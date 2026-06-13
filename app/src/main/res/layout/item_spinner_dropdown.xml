@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dropdown row for the spinner popup — same 13sp size as the input fields. -->
+<com.anokix.distributor.ui.views.RobotoTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:ellipsize="end"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="10dp"
+    android:textColor="@color/text_primary"
+    android:textSize="13sp" />

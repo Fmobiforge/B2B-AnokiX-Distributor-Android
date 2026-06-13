@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="44dp"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/spacing_sm">
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/rowTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Product Name"
+            android:textAppearance="@style/TextAppearance.AnokiX.Body"
+            android:textSize="@dimen/text_micro" />
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/rowSku"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="SKU-001"
+            android:textAppearance="@style/TextAppearance.AnokiX.Caption"
+            android:textSize="@dimen/text_micro"/>
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/rowStock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="186"
+            android:textAppearance="@style/TextAppearance.AnokiX.Body"
+            android:textSize="@dimen/text_micro" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:minHeight="20dp">
+
+            <ProgressBar
+                android:id="@+id/stockProgress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="20dp"
+                android:max="100"
+                android:progress="75"
+                android:progressDrawable="@drawable/bg_stock_progress" />
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/outLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/out_label"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_micro"
+                android:visibility="gone" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/rowDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+</LinearLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/spacing_sm">
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_kpi_icon_purple">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_document"
+                app:tint="@color/purple_primary" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Payment from Mega Traders"
+                android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                android:textSize="@dimen/text_body_sm" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:id="@+id/invoiceId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="INV-10023"
+                android:textAppearance="@style/TextAppearance.AnokiX.Caption" />
+
+            <com.anokix.distributor.ui.views.RobotoLightTextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="24 May 2025"
+                android:textAppearance="@style/TextAppearance.AnokiX.Label" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+R250,000"
+                android:textColor="@color/success"
+                android:textSize="@dimen/text_body_sm" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:id="@+id/statusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/bg_badge_success"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="3dp"
+                android:text="Paid"
+                android:textColor="@color/success"
+                android:textSize="@dimen/text_micro" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+</LinearLayout>

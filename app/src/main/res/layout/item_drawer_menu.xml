@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/drawer_item_margin_horizontal"
+    android:paddingVertical="2dp">
+
+    <LinearLayout
+        android:id="@+id/drawerItemRoot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_item_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_md">
+
+        <ImageView
+            android:id="@+id/drawerItemIcon"
+            android:layout_width="@dimen/drawer_icon_size"
+            android:layout_height="@dimen/drawer_icon_size"
+            android:contentDescription="@null"
+            app:tint="@color/drawer_text_muted" />
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/drawerItemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_weight="1"
+            android:textColor="@color/drawer_text_muted"
+            android:textSize="@dimen/drawer_text_size" />
+    </LinearLayout>
+</FrameLayout>

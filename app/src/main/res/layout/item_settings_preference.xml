@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:id="@+id/prefTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Alerts"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp" />
+
+            <com.anokix.distributor.ui.views.RobotoLightTextView
+                android:id="@+id/prefSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Subtitle"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+            android:id="@+id/prefSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:thumbTint="@color/switch_thumb_tint"
+            app:trackTint="@color/switch_track_tint" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/prefDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+</LinearLayout>

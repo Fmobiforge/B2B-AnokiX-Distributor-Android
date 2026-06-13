@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing scale (4dp base) -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">12dp</dimen>
+    <dimen name="spacing_lg">16dp</dimen>
+    <dimen name="spacing_xl">20dp</dimen>
+    <dimen name="spacing_2xl">24dp</dimen>
+
+    <!-- Screen padding -->
+    <dimen name="screen_padding_horizontal">16dp</dimen>
+    <dimen name="screen_padding_vertical">16dp</dimen>
+
+    <!-- Corner radii -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">10dp</dimen>
+    <dimen name="radius_lg">12dp</dimen>
+    <dimen name="radius_xl">16dp</dimen>
+
+    <!-- Component sizes -->
+    <dimen name="search_bar_height">40dp</dimen>
+    <dimen name="filter_button_size">40dp</dimen>
+    <dimen name="filter_pill_height">34dp</dimen>
+    <dimen name="header_icon_size">36dp</dimen>
+    <dimen name="logo_header_width">88dp</dimen>
+    <dimen name="list_item_padding">12dp</dimen>
+    <dimen name="card_margin_bottom">8dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+
+    <!-- Typography – compact professional scale -->
+    <dimen name="text_display">18sp</dimen>
+    <dimen name="text_headline">16sp</dimen>
+    <dimen name="text_title">14sp</dimen>
+    <dimen name="text_body">13sp</dimen>
+    <dimen name="text_body_sm">12sp</dimen>
+    <dimen name="text_caption">11sp</dimen>
+    <dimen name="text_label">10sp</dimen>
+    <dimen name="text_micro">9sp</dimen>
+    <dimen name="text_stat_value">17sp</dimen>
+    <dimen name="text_kpi_value">20sp</dimen>
+    <dimen name="bottom_nav_text_size">10sp</dimen>
+
+    <!-- Drawer -->
+    <dimen name="drawer_width">280dp</dimen>
+    <dimen name="drawer_padding_horizontal">20dp</dimen>
+    <dimen name="drawer_item_height">44dp</dimen>
+    <dimen name="drawer_item_margin_horizontal">12dp</dimen>
+    <dimen name="drawer_icon_size">22dp</dimen>
+    <dimen name="drawer_logo_width">120dp</dimen>
+    <dimen name="drawer_text_size">14sp</dimen>
+
+    <!-- Finance summary cards -->
+    <dimen name="finance_summary_card_width">158dp</dimen>
+    <dimen name="finance_summary_card_height">100dp</dimen>
+
+    <item name="letter_spacing_tight" format="float" type="dimen">-0.02</item>
+    <item name="letter_spacing_normal" format="float" type="dimen">0</item>
+    <item name="letter_spacing_wide" format="float" type="dimen">0.02</item>
+</resources>

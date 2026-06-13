@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Google Maps SDK for Android key.
+      Replace YOUR_MAPS_API_KEY_HERE with a key from Google Cloud Console:
+        1. Enable "Maps SDK for Android".
+        2. Restrict the key to Android apps with package "com.anokix.distributor"
+           and this app's signing SHA-1.
+      Until a valid key is set, the map area renders blank/gray.
+    -->
+    <string name="google_maps_key" translatable="false">AIzaSyA7rL6-l1P9qk1IpB2nWD2iMB97OYRh7zg</string>
+</resources>

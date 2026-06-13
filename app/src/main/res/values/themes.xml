@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AnokiXDistributor" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_primary</item>
+        <item name="colorPrimaryVariant">@color/purple_dark</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/purple_primary</item>
+        <item name="android:statusBarColor">@color/purple_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="materialCardViewStyle">@style/Widget.AnokiX.Card</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.AnokiX.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.AnokiX.Medium</item>
+    </style>
+
+    <style name="Theme.AnokiXDistributor.Login" parent="Theme.AnokiXDistributor">
+        <item name="android:statusBarColor">@color/login_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Widget.AnokiX.Card" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/radius_lg</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="contentPadding">@dimen/spacing_lg</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/border</item>
+    </style>
+
+    <style name="Widget.AnokiX.Card.Flat" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">@dimen/radius_lg</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="contentPadding">@dimen/spacing_md</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/border</item>
+    </style>
+
+    <style name="ShapeAppearance.AnokiX.Small" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_sm</item>
+    </style>
+
+    <style name="ShapeAppearance.AnokiX.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_md</item>
+    </style>
+
+    <style name="Widget.AnokiX.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@drawable/bg_header_purple</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="subtitleTextColor">@color/purple_text_light</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="Widget.AnokiX.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">@color/purple_primary</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+
+    <style name="Widget.AnokiX.Button.Outlined.Success" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/success</item>
+        <item name="android:textColor">@color/success</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.AnokiX.Button.Outlined.Danger" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/danger</item>
+        <item name="android:textColor">@color/danger</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="TextAppearance.AnokiX.BottomNav" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">@dimen/bottom_nav_text_size</item>
+    </style>
+
+    <style name="TextAppearance.AnokiX.BottomNav.Active" parent="TextAppearance.AnokiX.BottomNav">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Widget.AnokiX.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/nav_icon_color</item>
+        <item name="itemTextColor">@color/nav_icon_color</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.AnokiX.BottomNav.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.AnokiX.BottomNav</item>
+        <item name="itemIconSize">22dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="elevation">0dp</item>
+        <item name="android:background">@drawable/bg_bottom_nav</item>
+    </style>
+</resources>
