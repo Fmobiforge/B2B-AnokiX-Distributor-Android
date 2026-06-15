@@ -28,6 +28,11 @@
         </activity>
 
         <activity
+            android:name=".ui.WelcomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AnokiXDistributor.Login" />
+
+        <activity
             android:name=".ui.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AnokiXDistributor.Login">
@@ -40,6 +45,7 @@
         <activity android:name=".ui.StoresActivity" android:exported="false" />
         <activity android:name=".ui.AddEditStoreActivity" android:exported="false" />
         <activity android:name=".ui.TradersActivity" android:exported="false" />
+        <activity android:name=".ui.CreateTraderActivity" android:exported="false" />
         <activity android:name=".ui.ProductsActivity" android:exported="false" />
         <activity android:name=".ui.PromotionsActivity" android:exported="false" />
         <activity android:name=".ui.FinancesActivity" android:exported="false" />

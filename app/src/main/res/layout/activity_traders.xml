@@ -6,22 +6,62 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/include_secondary_header" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp">
+        android:background="@color/purple_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_chevron_right"
+            android:rotation="180"
+            app:tint="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/screenTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="-0.01"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_headline" />
+
+            <com.anokix.distributor.ui.views.RobotoLightTextView
+                android:id="@+id/screenSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/addTraderButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/traders"
-            android:textAppearance="@style/TextAppearance.AnokiX.Headline" />
+            android:layout_height="40dp"
+            android:background="@drawable/bg_btn_continue"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/add_new_trader_btn"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -29,6 +69,7 @@
         android:layout_height="wrap_content"
         android:background="@color/surface"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/screen_padding_vertical"
         android:paddingHorizontal="16dp"
         android:paddingBottom="12dp">
 

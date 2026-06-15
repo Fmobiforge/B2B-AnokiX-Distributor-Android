@@ -1,8 +1,11 @@
 package com.anokix.distributor.ui;
 
+import android.content.Intent;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,8 +26,15 @@ public class TradersActivity extends BaseSecondaryActivity {
 
     private TraderAdapter adapter;
     private List<TraderItem> allItems = new ArrayList<>();
-    private String selectedArea = "All Areas";
-    private String selectedSegment = "All Segments";
+    private String selectedArea = "All Status";
+    private String selectedSegment = "All Status";
+
+    private final ActivityResultLauncher<Intent> createTraderLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    loadData(); // refresh the list after a new trader is registered
+                }
+            });
 
     @Override
     protected int getLayoutRes() {
@@ -43,6 +53,9 @@ public class TradersActivity extends BaseSecondaryActivity {
         adapter = new TraderAdapter();
         list.setAdapter(adapter);
 
+        findViewById(R.id.addTraderButton).setOnClickListener(v ->
+                createTraderLauncher.launch(new Intent(this, CreateTraderActivity.class)));
+
         TextView areaLabel = findViewById(R.id.areaFilterLabel);
         TextView segmentLabel = findViewById(R.id.segmentFilterLabel);
         FilterUiHelper.setDropdownContentDescription(areaLabel, getString(R.string.all_areas));
@@ -51,7 +64,7 @@ public class TradersActivity extends BaseSecondaryActivity {
         FilterUiHelper.bindDropdown(
                 findViewById(R.id.areaFilterButton),
                 areaLabel,
-                MockData.getFilterAreas(),
+                MockData.getFilterStatus(),
                 0,
                 (index, value) -> {
                     selectedArea = value;
@@ -61,7 +74,7 @@ public class TradersActivity extends BaseSecondaryActivity {
         FilterUiHelper.bindDropdown(
                 findViewById(R.id.segmentFilterButton),
                 segmentLabel,
-                MockData.getFilterSegments(),
+                MockData.getFilterRegistrationStatus(),
                 0,
                 (index, value) -> {
                     selectedSegment = value;
@@ -88,8 +101,8 @@ public class TradersActivity extends BaseSecondaryActivity {
     private void applyFilters() {
         List<TraderItem> filtered = new ArrayList<>();
         for (TraderItem item : allItems) {
-            boolean areaMatch = "All Areas".equals(selectedArea) || selectedArea.equals(item.area);
-            boolean segmentMatch = "All Segments".equals(selectedSegment)
+            boolean areaMatch = "All Status".equals(selectedArea) || selectedArea.equals(item.area);
+            boolean segmentMatch = "All Status".equals(selectedSegment)
                     || selectedSegment.equalsIgnoreCase(item.segment);
             if (areaMatch && segmentMatch) {
                 filtered.add(item);

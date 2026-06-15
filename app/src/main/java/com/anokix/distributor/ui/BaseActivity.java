@@ -97,6 +97,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
     }
 
+    protected void goToWelcome() {
+        startActivity(new Intent(this, WelcomeActivity.class));
+        finish();
+    }
+
     protected ProgressDialog mProgress;
 
     public void showProgressDialog() {

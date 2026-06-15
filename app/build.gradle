@@ -45,4 +45,7 @@ dependencies {
 
     // Google Maps (store geolocation picker)
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
+
+    // Country code picker (phone country selector with flags + search)
+    implementation 'com.hbb20:ccp:2.7.3'
 }

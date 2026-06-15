@@ -38,7 +38,7 @@ public class TraderAdapter extends RecyclerView.Adapter<TraderAdapter.ViewHolder
         TraderItem item = items.get(position);
         holder.name.setText(item.name);
         holder.location.setText(item.location);
-        holder.phone.setText(item.phone);
+        holder.code.setText(item.traderCode);
         holder.segment.setText(item.segment);
         holder.avatar.setText(item.initials);
         holder.avatar.setBackgroundTintList(ContextCompat.getColorStateList(
@@ -52,13 +52,13 @@ public class TraderAdapter extends RecyclerView.Adapter<TraderAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView name, location, phone, segment, avatar, newTag;
+        final TextView name, location, code, segment, avatar, newTag;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.traderName);
             location = itemView.findViewById(R.id.traderLocation);
-            phone = itemView.findViewById(R.id.traderPhone);
+            code = itemView.findViewById(R.id.traderCode);
             segment = itemView.findViewById(R.id.segmentTag);
             avatar = itemView.findViewById(R.id.avatar);
             newTag = itemView.findViewById(R.id.newTag);

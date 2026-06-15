@@ -65,27 +65,27 @@ public final class MockData {
 
     public static List<TraderItem> getTraderItems() {
         return Arrays.asList(
-                new TraderItem("t1", "John Mokoena", "Mabopane, Pretoria",
+                new TraderItem("t1", "John Mokoena", "T1", "Mabopane, Pretoria",
                         "+27 82 123 4567", "Spaza", "Gauteng", "JM", R.color.purple_primary, true),
-                new TraderItem("t2", "Sarah Bhuda", "Emthombeni, Durban",
+                new TraderItem("t2", "Sarah Bhuda", "T1", "Emthombeni, Durban",
                         "+27 83 234 5678", "Spaza", "KZN", "SB", R.color.success, false),
-                new TraderItem("t3", "Thabo Khumalo", "Rockingham, Durban",
+                new TraderItem("t3", "Thabo Khumalo", "T1", "Rockingham, Durban",
                         "+27 84 345 6789", "Spaza", "KZN", "TK", R.color.warning, true),
-                new TraderItem("t4", "Nomvula Phuphuthi", "Pinetown, Durban",
+                new TraderItem("t4", "Nomvula Phuphuthi", "T1", "Pinetown, Durban",
                         "+27 85 456 7890", "Spaza", "KZN", "NP", R.color.info, false),
-                new TraderItem("t5", "Lunga Mthembu", "Soweto, Johannesburg",
+                new TraderItem("t5", "Lunga Mthembu", "T1", "Soweto, Johannesburg",
                         "+27 86 567 8901", "Spaza", "Gauteng", "LM", R.color.purple_dark, true),
-                new TraderItem("t6", "Peter Situngu", "Verulam, KZN",
+                new TraderItem("t6", "Peter Situngu", "T1", "Verulam, KZN",
                         "+27 87 678 9012", "Spaza", "KZN", "PS", R.color.danger, false)
         );
     }
 
-    public static String[] getFilterAreas() {
-        return new String[]{"All Areas", "Gauteng", "KZN", "Limpopo", "Mpumalanga", "Eastern Cape"};
+    public static String[] getFilterStatus() {
+        return new String[]{"All Status", "Active", "New", "Inactive", "Suspended", "Draft", "Pending Approval"};
     }
 
-    public static String[] getFilterSegments() {
-        return new String[]{"All Segments", "Spaza", "Reseller", "Trader"};
+    public static String[] getFilterRegistrationStatus() {
+        return new String[]{"All Status", "Draft", "Pending Approval", "Approved", "Rejected", "Needs Information"};
     }
 
     public static String[] getFilterDrivers() {

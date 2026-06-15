@@ -61,7 +61,7 @@ public class StoresActivity extends BaseSecondaryActivity {
         FilterUiHelper.bindDropdown(
                 findViewById(R.id.areaFilterButton),
                 areaLabel,
-                MockData.getFilterAreas(),
+                MockData.getFilterStatus(),
                 0,
                 (index, value) -> {
                     selectedArea = value;

@@ -41,23 +41,25 @@
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/traderCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="TRD000001"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp" />
+
             <com.anokix.distributor.ui.views.RobotoTextView
                 android:id="@+id/traderLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Mabopane, Pretoria"
+                android:maxLines="2"
                 android:textColor="@color/text_secondary"
                 android:textSize="11sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
-                android:id="@+id/traderPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="+27 82 123 4567"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout

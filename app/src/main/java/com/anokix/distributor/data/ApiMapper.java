@@ -18,11 +18,11 @@ import java.util.List;
 public final class ApiMapper {
 
     private static final int[] AVATAR_COLORS = {
+            R.color.danger,
+            R.color.warning,
             R.color.purple_primary,
             R.color.info,
             R.color.success,
-            R.color.warning,
-            R.color.danger
     };
 
     private ApiMapper() {}
@@ -63,6 +63,7 @@ public final class ApiMapper {
             out.add(new TraderItem(
                     safe(t.id),
                     name,
+                    t.trader_code,
                     safe(t.address),
                     phone.trim(),
                     capitalize(t.store_type),

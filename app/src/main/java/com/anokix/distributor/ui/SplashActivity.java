@@ -30,11 +30,11 @@ public class SplashActivity extends BaseActivity {
         StrictMode.setThreadPolicy(policy);
 
         new Handler().postDelayed(() -> {
-            // If already signed in, skip login
+            // Already signed in → straight to the app; otherwise show the welcome screen.
             if (false && SessionManager.get(this).isLoggedIn()) {
                 goToMain();
             } else {
-                goToLogin();
+                goToWelcome();
             }
         }, 2000);
     }

@@ -3,12 +3,16 @@ package com.anokix.distributor.network;
 import android.net.Uri;
 import android.util.Log;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -66,6 +70,45 @@ public final class Http {
         if (form != null) {
             for (Map.Entry<String, String> e : form.entrySet()) {
                 body.add(e.getKey(), e.getValue() == null ? "" : e.getValue());
+            }
+        }
+        Request.Builder request = new Request.Builder().url(baseUrl + path).post(body.build());
+        return execute(request, token);
+    }
+
+    /** A single file part for a multipart upload (content already read into memory). */
+    public static class FilePart {
+        public final String field;
+        public final String fileName;
+        public final String mimeType;
+        public final byte[] content;
+
+        public FilePart(String field, String fileName, String mimeType, byte[] content) {
+            this.field = field;
+            this.fileName = fileName;
+            this.mimeType = mimeType;
+            this.content = content;
+        }
+    }
+
+    /** multipart/form-data POST with text fields and optional file parts. */
+    public static Result postMultipart(String baseUrl, String path, Map<String, String> form,
+                                       List<FilePart> files, String token) {
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (form != null) {
+            for (Map.Entry<String, String> e : form.entrySet()) {
+                body.addFormDataPart(e.getKey(), e.getValue() == null ? "" : e.getValue());
+            }
+        }
+        if (files != null) {
+            for (FilePart part : files) {
+                if (part == null || part.content == null) {
+                    continue;
+                }
+                MediaType type = MediaType.parse(
+                        part.mimeType != null ? part.mimeType : "application/octet-stream");
+                String name = part.fileName != null ? part.fileName : part.field;
+                body.addFormDataPart(part.field, name, RequestBody.create(part.content, type));
             }
         }
         Request.Builder request = new Request.Builder().url(baseUrl + path).post(body.build());

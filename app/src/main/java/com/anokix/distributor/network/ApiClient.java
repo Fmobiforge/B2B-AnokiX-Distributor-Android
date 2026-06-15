@@ -5,11 +5,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.anokix.distributor.network.dto.AutocompleteData;
 import com.anokix.distributor.network.dto.BaseInfoData;
+import com.anokix.distributor.network.dto.CoordinateData;
+import com.anokix.distributor.network.dto.CreateTraderData;
 import com.anokix.distributor.network.dto.DashboardData;
 import com.anokix.distributor.network.dto.InventorySummaryData;
 import com.anokix.distributor.network.dto.LoginData;
 import com.anokix.distributor.network.dto.ProductsData;
+import com.anokix.distributor.network.dto.ReferenceData;
 import com.anokix.distributor.network.dto.StoreDetailData;
 import com.anokix.distributor.network.dto.StoresData;
 import com.anokix.distributor.network.dto.TradersData;
@@ -19,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -99,6 +104,37 @@ public final class ApiClient {
 
     public void getBaseInfo(ApiCallback<BaseInfoData> cb) {
         getAuthed("api/common/base-info", null, BaseInfoData.class, cb);
+    }
+
+    /** Lookup data for the Create Trader wizard (categories, distributors, trader types). */
+    public void getReference(ApiCallback<ReferenceData> cb) {
+        getAuthed("api/common/reference", null, ReferenceData.class, cb);
+    }
+
+    /** Google Places autocomplete (proxied) for the business address search. */
+    public void getAddressAutocomplete(String keyword, ApiCallback<AutocompleteData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("keyword", keyword == null ? "" : keyword);
+        q.put("str_countries", "country:ZA");
+        q.put("search_type", "address");
+        getAuthed("api/common/google-auto-complete", q, AutocompleteData.class, cb);
+    }
+
+    /** Resolve a place_id from autocomplete into latitude/longitude + formatted address. */
+    public void getCoordinateFromPlaceId(String placeId, ApiCallback<CoordinateData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("place_id", placeId == null ? "" : placeId);
+        getAuthed("api/common/get-coordinate-from-placeid", q, CoordinateData.class, cb);
+    }
+
+    /** Create a trader under the logged-in distributor (multipart, with KYC documents). */
+    public void createTrader(Map<String, String> form, List<Http.FilePart> files,
+                             ApiCallback<CreateTraderData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/traders/create",
+                    form, files, session.getToken());
+            deliver(r, CreateTraderData.class, cb);
+        });
     }
 
     public void getStore(String id, ApiCallback<StoreDetailData> cb) {

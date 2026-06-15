@@ -175,4 +175,141 @@
     <string name="day_thu">Thu</string>
     <string name="day_fri">Fri</string>
     <string name="day_sat">Sat</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Welcome to anokiX</string>
+    <string name="welcome_tagline">Africa\'s Commerce, Payments &amp; Merchant Growth Ecosystem</string>
+    <string name="welcome_login">Login</string>
+    <string name="welcome_create_account">Create Account</string>
+    <string name="welcome_have_account">Already have an account? </string>
+    <string name="welcome_sign_in">Sign In</string>
+    <string name="welcome_need_help">Need Help? </string>
+    <string name="welcome_support_centre">Support Centre</string>
+    <string name="support_email">support@anokix.com</string>
+    <string name="support_subject">Support Request – anokiX Distributor</string>
+    <string name="no_email_app">No email app found on this device.</string>
+    <string name="distributor_register_coming_soon">Distributor registration coming soon</string>
+
+    <!-- Create Trader -->
+    <string name="add_new_trader">Add New Trader</string>
+    <string name="add_new_trader_btn">+ Add New Trader</string>
+    <string name="create_trader_subtitle">Register a new trader in your network.</string>
+    <string name="continue_btn">Continue</string>
+    <string name="register_btn">Register</string>
+
+    <string name="step_owner">Owner</string>
+    <string name="step_business">Business</string>
+    <string name="step_trader">Trader</string>
+    <string name="step_location">Location</string>
+    <string name="step_verify">Verify</string>
+    <string name="step_distributor">Distributor</string>
+    <string name="step_wallet">Wallet</string>
+    <string name="step_terms">Terms</string>
+
+    <!-- Step 1: Owner -->
+    <string name="owner_information">Owner Information</string>
+    <string name="owner_information_sub">Tell us about the business owner.</string>
+    <string name="owner_first_name">Owner First Name</string>
+    <string name="owner_last_name">Owner Last Name</string>
+    <string name="hint_first_name">Enter first name</string>
+    <string name="hint_last_name">Enter last name</string>
+    <string name="id_number">ID Number</string>
+    <string name="passport_number">Passport Number</string>
+    <string name="hint_id_number">Enter ID number</string>
+    <string name="hint_passport_number">Enter passport number</string>
+    <string name="id_or_passport_hint">Provide either your ID number or passport number.</string>
+    <string name="owner_contact">Owner contact</string>
+    <string name="owner_contact_sub">Provide the owner\'s mobile number and email address for verification and account communication.</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email_address_field">Email Address</string>
+    <string name="hint_email_address">Enter email address</string>
+
+    <!-- Step 2: Business -->
+    <string name="business_information">Business Information</string>
+    <string name="business_information_sub">Tell us about your business.</string>
+    <string name="business_name">Business Name</string>
+    <string name="trading_name">Trading Name</string>
+    <string name="business_registration_number">Business Registration Number</string>
+    <string name="optional_label">(Optional)</string>
+    <string name="business_phone_number">Business Phone Number</string>
+    <string name="business_email_address">Business Email Address</string>
+    <string name="hint_business_name">Enter business name</string>
+    <string name="hint_trading_name">Enter trading name</string>
+    <string name="hint_business_reg">Enter registration number</string>
+    <string name="hint_business_email">Enter business email</string>
+
+    <!-- Step 3: Trader -->
+    <string name="trader_classification">Trader Classification</string>
+    <string name="trader_classification_sub">What type of trader are you?</string>
+    <string name="primary_product_categories">Primary Product Categories</string>
+    <string name="select_categories_hint">Tap to select categories</string>
+
+    <!-- Step 4: Location -->
+    <string name="business_location">Business Location</string>
+    <string name="business_location_sub">Where is your business located?</string>
+    <string name="address_of_business">Address of your business</string>
+    <string name="search_address_hint">Search for your business address</string>
+    <string name="map_pin_hint_trader">Tap the map to drop a pin, or drag the pin to set the location.</string>
+
+    <!-- Step 5: Verify -->
+    <string name="business_verification">Business Verification</string>
+    <string name="business_verification_sub">Upload the required documents.</string>
+    <string name="upload">Upload</string>
+    <string name="doc_business_reg">Business Registration Document</string>
+    <string name="doc_business_reg_sub">CIPC, Business Permit, etc.</string>
+    <string name="doc_owner_id">Owner ID Document</string>
+    <string name="doc_owner_id_sub">ID or Passport</string>
+    <string name="doc_proof_address">Proof of Address</string>
+    <string name="doc_proof_address_sub">Municipal bill, Lease, etc.</string>
+    <string name="doc_store_front">Store Front Photo</string>
+    <string name="doc_store_front_sub">Clear photo of your store</string>
+    <string name="doc_store_interior">Store Interior Photo</string>
+    <string name="doc_store_interior_sub">Inside view of your store</string>
+    <string name="doc_additional">Additional Documents</string>
+    <string name="doc_additional_sub">(If any)</string>
+    <string name="accepted_formats">Accepted formats: JPG, PNG, PDF (Max 5MB)</string>
+
+    <!-- Step 6: Distributor -->
+    <string name="select_preferred_distributor">Select Preferred Distributor</string>
+    <string name="select_preferred_distributor_sub">Choose the distributor you want to work with.</string>
+    <string name="preferred_distributors">Preferred Distributors</string>
+    <string name="select_distributors_hint">Tap to select distributors</string>
+    <string name="preferred_delivery_days">Preferred Delivery Days</string>
+    <string name="select_all_apply">(Select all that apply)</string>
+    <string name="preferred_payment_method">Preferred Payment Method</string>
+
+    <!-- Step 7: Wallet -->
+    <string name="activate_merchant_wallet">Activate Merchant Wallet</string>
+    <string name="powered_by_imb">Powered by IMB.</string>
+    <string name="benefits">Benefits</string>
+    <string name="benefit_faster_payments">Faster payments</string>
+    <string name="benefit_access_credit">Access to credit</string>
+    <string name="benefit_insurance">Insurance solutions</string>
+    <string name="benefit_rewards">Rewards &amp; cashback</string>
+    <string name="benefit_growth_tools">Business growth tools</string>
+    <string name="create_wallet_now">Create Wallet Now</string>
+    <string name="activate_later">Activate Later</string>
+
+    <!-- Step 8: Terms -->
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="terms_conditions_sub">Please review and accept to continue.</string>
+    <string name="terms_accurate">I confirm that the information provided is accurate and correct.</string>
+    <string name="terms_tos">I agree to the Terms of Service and Privacy Policy.</string>
+    <string name="terms_kyc">I agree to KYC verification and identity checks.</string>
+    <string name="terms_comms">I consent to receive electronic communications from anokiX.</string>
+
+    <!-- Validation / messages -->
+    <string name="err_first_name">Please enter the owner\'s first name.</string>
+    <string name="err_last_name">Please enter the owner\'s last name.</string>
+    <string name="err_id_or_passport">Provide an ID number or passport number.</string>
+    <string name="err_mobile">Please enter a mobile number.</string>
+    <string name="err_email">Please enter a valid email address.</string>
+    <string name="err_business_name">Please enter the business name.</string>
+    <string name="err_trader_type">Please select a trader classification.</string>
+    <string name="err_location">Please select your business location on the map.</string>
+    <string name="err_documents">Please upload all required documents.</string>
+    <string name="err_terms">Please accept all terms to continue.</string>
+    <string name="trader_created_msg">Trader registered successfully</string>
+    <string name="registering">Registering…</string>
+    <string name="select_payment_method">Select payment method</string>
 </resources>
