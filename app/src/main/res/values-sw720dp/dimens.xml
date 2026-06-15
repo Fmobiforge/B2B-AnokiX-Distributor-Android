@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="padding1">10dp</dimen>
+    <dimen name="padding2">20dp</dimen>
+    <dimen name="padding3">30dp</dimen>
+    <dimen name="padding4">40dp</dimen>
+    <dimen name="padding5">50dp</dimen>
+    <dimen name="padding6">60dp</dimen>
+    <dimen name="padding7">70dp</dimen>
+    <dimen name="padding8">80dp</dimen>
+    <dimen name="padding9">90dp</dimen>
+    <dimen name="padding10">100dp</dimen>
+    <dimen name="padding11">140dp</dimen>
+    <dimen name="padding12">200dp</dimen>
+    <dimen name="padding13">250dp</dimen>
+    <dimen name="padding14">300dp</dimen>
+    <dimen name="padding15">160dp</dimen>
+    <dimen name="padding16">180dp</dimen>
+    <dimen name="padding17">400dp</dimen>
+
+    <dimen name="padding21">5dp</dimen>
+    <dimen name="padding22">12dp</dimen>
+    <dimen name="padding23">75dp</dimen>
+
+    <dimen name="font_1">40.0sp</dimen>
+    <dimen name="font_2">37.0sp</dimen>
+    <dimen name="font_3">35.0sp</dimen>
+    <dimen name="font_4">32.0sp</dimen>
+    <dimen name="font_5">30.0sp</dimen>
+    <dimen name="font_6">28.0sp</dimen>
+    <dimen name="font_7">26.0sp</dimen>
+    <dimen name="font_8">24.0sp</dimen>
+    <dimen name="font_9">20.0sp</dimen>
+    <dimen name="font_gauge">15.0sp</dimen>
+    <dimen name="font_10">45.0sp</dimen>
+    <dimen name="font_11">50.0sp</dimen>
+    <dimen name="font_12">55.0sp</dimen>
+
+    <dimen name="font_20">16.0sp</dimen>
+
+    <dimen name="loading_dlg_size">200dp</dimen>
+
+</resources>

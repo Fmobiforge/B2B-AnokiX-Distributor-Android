@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">anokiX Distributor</string>
+    <string name="version_info">anokiX Distributor v1.0</string>
+
     <string name="login_title">LOGIN</string>
     <string name="login_subtitle">Distributor App</string>
     <string name="distributor_portal">Distributor Portal</string>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:background="#00000000"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/padding12"
+        android:layout_height="@dimen/padding12"
+        android:background="@drawable/loading_back_bg"
+        android:gravity="center"
+        android:padding="@dimen/padding1"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/padding8"
+            android:layout_height="@dimen/padding8"
+            android:layout_marginTop="@dimen/padding1"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/padding1"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_loading_logo" />
+
+            <ProgressBar
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:indeterminateDrawable="@drawable/loading_white" />
+        </RelativeLayout>
+
+        <com.anokix.distributor.ui.views.RobotoLightTextView
+            android:id="@+id/loading_msg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding1"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/loading"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_8" />
+
+    </LinearLayout>
+
+</LinearLayout>
