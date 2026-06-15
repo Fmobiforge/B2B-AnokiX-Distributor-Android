@@ -19,15 +19,17 @@ import com.anokix.distributor.network.dto.TradersData;
 import com.anokix.distributor.ui.adapter.TraderAdapter;
 import com.anokix.distributor.ui.util.FilterUiHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TradersActivity extends BaseSecondaryActivity {
 
+    private static final String ALL_STATUS = "All Status";
+
     private TraderAdapter adapter;
-    private List<TraderItem> allItems = new ArrayList<>();
-    private String selectedArea = "All Status";
-    private String selectedSegment = "All Status";
+
+    // Server-side filters: empty string means "no filter" (All Status).
+    private String selectedStatus = "";
+    private String selectedRegistrationStatus = "";
 
     private final ActivityResultLauncher<Intent> createTraderLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -56,58 +58,53 @@ public class TradersActivity extends BaseSecondaryActivity {
         findViewById(R.id.addTraderButton).setOnClickListener(v ->
                 createTraderLauncher.launch(new Intent(this, CreateTraderActivity.class)));
 
-        TextView areaLabel = findViewById(R.id.areaFilterLabel);
-        TextView segmentLabel = findViewById(R.id.segmentFilterLabel);
-        FilterUiHelper.setDropdownContentDescription(areaLabel, getString(R.string.all_areas));
-        FilterUiHelper.setDropdownContentDescription(segmentLabel, getString(R.string.all_segments));
+        TextView statusLabel = findViewById(R.id.areaFilterLabel);
+        TextView registrationLabel = findViewById(R.id.segmentFilterLabel);
+        FilterUiHelper.setDropdownContentDescription(statusLabel, getString(R.string.filter_status));
+        FilterUiHelper.setDropdownContentDescription(registrationLabel,
+                getString(R.string.filter_registration_status));
 
+        // Status filter → ?status=
         FilterUiHelper.bindDropdown(
                 findViewById(R.id.areaFilterButton),
-                areaLabel,
+                statusLabel,
                 MockData.getFilterStatus(),
                 0,
                 (index, value) -> {
-                    selectedArea = value;
-                    applyFilters();
+                    selectedStatus = toParam(value);
+                    loadData();
                 });
 
+        // Registration status filter → ?registration_status=
         FilterUiHelper.bindDropdown(
                 findViewById(R.id.segmentFilterButton),
-                segmentLabel,
+                registrationLabel,
                 MockData.getFilterRegistrationStatus(),
                 0,
                 (index, value) -> {
-                    selectedSegment = value;
-                    applyFilters();
+                    selectedRegistrationStatus = toParam(value);
+                    loadData();
                 });
     }
 
     @Override
     protected void loadData() {
-        ApiClient.get(this).getTraders("", new ApiCallback<TradersData>() {
-            @Override
-            public void onSuccess(TradersData data) {
-                allItems = ApiMapper.toTraderItems(data);
-                applyFilters();
-            }
+        ApiClient.get(this).getTraders("", selectedStatus, selectedRegistrationStatus,
+                new ApiCallback<TradersData>() {
+                    @Override
+                    public void onSuccess(TradersData data) {
+                        adapter.setItems(ApiMapper.toTraderItems(data));
+                    }
 
-            @Override
-            public void onError(String message) {
-                Toast.makeText(TradersActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void onError(String message) {
+                        Toast.makeText(TradersActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
-    private void applyFilters() {
-        List<TraderItem> filtered = new ArrayList<>();
-        for (TraderItem item : allItems) {
-            boolean areaMatch = "All Status".equals(selectedArea) || selectedArea.equals(item.area);
-            boolean segmentMatch = "All Status".equals(selectedSegment)
-                    || selectedSegment.equalsIgnoreCase(item.segment);
-            if (areaMatch && segmentMatch) {
-                filtered.add(item);
-            }
-        }
-        adapter.setItems(filtered);
+    /** "All Status" means no filter; everything else is sent verbatim to the API. */
+    private String toParam(String value) {
+        return ALL_STATUS.equals(value) ? "" : value;
     }
 }

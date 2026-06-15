@@ -105,6 +105,9 @@
     <string name="search_traders">Search traders&#8230;</string>
     <string name="all_areas">All Areas</string>
     <string name="all_segments">All Segments</string>
+    <string name="all_status">All Status</string>
+    <string name="filter_status">Status</string>
+    <string name="filter_registration_status">Registration Status</string>
     <string name="traders_count">Traders</string>
     <string name="sku_label">SKU: %1$s</string>
     <string name="category_label">Category: %1$s</string>

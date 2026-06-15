@@ -86,10 +86,15 @@ public final class ApiClient {
     }
 
     public void getTraders(String search, ApiCallback<TradersData> cb) {
+        getTraders(search, "", "", cb);
+    }
+
+    public void getTraders(String search, String status, String registrationStatus,
+                           ApiCallback<TradersData> cb) {
         Map<String, String> q = new HashMap<>();
         q.put("search", search == null ? "" : search);
-        q.put("status", "");
-        q.put("registration_status", "");
+        q.put("status", status == null ? "" : status);
+        q.put("registration_status", registrationStatus == null ? "" : registrationStatus);
         q.put("credit_status", "");
         getAuthed("api/distributor/traders", q, TradersData.class, cb);
     }
