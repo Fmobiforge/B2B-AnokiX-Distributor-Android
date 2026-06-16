@@ -43,7 +43,8 @@
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/delete_product"
-            android:src="@drawable/ic_cancel_circle"
+            android:padding="8dp"
+            android:src="@drawable/ic_delete"
             android:visibility="gone"
             app:tint="@android:color/white" />
     </LinearLayout>
