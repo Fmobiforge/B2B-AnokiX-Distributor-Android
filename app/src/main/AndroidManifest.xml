@@ -47,6 +47,8 @@
         <activity android:name=".ui.TradersActivity" android:exported="false" />
         <activity android:name=".ui.CreateTraderActivity" android:exported="false" />
         <activity android:name=".ui.ProductsActivity" android:exported="false" />
+        <activity android:name=".ui.AddProductOptionsActivity" android:exported="false" />
+        <activity android:name=".ui.CreateProductActivity" android:exported="false" />
         <activity android:name=".ui.PromotionsActivity" android:exported="false" />
         <activity android:name=".ui.FinancesActivity" android:exported="false" />
         <activity android:name=".ui.ReportsActivity" android:exported="false" />

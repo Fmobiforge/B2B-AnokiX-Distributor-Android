@@ -12,6 +12,7 @@ import com.anokix.distributor.network.dto.CreateTraderData;
 import com.anokix.distributor.network.dto.DashboardData;
 import com.anokix.distributor.network.dto.InventorySummaryData;
 import com.anokix.distributor.network.dto.LoginData;
+import com.anokix.distributor.network.dto.ProductDetailData;
 import com.anokix.distributor.network.dto.ProductsData;
 import com.anokix.distributor.network.dto.ReferenceData;
 import com.anokix.distributor.network.dto.StoreDetailData;
@@ -101,6 +102,44 @@ public final class ApiClient {
 
     public void getProducts(ApiCallback<ProductsData> cb) {
         getAuthed("api/distributor/products", null, ProductsData.class, cb);
+    }
+
+    public void getProductById(String id, ApiCallback<ProductDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/products/get-by-id", q, ProductDetailData.class, cb);
+    }
+
+    /** Create a product (multipart: text fields + primary image, additional images, datasheet). */
+    public void createProduct(Map<String, String> form, List<Http.FilePart> files,
+                              ApiCallback<ProductDetailData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/products/create",
+                    form, files, session.getToken());
+            deliver(r, ProductDetailData.class, cb);
+        });
+    }
+
+    /** Update an existing product (partial — only the sent fields change). */
+    public void updateProduct(Map<String, String> form, List<Http.FilePart> files,
+                              ApiCallback<ProductDetailData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/products/update",
+                    form, files, session.getToken());
+            deliver(r, ProductDetailData.class, cb);
+        });
+    }
+
+    public void deleteProduct(String id, ApiCallback<ProductDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/products/delete",
+                    form, session.getToken());
+            // The delete endpoint returns "data": [] (an empty list), so it must not be
+            // parsed into a ProductDetailData object — only the status/message matter.
+            deliverStatusOnly(r, cb);
+        });
     }
 
     public void getInventorySummary(ApiCallback<InventorySummaryData> cb) {
@@ -198,6 +237,37 @@ public final class ApiClient {
         main.post(() -> {
             if (errorMessage == null) {
                 cb.onSuccess(result);
+            } else {
+                cb.onError(errorMessage);
+            }
+        });
+    }
+
+    /**
+     * Check only the {@code status}/{@code message} of an envelope, ignoring the shape
+     * of {@code data}. Used by endpoints (e.g. products/delete) whose {@code data} block
+     * is not a typed object — parsing it into one would throw and surface a false error.
+     */
+    private <T> void deliverStatusOnly(Http.Result r, ApiCallback<T> cb) {
+        String error = null;
+        try {
+            if (r.body == null || r.body.isEmpty()) {
+                error = "Network error (HTTP " + r.code + ")";
+            } else {
+                ApiResponse<?> resp = gson.fromJson(r.body, ApiResponse.class);
+                if (resp == null || !resp.status) {
+                    error = (resp != null && resp.message != null) ? resp.message : "Request failed";
+                }
+            }
+        } catch (Exception e) {
+            Log.e(Http.TAG, "parse failed: " + e, e);
+            error = "Unexpected response from server";
+        }
+
+        final String errorMessage = error;
+        main.post(() -> {
+            if (errorMessage == null) {
+                cb.onSuccess(null);
             } else {
                 cb.onError(errorMessage);
             }

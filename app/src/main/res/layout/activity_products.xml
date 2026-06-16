@@ -55,13 +55,22 @@
                     android:src="@drawable/ic_search"
                     app:tint="@color/text_secondary" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/searchInput"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    android:text="@string/search_products"
-                    android:textColor="@color/text_secondary"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_products"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
 

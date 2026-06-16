@@ -15,12 +15,26 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
+    /** Tap callback for a product row (e.g. open the edit wizard). */
+    public interface OnItemClick {
+        void onClick(ProductItem item);
+    }
+
+    // Full data set from the API, plus the (possibly filtered) view shown to the user.
+    private final List<ProductItem> allItems = new ArrayList<>();
     private final List<ProductItem> items = new ArrayList<>();
+    private String query = "";
+    private OnItemClick onItemClick;
 
     public ProductAdapter() {
+    }
+
+    public void setOnItemClickListener(OnItemClick listener) {
+        this.onItemClick = listener;
     }
 
     public ProductAdapter(List<ProductItem> data) {
@@ -28,9 +42,35 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public void setItems(List<ProductItem> data) {
+        allItems.clear();
+        if (data != null) allItems.addAll(data);
+        applyFilter();
+    }
+
+    /** Local, case-insensitive keyword search over name / SKU / category. */
+    public void filter(String text) {
+        query = text == null ? "" : text.trim().toLowerCase(Locale.getDefault());
+        applyFilter();
+    }
+
+    private void applyFilter() {
         items.clear();
-        if (data != null) items.addAll(data);
+        if (query.isEmpty()) {
+            items.addAll(allItems);
+        } else {
+            for (ProductItem item : allItems) {
+                if (matches(item, query)) items.add(item);
+            }
+        }
         notifyDataSetChanged();
+    }
+
+    private boolean matches(ProductItem item, String q) {
+        return contains(item.name, q) || contains(item.sku, q) || contains(item.category, q);
+    }
+
+    private static boolean contains(String value, String q) {
+        return value != null && value.toLowerCase(Locale.getDefault()).contains(q);
     }
 
     @NonNull
@@ -44,6 +84,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductItem item = items.get(position);
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClick != null) onItemClick.onClick(item);
+        });
         holder.name.setText(item.name);
         holder.sku.setText(holder.itemView.getContext().getString(R.string.sku_label, item.sku));
         holder.category.setText(holder.itemView.getContext().getString(R.string.category_label, item.category));
@@ -55,7 +98,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.image.setVisibility(View.VISIBLE);
             Glide.with(holder.image.getContext())
                     .load(item.imageUrl)
-                    .centerCrop()
+                    .fitCenter()
                     .into(holder.image);
         } else {
             holder.image.setVisibility(View.GONE);

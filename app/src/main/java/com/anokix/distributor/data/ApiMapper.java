@@ -84,15 +84,14 @@ public final class ApiMapper {
             return out;
         }
         for (ProductsData.Product p : data.products) {
-            String category = p.category != null ? safe(p.category.title) : "";
             ProductItem item = new ProductItem(
                     safe(p.id),
                     safe(p.name),
                     safe(p.sku),
-                    category,
+                    safe(p.category_title),
                     formatPrice(p.selling_price),
-                    stockStatus(p.stock));
-            item.imageUrl = p.image_url;
+                    stockStatus(p.stockValue()));
+            item.imageUrl = p.imageUrl();
             out.add(item);
         }
         return out;

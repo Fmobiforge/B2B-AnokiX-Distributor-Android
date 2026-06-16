@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">anokiX Distributor</string>
-    <string name="version_info">anokiX Distributor v1.0</string>
+    <string name="app_name">AnokiX Distributor</string>
+    <string name="version_info">AnokiX Distributor v1.0</string>
 
     <string name="login_title">LOGIN</string>
     <string name="login_subtitle">Distributor App</string>
@@ -315,4 +315,121 @@
     <string name="trader_created_msg">Trader registered successfully</string>
     <string name="registering">Registering…</string>
     <string name="select_payment_method">Select payment method</string>
+
+    <!-- ===== Create Product ===== -->
+    <string name="add_new_product">Add New Product</string>
+    <string name="how_add_product">How would you like to add this product?</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="opt_scan_barcode">Scan Barcode</string>
+    <string name="opt_scan_barcode_sub">Scan product barcode using camera</string>
+    <string name="opt_enter_barcode">Enter Barcode Manually</string>
+    <string name="opt_enter_barcode_sub">Type or paste barcode number</string>
+    <string name="opt_search_library">Search Product Library</string>
+    <string name="opt_search_library_sub">Search by product name, brand or category</string>
+    <string name="opt_create_product">Create New Product</string>
+    <string name="opt_create_product_sub">Create a completely new product</string>
+
+    <string name="create_new_product">Create New Product</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="delete_product">Delete product</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="submit_btn">Submit</string>
+    <string name="submitting">Submitting…</string>
+
+    <string name="step_basic_info">Basic Information</string>
+    <string name="step_packaging">Packaging</string>
+    <string name="step_images_docs">Images &amp; Documents</string>
+    <string name="step_pricing">Pricing &amp; Inventory</string>
+    <string name="step_review">Review &amp; Submit</string>
+
+    <string name="product_name_req">Product Name *</string>
+    <string name="hint_product_name">Enter product name</string>
+    <string name="brand_req">Brand *</string>
+    <string name="select_brand">Select brand</string>
+    <string name="category_req">Category *</string>
+    <string name="select_category">Select category</string>
+    <string name="sub_category_req">Sub Category *</string>
+    <string name="select_sub_category">Select sub category</string>
+    <string name="barcode_req">Barcode *</string>
+    <string name="hint_barcode">Enter barcode</string>
+    <string name="sku_req">SKU *</string>
+    <string name="hint_sku">Enter SKU</string>
+    <string name="description_label">Description</string>
+    <string name="hint_description">Enter product description</string>
+
+    <string name="unit_type_req">Unit Type *</string>
+    <string name="select_unit_type">Select unit type</string>
+    <string name="units_per_case">Units Per Case</string>
+    <string name="hint_units_per_case">e.g. 12</string>
+    <string name="measurements_type_req">Measurements Type *</string>
+    <string name="measurement_kg_cm">Kilograms / Centimeters</string>
+    <string name="measurement_lb_in">Pounds / Inches</string>
+    <string name="weight_req">Weight *</string>
+    <string name="hint_weight">0.0</string>
+    <string name="unit_kg">kg</string>
+    <string name="unit_lb">lb</string>
+    <string name="unit_cm">cm</string>
+    <string name="unit_in">in</string>
+    <string name="dimensions_req">Dimensions (L x W x H) *</string>
+    <string name="dim_x">x</string>
+    <string name="hint_dim_l">L</string>
+    <string name="hint_dim_w">W</string>
+    <string name="hint_dim_h">H</string>
+
+    <string name="primary_product_image_req">Primary Product Image *</string>
+    <string name="click_to_upload">Tap to upload</string>
+    <string name="png_jpg_5mb">PNG, JPG up to 5MB</string>
+    <string name="additional_images">Additional Images</string>
+    <string name="add_more">Add More</string>
+    <string name="product_datasheet_optional">Product Datasheet (Optional)</string>
+    <string name="click_to_upload_file">Tap to upload file</string>
+    <string name="datasheet_formats">PDF, DOC, XLS up to 10MB</string>
+
+    <string name="selling_price_req">Selling Price (R) *</string>
+    <string name="hint_selling_price">0.00</string>
+    <string name="cost_price_optional">Cost Price (R)</string>
+    <string name="hint_cost_price">0.00</string>
+    <string name="stock_quantity_req">Stock Quantity *</string>
+    <string name="hint_stock">0</string>
+    <string name="reorder_level_req">Reorder Level *</string>
+    <string name="hint_reorder_level">0</string>
+    <string name="promotion_price_optional">Promotion Price (R)</string>
+    <string name="hint_promo_price">0.00</string>
+    <string name="promotion_start_date">Promotion Start Date</string>
+    <string name="promotion_end_date">Promotion End Date</string>
+    <string name="date_placeholder">DD/MM/YYYY</string>
+    <string name="available_for_ordering">Available For Ordering</string>
+    <string name="yes_label">Yes</string>
+    <string name="no_label">No</string>
+
+    <string name="review_sub">Review your product details below, then submit for approval.</string>
+    <string name="review_product_name">Product Name</string>
+    <string name="review_brand">Brand</string>
+    <string name="review_category">Category</string>
+    <string name="review_barcode">Barcode</string>
+    <string name="review_selling_price">Selling Price</string>
+    <string name="review_stock">Stock Quantity</string>
+
+    <string name="product_created_msg">Product created successfully</string>
+    <string name="product_updated_msg">Product updated successfully</string>
+    <string name="product_deleted_msg">Product deleted</string>
+    <string name="delete">Delete</string>
+    <string name="delete_confirm_title">Delete product?</string>
+    <string name="delete_confirm_msg">This will permanently remove the product. This cannot be undone.</string>
+
+    <string name="err_product_name">Please enter the product name.</string>
+    <string name="err_brand">Please select a brand.</string>
+    <string name="err_category">Please select a category.</string>
+    <string name="err_sub_category">Please select a sub category.</string>
+    <string name="err_barcode">Please enter the barcode.</string>
+    <string name="err_sku">Please enter the SKU.</string>
+    <string name="err_unit_type">Please select a unit type.</string>
+    <string name="err_weight">Please enter the weight.</string>
+    <string name="err_dimensions">Please enter the dimensions.</string>
+    <string name="err_primary_image">Please upload a primary product image.</string>
+    <string name="err_selling_price">Please enter the selling price.</string>
+    <string name="err_stock">Please enter the stock quantity.</string>
+    <string name="err_reorder">Please enter the reorder level.</string>
+    <string name="err_max_images">You can upload up to 5 additional images.</string>
+    <string name="err_file_too_large">File is too large. Please choose a file under 5 MB.</string>
 </resources>
