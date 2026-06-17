@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/orderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ORD-10548"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/orderTrader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Spaza Sunrise"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <com.anokix.distributor.ui.views.RobotoLightTextView
+            android:id="@+id/orderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="19 May 2024, 14:32"
+            android:textColor="@color/text_tertiary"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/orderAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R8,560.00"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/orderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_status_pill"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="3dp"
+            android:text="Delivered"
+            android:textColor="@color/success"
+            android:textSize="10sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -134,7 +134,7 @@
                             android:layout_marginStart="4dp"
                             android:text="Umlazi, Durban, 4031"
                             android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -147,7 +147,7 @@
                 android:layout_marginTop="12dp"
                 android:text="Airtime x10  ·  Data 10GB x5  ·  Electricity x3  ·  +3"
                 android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
+                android:textSize="11sp" />
 
             <!-- Order value + badges -->
             <LinearLayout
@@ -246,7 +246,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/view_order"
                         android:textColor="@color/purple_primary"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -271,7 +271,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/accept_order"
                         android:textColor="#FFFFFF"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -295,7 +295,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/reject_order"
                         android:textColor="@color/danger"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

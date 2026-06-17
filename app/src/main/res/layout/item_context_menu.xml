@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.anokix.distributor.ui.views.RobotoTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical|start"
+    android:minWidth="@dimen/context_menu_min_width"
+    android:paddingHorizontal="@dimen/context_menu_item_padding_h"
+    android:paddingVertical="@dimen/context_menu_item_padding_v"
+    android:textAppearance="@style/TextAppearance.AnokiX.ContextMenuItem"
+    android:textColor="@color/text_primary" />

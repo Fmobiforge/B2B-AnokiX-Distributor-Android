@@ -2,14 +2,19 @@ package com.anokix.distributor.data;
 
 import com.anokix.distributor.R;
 import com.anokix.distributor.model.ProductItem;
+import com.anokix.distributor.model.PromotionItem;
 import com.anokix.distributor.model.StoreItem;
 import com.anokix.distributor.model.TraderItem;
 import com.anokix.distributor.network.dto.ProductsData;
+import com.anokix.distributor.network.dto.PromotionsData;
 import com.anokix.distributor.network.dto.StoresData;
 import com.anokix.distributor.network.dto.TradersData;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Converts network DTOs into the UI model objects the existing adapters already render.
@@ -95,6 +100,104 @@ public final class ApiMapper {
             out.add(item);
         }
         return out;
+    }
+
+    // ---- Promotions ------------------------------------------------------
+
+    public static List<PromotionItem> toPromotionItems(PromotionsData data) {
+        List<PromotionItem> out = new ArrayList<>();
+        if (data == null || data.promotions == null) {
+            return out;
+        }
+        String symbol = data.summary != null && data.summary.currency != null
+                && data.summary.currency.symbol != null ? data.summary.currency.symbol : "R";
+        for (PromotionsData.Promotion p : data.promotions) {
+            out.add(new PromotionItem(
+                    safe(p.id),
+                    safe(p.name),
+                    safe(p.campaign_type),
+                    campaignTypeLabel(p.campaign_type),
+                    safe(p.status),
+                    prettify(p.status),
+                    dateRange(p.start_date, p.end_date),
+                    formatMoney(symbol, p.budget),
+                    formatCount(p.reach),
+                    formatCount(p.clicks),
+                    formatPercent(p.ctr)));
+        }
+        return out;
+    }
+
+    private static String campaignTypeLabel(String type) {
+        if (isEmpty(type)) {
+            return "";
+        }
+        switch (type) {
+            case "best_deal": return "Best Deal";
+            case "cant_miss_deal": return "Can't Miss Deal";
+            case "exclusive_deal": return "Exclusive Deal";
+            case "featured_store": return "Featured Store";
+            case "promotion": return "Promotion";
+            case "post": return "Post";
+            case "story": return "Story";
+            default: return prettify(type);
+        }
+    }
+
+    /** "pending_approval" → "Pending Approval". */
+    private static String prettify(String value) {
+        if (isEmpty(value)) {
+            return "";
+        }
+        String[] parts = value.trim().split("[_\\s]+");
+        StringBuilder sb = new StringBuilder();
+        for (String part : parts) {
+            if (part.isEmpty()) continue;
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+        }
+        return sb.toString();
+    }
+
+    private static final SimpleDateFormat IN_DATE = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+    /** "2026-06-15" + "2026-06-30" → "15 Jun – 30 Jun 2026". */
+    private static String dateRange(String start, String end) {
+        Date s = parseDate(start);
+        Date e = parseDate(end);
+        if (s == null || e == null) {
+            return (safe(start) + " – " + safe(end)).trim();
+        }
+        SimpleDateFormat dm = new SimpleDateFormat("d MMM", Locale.US);
+        SimpleDateFormat dmy = new SimpleDateFormat("d MMM yyyy", Locale.US);
+        SimpleDateFormat y = new SimpleDateFormat("yyyy", Locale.US);
+        if (y.format(s).equals(y.format(e))) {
+            return dm.format(s) + " – " + dmy.format(e);
+        }
+        return dmy.format(s) + " – " + dmy.format(e);
+    }
+
+    private static Date parseDate(String value) {
+        if (isEmpty(value)) {
+            return null;
+        }
+        try {
+            return IN_DATE.parse(value.trim());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static String formatMoney(String symbol, double value) {
+        return symbol + String.format(Locale.US, "%,.0f", value);
+    }
+
+    private static String formatCount(long value) {
+        return String.format(Locale.US, "%,d", value);
+    }
+
+    private static String formatPercent(double value) {
+        return String.format(Locale.US, "%.1f%%", value);
     }
 
     // ---- helpers ---------------------------------------------------------

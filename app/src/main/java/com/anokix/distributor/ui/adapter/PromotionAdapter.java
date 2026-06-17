@@ -3,7 +3,7 @@ package com.anokix.distributor.ui.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +18,17 @@ import java.util.List;
 
 public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.ViewHolder> {
 
+    /** Fired when the row's overflow (3-dot) button is tapped. */
+    public interface OnItemMenu {
+        void onMenu(View anchor, PromotionItem item);
+    }
+
     private final List<PromotionItem> items = new ArrayList<>();
+    private OnItemMenu onItemMenu;
+
+    public void setOnItemMenu(OnItemMenu listener) {
+        this.onItemMenu = listener;
+    }
 
     public void setItems(List<PromotionItem> data) {
         items.clear();
@@ -37,24 +47,54 @@ public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PromotionItem item = items.get(position);
-        holder.title.setText(item.title);
-        holder.impressions.setText(item.impressions);
+        holder.title.setText(item.name);
+        holder.subtitle.setText(subtitle(item));
+        holder.budget.setText(item.budget);
+        holder.reach.setText(item.reach);
+        holder.clicks.setText(item.clicks);
         holder.ctr.setText(item.ctr);
-        holder.bannerLabel.setText(item.bannerLabel);
-        holder.banner.setBackgroundResource(item.bannerBgRes);
-        holder.statusBadge.setText(item.status);
 
+        holder.statusBadge.setText(item.statusLabel);
         int statusColor;
         int bgRes;
-        if ("Paused".equalsIgnoreCase(item.status)) {
-            statusColor = R.color.warning;
-            bgRes = R.drawable.bg_badge_warning;
-        } else {
-            statusColor = R.color.success;
-            bgRes = R.drawable.bg_badge_success;
+        switch (item.status == null ? "" : item.status.toLowerCase()) {
+            case "active":
+                statusColor = R.color.success;
+                bgRes = R.drawable.bg_badge_success;
+                break;
+            case "rejected":
+            case "inactive":
+            case "expired":
+                statusColor = R.color.danger;
+                bgRes = R.drawable.bg_badge_danger;
+                break;
+            case "pending_approval":
+            case "paused":
+            case "draft":
+                statusColor = R.color.warning;
+                bgRes = R.drawable.bg_badge_warning;
+                break;
+            default:
+                statusColor = R.color.info;
+                bgRes = R.drawable.bg_badge_info;
+                break;
         }
         holder.statusBadge.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), statusColor));
         holder.statusBadge.setBackgroundResource(bgRes);
+
+        holder.menuButton.setOnClickListener(v -> {
+            if (onItemMenu != null) onItemMenu.onMenu(v, item);
+        });
+    }
+
+    /** "Best Deal • 15 Jun – 30 Jun 2026" (drops the bullet when a part is missing). */
+    private String subtitle(PromotionItem item) {
+        boolean hasType = item.typeLabel != null && !item.typeLabel.isEmpty();
+        boolean hasDates = item.dateRange != null && !item.dateRange.isEmpty();
+        if (hasType && hasDates) {
+            return item.typeLabel + " • " + item.dateRange;
+        }
+        return hasType ? item.typeLabel : (hasDates ? item.dateRange : "");
     }
 
     @Override
@@ -63,17 +103,19 @@ public class PromotionAdapter extends RecyclerView.Adapter<PromotionAdapter.View
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView title, impressions, ctr, statusBadge, bannerLabel;
-        final FrameLayout banner;
+        final TextView title, subtitle, statusBadge, budget, reach, clicks, ctr;
+        final ImageButton menuButton;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            impressions = itemView.findViewById(R.id.impressions);
-            ctr = itemView.findViewById(R.id.ctr);
+            subtitle = itemView.findViewById(R.id.subtitle);
             statusBadge = itemView.findViewById(R.id.statusBadge);
-            bannerLabel = itemView.findViewById(R.id.bannerLabel);
-            banner = itemView.findViewById(R.id.banner);
+            budget = itemView.findViewById(R.id.budget);
+            reach = itemView.findViewById(R.id.reach);
+            clicks = itemView.findViewById(R.id.clicks);
+            ctr = itemView.findViewById(R.id.ctr);
+            menuButton = itemView.findViewById(R.id.menuButton);
         }
     }
 }

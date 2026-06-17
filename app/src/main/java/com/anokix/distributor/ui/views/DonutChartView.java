@@ -22,8 +22,13 @@ public class DonutChartView extends View {
     };
 
     private final Paint segmentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint centerMainPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint centerSubPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final RectF arcRect = new RectF();
     private float strokeWidthDp = 16f;
+
+    private String centerMain;
+    private String centerSub;
 
     public DonutChartView(Context context) {
         super(context);
@@ -44,6 +49,28 @@ public class DonutChartView extends View {
         segmentPaint.setStyle(Paint.Style.STROKE);
         segmentPaint.setStrokeWidth(dp(strokeWidthDp));
         segmentPaint.setStrokeCap(Paint.Cap.BUTT);
+
+        centerMainPaint.setColor(Color.parseColor("#0F172A"));
+        centerMainPaint.setTextAlign(Paint.Align.CENTER);
+        centerMainPaint.setFakeBoldText(true);
+        centerMainPaint.setTextSize(dp(13));
+
+        centerSubPaint.setColor(Color.parseColor("#64748B"));
+        centerSubPaint.setTextAlign(Paint.Align.CENTER);
+        centerSubPaint.setTextSize(dp(9));
+    }
+
+    public void setStrokeWidthDp(float widthDp) {
+        this.strokeWidthDp = widthDp;
+        segmentPaint.setStrokeWidth(dp(widthDp));
+        invalidate();
+    }
+
+    /** Optional text drawn in the donut hole (e.g. total amount + caption). */
+    public void setCenterText(String main, String sub) {
+        this.centerMain = main;
+        this.centerSub = sub;
+        invalidate();
     }
 
     public void setData(float[] values, int[] colors) {
@@ -76,6 +103,17 @@ public class DonutChartView extends View {
             float drawSweep = Math.max(0, sweep - gap);
             canvas.drawArc(arcRect, startAngle + gap / 2, drawSweep, false, segmentPaint);
             startAngle += sweep;
+        }
+
+        if (centerMain != null) {
+            float cx = arcRect.centerX();
+            float cy = arcRect.centerY();
+            boolean hasSub = centerSub != null && !centerSub.isEmpty();
+            float mainBaseline = hasSub ? cy + dp(2) : cy + dp(5);
+            canvas.drawText(centerMain, cx, mainBaseline, centerMainPaint);
+            if (hasSub) {
+                canvas.drawText(centerSub, cx, mainBaseline + dp(13), centerSubPaint);
+            }
         }
     }
 

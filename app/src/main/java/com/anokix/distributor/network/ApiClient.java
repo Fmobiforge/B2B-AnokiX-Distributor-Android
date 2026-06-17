@@ -14,6 +14,8 @@ import com.anokix.distributor.network.dto.InventorySummaryData;
 import com.anokix.distributor.network.dto.LoginData;
 import com.anokix.distributor.network.dto.ProductDetailData;
 import com.anokix.distributor.network.dto.ProductsData;
+import com.anokix.distributor.network.dto.PromotionDetailData;
+import com.anokix.distributor.network.dto.PromotionsData;
 import com.anokix.distributor.network.dto.ReferenceData;
 import com.anokix.distributor.network.dto.StoreDetailData;
 import com.anokix.distributor.network.dto.StoresData;
@@ -102,6 +104,63 @@ public final class ApiClient {
 
     public void getProducts(ApiCallback<ProductsData> cb) {
         getAuthed("api/distributor/products", null, ProductsData.class, cb);
+    }
+
+    /** Promotions/campaigns list + KPI summary. Pass "" for all campaign types. */
+    public void getPromotions(String campaignType, ApiCallback<PromotionsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("campaign_type", campaignType == null ? "" : campaignType);
+        getAuthed("api/distributor/promotions", q, PromotionsData.class, cb);
+    }
+
+    /** Create a campaign (multipart: text fields + optional banner image / video). */
+    public void createPromotion(Map<String, String> form, List<Http.FilePart> files,
+                                ApiCallback<PromotionDetailData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/promotions/create",
+                    form, files, session.getToken());
+            deliver(r, PromotionDetailData.class, cb);
+        });
+    }
+
+    /** Full campaign detail (+ selected_products, media, analytics) for the edit/view flow. */
+    public void getPromotionById(String id, ApiCallback<PromotionDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/promotions/get-by-id", q, PromotionDetailData.class, cb);
+    }
+
+    /** Update an existing campaign (partial — only the sent fields change). */
+    public void updatePromotion(Map<String, String> form, List<Http.FilePart> files,
+                                ApiCallback<PromotionDetailData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/promotions/update",
+                    form, files, session.getToken());
+            deliver(r, PromotionDetailData.class, cb);
+        });
+    }
+
+    /** Upload / replace the banner and/or video for an existing campaign. */
+    public void uploadPromotionMedia(String id, List<Http.FilePart> files,
+                                     ApiCallback<PromotionDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/promotions/upload-media",
+                    form, files, session.getToken());
+            deliver(r, PromotionDetailData.class, cb);
+        });
+    }
+
+    public void deletePromotion(String id, ApiCallback<PromotionDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/promotions/delete",
+                    form, session.getToken());
+            // The delete endpoint returns "data": [] (an empty list); only status/message matter.
+            deliverStatusOnly(r, cb);
+        });
     }
 
     public void getProductById(String id, ApiCallback<ProductDetailData> cb) {

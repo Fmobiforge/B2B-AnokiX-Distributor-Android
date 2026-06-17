@@ -53,6 +53,12 @@
         <item name="android:textSize">@dimen/text_micro</item>
     </style>
 
+    <style name="TextAppearance.AnokiX.ContextMenuItem" parent="TextAppearance.AnokiX.Body">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="TextAppearance.AnokiX.BrandSubtitle" parent="TextAppearance.AnokiX.Caption">
         <item name="android:textColor">@color/text_secondary</item>
     </style>
@@ -68,7 +74,7 @@
 
     <style name="StoreFieldInput">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@drawable/bg_login_input</item>
         <item name="android:gravity">center_vertical</item>
@@ -81,7 +87,7 @@
     <!-- Create Product: tap-to-select dropdown field (opens a dialog) -->
     <style name="ProductDropdown">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@drawable/bg_login_input</item>
         <item name="android:gravity">center_vertical</item>
@@ -111,7 +117,7 @@
     <!-- Create Product: dimension (L x W x H) number boxes -->
     <style name="ProductDimInput">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/bg_login_input</item>
         <item name="android:gravity">center</item>
@@ -128,5 +134,115 @@
         <item name="android:layout_marginEnd">6dp</item>
         <item name="android:textColor">@color/text_secondary</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Promotions: compact summary card (3 per row) -->
+    <style name="PromoSummaryCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_stat_card</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="PromoSummaryValue">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/top_title</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="PromoSummaryLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="PromoSummaryTrend">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:textColor">@color/success</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <!-- Create Promotion wizard -->
+    <style name="PromoStepTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/top_title</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="PromoStepSubtitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PromoSectionHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="PromoSectionTitle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="PromoAddButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_login_button_primary</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="PromoCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@drawable/bg_stat_card</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="PromoCardTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/top_title</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PromoCardCaption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PromoCardValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textColor">@color/top_title</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

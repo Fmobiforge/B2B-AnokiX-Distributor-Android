@@ -28,6 +28,14 @@
     <dimen name="card_margin_bottom">8dp</dimen>
     <dimen name="card_elevation">1dp</dimen>
 
+    <!-- Context menu popup -->
+    <dimen name="context_menu_min_width">148dp</dimen>
+    <dimen name="context_menu_item_padding_h">18dp</dimen>
+    <dimen name="context_menu_item_padding_v">11dp</dimen>
+    <dimen name="context_menu_vertical_padding">6dp</dimen>
+    <dimen name="context_menu_elevation">8dp</dimen>
+    <dimen name="context_menu_offset_y">4dp</dimen>
+
     <!-- Typography – compact professional scale -->
     <dimen name="text_display">18sp</dimen>
     <dimen name="text_headline">16sp</dimen>
@@ -37,8 +45,8 @@
     <dimen name="text_caption">11sp</dimen>
     <dimen name="text_label">10sp</dimen>
     <dimen name="text_micro">9sp</dimen>
-    <dimen name="text_stat_value">17sp</dimen>
-    <dimen name="text_kpi_value">20sp</dimen>
+    <dimen name="text_stat_value">16sp</dimen>
+    <dimen name="text_kpi_value">16sp</dimen>
     <dimen name="bottom_nav_text_size">10sp</dimen>
 
     <!-- Drawer -->

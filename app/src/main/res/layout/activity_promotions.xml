@@ -8,16 +8,407 @@
 
     <include layout="@layout/include_secondary_header" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/promotionsList"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/surface"
         android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="80dp" />
+        android:overScrollMode="never"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp">
+
+            <!-- ===== Static summary: row 1 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- Active Campaigns -->
+                <LinearLayout
+                    style="@style/PromoSummaryCard"
+                    android:layout_marginEnd="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valActiveCampaigns"
+                            style="@style/PromoSummaryValue"
+                            android:text="0" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_purple">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_megaphone"
+                                app:tint="@color/purple_primary" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/active_campaigns" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendActiveCampaigns"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+
+                <!-- Campaign Revenue -->
+                <LinearLayout
+                    style="@style/PromoSummaryCard"
+                    android:layout_marginEnd="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valRevenue"
+                            style="@style/PromoSummaryValue"
+                            android:text="R0" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_green">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_finances"
+                                app:tint="@color/success" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/campaign_revenue" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendRevenue"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+
+                <!-- Campaign Reach -->
+                <LinearLayout style="@style/PromoSummaryCard">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valReach"
+                            style="@style/PromoSummaryValue"
+                            android:text="0" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_orange">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_traders"
+                                app:tint="@color/warning" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/campaign_reach" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendReach"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ===== Static summary: row 2 ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- Campaign Clicks -->
+                <LinearLayout
+                    style="@style/PromoSummaryCard"
+                    android:layout_marginEnd="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valClicks"
+                            style="@style/PromoSummaryValue"
+                            android:text="0" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_red">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_ctr"
+                                app:tint="@color/danger" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/campaign_clicks" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendClicks"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+
+                <!-- CTR -->
+                <LinearLayout
+                    style="@style/PromoSummaryCard"
+                    android:layout_marginEnd="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valCtr"
+                            style="@style/PromoSummaryValue"
+                            android:text="0.0%" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_purple">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_reports"
+                                app:tint="@color/purple_primary" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/ctr" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendCtr"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+
+                <!-- Attributed Sales -->
+                <LinearLayout style="@style/PromoSummaryCard">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/valSales"
+                            style="@style/PromoSummaryValue"
+                            android:text="R0.00" />
+
+                        <FrameLayout
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_kpi_icon_green">
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_shopping_bag"
+                                app:tint="@color/success" />
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/PromoSummaryLabel"
+                        android:text="@string/attributed_sales" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/trendSales"
+                        style="@style/PromoSummaryTrend"
+                        android:text="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ===== Search ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_search_bar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/text_secondary" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_campaigns"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- ===== Filters: Status + Campaign Type ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/statusFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/statusFilterLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/all_status"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:rotation="90"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/typeFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/typeFilterLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/all_types"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:rotation="90"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/promotionsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:nestedScrollingEnabled="false" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="@string/no_promotions"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/createPromotionButton"
@@ -43,6 +434,6 @@
             android:layout_marginStart="8dp"
             android:text="@string/create_promotion"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

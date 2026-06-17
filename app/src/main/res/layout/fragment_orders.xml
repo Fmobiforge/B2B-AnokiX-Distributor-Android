@@ -93,7 +93,7 @@
                 android:paddingEnd="20dp"
                 android:text="New Orders (12)"
                 android:textColor="@color/warning"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <com.anokix.distributor.ui.views.RobotoTextView
                 android:id="@+id/tabProcessing"
@@ -102,7 +102,7 @@
                 android:paddingHorizontal="20dp"
                 android:text="Processing (18)"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <com.anokix.distributor.ui.views.RobotoTextView
                 android:id="@+id/tabDelivered"
@@ -111,7 +111,7 @@
                 android:paddingStart="20dp"
                 android:text="Delivered (245)"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -154,7 +154,7 @@
                 android:layout_weight="1"
                 android:text="@string/search_orders_detail"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <ImageButton

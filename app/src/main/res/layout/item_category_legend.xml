@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="5dp">
+
+    <View
+        android:id="@+id/legendDot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/bg_legend_dot" />
+
+    <com.anokix.distributor.ui.views.RobotoTextView
+        android:id="@+id/legendName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Beverages"
+        android:textColor="@color/text_secondary"
+        android:textSize="10sp" />
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        android:id="@+id/legendAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="R458,760.00"
+        android:textColor="@color/text_primary"
+        android:textSize="11sp" />
+</LinearLayout>

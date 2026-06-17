@@ -7,6 +7,7 @@ import com.anokix.distributor.model.OrderItem;
 import com.anokix.distributor.model.ProductItem;
 import com.anokix.distributor.model.StoreItem;
 import com.anokix.distributor.model.TraderItem;
+import com.anokix.distributor.network.dto.DashboardData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -235,6 +236,36 @@ public final class MockData {
             new MenuItem("notifications", "Notifications", R.drawable.ic_notifications),
             new MenuItem("settings", "Settings", R.drawable.ic_settings)
         );
+    }
+
+    /** Placeholder summary KPI cards shown before the dashboard API responds. */
+    public static List<DashboardData.SummaryCard> fallbackSummaryCards() {
+        List<DashboardData.SummaryCard> cards = new ArrayList<>();
+        cards.add(summaryCard("total_revenue", "Total Revenue", "R1,245,600.00", "↑ 18.6%", "purple",
+                new float[]{4.2f, 3.8f, 5.1f, 4.7f, 5.6f, 4.9f, 6.2f}));
+        cards.add(summaryCard("total_orders", "Total Orders", "1,286", "↑ 15.3%", "blue",
+                new float[]{9.8f, 10.2f, 10.5f, 11f, 11.5f, 12f, 12.86f}));
+        cards.add(summaryCard("active_traders", "Active Traders", "2,453", "↑ 21.4%", "green",
+                new float[]{21f, 21.5f, 22f, 22.8f, 23.2f, 23.8f, 24.53f}));
+        cards.add(summaryCard("products_sold", "Products Sold", "24,560", "↑ 12.7%", "orange",
+                new float[]{20.1f, 20.8f, 21.4f, 22f, 22.9f, 23.6f, 24.56f}));
+        return cards;
+    }
+
+    private static DashboardData.SummaryCard summaryCard(String key, String label, String value,
+                                                         String trendLabel, String color, float[] spark) {
+        DashboardData.SummaryCard c = new DashboardData.SummaryCard();
+        c.key = key;
+        c.label = label;
+        c.formatted_value = value;
+        c.color = color;
+        c.trend = new DashboardData.Trend();
+        c.trend.direction = "up";
+        c.trend.label = trendLabel;
+        List<Float> list = new ArrayList<>();
+        for (float v : spark) list.add(v);
+        c.sparkline = list;
+        return c;
     }
 
     public static List<String> getKpiTitles() {

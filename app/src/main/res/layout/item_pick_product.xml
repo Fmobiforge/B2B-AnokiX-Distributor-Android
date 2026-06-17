@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="8dp">
+
+    <ImageView
+        android:id="@+id/pickImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_trader_type_card"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/pickName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Product"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/pickMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="SKU • Category"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        android:id="@+id/pickPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="R0"
+        android:textColor="@color/purple_primary"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/pickCheck"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_radio_unselected"
+        app:tint="@color/purple_primary" />
+</LinearLayout>

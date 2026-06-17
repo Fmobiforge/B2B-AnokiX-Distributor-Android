@@ -127,12 +127,12 @@ public class MockDistributorRepository implements DistributorRepository {
     @Override
     public List<PromotionItem> getPromotions() {
         return Arrays.asList(
-                new PromotionItem("p1", "Boost Sales Campaign", "Active", "245,678", "3.45%",
-                        R.drawable.bg_promo_banner_dark, "BOOST SALES\nEARN MORE"),
-                new PromotionItem("p2", "Max Power Launch", "Active", "182,450", "2.87%",
-                        R.drawable.bg_promo_banner_purple, "MAX POWER\nLAUNCH"),
-                new PromotionItem("p3", "Summer Mega Deals", "Paused", "81,203", "1.52%",
-                        R.drawable.bg_promo_banner_orange, "SUMMER\nMEGA DEALS")
+                new PromotionItem("p1", "Boost Sales Campaign", "best_deal", "Best Deal", "active",
+                        "Active", "15 Jun – 30 Jun 2026", "R3,000", "245,678", "8,420", "3.45%"),
+                new PromotionItem("p2", "Max Power Launch", "promotion", "Promotion", "active",
+                        "Active", "15 Jun – 30 Jun 2026", "R1,800", "182,450", "5,240", "2.87%"),
+                new PromotionItem("p3", "Summer Mega Deals", "featured_store", "Featured Store", "draft",
+                        "Draft", "10 Jun – 24 Jun 2026", "R900", "81,203", "1,230", "1.52%")
         );
     }
 
