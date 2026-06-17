@@ -13,6 +13,7 @@ import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +108,31 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
             "Discounts, bundles and special offers.",
             "Share news, updates and product highlights.",
             "Short, engaging stories that drive attention."};
+
+    private static final int[] TYPE_ICON_RES = {
+            R.drawable.ic_promo_gift,
+            R.drawable.ic_promo_rocket,
+            R.drawable.ic_promo_crown,
+            R.drawable.ic_promo_store,
+            R.drawable.ic_promo_tag,
+            R.drawable.ic_promo_post,
+            R.drawable.ic_promo_story};
+    private static final int[] TYPE_ICON_BG = {
+            R.drawable.bg_promo_icon_pink,
+            R.drawable.bg_promo_icon_purple,
+            R.drawable.bg_promo_icon_purple,
+            R.drawable.bg_promo_icon_green,
+            R.drawable.bg_promo_icon_orange,
+            R.drawable.bg_promo_icon_blue,
+            R.drawable.bg_promo_icon_purple};
+    private static final int[] TYPE_ICON_TINT = {
+            R.color.danger,
+            R.color.purple_primary,
+            R.color.purple_primary,
+            R.color.success,
+            R.color.warning,
+            R.color.info,
+            R.color.purple_primary};
 
     // Step 2 — campaign objectives (label, server value).
     private static final String[] OBJECTIVE_VALUES = {
@@ -363,44 +389,26 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
 
     private void buildTypeCards() {
         FlowLayout container = findViewById(R.id.typeContainer);
+        LayoutInflater inflater = LayoutInflater.from(this);
         int cardWidth = (getResources().getDisplayMetrics().widthPixels - dp(32) - dp(10)) / 2;
         for (int i = 0; i < TYPE_VALUES.length; i++) {
             final int index = i;
-            LinearLayout card = new LinearLayout(this);
-            card.setOrientation(LinearLayout.VERTICAL);
-            card.setGravity(Gravity.CENTER);
-            card.setPadding(dp(12), dp(16), dp(12), dp(16));
+            View card = inflater.inflate(R.layout.item_promo_type_card, container, false);
             LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(
                     cardWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             clp.setMargins(0, 0, dp(10), dp(10));
             card.setLayoutParams(clp);
-            card.setBackgroundResource(R.drawable.bg_trader_type_card);
 
-            ImageView icon = new ImageView(this);
-            icon.setLayoutParams(new LinearLayout.LayoutParams(dp(24), dp(24)));
-            icon.setImageResource(R.drawable.ic_stores);
-            card.addView(icon);
+            View iconTile = card.findViewById(R.id.iconTile);
+            ImageView icon = card.findViewById(R.id.icon);
+            TextView title = card.findViewById(R.id.title);
+            TextView desc = card.findViewById(R.id.description);
 
-            RobotoBoldTextView title = new RobotoBoldTextView(this);
+            iconTile.setBackgroundResource(TYPE_ICON_BG[index]);
+            icon.setImageResource(TYPE_ICON_RES[index]);
+            icon.setColorFilter(ContextCompat.getColor(this, TYPE_ICON_TINT[index]));
             title.setText(TYPE_LABELS[index]);
-            title.setTextSize(13);
-            title.setGravity(Gravity.CENTER);
-            LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            tlp.topMargin = dp(8);
-            title.setLayoutParams(tlp);
-            card.addView(title);
-
-            RobotoTextView desc = new RobotoTextView(this);
             desc.setText(TYPE_DESCS[index]);
-            desc.setTextSize(11);
-            desc.setGravity(Gravity.CENTER);
-            desc.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-            LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            dlp.topMargin = dp(4);
-            desc.setLayoutParams(dlp);
-            card.addView(desc);
 
             card.setOnClickListener(v -> {
                 if (typeLocked) {
@@ -418,17 +426,13 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
 
     private void applyTypeSelection() {
         for (int i = 0; i < typeCards.size(); i++) {
-            LinearLayout card = (LinearLayout) typeCards.get(i);
+            View card = typeCards.get(i);
             boolean selected = TYPE_VALUES[i].equals(selectedTypeValue);
             card.setBackgroundResource(selected
-                    ? R.drawable.bg_trader_type_card_selected : R.drawable.bg_trader_type_card);
-            ImageView icon = (ImageView) card.getChildAt(0);
-            TextView title = (TextView) card.getChildAt(1);
-            int color = ContextCompat.getColor(this,
-                    selected ? R.color.purple_primary : R.color.text_primary);
-            icon.setColorFilter(color);
-            title.setTextColor(color);
-            // When editing, the campaign type is fixed: dim the alternatives.
+                    ? R.drawable.bg_promo_type_card_selected : R.drawable.bg_promo_type_card);
+            TextView title = card.findViewById(R.id.title);
+            title.setTextColor(ContextCompat.getColor(this,
+                    selected ? R.color.purple_primary : R.color.top_title));
             card.setAlpha(typeLocked && !selected ? 0.4f : 1f);
         }
     }

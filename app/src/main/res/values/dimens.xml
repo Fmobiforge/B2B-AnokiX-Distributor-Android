@@ -36,6 +36,11 @@
     <dimen name="context_menu_elevation">8dp</dimen>
     <dimen name="context_menu_offset_y">4dp</dimen>
 
+    <!-- Promotion type picker cards (Create Promotion step 1) -->
+    <dimen name="promo_type_card_min_height">148dp</dimen>
+    <dimen name="promo_type_icon_tile">40dp</dimen>
+    <dimen name="promo_type_icon_size">22dp</dimen>
+
     <!-- Typography – compact professional scale -->
     <dimen name="text_display">18sp</dimen>
     <dimen name="text_headline">16sp</dimen>
