@@ -75,7 +75,8 @@ public class MockDistributorRepository implements DistributorRepository {
             "Chang", "CongCong", "test@gmail.com", "", "comp1");
     private BusinessSettings businessSettings = new BusinessSettings(
             "comp1", "", "ca",
-            "Be\u015Ftepe, A\u015FT\u0130, Yenimahalle/Ankara, T\u00FCrkiye", "");
+            "Be\u015Ftepe, A\u015FT\u0130, Yenimahalle/Ankara, T\u00FCrkiye", "",
+            39.9306, 32.7439);
     private AppPreferences appPreferences = new AppPreferences(
             "English", "South African Rand (ZAR)", "Africa/Johannesburg", "19 May 2024");
 

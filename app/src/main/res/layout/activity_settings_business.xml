@@ -9,6 +9,7 @@
     <include layout="@layout/include_secondary_header" />
 
     <ScrollView
+        android:id="@+id/businessScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -71,14 +72,28 @@
 
                     <com.anokix.distributor.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"
-                        android:text="@string/address_label" />
+                        android:text="@string/address_of_business" />
 
                     <com.anokix.distributor.ui.views.RobotoEditText
-                        android:id="@+id/etAddress"
+                        android:id="@+id/etAddressSearch"
                         style="@style/StoreFieldInput"
-                        android:hint="@string/hint_business_address"
-                        android:inputType="textPostalAddress|textMultiLine"
-                        android:minLines="2" />
+                        android:hint="@string/search_address_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/map_pin_hint_trader"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/businessMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="12dp" />
 
                     <com.anokix.distributor.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"

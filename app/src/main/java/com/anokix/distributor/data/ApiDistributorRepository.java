@@ -104,7 +104,7 @@ public class ApiDistributorRepository implements DistributorRepository {
 
     @Override
     public BusinessSettings getBusinessSettings() {
-        return new BusinessSettings("", "", "", "", "");
+        return new BusinessSettings("", "", "", "", "", null, null);
     }
 
     @Override
