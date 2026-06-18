@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_secondary_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:contentPadding="16dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/language_label" />
+
+                    <Spinner
+                        android:id="@+id/languageSpinner"
+                        style="@style/StoreFieldInput"
+                        android:spinnerMode="dropdown" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/currency_label" />
+
+                    <Spinner
+                        android:id="@+id/currencySpinner"
+                        style="@style/StoreFieldInput"
+                        android:spinnerMode="dropdown" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/time_zone_label" />
+
+                    <Spinner
+                        android:id="@+id/timezoneSpinner"
+                        style="@style/StoreFieldInput"
+                        android:spinnerMode="dropdown" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/date_format_label" />
+
+                    <Spinner
+                        android:id="@+id/dateFormatSpinner"
+                        style="@style/StoreFieldInput"
+                        android:spinnerMode="dropdown" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/include_settings_form_footer" />
+</LinearLayout>

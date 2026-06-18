@@ -1,5 +1,6 @@
 package com.anokix.distributor.ui;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,15 +23,15 @@ public class SettingsActivity extends BaseSecondaryActivity {
     @Override
     protected void bindViews() {
         findViewById(R.id.menuProfile).setOnClickListener(v ->
-                openSection(SettingsFormActivity.SECTION_PROFILE));
+                startActivity(new Intent(this, SettingsProfileActivity.class)));
         findViewById(R.id.menuBusiness).setOnClickListener(v ->
-                openSection(SettingsFormActivity.SECTION_BUSINESS));
+                startActivity(new Intent(this, SettingsBusinessActivity.class)));
         findViewById(R.id.menuNotifications).setOnClickListener(v ->
-                openSection(SettingsFormActivity.SECTION_NOTIFICATIONS));
+                startActivity(new Intent(this, SettingsNotificationsActivity.class)));
         findViewById(R.id.menuSecurity).setOnClickListener(v ->
-                openSection(SettingsFormActivity.SECTION_SECURITY));
+                startActivity(new Intent(this, SettingsSecurityActivity.class)));
         findViewById(R.id.menuPreferences).setOnClickListener(v ->
-                openSection(SettingsFormActivity.SECTION_PREFERENCES));
+                startActivity(new Intent(this, SettingsPreferencesActivity.class)));
     }
 
     @Override
@@ -54,10 +55,6 @@ public class SettingsActivity extends BaseSecondaryActivity {
         ((TextView) findViewById(R.id.profileName)).setText(name);
         ((TextView) findViewById(R.id.profileEmail)).setText(email);
         findViewById(R.id.verifiedBadge).setVisibility(profile.verified ? View.VISIBLE : View.GONE);
-    }
-
-    private void openSection(String section) {
-        startActivity(SettingsFormActivity.intent(this, section));
     }
 
     private String initialsOf(String name, String fallback) {

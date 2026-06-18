@@ -58,7 +58,11 @@
         <activity android:name=".ui.ReturnsActivity" android:exported="false" />
         <activity android:name=".ui.NotificationsActivity" android:exported="false" />
         <activity android:name=".ui.SettingsActivity" android:exported="false" />
-        <activity android:name=".ui.SettingsFormActivity" android:exported="false" />
+        <activity android:name=".ui.SettingsProfileActivity" android:exported="false" />
+        <activity android:name=".ui.SettingsBusinessActivity" android:exported="false" />
+        <activity android:name=".ui.SettingsNotificationsActivity" android:exported="false" />
+        <activity android:name=".ui.SettingsSecurityActivity" android:exported="false" />
+        <activity android:name=".ui.SettingsPreferencesActivity" android:exported="false" />
     </application>
 
 </manifest>
