@@ -143,14 +143,98 @@ public class ViewPromotionActivity extends AppCompatActivity {
         bindStockLogs(resolveStockLogs(data));
     }
 
-    private List<PromotionDetailData.StockLog> resolveStockLogs(PromotionDetailData data) {
-        if (data.stock_logs != null && !data.stock_logs.isEmpty()) {
-            return data.stock_logs;
+    private List<StockLogRow> resolveStockLogs(PromotionDetailData data) {
+        if (data == null) return new ArrayList<>();
+        // API returns stock_logs nested under promotion (see get-by-id sample).
+        if (data.promotion != null) {
+            List<StockLogRow> rows = parseStockLogs(data.promotion.stock_logs);
+            if (!rows.isEmpty()) return rows;
+            rows = parseStockLogs(data.promotion.promotion_stock_logs);
+            if (!rows.isEmpty()) return rows;
         }
-        if (data.promotion != null && data.promotion.stock_logs != null) {
-            return data.promotion.stock_logs;
+        List<StockLogRow> rows = parseStockLogs(data.stock_logs);
+        if (!rows.isEmpty()) return rows;
+        return parseStockLogs(data.promotion_stock_logs);
+    }
+
+    /** Defensive parser for stock log arrays (shape varies across server builds). */
+    private List<StockLogRow> parseStockLogs(@Nullable JsonElement raw) {
+        raw = unwrap(raw);
+        if (raw == null) return new ArrayList<>();
+
+        JsonArray array;
+        if (raw.isJsonArray()) {
+            array = raw.getAsJsonArray();
+        } else if (raw.isJsonObject()) {
+            JsonObject obj = raw.getAsJsonObject();
+            if (obj.has("items") && obj.get("items").isJsonArray()) {
+                array = obj.getAsJsonArray("items");
+            } else if (obj.has("data") && obj.get("data").isJsonArray()) {
+                array = obj.getAsJsonArray("data");
+            } else {
+                array = new JsonArray();
+                array.add(obj);
+            }
+        } else {
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
+
+        List<StockLogRow> rows = new ArrayList<>();
+        for (JsonElement el : array) {
+            if (!el.isJsonObject()) continue;
+            rows.add(stockLogFromObject(el.getAsJsonObject()));
+        }
+        return rows;
+    }
+
+    private StockLogRow stockLogFromObject(JsonObject o) {
+        StockLogRow row = new StockLogRow();
+        row.productLabel = firstNonEmpty(
+                jStr(o, "product_name"),
+                jStr(o, "name"),
+                jStr(o, "product_title"),
+                nestedStr(o, "product", "name"),
+                jStr(o, "product_id"),
+                jStr(o, "id"),
+                nestedStr(o, "product", "id"),
+                "—");
+        row.action = jStr(o, "action");
+        String qty = jStr(o, "quantity");
+        if (qty.isEmpty() && o.has("quantity") && !o.get("quantity").isJsonNull()) {
+            qty = o.get("quantity").getAsString();
+        }
+        row.quantity = qty;
+        row.createdAt = firstNonEmpty(
+                jStr(o, "created_at"),
+                jStr(o, "date"),
+                jStr(o, "logged_at"));
+        return row;
+    }
+
+    private static final class StockLogRow {
+        String productLabel;
+        String action;
+        String quantity;
+        String createdAt;
+    }
+
+    private void bindStockLogs(List<StockLogRow> logs) {
+        stockLogsContainer.removeAllViews();
+        if (logs == null || logs.isEmpty()) {
+            stockLogsEmpty.setVisibility(View.VISIBLE);
+            return;
+        }
+        stockLogsEmpty.setVisibility(View.GONE);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (StockLogRow log : logs) {
+            View row = inflater.inflate(R.layout.item_promo_stock_log_row, stockLogsContainer, false);
+            ((TextView) row.findViewById(R.id.productName)).setText(safe(log.productLabel));
+            ((TextView) row.findViewById(R.id.action)).setText(safe(log.action));
+            ((TextView) row.findViewById(R.id.quantity)).setText(
+                    log.quantity == null || log.quantity.isEmpty() ? "" : "Qty: " + log.quantity);
+            ((TextView) row.findViewById(R.id.date)).setText(safe(log.createdAt));
+            stockLogsContainer.addView(row);
+        }
     }
 
     private void bindMedia(PromotionDetailData.Promotion p) {
@@ -276,10 +360,8 @@ public class ViewPromotionActivity extends AppCompatActivity {
             }
             if (lines.isEmpty()) continue;
             sections++;
-            String subtitle = getString(R.string.promo_deal_price_stock,
-                    formatMoney(jStr(deal, "campaign_selling_price")),
-                    jStr(deal, "available_stock"));
-            addProductSection(getString(R.string.promo_combo_deals), subtitle, lines, false);
+            addProductSection(getString(R.string.promo_combo_deals),
+                    comboDealSubtitle(deal), lines, false);
         }
 
         JsonArray b1g1 = optArray(obj, "buy1_get1_deals");
@@ -287,10 +369,7 @@ public class ViewPromotionActivity extends AppCompatActivity {
             if (!b1g1.get(i).isJsonObject()) continue;
             JsonObject deal = b1g1.get(i).getAsJsonObject();
             sections++;
-            String subtitle = getString(R.string.promo_deal_price_stock,
-                    formatMoney(jStr(deal, "campaign_selling_price")),
-                    jStr(deal, "available_stock"));
-            addDealHeader(getString(R.string.promo_b1g1_deals), subtitle);
+            addDealHeader(getString(R.string.promo_b1g1_deals), b1g1DealSubtitle(deal));
             appendProductLines(optArray(deal, "buy_products"), getString(R.string.promo_role_buy));
             appendProductLines(optArray(deal, "free_products"), getString(R.string.promo_role_free));
         }
@@ -383,24 +462,67 @@ public class ViewPromotionActivity extends AppCompatActivity {
         return !category.isEmpty() ? category : brand;
     }
 
-    private void bindStockLogs(List<PromotionDetailData.StockLog> logs) {
-        stockLogsContainer.removeAllViews();
-        if (logs == null || logs.isEmpty()) {
-            stockLogsEmpty.setVisibility(View.VISIBLE);
-            return;
+    /** Combo deals in get-by-id often omit deal-level price/stock — derive from line items. */
+    @Nullable
+    private String comboDealSubtitle(JsonObject deal) {
+        String price = jStr(deal, "campaign_selling_price");
+        String stock = jStr(deal, "available_stock");
+        if (price.isEmpty() || stock.isEmpty()) {
+            DealMetrics metrics = metricsFromLines(optArray(deal, "products"));
+            if (price.isEmpty() && metrics.sumPrice > 0) {
+                price = String.valueOf(metrics.sumPrice);
+            }
+            if (stock.isEmpty() && metrics.minStock >= 0) {
+                stock = String.valueOf(metrics.minStock);
+            }
         }
-        stockLogsEmpty.setVisibility(View.GONE);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (PromotionDetailData.StockLog log : logs) {
-            View row = inflater.inflate(R.layout.item_promo_stock_log_row, stockLogsContainer, false);
-            ((TextView) row.findViewById(R.id.productName)).setText(
-                    firstNonEmpty(log.product_name, log.product_id, "—"));
-            ((TextView) row.findViewById(R.id.action)).setText(safe(log.action));
-            ((TextView) row.findViewById(R.id.quantity)).setText(
-                    log.quantity == null ? "" : "Qty: " + log.quantity);
-            ((TextView) row.findViewById(R.id.date)).setText(safe(log.created_at));
-            stockLogsContainer.addView(row);
+        return dealSubtitle(price, stock);
+    }
+
+    @Nullable
+    private String b1g1DealSubtitle(JsonObject deal) {
+        String price = jStr(deal, "campaign_selling_price");
+        String stock = jStr(deal, "available_stock");
+        if (stock.isEmpty()) {
+            DealMetrics metrics = metricsFromLines(optArray(deal, "buy_products"));
+            if (metrics.minStock >= 0) stock = String.valueOf(metrics.minStock);
         }
+        return dealSubtitle(price, stock);
+    }
+
+    @Nullable
+    private String dealSubtitle(String price, String stock) {
+        String priceText = formatMoney(price);
+        if (priceText.isEmpty() && (stock == null || stock.isEmpty())) return null;
+        return getString(R.string.promo_deal_price_stock,
+                priceText.isEmpty() ? "—" : priceText,
+                stock == null || stock.isEmpty() ? "—" : stock);
+    }
+
+    private static final class DealMetrics {
+        double sumPrice;
+        int minStock = Integer.MAX_VALUE;
+    }
+
+    private DealMetrics metricsFromLines(JsonArray lines) {
+        DealMetrics m = new DealMetrics();
+        for (JsonElement el : lines) {
+            if (!el.isJsonObject()) continue;
+            JsonObject o = el.getAsJsonObject();
+            String cp = jStr(o, "campaign_selling_price");
+            if (!cp.isEmpty()) {
+                try { m.sumPrice += Double.parseDouble(cp); } catch (NumberFormatException ignored) {}
+            }
+            String st = firstNonEmpty(jStr(o, "available_stock"), jStr(o, "original_stock"));
+            if (!st.isEmpty()) {
+                try {
+                    int s = (int) Math.round(Double.parseDouble(st));
+                    m.minStock = Math.min(m.minStock, s);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        if (m.minStock == Integer.MAX_VALUE) m.minStock = -1;
+        return m;
     }
 
     // ---- Formatting / parsing helpers ------------------------------------
@@ -552,8 +674,11 @@ public class ViewPromotionActivity extends AppCompatActivity {
     }
 
     private String jStr(JsonObject o, String key) {
-        if (o != null && o.has(key) && !o.get(key).isJsonNull() && o.get(key).isJsonPrimitive()) {
-            return o.get(key).getAsString();
+        if (o != null && o.has(key) && !o.get(key).isJsonNull()) {
+            JsonElement el = o.get(key);
+            if (el.isJsonPrimitive()) {
+                return el.getAsString();
+            }
         }
         return "";
     }

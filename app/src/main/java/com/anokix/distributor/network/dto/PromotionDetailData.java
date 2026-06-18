@@ -9,14 +9,16 @@ import com.google.gson.JsonElement;
  * The create flow only needs the id to confirm success; the edit/view flow
  * reads the full record. Scalar numeric fields are declared as {@code String}
  * because Gson coerces JSON numbers into strings, so prefilling EditTexts works
- * whether the server emits {@code 5000} or {@code "5000"}. {@code trader_segments}
- * and {@code selected_products} are kept as raw {@link JsonElement} and parsed
- * defensively by the UI, since their exact shape varies (id arrays vs objects).
+ * whether the server emits {@code 5000} or {@code "5000"}. {@code trader_segments},
+ * {@code selected_products}, and {@code stock_logs} are kept as raw {@link JsonElement}
+ * and parsed defensively by the UI, since their exact shape varies.
  */
 public class PromotionDetailData {
     public Promotion promotion;
-    /** May be returned at the data root or nested under {@link #promotion}. */
-    public java.util.List<StockLog> stock_logs;
+
+    /** Raw stock log payload at the data root (may be {@code stock_logs} or {@code promotion_stock_logs}). */
+    public JsonElement stock_logs;
+    public JsonElement promotion_stock_logs;
 
     public static class Promotion {
         public String id;
@@ -50,15 +52,8 @@ public class PromotionDetailData {
         /** Raw payloads — shape varies, parsed defensively in the UI. */
         public JsonElement trader_segments;
         public JsonElement selected_products;
-        public java.util.List<StockLog> stock_logs;
-    }
-
-    public static class StockLog {
-        public String product_name;
-        public String product_id;
-        public String action;
-        public String quantity;
-        public String created_at;
+        public JsonElement stock_logs;
+        public JsonElement promotion_stock_logs;
     }
 
     public static class Media {
