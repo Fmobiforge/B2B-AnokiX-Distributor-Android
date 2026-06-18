@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:layout_marginTop="0dp"
+        android:text="@string/language_label" />
+
+    <Spinner
+        android:id="@+id/languageSpinner"
+        style="@style/StoreFieldInput"
+        android:spinnerMode="dropdown" />
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/currency_label" />
+
+    <Spinner
+        android:id="@+id/currencySpinner"
+        style="@style/StoreFieldInput"
+        android:spinnerMode="dropdown" />
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/time_zone_label" />
+
+    <Spinner
+        android:id="@+id/timezoneSpinner"
+        style="@style/StoreFieldInput"
+        android:spinnerMode="dropdown" />
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/date_format_label" />
+
+    <Spinner
+        android:id="@+id/dateFormatSpinner"
+        style="@style/StoreFieldInput"
+        android:spinnerMode="dropdown" />
+</LinearLayout>

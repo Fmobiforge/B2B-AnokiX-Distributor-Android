@@ -1,11 +1,14 @@
 package com.anokix.distributor.data;
 
 import com.anokix.distributor.R;
+import com.anokix.distributor.model.AppPreferences;
+import com.anokix.distributor.model.BusinessSettings;
 import com.anokix.distributor.model.DeliveryItem;
 import com.anokix.distributor.model.FinanceSummary;
 import com.anokix.distributor.model.FinanceTransaction;
 import com.anokix.distributor.model.NotificationItem;
 import com.anokix.distributor.model.NotificationPreference;
+import com.anokix.distributor.model.ProfileSettings;
 import com.anokix.distributor.model.PromotionItem;
 import com.anokix.distributor.model.ReportHistoryItem;
 import com.anokix.distributor.model.ReportTypeItem;
@@ -57,12 +60,24 @@ public class MockDistributorRepository implements DistributorRepository {
 
     private final List<NotificationPreference> preferences = new ArrayList<>(Arrays.asList(
             new NotificationPreference("order_alerts", "Order Alerts",
-                    "Get notified about new orders", true),
-            new NotificationPreference("low_stock", "Low Stock",
-                    "Get notified when stock is low", true),
+                    "Get notified when new orders are placed.", true),
+            new NotificationPreference("low_stock", "Low Stock Alerts",
+                    "Receive alerts when products fall below minimum stock.", true),
             new NotificationPreference("delivery_updates", "Delivery Updates",
-                    "Get notified about delivery status", true)
+                    "Track delivery status changes and delays.", true),
+            new NotificationPreference("finance_reminders", "Finance Reminders",
+                    "Reminders for overdue invoices and payments.", true),
+            new NotificationPreference("report_ready", "Report Ready",
+                    "Notify when scheduled reports are generated.", false)
     ));
+
+    private ProfileSettings profileSettings = new ProfileSettings(
+            "Chang", "CongCong", "test@gmail.com", "", "comp1");
+    private BusinessSettings businessSettings = new BusinessSettings(
+            "comp1", "", "ca",
+            "Be\u015Ftepe, A\u015FT\u0130, Yenimahalle/Ankara, T\u00FCrkiye", "");
+    private AppPreferences appPreferences = new AppPreferences(
+            "English", "South African Rand (ZAR)", "Africa/Johannesburg", "19 May 2024");
 
     @Override
     public List<ReturnItem> getReturns(String statusFilter) {
@@ -242,6 +257,50 @@ public class MockDistributorRepository implements DistributorRepository {
                 new SettingsMenuEntry("security", "Security", "", R.drawable.ic_shield),
                 new SettingsMenuEntry("preferences", "Preferences", "", R.drawable.ic_tune)
         );
+    }
+
+    @Override
+    public ProfileSettings getProfileSettings() {
+        return profileSettings;
+    }
+
+    @Override
+    public void saveProfileSettings(ProfileSettings settings) {
+        profileSettings = settings;
+    }
+
+    @Override
+    public BusinessSettings getBusinessSettings() {
+        return businessSettings;
+    }
+
+    @Override
+    public void saveBusinessSettings(BusinessSettings settings) {
+        businessSettings = settings;
+    }
+
+    @Override
+    public String changePassword(String currentPassword, String newPassword, String confirmPassword) {
+        if (currentPassword == null || currentPassword.trim().isEmpty()) {
+            return "Please enter your current password.";
+        }
+        if (newPassword == null || newPassword.length() < 8) {
+            return "New password must be at least 8 characters.";
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            return "New passwords do not match.";
+        }
+        return null;
+    }
+
+    @Override
+    public AppPreferences getAppPreferences() {
+        return appPreferences;
+    }
+
+    @Override
+    public void saveAppPreferences(AppPreferences preferences) {
+        appPreferences = preferences;
     }
 
     @Override

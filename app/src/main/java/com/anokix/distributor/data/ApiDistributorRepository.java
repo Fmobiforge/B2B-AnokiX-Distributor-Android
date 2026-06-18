@@ -1,10 +1,13 @@
 package com.anokix.distributor.data;
 
+import com.anokix.distributor.model.AppPreferences;
+import com.anokix.distributor.model.BusinessSettings;
 import com.anokix.distributor.model.DeliveryItem;
 import com.anokix.distributor.model.FinanceSummary;
 import com.anokix.distributor.model.FinanceTransaction;
 import com.anokix.distributor.model.NotificationItem;
 import com.anokix.distributor.model.NotificationPreference;
+import com.anokix.distributor.model.ProfileSettings;
 import com.anokix.distributor.model.PromotionItem;
 import com.anokix.distributor.model.ReportHistoryItem;
 import com.anokix.distributor.model.ReportTypeItem;
@@ -87,6 +90,42 @@ public class ApiDistributorRepository implements DistributorRepository {
     @Override
     public List<SettingsMenuEntry> getSettingsMenuEntries() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public ProfileSettings getProfileSettings() {
+        return new ProfileSettings("", "", "", "", "");
+    }
+
+    @Override
+    public void saveProfileSettings(ProfileSettings settings) {
+        // PUT /settings/profile
+    }
+
+    @Override
+    public BusinessSettings getBusinessSettings() {
+        return new BusinessSettings("", "", "", "", "");
+    }
+
+    @Override
+    public void saveBusinessSettings(BusinessSettings settings) {
+        // PUT /settings/business
+    }
+
+    @Override
+    public String changePassword(String currentPassword, String newPassword, String confirmPassword) {
+        // POST /settings/change-password
+        return null;
+    }
+
+    @Override
+    public AppPreferences getAppPreferences() {
+        return new AppPreferences("English", "", "", "");
+    }
+
+    @Override
+    public void saveAppPreferences(AppPreferences preferences) {
+        // PUT /settings/preferences
     }
 
     @Override

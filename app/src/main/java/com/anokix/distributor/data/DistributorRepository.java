@@ -1,10 +1,13 @@
 package com.anokix.distributor.data;
 
+import com.anokix.distributor.model.AppPreferences;
+import com.anokix.distributor.model.BusinessSettings;
 import com.anokix.distributor.model.DeliveryItem;
 import com.anokix.distributor.model.FinanceSummary;
 import com.anokix.distributor.model.FinanceTransaction;
 import com.anokix.distributor.model.NotificationItem;
 import com.anokix.distributor.model.NotificationPreference;
+import com.anokix.distributor.model.ProfileSettings;
 import com.anokix.distributor.model.PromotionItem;
 import com.anokix.distributor.model.ReportHistoryItem;
 import com.anokix.distributor.model.ReportTypeItem;
@@ -46,6 +49,20 @@ public interface DistributorRepository {
     SettingsProfile getSettingsProfile();
 
     List<SettingsMenuEntry> getSettingsMenuEntries();
+
+    ProfileSettings getProfileSettings();
+
+    void saveProfileSettings(ProfileSettings settings);
+
+    BusinessSettings getBusinessSettings();
+
+    void saveBusinessSettings(BusinessSettings settings);
+
+    String changePassword(String currentPassword, String newPassword, String confirmPassword);
+
+    AppPreferences getAppPreferences();
+
+    void saveAppPreferences(AppPreferences preferences);
 
     List<NotificationPreference> getNotificationPreferences();
 
