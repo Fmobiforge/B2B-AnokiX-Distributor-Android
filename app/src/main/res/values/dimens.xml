@@ -60,7 +60,7 @@
     <dimen name="drawer_item_height">44dp</dimen>
     <dimen name="drawer_item_margin_horizontal">12dp</dimen>
     <dimen name="drawer_icon_size">22dp</dimen>
-    <dimen name="drawer_logo_width">120dp</dimen>
+    <dimen name="drawer_logo_width">140dp</dimen>
     <dimen name="drawer_text_size">14sp</dimen>
 
     <!-- Finance summary cards -->

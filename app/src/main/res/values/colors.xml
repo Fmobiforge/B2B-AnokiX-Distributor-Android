@@ -26,8 +26,9 @@
     <color name="drawer_bg">#000920</color>
     <color name="drawer_item_selected">#7B61FF</color>
     <color name="drawer_text">#FFFFFF</color>
-    <color name="drawer_text_muted">#94A3B8</color>
-    <color name="drawer_badge_bg">#2E1065</color>
+    <color name="drawer_text_muted">#B4C3D8</color>
+    <color name="drawer_badge_bg">#161d4e</color>
+    <color name="drawer_badge_fg">#3e3389</color>
     <color name="drawer_badge_text">#C4B5FD</color>
     <color name="stat_low_stock">#EA580C</color>
     <color name="stat_out_of_stock">#DC2626</color>
