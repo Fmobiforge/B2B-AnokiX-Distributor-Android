@@ -273,7 +273,7 @@ public final class MockData {
     }
 
     public static List<String> getKpiValues() {
-        return Arrays.asList("126", "342", "32", "154");
+        return Arrays.asList("0", "0", "0", "0");
     }
 
     public static List<Integer> getKpiIcons() {
@@ -310,5 +310,9 @@ public final class MockData {
             R.color.danger,
             R.color.success
         );
+    }
+
+    public static List<String> getKpiActionTitles() {
+        return Arrays.asList("View orders", "Track orders", "View inventory", "View traders");
     }
 }

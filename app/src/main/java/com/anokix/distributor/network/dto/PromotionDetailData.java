@@ -15,6 +15,8 @@ import com.google.gson.JsonElement;
  */
 public class PromotionDetailData {
     public Promotion promotion;
+    /** May be returned at the data root or nested under {@link #promotion}. */
+    public java.util.List<StockLog> stock_logs;
 
     public static class Promotion {
         public String id;
@@ -38,9 +40,25 @@ public class PromotionDetailData {
         public Media banner_file;
         public Media video_file;
 
+        /** Analytics (get-by-id). */
+        public String reach;
+        public String clicks;
+        public String ctr;
+        public String revenue;
+        public String attributed_sales;
+
         /** Raw payloads — shape varies, parsed defensively in the UI. */
         public JsonElement trader_segments;
         public JsonElement selected_products;
+        public java.util.List<StockLog> stock_logs;
+    }
+
+    public static class StockLog {
+        public String product_name;
+        public String product_id;
+        public String action;
+        public String quantity;
+        public String created_at;
     }
 
     public static class Media {

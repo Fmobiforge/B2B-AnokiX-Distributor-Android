@@ -89,6 +89,7 @@ public class DashboardFragment extends Fragment {
         List<Integer> iconBackgrounds = MockData.getKpiIconBackgrounds();
         List<Integer> valueColors = MockData.getKpiValueColors();
         List<Integer> iconTints = MockData.getKpiIconTints();
+        List<String> titlesAction = MockData.getKpiActionTitles();
         LayoutInflater inflater = LayoutInflater.from(requireContext());
 
         int density = (int) getResources().getDisplayMetrics().density;
@@ -96,17 +97,28 @@ public class DashboardFragment extends Fragment {
 
         for (int i = 0; i < titles.size(); i++) {
             View card = inflater.inflate(R.layout.item_kpi_card, kpiGrid, false);
+
+            // Title
             ((TextView) card.findViewById(R.id.kpiTitle)).setText(titles.get(i));
+
+            // Temp value
             TextView kpiValue = card.findViewById(R.id.kpiValue);
             kpiValue.setText(values.get(i));
+
+            // Color
             kpiValue.setTextColor(getResources().getColor(valueColors.get(i)));
             if (i < kpiValueViews.length) {
                 kpiValueViews[i] = kpiValue;
             }
 
+            // Icon
             ImageView kpiIcon = card.findViewById(R.id.kpiIcon);
             kpiIcon.setImageResource(icons.get(i));
             kpiIcon.setColorFilter(getResources().getColor(iconTints.get(i)));
+
+            // Action Title
+            TextView kpiActionTitle = card.findViewById(R.id.kpiActionTitle);
+            kpiActionTitle.setText(titlesAction.get(i));
 
             FrameLayout iconContainer = card.findViewById(R.id.kpiIconContainer);
             iconContainer.setBackgroundResource(iconBackgrounds.get(i));

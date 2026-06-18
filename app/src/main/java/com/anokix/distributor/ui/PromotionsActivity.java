@@ -58,6 +58,11 @@ public class PromotionsActivity extends BaseSecondaryActivity {
     private final ActivityResultLauncher<Intent> createLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> loadData());
 
+    private final ActivityResultLauncher<Intent> viewDetailsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) loadData();
+            });
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_promotions;
@@ -197,27 +202,10 @@ public class PromotionsActivity extends BaseSecondaryActivity {
         });
     }
 
-    /** Quick read-only summary built from the list row (always available, no extra fetch). */
+    /** Opens the full campaign detail screen (loads get-by-id from the API). */
     private void showDetails(PromotionItem item) {
-        StringBuilder sb = new StringBuilder();
-        appendDetail(sb, getString(R.string.promo_type_label), item.typeLabel);
-        appendDetail(sb, getString(R.string.promo_status_label), item.statusLabel);
-        appendDetail(sb, getString(R.string.promo_duration), item.dateRange);
-        appendDetail(sb, getString(R.string.budget), item.budget);
-        appendDetail(sb, getString(R.string.reach), item.reach);
-        appendDetail(sb, getString(R.string.clicks), item.clicks);
-        appendDetail(sb, getString(R.string.ctr), item.ctr);
-        new AlertDialog.Builder(this)
-                .setTitle(item.name)
-                .setMessage(sb.toString().trim())
-                .setPositiveButton(R.string.promo_edit, (d, w) -> openEditor(item))
-                .setNegativeButton(R.string.promo_close, null)
-                .show();
-    }
-
-    private void appendDetail(StringBuilder sb, String label, String value) {
-        if (value == null || value.isEmpty()) return;
-        sb.append(label).append(": ").append(value).append('\n');
+        viewDetailsLauncher.launch(new Intent(this, ViewPromotionActivity.class)
+                .putExtra(ViewPromotionActivity.EXTRA_PROMOTION_ID, item.id));
     }
 
     // ---- Summary cards (static views, values bound by key) ---------------
