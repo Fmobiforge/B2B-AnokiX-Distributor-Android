@@ -69,6 +69,7 @@ public final class ApiClient {
         Map<String, String> form = new HashMap<>();
         form.put("email", email);
         form.put("password", password);
+        form.put("portal_type", "distributor");
         io.execute(() -> {
             // login itself needs no token
             Http.Result r = Http.postForm(BASE_URL, "api/common/login", form, null);
