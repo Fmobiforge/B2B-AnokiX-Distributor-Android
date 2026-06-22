@@ -1,0 +1,1433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:rotation="180"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_account"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/register_account_subtitle"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- Stepper (populated in code) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/stepperContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp" />
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- Steps -->
+    <ViewFlipper
+        android:id="@+id/stepFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/surface">
+
+        <!-- ============ STEP 1: COMPANY ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/company_information"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/company_information_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <!-- Company Logo -->
+                <LinearLayout
+                    style="@style/StoreFieldLabel"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/company_logo"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/optional_label"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    app:cardCornerRadius="12dp">
+
+                    <FrameLayout
+                        android:id="@+id/logoUploadBox"
+                        android:layout_width="160dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/bg_upload_dashed">
+
+                        <LinearLayout
+                            android:id="@+id/logoPlaceholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_add"
+                                app:tint="@color/purple_primary" />
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/upload_logo"
+                                android:textColor="@color/purple_primary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/logoPreview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/company_logo"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/company_legal_name" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etCompanyLegalName"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_company_legal_name"
+                    android:inputType="textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/trading_name_if_different" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etTradingName"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_trading_name_reg"
+                    android:inputType="textCapWords" />
+
+                <LinearLayout
+                    style="@style/StoreFieldLabel"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/company_registration_number"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/optional_label"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etCompanyReg"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_company_reg_number"
+                    android:inputType="text" />
+
+                <LinearLayout
+                    style="@style/StoreFieldLabel"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vat_number"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="@string/optional_label"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etVat"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_vat_number_reg"
+                    android:inputType="text" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/company_email" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etCompanyEmail"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_company_email"
+                    android:inputType="textEmailAddress" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/company_phone_number_reg" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccpCompany"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        app:ccp_contentColor="@color/text_primary"
+                        app:ccp_defaultNameCode="ZA"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="14sp"
+                        app:ccpDialog_showTitle="true" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:background="@color/border" />
+
+                    <com.anokix.distributor.ui.views.RobotoEditText
+                        android:id="@+id/etCompanyPhone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="31 123 4567"
+                        android:inputType="phone"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Account sign-in info box -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_info_box"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/account_signin"
+                        android:textColor="@color/info"
+                        android:textSize="13sp" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="@string/account_signin_sub"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/first_name" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etFirstName"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_first_name"
+                    android:inputType="textPersonName|textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/last_name" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etLastName"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_last_name"
+                    android:inputType="textPersonName|textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/mobile_number" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccpMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        app:ccp_contentColor="@color/text_primary"
+                        app:ccp_defaultNameCode="ZA"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="14sp"
+                        app:ccpDialog_showTitle="true" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:background="@color/border" />
+
+                    <com.anokix.distributor.ui.views.RobotoEditText
+                        android:id="@+id/etMobile"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="82 123 4567"
+                        android:inputType="phone"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/email_address_field" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etEmail"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_email_address"
+                    android:inputType="textEmailAddress" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/password" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <com.anokix.distributor.ui.views.RobotoEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/hint_password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/togglePassword"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_visibility"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/confirm_password" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <com.anokix.distributor.ui.views.RobotoEditText
+                        android:id="@+id/etConfirmPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/hint_confirm_password_reg"
+                        android:inputType="textPassword"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/toggleConfirmPassword"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_visibility"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/password_min_hint"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 2: BUSINESS ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/business_details"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/business_details_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/type_of_business" />
+
+                <LinearLayout
+                    android:id="@+id/fieldBusinessType"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblBusinessType"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_business_type" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/year_established" />
+
+                <LinearLayout
+                    android:id="@+id/fieldYear"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblYear"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_year" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/number_of_employees" />
+
+                <LinearLayout
+                    android:id="@+id/fieldEmployees"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblEmployees"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_range" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/annual_turnover" />
+
+                <LinearLayout
+                    android:id="@+id/fieldTurnover"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblTurnover"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_range" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/banking_information"
+                    android:textColor="@color/top_title"
+                    android:textSize="18sp" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/banking_information_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/bank_name" />
+
+                <LinearLayout
+                    android:id="@+id/fieldBank"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblBank"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_your_bank" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/account_holder_name" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etAccountHolder"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_account_holder_name"
+                    android:inputType="textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/account_number" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etAccountNumber"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_account_number"
+                    android:inputType="number" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/account_type" />
+
+                <LinearLayout
+                    android:id="@+id/fieldAccountType"
+                    style="@style/ProductDropdown">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/lblAccountType"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/select_account_type" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/branch_code" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etBranchCode"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_branch_code"
+                    android:inputType="number" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 3: CONTACTS ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_persons"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/contact_persons_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/primary_contact"
+                    android:textColor="@color/top_title"
+                    android:textSize="16sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/contact_full_name" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etPrimaryName"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_full_name"
+                    android:inputType="textPersonName|textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/contact_position" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etPrimaryPosition"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_position"
+                    android:inputType="textCapWords" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/mobile_number" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/ccpPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        app:ccp_contentColor="@color/text_primary"
+                        app:ccp_defaultNameCode="ZA"
+                        app:ccp_showNameCode="false"
+                        app:ccp_textSize="14sp"
+                        app:ccpDialog_showTitle="true" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="24dp"
+                        android:background="@color/border" />
+
+                    <com.anokix.distributor.ui.views.RobotoEditText
+                        android:id="@+id/etPrimaryMobile"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="82 123 4567"
+                        android:inputType="phone"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/email_address_field" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etPrimaryEmail"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/hint_email_address"
+                    android:inputType="textEmailAddress" />
+
+                <!-- Additional contacts (added in code) -->
+                <LinearLayout
+                    android:id="@+id/additionalContactsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:id="@+id/btnAddContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/bg_upload_dashed"
+                    android:gravity="center"
+                    android:text="@string/add_another_contact"
+                    android:textColor="@color/purple_primary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 4: LOCATION ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/locationScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/business_location"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/business_location_reg_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/address_of_business" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/etAddressSearch"
+                    style="@style/StoreFieldInput"
+                    android:hint="@string/search_address_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/map_pin_hint_trader"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/registerMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:layout_marginTop="12dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 5: DOCUMENTS ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/document_upload"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="@string/document_upload_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:id="@+id/documentContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/accepted_formats"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 6: SERVICE ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_coverage"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/service_coverage_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/distribution_coverage"
+                    android:textColor="@color/top_title"
+                    android:textSize="16sp" />
+
+                <!-- Coverage cards -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/coverageLocal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_trader_type_card"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageLocal"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_location_pin"
+                            app:tint="@color/text_secondary" />
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/titleCoverageLocal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/coverage_local"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/coverage_local_sub"
+                            android:lines="2"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/coverageRegional"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_trader_type_card"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageRegional"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_globe"
+                            app:tint="@color/text_secondary" />
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/titleCoverageRegional"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/coverage_regional"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            android:lines="2"
+                            android:text="@string/coverage_regional_sub"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/coverageNational"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_trader_type_card"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="8dp">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageNational"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_flag"
+                            app:tint="@color/text_secondary" />
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:id="@+id/titleCoverageNational"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/coverage_national"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp" />
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/coverage_national_sub"
+                            android:textColor="@color/text_secondary"
+                            android:lines="2"
+                            android:gravity="center"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/primary_product_categories"
+                    android:textColor="@color/top_title"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/categoryField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_login_input"
+                    android:minHeight="48dp"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/categoryHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/select_categories_hint"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <com.anokix.distributor.ui.views.FlowLayout
+                        android:id="@+id/categoryChips"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!-- Active clients + fleet size -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/number_active_clients"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/fieldClients"
+                        style="@style/ProductDropdown">
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:id="@+id/lblClients"
+                            style="@style/ProductDropdownLabel"
+                            android:text="@string/select_range" />
+
+                        <ImageView style="@style/ProductDropdownChevron" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding2"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delivery_fleet_size_label"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/fieldFleet"
+                        style="@style/ProductDropdown">
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:id="@+id/lblFleet"
+                            style="@style/ProductDropdownLabel"
+                            android:text="@string/select_range" />
+
+                        <ImageView style="@style/ProductDropdownChevron" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/preferred_delivery_days_reg"
+                    android:textColor="@color/top_title"
+                    android:textSize="16sp" />
+
+                <!-- Delivery days table (rows added in code) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_trader_type_card"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <!-- Header row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="4dp"
+                        android:paddingBottom="6dp">
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:text="@string/col_day"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp" />
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/col_open"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp" />
+
+                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/col_close"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/deliveryDaysTable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 7: WALLET ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activate_merchant_wallet_reg"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/powered_by_imb"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <FrameLayout
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_wallet_icon">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_wallet"
+                        app:tint="@android:color/white" />
+                </FrameLayout>
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/benefits"
+                    android:textColor="@color/top_title"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/benefitsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_wallet_panel"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <LinearLayout
+                        android:id="@+id/optionCreateWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/radioCreateWallet"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_radio_selected" />
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/create_wallet_now"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/optionActivateLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/radioActivateLater"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_radio_unselected" />
+
+                        <com.anokix.distributor.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/activate_later"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- ============ STEP 8: TERMS ============ -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_conditions"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textColor="@color/top_title" />
+
+                <com.anokix.distributor.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/terms_conditions_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <CheckBox
+                    android:id="@+id/cbAccurate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="8dp"
+                    android:text="@string/terms_accurate"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+
+                <CheckBox
+                    android:id="@+id/cbTos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="8dp"
+                    android:text="@string/terms_tos"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+
+                <CheckBox
+                    android:id="@+id/cbKyc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="8dp"
+                    android:text="@string/terms_kyc"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+
+                <CheckBox
+                    android:id="@+id/cbComms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="8dp"
+                    android:text="@string/terms_comms"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </ViewFlipper>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- Bottom navigation bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:background="@drawable/bg_btn_back_pill"
+            android:gravity="center"
+            android:paddingHorizontal="22dp"
+            android:text="@string/back_btn"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/btnContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:background="@drawable/bg_btn_continue"
+            android:gravity="center"
+            android:minWidth="130dp"
+            android:paddingHorizontal="26dp"
+            android:text="@string/continue_btn"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

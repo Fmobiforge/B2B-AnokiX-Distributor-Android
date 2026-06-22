@@ -581,4 +581,159 @@
     <string name="notif_finance_sub">Reminders for overdue invoices and payments.</string>
     <string name="notif_report_title">Report Ready</string>
     <string name="notif_report_sub">Notify when scheduled reports are generated.</string>
+
+    <!-- ===== Distributor Registration (Create Account) ===== -->
+    <string name="register_account">Register Account</string>
+    <string name="register_account_subtitle">Create your distributor account.</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="remove">Remove</string>
+
+    <!-- Register stepper -->
+    <string name="rstep_company">Company</string>
+    <string name="rstep_business">Business</string>
+    <string name="rstep_contacts">Contacts</string>
+    <string name="rstep_location">Location</string>
+    <string name="rstep_documents">Documents</string>
+    <string name="rstep_service">Service</string>
+    <string name="rstep_wallet">Wallet</string>
+    <string name="rstep_terms">Terms</string>
+
+    <!-- Register Step 1: Company -->
+    <string name="company_information">Company Information</string>
+    <string name="company_information_sub">Tell us about your distribution business.</string>
+    <string name="company_logo">Company Logo</string>
+    <string name="upload_logo">Upload logo</string>
+    <string name="company_legal_name">Company Legal Name</string>
+    <string name="hint_company_legal_name">Enter legal company name</string>
+    <string name="trading_name_if_different">Trading Name (If different)</string>
+    <string name="hint_trading_name_reg">Enter trading name</string>
+    <string name="company_registration_number">Company Registration Number</string>
+    <string name="hint_company_reg_number">Enter registration number</string>
+    <string name="vat_number">VAT Number</string>
+    <string name="hint_vat_number_reg">Enter VAT number</string>
+    <string name="company_email">Company Email</string>
+    <string name="hint_company_email">Enter email address</string>
+    <string name="company_phone_number_reg">Company Phone Number</string>
+    <string name="account_signin">Account sign-in</string>
+    <string name="account_signin_sub">Your email address and password will be used to log in to your distributor account. Mobile number is required for verification.</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="hint_password">Enter password</string>
+    <string name="hint_confirm_password_reg">Confirm password</string>
+    <string name="password_min_hint">Password must be at least 8 characters.</string>
+
+    <!-- Register Step 2: Business -->
+    <string name="business_details">Business Details</string>
+    <string name="business_details_sub">Tell us more about your business.</string>
+    <string name="type_of_business">Type of Business</string>
+    <string name="select_business_type">Select business type</string>
+    <string name="year_established">Year Established</string>
+    <string name="select_year">Select year</string>
+    <string name="number_of_employees">Number of Employees</string>
+    <string name="select_range">Select range</string>
+    <string name="annual_turnover">Annual Turnover</string>
+    <string name="banking_information">Banking Information</string>
+    <string name="banking_information_sub">Provide your company banking details.</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="select_your_bank">Select your bank</string>
+    <string name="account_holder_name">Account Holder Name</string>
+    <string name="hint_account_holder_name">Enter account holder name</string>
+    <string name="account_number">Account Number</string>
+    <string name="hint_account_number">Enter account number</string>
+    <string name="account_type">Account Type</string>
+    <string name="select_account_type">Select account type</string>
+    <string name="branch_code">Branch Code</string>
+    <string name="hint_branch_code">Enter branch code</string>
+
+    <!-- Register Step 3: Contacts -->
+    <string name="contact_persons">Contact Persons</string>
+    <string name="contact_persons_sub">Provide details of key contacts.</string>
+    <string name="primary_contact">Primary Contact</string>
+    <string name="additional_contact">Additional Contact %1$d</string>
+    <string name="contact_full_name">Full Name</string>
+    <string name="hint_full_name">Enter full name</string>
+    <string name="contact_position">Position</string>
+    <string name="hint_position">Enter position</string>
+    <string name="add_another_contact">+ Add Another Contact</string>
+
+    <!-- Register Step 4: Location -->
+    <string name="business_location_reg_sub">Where is your business located?</string>
+
+    <!-- Register Step 5: Documents -->
+    <string name="document_upload">Document Upload</string>
+    <string name="document_upload_sub">Upload your company documents.</string>
+    <string name="replace">Replace</string>
+    <string name="doc_company_reg_cert">Company Registration Certificate (CIPC)</string>
+    <string name="doc_tax_clearance">Tax Clearance Certificate</string>
+    <string name="doc_if_available">(If available)</string>
+    <string name="doc_vat_reg_cert">VAT Registration Certificate</string>
+    <string name="doc_proof_address_reg">Proof of Address</string>
+    <string name="doc_proof_address_reg_sub">Utility Bill / Lease Agreement</string>
+    <string name="doc_bank_confirmation">Bank Confirmation Letter</string>
+    <string name="doc_company_logo">Company Logo</string>
+    <string name="doc_recommended">(Recommended)</string>
+
+    <!-- Register Step 6: Service -->
+    <string name="service_coverage">Service &amp; Coverage</string>
+    <string name="service_coverage_sub">Tell us about your distribution coverage.</string>
+    <string name="distribution_coverage">Distribution Coverage</string>
+    <string name="coverage_local">Local</string>
+    <string name="coverage_local_sub">City / Town</string>
+    <string name="coverage_regional">Regional</string>
+    <string name="coverage_regional_sub">Multiple cities / region</string>
+    <string name="coverage_national">National</string>
+    <string name="coverage_national_sub">Across South Africa</string>
+    <string name="number_active_clients">Number of Active Clients (Retailers)</string>
+    <string name="delivery_fleet_size_label">Delivery Fleet Size</string>
+    <string name="preferred_delivery_days_reg">Preferred Delivery Days</string>
+
+    <!-- Register Step 7: Wallet -->
+    <string name="activate_merchant_wallet_reg">Activate Merchant Wallet</string>
+
+    <!-- Register validation / messages -->
+    <string name="err_company_legal_name">Please enter the company legal name.</string>
+    <string name="err_company_email">Please enter a valid company email address.</string>
+    <string name="err_company_phone">Please enter the company phone number.</string>
+    <string name="err_reg_first_name">Please enter your first name.</string>
+    <string name="err_reg_last_name">Please enter your last name.</string>
+    <string name="err_reg_mobile">Please enter your mobile number.</string>
+    <string name="err_password_length">Password must be at least 8 characters.</string>
+    <string name="err_password_match">Passwords do not match.</string>
+    <string name="err_business_type">Please select a business type.</string>
+    <string name="err_bank_name">Please select your bank.</string>
+    <string name="err_primary_contact_name">Please enter the primary contact name.</string>
+    <string name="err_primary_contact_mobile">Please enter the primary contact mobile number.</string>
+    <string name="err_coverage">Please select your distribution coverage.</string>
+    <string name="err_required_documents">Please upload all required documents.</string>
+    <string name="err_terms_reg">Please accept all terms to continue.</string>
+    <string name="register_success">Registration submitted successfully.</string>
+
+    <!-- Logo crop dialog -->
+    <string name="crop_company_logo">Crop Company Logo</string>
+    <string name="crop_scale">Scale</string>
+    <string name="crop_rotation">Rotation</string>
+    <string name="crop_drag_hint">Drag the image to reposition</string>
+    <string name="crop_upload_new">Upload new image</string>
+
+    <!-- Image source chooser -->
+    <string name="choose_image_source">Add Image</string>
+    <string name="source_take_photo">Take Photo</string>
+    <string name="source_choose_gallery">Choose from Gallery</string>
+    <string name="source_choose_file">Choose File</string>
+    <string name="camera_permission_denied">Camera permission is required to take a photo.</string>
+
+    <!-- Register submitted (success) screen -->
+    <string name="application_submitted">Application Submitted!</string>
+    <string name="application_submitted_sub">Thank you for joining anokiX. We\'ve received your application and will begin processing it shortly.</string>
+    <string name="what_happens_next">What happens next?</string>
+    <string name="next_review_docs">We will review your documents</string>
+    <string name="next_kyc">KYC verification will be completed</string>
+    <string name="next_distributor_approval">Distributor approval</string>
+    <string name="next_wallet_activation">Wallet activation</string>
+    <string name="estimated_approval_time">ESTIMATED APPROVAL TIME</string>
+    <string name="approval_time_value">24 – 48 Hours</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

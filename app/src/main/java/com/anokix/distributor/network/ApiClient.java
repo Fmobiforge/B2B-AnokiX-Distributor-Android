@@ -17,6 +17,7 @@ import com.anokix.distributor.network.dto.ProductsData;
 import com.anokix.distributor.network.dto.PromotionDetailData;
 import com.anokix.distributor.network.dto.PromotionsData;
 import com.anokix.distributor.network.dto.ReferenceData;
+import com.anokix.distributor.network.dto.RegisterDistributorData;
 import com.anokix.distributor.network.dto.StoreDetailData;
 import com.anokix.distributor.network.dto.StoresData;
 import com.anokix.distributor.network.dto.TradersData;
@@ -229,6 +230,20 @@ public final class ApiClient {
         Map<String, String> q = new HashMap<>();
         q.put("place_id", placeId == null ? "" : placeId);
         getAuthed("api/common/get-coordinate-from-placeid", q, CoordinateData.class, cb);
+    }
+
+    /**
+     * Public distributor self-registration (multipart, no auth). Posts company /
+     * banking / contact / coverage fields plus the KYC document files.
+     */
+    public void registerDistributor(Map<String, String> form, List<Http.FilePart> files,
+                                    ApiCallback<RegisterDistributorData> cb) {
+        io.execute(() -> {
+            // Registration is a public endpoint: send no token.
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/register",
+                    form, files, null);
+            deliver(r, RegisterDistributorData.class, cb);
+        });
     }
 
     /** Create a trader under the logged-in distributor (multipart, with KYC documents). */
