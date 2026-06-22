@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         joinButton.setOnClickListener(v ->
-                Toast.makeText(this, "Join portal coming soon", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, RegisterDistributorActivity.class)));
     }
 
     private void doLogin(TextView loginButton, String email, String password) {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Temporary location for camera captures (logo / document photos). -->
+    <cache-path
+        name="captures"
+        path="captures/" />
+    <external-cache-path
+        name="external_captures"
+        path="captures/" />
+</paths>

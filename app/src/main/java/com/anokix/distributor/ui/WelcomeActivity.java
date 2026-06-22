@@ -34,11 +34,10 @@ public class WelcomeActivity extends AppCompatActivity {
         login.setOnClickListener(toLogin);
         signIn.setOnClickListener(toLogin);
 
-        // Create Account opens Distributor registration (separate from the Trader
-        // wizard, which is reached from the Traders screen). Not built yet.
+        // Create Account opens the 8-step distributor registration (separate from
+        // the Trader wizard, which is reached from the Traders screen).
         createAccount.setOnClickListener(v ->
-                Toast.makeText(this, R.string.distributor_register_coming_soon,
-                        Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, RegisterDistributorActivity.class)));
 
         support.setOnClickListener(v -> openSupportEmail());
     }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Title row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/crop_company_logo"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/cropClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cancel"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </LinearLayout>
+
+    <!-- Square crop preview -->
+    <com.anokix.distributor.ui.views.LogoCropView
+        android:id="@+id/cropView"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginTop="18dp"
+        android:background="#9CA3AF" />
+
+    <com.anokix.distributor.ui.views.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="@string/crop_drag_hint"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+
+    <!-- Scale -->
+    <com.anokix.distributor.ui.views.RobotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/crop_scale"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <SeekBar
+        android:id="@+id/cropScale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="200"
+        android:progress="0" />
+
+    <!-- Rotation -->
+    <com.anokix.distributor.ui.views.RobotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/crop_rotation"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <SeekBar
+        android:id="@+id/cropRotation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="360"
+        android:progress="0" />
+
+    <!-- Upload new image -->
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        android:id="@+id/cropUploadNew"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_login_button_outlined"
+        android:gravity="center"
+        android:text="@string/crop_upload_new"
+        android:textColor="@color/purple_primary"
+        android:textSize="14sp" />
+
+    <!-- Cancel / OK -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/cropCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_btn_back_pill"
+            android:gravity="center"
+            android:paddingHorizontal="22dp"
+            android:text="@string/cancel"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/cropOk"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_btn_continue"
+            android:gravity="center"
+            android:minWidth="90dp"
+            android:paddingHorizontal="26dp"
+            android:text="@string/ok"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>
