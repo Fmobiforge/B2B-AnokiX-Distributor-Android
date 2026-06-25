@@ -12,6 +12,8 @@ import com.anokix.distributor.network.dto.CreateTraderData;
 import com.anokix.distributor.network.dto.DashboardData;
 import com.anokix.distributor.network.dto.InventorySummaryData;
 import com.anokix.distributor.network.dto.LoginData;
+import com.anokix.distributor.network.dto.OrderDetailData;
+import com.anokix.distributor.network.dto.OrdersData;
 import com.anokix.distributor.network.dto.ProductDetailData;
 import com.anokix.distributor.network.dto.ProductsData;
 import com.anokix.distributor.network.dto.PromotionDetailData;
@@ -205,6 +207,47 @@ public final class ApiClient {
 
     public void getInventorySummary(ApiCallback<InventorySummaryData> cb) {
         getAuthed("api/distributor/inventory/summary", null, InventorySummaryData.class, cb);
+    }
+
+    // ---- Orders ----------------------------------------------------------
+
+    /**
+     * Orders list for a status tab. Empty/null filters are omitted; {@code status}
+     * "all" is also omitted so the backend returns every status.
+     */
+    public void getOrders(String traderId, String search, String dateFrom, String dateTo,
+                          String status, int page, int perPage, ApiCallback<OrdersData> cb) {
+        Map<String, String> q = new HashMap<>();
+        if (status != null && !status.isEmpty() && !"all".equals(status)) q.put("status", status);
+        if (traderId != null && !traderId.isEmpty()) q.put("trader_id", traderId);
+        if (search != null && !search.trim().isEmpty()) q.put("search", search.trim());
+        if (dateFrom != null && !dateFrom.isEmpty()) q.put("date_from", dateFrom);
+        if (dateTo != null && !dateTo.isEmpty()) q.put("date_to", dateTo);
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/distributor/orders", q, OrdersData.class, cb);
+    }
+
+    /** Full order detail (+ items) for the tracking screen. */
+    public void getOrderById(String id, ApiCallback<OrderDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/orders/get-by-id", q, OrderDetailData.class, cb);
+    }
+
+    /**
+     * Advance an order through the fulfilment flow. {@code action} is one of
+     * accept / reject / pick / pack / ready / dispatch / deliver. Only the
+     * envelope status/message matter, so the (variable) data block is ignored.
+     */
+    public void orderAction(String action, long orderId, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("order_id", String.valueOf(orderId));
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/orders/" + action,
+                    form, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
     }
 
     public void getBaseInfo(ApiCallback<BaseInfoData> cb) {

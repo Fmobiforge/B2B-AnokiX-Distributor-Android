@@ -66,6 +66,7 @@
         <activity android:name=".ui.ProductsActivity" android:exported="false" />
         <activity android:name=".ui.AddProductOptionsActivity" android:exported="false" />
         <activity android:name=".ui.CreateProductActivity" android:exported="false" />
+        <activity android:name=".ui.OrderDetailActivity" android:exported="false" />
         <activity android:name=".ui.PromotionsActivity" android:exported="false" />
         <activity android:name=".ui.CreatePromotionActivity" android:exported="false" />
         <activity android:name=".ui.ViewPromotionActivity" android:exported="false" />
