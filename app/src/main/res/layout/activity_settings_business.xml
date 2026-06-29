@@ -193,11 +193,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
+                                app:ccpDialog_showTitle="true"
                                 app:ccp_contentColor="@color/text_primary"
                                 app:ccp_defaultNameCode="ZA"
                                 app:ccp_showNameCode="false"
-                                app:ccp_textSize="14sp"
-                                app:ccpDialog_showTitle="true" />
+                                app:ccp_textSize="14sp" />
 
                             <View
                                 android:layout_width="1dp"
@@ -247,11 +247,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/type_of_business" />
 
-                        <LinearLayout android:id="@+id/fieldBusinessType" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldBusinessType"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblBusinessType" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblBusinessType"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -261,11 +268,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/year_established" />
 
-                        <LinearLayout android:id="@+id/fieldYear" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldYear"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblYear" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblYear"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -278,11 +292,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/number_of_employees" />
 
-                        <LinearLayout android:id="@+id/fieldEmployees" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldEmployees"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblEmployees" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblEmployees"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -292,11 +313,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/annual_turnover" />
 
-                        <LinearLayout android:id="@+id/fieldTurnover" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldTurnover"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblTurnover" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblTurnover"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -309,11 +337,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/bank_name" />
 
-                        <LinearLayout android:id="@+id/fieldBank" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldBank"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblBank" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblBank"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -348,11 +383,18 @@
                             style="@style/SettingsFieldLabel"
                             android:text="@string/account_type" />
 
-                        <LinearLayout android:id="@+id/fieldAccountType" style="@style/SettingsDropdown">
+                        <LinearLayout
+                            android:id="@+id/fieldAccountType"
+                            style="@style/SettingsDropdown">
+
                             <com.anokix.distributor.ui.views.RobotoTextView
-                                android:id="@+id/lblAccountType" style="@style/ProductDropdownLabel"
+                                android:id="@+id/lblAccountType"
+                                style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
-                            <ImageView style="@style/ProductDropdownChevron" android:contentDescription="@null" />
+
+                            <ImageView
+                                style="@style/ProductDropdownChevron"
+                                android:contentDescription="@null" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -411,19 +453,23 @@
                         <LinearLayout style="@style/SettingsCol">
 
                             <com.anokix.distributor.ui.views.RobotoBoldTextView
-                                style="@style/SettingsFieldLabel" android:text="@string/full_name" />
+                                style="@style/SettingsFieldLabel"
+                                android:text="@string/full_name" />
 
                             <com.anokix.distributor.ui.views.RobotoEditText
-                                android:id="@+id/etPrimaryName" style="@style/SettingsFieldInput" />
+                                android:id="@+id/etPrimaryName"
+                                style="@style/SettingsFieldInput" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/SettingsColEnd">
 
                             <com.anokix.distributor.ui.views.RobotoBoldTextView
-                                style="@style/SettingsFieldLabel" android:text="@string/position_label" />
+                                style="@style/SettingsFieldLabel"
+                                android:text="@string/position_label" />
 
                             <com.anokix.distributor.ui.views.RobotoEditText
-                                android:id="@+id/etPrimaryPosition" style="@style/SettingsFieldInput" />
+                                android:id="@+id/etPrimaryPosition"
+                                style="@style/SettingsFieldInput" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -432,7 +478,8 @@
                         <LinearLayout style="@style/SettingsCol">
 
                             <com.anokix.distributor.ui.views.RobotoBoldTextView
-                                style="@style/SettingsFieldLabel" android:text="@string/phone_label" />
+                                style="@style/SettingsFieldLabel"
+                                android:text="@string/phone_label" />
 
                             <LinearLayout style="@style/SettingsPhoneRow">
 
@@ -441,11 +488,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
+                                    app:ccpDialog_showTitle="true"
                                     app:ccp_contentColor="@color/text_primary"
                                     app:ccp_defaultNameCode="ZA"
                                     app:ccp_showNameCode="false"
-                                    app:ccp_textSize="14sp"
-                                    app:ccpDialog_showTitle="true" />
+                                    app:ccp_textSize="14sp" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -453,7 +500,8 @@
                                     android:background="@color/border" />
 
                                 <com.anokix.distributor.ui.views.RobotoEditText
-                                    android:id="@+id/etPrimaryMobile" style="@style/SettingsPhoneInput"
+                                    android:id="@+id/etPrimaryMobile"
+                                    style="@style/SettingsPhoneInput"
                                     android:hint="82 123 4567"
                                     android:inputType="phone" />
                             </LinearLayout>
@@ -462,10 +510,12 @@
                         <LinearLayout style="@style/SettingsColEnd">
 
                             <com.anokix.distributor.ui.views.RobotoBoldTextView
-                                style="@style/SettingsFieldLabel" android:text="@string/email_label" />
+                                style="@style/SettingsFieldLabel"
+                                android:text="@string/email_label" />
 
                             <com.anokix.distributor.ui.views.RobotoEditText
-                                android:id="@+id/etPrimaryEmail" style="@style/SettingsFieldInput"
+                                android:id="@+id/etPrimaryEmail"
+                                style="@style/SettingsFieldInput"
                                 android:inputType="textEmailAddress" />
                         </LinearLayout>
                     </LinearLayout>
@@ -611,34 +661,64 @@
                     android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <LinearLayout android:id="@+id/coverageLocal" style="@style/CoverageCard">
-                        <ImageView android:id="@+id/iconCoverageLocal" style="@style/CoverageIcon"
-                            android:src="@drawable/ic_location_pin" android:contentDescription="@null" />
+                    <LinearLayout
+                        android:id="@+id/coverageLocal"
+                        style="@style/CoverageCard">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageLocal"
+                            style="@style/CoverageIcon"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_location_pin" />
+
                         <com.anokix.distributor.ui.views.RobotoBoldTextView
-                            android:id="@+id/titleCoverageLocal" style="@style/CoverageTitle"
+                            android:id="@+id/titleCoverageLocal"
+                            style="@style/CoverageTitle"
                             android:text="@string/coverage_local" />
+
                         <com.anokix.distributor.ui.views.RobotoLightTextView
-                            style="@style/CoverageSub" android:text="@string/coverage_local_sub" />
+                            style="@style/CoverageSub"
+                            android:text="@string/coverage_local_sub" />
                     </LinearLayout>
 
-                    <LinearLayout android:id="@+id/coverageRegional" style="@style/CoverageCardMid">
-                        <ImageView android:id="@+id/iconCoverageRegional" style="@style/CoverageIcon"
-                            android:src="@drawable/ic_deliveries" android:contentDescription="@null" />
+                    <LinearLayout
+                        android:id="@+id/coverageRegional"
+                        style="@style/CoverageCardMid">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageRegional"
+                            style="@style/CoverageIcon"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_deliveries" />
+
                         <com.anokix.distributor.ui.views.RobotoBoldTextView
-                            android:id="@+id/titleCoverageRegional" style="@style/CoverageTitle"
+                            android:id="@+id/titleCoverageRegional"
+                            style="@style/CoverageTitle"
                             android:text="@string/coverage_regional" />
+
                         <com.anokix.distributor.ui.views.RobotoLightTextView
-                            style="@style/CoverageSub" android:text="@string/coverage_regional_sub" />
+                            style="@style/CoverageSub"
+                            android:text="@string/coverage_regional_sub" />
                     </LinearLayout>
 
-                    <LinearLayout android:id="@+id/coverageNational" style="@style/CoverageCard">
-                        <ImageView android:id="@+id/iconCoverageNational" style="@style/CoverageIcon"
-                            android:src="@drawable/ic_shopping_bag" android:contentDescription="@null" />
+                    <LinearLayout
+                        android:id="@+id/coverageNational"
+                        style="@style/CoverageCard">
+
+                        <ImageView
+                            android:id="@+id/iconCoverageNational"
+                            style="@style/CoverageIcon"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_shopping_bag" />
+
                         <com.anokix.distributor.ui.views.RobotoBoldTextView
-                            android:id="@+id/titleCoverageNational" style="@style/CoverageTitle"
+                            android:id="@+id/titleCoverageNational"
+                            style="@style/CoverageTitle"
                             android:text="@string/coverage_national" />
+
                         <com.anokix.distributor.ui.views.RobotoLightTextView
-                            style="@style/CoverageSub" android:text="@string/coverage_national_sub" />
+                            style="@style/CoverageSub"
+                            android:text="@string/coverage_national_sub" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -676,20 +756,24 @@
                     <LinearLayout style="@style/SettingsCol">
 
                         <com.anokix.distributor.ui.views.RobotoBoldTextView
-                            style="@style/SettingsFieldLabel" android:text="@string/active_clients" />
+                            style="@style/SettingsFieldLabel"
+                            android:text="@string/active_clients" />
 
                         <com.anokix.distributor.ui.views.RobotoEditText
-                            android:id="@+id/etActiveClients" style="@style/SettingsFieldInput"
+                            android:id="@+id/etActiveClients"
+                            style="@style/SettingsFieldInput"
                             android:inputType="number" />
                     </LinearLayout>
 
                     <LinearLayout style="@style/SettingsColEnd">
 
                         <com.anokix.distributor.ui.views.RobotoBoldTextView
-                            style="@style/SettingsFieldLabel" android:text="@string/delivery_fleet_vehicles" />
+                            style="@style/SettingsFieldLabel"
+                            android:text="@string/delivery_fleet_vehicles" />
 
                         <com.anokix.distributor.ui.views.RobotoEditText
-                            android:id="@+id/etFleetSize" style="@style/SettingsFieldInput"
+                            android:id="@+id/etFleetSize"
+                            style="@style/SettingsFieldInput"
                             android:inputType="number" />
                     </LinearLayout>
                 </LinearLayout>
@@ -707,25 +791,48 @@
                     android:paddingHorizontal="4dp">
 
                     <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1.4" android:text="@string/col_day"
-                        android:textColor="@color/text_secondary" android:textSize="10sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:text="@string/col_day"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp" />
+
                     <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:gravity="center" android:text="@string/col_open"
-                        android:textColor="@color/text_secondary" android:textSize="10sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/col_open"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp" />
+
                     <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:gravity="center" android:text="@string/col_close"
-                        android:textColor="@color/text_secondary" android:textSize="10sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/col_close"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp" />
+
                     <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:gravity="center" android:text="@string/col_open"
-                        android:textColor="@color/text_secondary" android:textSize="10sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/col_open"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp" />
+
                     <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:gravity="center" android:text="@string/col_close"
-                        android:textColor="@color/text_secondary" android:textSize="10sp" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/col_close"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
