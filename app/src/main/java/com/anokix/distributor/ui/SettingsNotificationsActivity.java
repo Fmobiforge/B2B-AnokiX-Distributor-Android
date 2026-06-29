@@ -1,12 +1,19 @@
 package com.anokix.distributor.ui;
 
+import android.view.View;
+import android.widget.Toast;
+
 import com.anokix.distributor.R;
-import com.anokix.distributor.model.NotificationPreference;
+import com.anokix.distributor.network.ApiCallback;
+import com.anokix.distributor.network.ApiClient;
+import com.anokix.distributor.network.dto.PreferencesData;
 import com.anokix.distributor.ui.views.RobotoSwitchCompat;
 
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Notification Preferences — the 5 toggles, loaded from GET api/common/preferences and saved
+ * via POST api/common/preferences/update (3-Settings-Notifications.png). When the server has
+ * no notification settings yet, every toggle defaults to on.
+ */
 public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
 
     @Override
@@ -26,55 +33,63 @@ public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
 
     @Override
     protected void loadData() {
-        setSwitchFromRepo(R.id.switchOrderAlerts, "order_alerts", true);
-        setSwitchFromRepo(R.id.switchLowStock, "low_stock", true);
-        setSwitchFromRepo(R.id.switchDeliveryUpdates, "delivery_updates", true);
-        setSwitchFromRepo(R.id.switchFinanceReminders, "finance_reminders", true);
-        setSwitchFromRepo(R.id.switchReportReady, "report_ready", false);
+        ApiClient.get(this).getPreferences(new ApiCallback<PreferencesData>() {
+            @Override
+            public void onSuccess(PreferencesData data) {
+                PreferencesData.Preferences p = data == null ? null : data.preferences;
+                setChecked(R.id.switchOrderAlerts, p == null || p.notif("orderAlerts"));
+                setChecked(R.id.switchLowStock, p == null || p.notif("lowStockAlerts"));
+                setChecked(R.id.switchDeliveryUpdates, p == null || p.notif("deliveryUpdates"));
+                setChecked(R.id.switchFinanceReminders, p == null || p.notif("financeReminders"));
+                setChecked(R.id.switchReportReady, p == null || p.notif("reportReady"));
+            }
+
+            @Override
+            public void onError(String message) {
+                // Default everything on (matches "no settings yet").
+                setChecked(R.id.switchOrderAlerts, true);
+                setChecked(R.id.switchLowStock, true);
+                setChecked(R.id.switchDeliveryUpdates, true);
+                setChecked(R.id.switchFinanceReminders, true);
+                setChecked(R.id.switchReportReady, true);
+            }
+        });
     }
 
-    private void setSwitchFromRepo(int switchId, String key, boolean defaultValue) {
+    private void setChecked(int switchId, boolean checked) {
         RobotoSwitchCompat switchView = findViewById(switchId);
-        for (NotificationPreference pref : repository.getNotificationPreferences()) {
-            if (key.equals(pref.key)) {
-                switchView.setChecked(pref.enabled);
-                return;
-            }
-        }
-        switchView.setChecked(defaultValue);
+        if (switchView != null) switchView.setChecked(checked);
+    }
+
+    private boolean isChecked(int switchId) {
+        RobotoSwitchCompat switchView = findViewById(switchId);
+        return switchView != null && switchView.isChecked();
     }
 
     @Override
     protected void onSave() {
-        List<NotificationPreference> updated = Arrays.asList(
-                new NotificationPreference("order_alerts",
-                        getString(R.string.notif_order_alerts_title),
-                        getString(R.string.notif_order_alerts_sub),
-                        isSwitchChecked(R.id.switchOrderAlerts)),
-                new NotificationPreference("low_stock",
-                        getString(R.string.notif_low_stock_title),
-                        getString(R.string.notif_low_stock_sub),
-                        isSwitchChecked(R.id.switchLowStock)),
-                new NotificationPreference("delivery_updates",
-                        getString(R.string.notif_delivery_title),
-                        getString(R.string.notif_delivery_sub),
-                        isSwitchChecked(R.id.switchDeliveryUpdates)),
-                new NotificationPreference("finance_reminders",
-                        getString(R.string.notif_finance_title),
-                        getString(R.string.notif_finance_sub),
-                        isSwitchChecked(R.id.switchFinanceReminders)),
-                new NotificationPreference("report_ready",
-                        getString(R.string.notif_report_title),
-                        getString(R.string.notif_report_sub),
-                        isSwitchChecked(R.id.switchReportReady))
-        );
-        repository.saveNotificationPreferences(updated);
-        toastSaved();
-        finish();
-    }
+        final View save = findViewById(R.id.saveButton);
+        save.setEnabled(false);
+        ApiClient.get(this).updateNotificationPrefs(
+                isChecked(R.id.switchOrderAlerts),
+                isChecked(R.id.switchLowStock),
+                isChecked(R.id.switchDeliveryUpdates),
+                isChecked(R.id.switchFinanceReminders),
+                isChecked(R.id.switchReportReady),
+                new ApiCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        toastSaved();
+                        finish();
+                    }
 
-    private boolean isSwitchChecked(int switchId) {
-        RobotoSwitchCompat switchView = findViewById(switchId);
-        return switchView != null && switchView.isChecked();
+                    @Override
+                    public void onError(String message) {
+                        save.setEnabled(true);
+                        Toast.makeText(SettingsNotificationsActivity.this,
+                                message != null ? message : getString(R.string.error_generic),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

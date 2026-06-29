@@ -76,6 +76,14 @@ public final class Http {
         return execute(request, token);
     }
 
+    /** application/json POST — used by endpoints that expect a JSON body (e.g. preferences/update). */
+    public static Result postJson(String baseUrl, String path, String json, String token) {
+        RequestBody body = RequestBody.create(
+                json == null ? "{}" : json, MediaType.parse("application/json; charset=utf-8"));
+        Request.Builder request = new Request.Builder().url(baseUrl + path).post(body);
+        return execute(request, token);
+    }
+
     /** A single file part for a multipart upload (content already read into memory). */
     public static class FilePart {
         public final String field;

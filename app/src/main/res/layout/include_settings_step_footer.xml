@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:gravity="end"
+    android:orientation="horizontal">
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        android:id="@+id/btnStepReset"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_btn_view_order"
+        android:gravity="center"
+        android:minWidth="96dp"
+        android:paddingHorizontal="18dp"
+        android:text="@string/reset"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <com.anokix.distributor.ui.views.RobotoBoldTextView
+        android:id="@+id/btnStepSave"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/bg_login_button_primary"
+        android:gravity="center"
+        android:minWidth="130dp"
+        android:paddingHorizontal="18dp"
+        android:text="@string/save_changes"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+</LinearLayout>

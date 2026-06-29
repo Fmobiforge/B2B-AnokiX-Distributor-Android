@@ -16,6 +16,7 @@ import com.anokix.distributor.R;
 import com.anokix.distributor.data.MockData;
 import com.anokix.distributor.model.MenuItem;
 import com.anokix.distributor.ui.DeliveriesActivity;
+import com.anokix.distributor.ui.NotificationBadge;
 import com.anokix.distributor.ui.FinancesActivity;
 import com.anokix.distributor.ui.NotificationsActivity;
 import com.anokix.distributor.ui.ProductsActivity;
@@ -33,6 +34,14 @@ public class MoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_more, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() != null) {
+            NotificationBadge.refresh(requireContext(), getView().findViewById(R.id.notificationBadge));
+        }
     }
 
     @Override

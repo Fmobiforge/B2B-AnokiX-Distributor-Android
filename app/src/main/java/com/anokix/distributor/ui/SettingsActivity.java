@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import com.anokix.distributor.R;
 import com.anokix.distributor.model.SettingsProfile;
+import com.anokix.distributor.network.ApiCallback;
+import com.anokix.distributor.network.ApiClient;
+import com.anokix.distributor.network.dto.BaseInfoData;
 import com.anokix.distributor.session.SessionManager;
 
 public class SettingsActivity extends BaseSecondaryActivity {
@@ -37,12 +40,37 @@ public class SettingsActivity extends BaseSecondaryActivity {
     @Override
     protected void loadData() {
         bindProfileHeader();
+        // Refresh the header from the live account (base data).
+        ApiClient.get(this).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                if (data == null || data.user == null) return;
+                String name = ((safe(data.user.first_name) + " " + safe(data.user.last_name))).trim();
+                String email = safe(data.user.email);
+                if (!name.isEmpty()) {
+                    ((TextView) findViewById(R.id.profileName)).setText(name);
+                    ((TextView) findViewById(R.id.profileInitials)).setText(initialsOf(name, "?"));
+                }
+                if (!email.isEmpty()) {
+                    ((TextView) findViewById(R.id.profileEmail)).setText(email);
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                // Header keeps the session-backed values.
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         bindProfileHeader();
+    }
+
+    private static String safe(String s) {
+        return s == null ? "" : s;
     }
 
     private void bindProfileHeader() {

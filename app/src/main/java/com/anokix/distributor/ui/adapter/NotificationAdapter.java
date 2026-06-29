@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,7 +19,17 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
+    /** Tapping a row (or its action chip) opens the related screen. */
+    public interface OnNotificationClick {
+        void onClick(int position);
+    }
+
     private final List<NotificationItem> items = new ArrayList<>();
+    private OnNotificationClick listener;
+
+    public void setOnNotificationClick(OnNotificationClick l) {
+        this.listener = l;
+    }
 
     public void setItems(List<NotificationItem> data) {
         items.clear();
@@ -50,16 +59,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
         holder.iconContainer.setBackgroundResource(item.iconBgRes);
         holder.unreadDot.setVisibility(item.unread ? View.VISIBLE : View.GONE);
+        holder.importantTag.setVisibility(item.important ? View.VISIBLE : View.GONE);
 
         boolean hasAction = item.actionLabel != null && !item.actionLabel.isEmpty();
         holder.actionButton.setVisibility(hasAction ? View.VISIBLE : View.GONE);
         if (hasAction) {
             holder.actionButton.setText(item.actionLabel);
-            holder.actionButton.setOnClickListener(v ->
-                    Toast.makeText(v.getContext(), item.actionLabel, Toast.LENGTH_SHORT).show());
-        } else {
-            holder.actionButton.setOnClickListener(null);
         }
+
+        View.OnClickListener click = v -> {
+            if (listener != null) listener.onClick(holder.getBindingAdapterPosition());
+        };
+        holder.itemView.setOnClickListener(click);
+        holder.actionButton.setOnClickListener(hasAction ? click : null);
     }
 
     @Override
@@ -68,7 +80,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView title, message, time, actionButton;
+        final TextView title, message, time, actionButton, importantTag;
         final ImageView icon;
         final FrameLayout iconContainer;
         final View unreadDot;
@@ -79,6 +91,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             message = itemView.findViewById(R.id.message);
             time = itemView.findViewById(R.id.time);
             actionButton = itemView.findViewById(R.id.actionButton);
+            importantTag = itemView.findViewById(R.id.importantTag);
             icon = itemView.findViewById(R.id.icon);
             iconContainer = itemView.findViewById(R.id.iconContainer);
             unreadDot = itemView.findViewById(R.id.unreadDot);

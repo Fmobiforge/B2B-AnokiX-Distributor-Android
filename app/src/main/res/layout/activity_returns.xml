@@ -8,154 +8,416 @@
 
     <include layout="@layout/include_secondary_header" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingTop="16dp">
 
+            <!-- ===== Summary stats (horizontal scroll) ===== -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Total Returns -->
+                    <LinearLayout
+                        style="@style/DeliveryStatCard"
+                        android:layout_marginEnd="10dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_kpi_icon_purple">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_shopping_bag"
+                                app:tint="@color/purple_primary" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                style="@style/DeliveryStatLabel"
+                                android:text="@string/total_returns" />
+
+                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                                android:id="@+id/valTotalReturns"
+                                style="@style/DeliveryStatValue"
+                                android:text="0" />
+
+                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                                style="@style/DeliveryStatSub"
+                                android:text="@string/in_selected_range" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Approved -->
+                    <LinearLayout
+                        style="@style/DeliveryStatCard"
+                        android:layout_marginEnd="10dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_kpi_icon_green">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_person"
+                                app:tint="@color/success" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                style="@style/DeliveryStatLabel"
+                                android:text="@string/approved" />
+
+                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                                android:id="@+id/valApproved"
+                                style="@style/DeliveryStatValue"
+                                android:text="0" />
+
+                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                                style="@style/DeliveryStatSub"
+                                android:text="@string/in_selected_range" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Pending -->
+                    <LinearLayout
+                        style="@style/DeliveryStatCard"
+                        android:layout_marginEnd="10dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_kpi_icon_orange">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_clock"
+                                app:tint="@color/warning" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                style="@style/DeliveryStatLabel"
+                                android:text="@string/pending" />
+
+                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                                android:id="@+id/valPending"
+                                style="@style/DeliveryStatValue"
+                                android:text="0" />
+
+                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                                style="@style/DeliveryStatSub"
+                                android:text="@string/awaiting_review" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Rejected -->
+                    <LinearLayout
+                        style="@style/DeliveryStatCard"
+                        android:layout_marginEnd="10dp">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_kpi_icon_red">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_close"
+                                app:tint="@color/danger" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                style="@style/DeliveryStatLabel"
+                                android:text="@string/rejected" />
+
+                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                                android:id="@+id/valRejected"
+                                style="@style/DeliveryStatValue"
+                                android:text="0" />
+
+                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                                style="@style/DeliveryStatSub"
+                                android:text="@string/in_selected_range" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Credit Issued -->
+                    <LinearLayout style="@style/DeliveryStatCard">
+
+                        <FrameLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_kpi_icon_blue">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_shield_check"
+                                app:tint="@color/info" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributor.ui.views.RobotoTextView
+                                style="@style/DeliveryStatLabel"
+                                android:text="@string/credit_issued" />
+
+                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                                android:id="@+id/valCreditIssued"
+                                style="@style/DeliveryStatValue"
+                                android:text="R0.00" />
+
+                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                                style="@style/DeliveryStatSub"
+                                android:text="@string/in_selected_range" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- ===== Search ===== -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_search_bar"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/text_secondary" />
+
+                <com.anokix.distributor.ui.views.RobotoEditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/search_returns"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="0dp"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- ===== Filters: Reason + Date range ===== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                android:paddingTop="8dp">
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/reasonFilter"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_height="@dimen/filter_pill_height"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_stat_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:background="@drawable/bg_search_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
-                        android:id="@+id/countPending"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="12"
-                        android:textColor="@color/purple_primary"
-                        android:textSize="22sp" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_filter"
+                        app:tint="@color/text_secondary" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="wrap_content"
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/reasonFilterLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/pending"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/all_reasons"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="@null"
+                        android:rotation="90"
+                        android:src="@drawable/ic_chevron_right"
+                        app:tint="@color/text_secondary" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/dateRangeButton"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="3dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_stat_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                    android:layout_height="@dimen/filter_pill_height"
+                    android:layout_weight="1.4"
+                    android:background="@drawable/bg_search_bar"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
-                        android:id="@+id/countApproved"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/text_secondary" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/dateRangeLabel"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="18"
-                        android:textColor="@color/success"
-                        android:textSize="22sp" />
-
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/approved"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_stat_card"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
-                        android:id="@+id/countRejected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4"
-                        android:textColor="@color/danger"
-                        android:textSize="22sp" />
-
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rejected"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp" />
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="31 Mar – 30 Jun 2026"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <!-- ===== Status tabs ===== -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:scrollbars="none">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
-                    android:id="@+id/tabPending"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/pending"
-                    android:textColor="@color/purple_primary"
-                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_segment_container"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
 
-                <com.anokix.distributor.ui.views.RobotoTextView
-                    android:id="@+id/tabApproved"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/approved"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:id="@+id/tabAll"
+                        style="@style/DeliveryTab"
+                        android:background="@drawable/bg_segment_tab_selected"
+                        android:text="@string/all_returns"
+                        android:textColor="#FFFFFF" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
-                    android:id="@+id/tabRejected"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/rejected"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/tabPending"
+                        style="@style/DeliveryTab"
+                        android:text="@string/pending" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/border" />
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/tabApproved"
+                        style="@style/DeliveryTab"
+                        android:text="@string/approved" />
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        android:id="@+id/tabRejected"
+                        style="@style/DeliveryTab"
+                        android:text="@string/rejected" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/returnsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:padding="12dp" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="14dp"
+                android:nestedScrollingEnabled="false" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:text="@string/no_returns"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:visibility="gone" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

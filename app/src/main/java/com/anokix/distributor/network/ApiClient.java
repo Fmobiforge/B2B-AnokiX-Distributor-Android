@@ -7,9 +7,18 @@ import android.util.Log;
 
 import com.anokix.distributor.network.dto.AutocompleteData;
 import com.anokix.distributor.network.dto.BaseInfoData;
+import com.anokix.distributor.network.dto.BusinessProfileData;
 import com.anokix.distributor.network.dto.CoordinateData;
 import com.anokix.distributor.network.dto.CreateTraderData;
 import com.anokix.distributor.network.dto.DashboardData;
+import com.anokix.distributor.network.dto.DeliveriesData;
+import com.anokix.distributor.network.dto.DeliveryDetailData;
+import com.anokix.distributor.network.dto.NotificationsData;
+import com.anokix.distributor.network.dto.PreferencesData;
+import com.anokix.distributor.network.dto.ProfileUpdateData;
+import com.anokix.distributor.network.dto.ReturnDetailData;
+import com.anokix.distributor.network.dto.ReturnsData;
+import com.anokix.distributor.network.dto.UnreadCountData;
 import com.anokix.distributor.network.dto.InventorySummaryData;
 import com.anokix.distributor.network.dto.LoginData;
 import com.anokix.distributor.network.dto.OrderDetailData;
@@ -250,8 +259,215 @@ public final class ApiClient {
         });
     }
 
+    // ---- Deliveries ------------------------------------------------------
+
+    /**
+     * Deliveries list + KPI summary + status counts for a date range. Empty filters are
+     * omitted. Search/tab/area filtering is then applied locally over the returned set.
+     */
+    public void getDeliveries(String dateFrom, String dateTo, String search,
+                              int page, int perPage, ApiCallback<DeliveriesData> cb) {
+        Map<String, String> q = new HashMap<>();
+        if (dateFrom != null && !dateFrom.isEmpty()) q.put("date_from", dateFrom);
+        if (dateTo != null && !dateTo.isEmpty()) q.put("date_to", dateTo);
+        if (search != null && !search.trim().isEmpty()) q.put("search", search.trim());
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/distributor/deliveries", q, DeliveriesData.class, cb);
+    }
+
+    /** Full delivery detail (+ items) for the detail screen. */
+    public void getDeliveryById(String id, ApiCallback<DeliveryDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/deliveries/get-by-id", q, DeliveryDetailData.class, cb);
+    }
+
+    /**
+     * Advance a delivery: {@code action} is {@code dispatch} (ReadyForDelivery →
+     * OutForDelivery) or {@code deliver} (OutForDelivery → Delivered). The endpoint
+     * returns the updated delivery (same shape as get-by-id).
+     */
+    public void deliveryAction(String action, long deliveryId, ApiCallback<DeliveryDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("order_id", String.valueOf(deliveryId));
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/deliveries/" + action,
+                    form, session.getToken());
+            deliver(r, DeliveryDetailData.class, cb);
+        });
+    }
+
+    // ---- Returns (GRNs) --------------------------------------------------
+
+    /**
+     * Returns list + KPI summary + status counts for a date range. Empty filters are
+     * omitted. Search / status tab / reason filtering is then applied locally over the
+     * returned set.
+     */
+    public void getReturns(String dateFrom, String dateTo, String search,
+                           int page, int perPage, ApiCallback<ReturnsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        if (dateFrom != null && !dateFrom.isEmpty()) q.put("date_from", dateFrom);
+        if (dateTo != null && !dateTo.isEmpty()) q.put("date_to", dateTo);
+        if (search != null && !search.trim().isEmpty()) q.put("search", search.trim());
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/distributor/grns", q, ReturnsData.class, cb);
+    }
+
+    /** Full return detail (+ items) for the detail screen. */
+    public void getReturnById(String id, ApiCallback<ReturnDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/grns/get-by-id", q, ReturnDetailData.class, cb);
+    }
+
+    /**
+     * Decide a return: {@code action} is {@code approve} or {@code reject}; {@code note} is
+     * the optional decision note. The endpoint returns the updated return (same shape as
+     * get-by-id).
+     */
+    public void returnAction(String action, long grnId, String note,
+                             ApiCallback<ReturnDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("grn_id", String.valueOf(grnId));
+        if (note != null) form.put("note", note);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/grns/" + action,
+                    form, session.getToken());
+            deliver(r, ReturnDetailData.class, cb);
+        });
+    }
+
+    // ---- Notifications (common) ------------------------------------------
+
+    /** Live unread-notification count (api/common/notifications/unread-count). */
+    public void getUnreadCount(ApiCallback<UnreadCountData> cb) {
+        getAuthed("api/common/notifications/unread-count", null, UnreadCountData.class, cb);
+    }
+
+    /**
+     * Notification feed (api/common/notifications). {@code filter} is "all" (omitted)
+     * or "unread"; paged by {@code page}/{@code perPage}.
+     */
+    public void getNotifications(String filter, int page, int perPage,
+                                ApiCallback<NotificationsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        if (filter != null && !filter.isEmpty() && !"all".equals(filter)) q.put("filter", filter);
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/common/notifications", q, NotificationsData.class, cb);
+    }
+
+    /** Mark one notification read (api/common/notifications/read, id=). */
+    public void markNotificationRead(String id, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/common/notifications/read", form, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
+    }
+
+    /** Mark every notification read (api/common/notifications/read, all=true). */
+    public void markAllNotificationsRead(ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("all", "true");
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/common/notifications/read", form, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
+    }
+
+    // ---- Settings: profile / preferences ---------------------------------
+
+    /** Portal preferences + notification toggles (api/common/preferences). */
+    public void getPreferences(ApiCallback<PreferencesData> cb) {
+        getAuthed("api/common/preferences", null, PreferencesData.class, cb);
+    }
+
+    /** Update the personal profile (api/common/profile/update). */
+    public void updateProfile(String firstName, String lastName, String email, String phone,
+                              ApiCallback<ProfileUpdateData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("first_name", firstName == null ? "" : firstName);
+        form.put("last_name", lastName == null ? "" : lastName);
+        form.put("email", email == null ? "" : email);
+        form.put("phone_number", phone == null ? "" : phone);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/common/profile/update", form, session.getToken());
+            deliver(r, ProfileUpdateData.class, cb);
+        });
+    }
+
+    /** Change the account password (api/common/profile/password). */
+    public void changePassword(String currentPassword, String newPassword, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("current_password", currentPassword == null ? "" : currentPassword);
+        form.put("new_password", newPassword == null ? "" : newPassword);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/common/profile/password", form, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
+    }
+
+    /** Update the 5 notification toggles (api/common/preferences/update, JSON body). */
+    public void updateNotificationPrefs(boolean orderAlerts, boolean lowStockAlerts,
+                                        boolean deliveryUpdates, boolean financeReminders,
+                                        boolean reportReady, ApiCallback<Void> cb) {
+        Map<String, Object> notifications = new HashMap<>();
+        notifications.put("orderAlerts", orderAlerts);
+        notifications.put("lowStockAlerts", lowStockAlerts);
+        notifications.put("deliveryUpdates", deliveryUpdates);
+        notifications.put("financeReminders", financeReminders);
+        notifications.put("reportReady", reportReady);
+        Map<String, Object> body = new HashMap<>();
+        body.put("notifications", notifications);
+        postPreferences(body, cb);
+    }
+
+    /** Update the regional preferences (api/common/preferences/update, JSON body). */
+    public void updatePreferences(String language, String currency, String timezone,
+                                  String dateFormat, ApiCallback<Void> cb) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("language", language);
+        body.put("currency", currency);
+        body.put("timezone", timezone);
+        body.put("date_format", dateFormat);
+        postPreferences(body, cb);
+    }
+
+    private void postPreferences(Map<String, Object> body, ApiCallback<Void> cb) {
+        final String json = gson.toJson(body);
+        io.execute(() -> {
+            Http.Result r = Http.postJson(BASE_URL, "api/common/preferences/update", json, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
+    }
+
     public void getBaseInfo(ApiCallback<BaseInfoData> cb) {
         getAuthed("api/common/base-info", null, BaseInfoData.class, cb);
+    }
+
+    // ---- Settings: business profile (7-step) -----------------------------
+
+    /** Full distributor business record for the Business editor (api/distributor/business/profile). */
+    public void getBusinessProfile(ApiCallback<BusinessProfileData> cb) {
+        getAuthed("api/distributor/business/profile", null, BusinessProfileData.class, cb);
+    }
+
+    /**
+     * Save one Business step (api/distributor/business/profile/update). Multipart so steps that
+     * carry files (logo, documents) share the same path; text-only steps pass an empty file list.
+     */
+    public void updateBusinessProfile(Map<String, String> form, List<Http.FilePart> files,
+                                      ApiCallback<Void> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/business/profile/update",
+                    form, files, session.getToken());
+            deliverStatusOnly(r, cb);
+        });
     }
 
     /** Lookup data for the Create Trader wizard (categories, distributors, trader types). */

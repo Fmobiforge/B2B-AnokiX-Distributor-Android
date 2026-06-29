@@ -7,12 +7,14 @@
     app:cardBackgroundColor="@color/surface"
     app:cardCornerRadius="12dp"
     app:cardElevation="1dp"
+    app:contentPadding="0dp"
     app:strokeColor="@color/border"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="14dp">
 
         <View
             android:id="@+id/unreadDot"
@@ -52,6 +54,23 @@
             app:layout_constraintStart_toEndOf="@id/iconContainer"
             app:layout_constraintTop_toTopOf="@id/iconContainer" />
 
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/importantTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_badge_danger"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="@string/important_tag"
+            android:textAllCaps="false"
+            android:textColor="@color/danger"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/iconContainer"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
         <com.anokix.distributor.ui.views.RobotoTextView
             android:id="@+id/message"
             android:layout_width="0dp"
@@ -65,7 +84,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iconContainer"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/importantTag" />
 
         <com.anokix.distributor.ui.views.RobotoLightTextView
             android:id="@+id/time"

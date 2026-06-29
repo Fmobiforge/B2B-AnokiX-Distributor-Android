@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anokix.distributor.R;
 import com.anokix.distributor.data.MockData;
 import com.anokix.distributor.model.ListItem;
+import com.anokix.distributor.ui.NotificationBadge;
 import com.anokix.distributor.ui.NotificationsActivity;
 import com.anokix.distributor.ui.adapter.InventoryAdapter;
 import com.anokix.distributor.ui.views.DonutChartView;
@@ -36,6 +37,14 @@ public class InventoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_inventory, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() != null) {
+            NotificationBadge.refresh(requireContext(), getView().findViewById(R.id.notificationBadge));
+        }
     }
 
     @Override

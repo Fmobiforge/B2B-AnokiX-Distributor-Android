@@ -25,6 +25,7 @@ import com.anokix.distributor.network.ApiClient;
 import com.anokix.distributor.network.dto.ProductsData;
 import com.anokix.distributor.ui.AddProductOptionsActivity;
 import com.anokix.distributor.ui.CreateProductActivity;
+import com.anokix.distributor.ui.NotificationBadge;
 import com.anokix.distributor.ui.NotificationsActivity;
 import com.anokix.distributor.ui.adapter.ProductAdapter;
 
@@ -44,6 +45,14 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_products, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() != null) {
+            NotificationBadge.refresh(requireContext(), getView().findViewById(R.id.notificationBadge));
+        }
     }
 
     @Override

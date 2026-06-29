@@ -8,151 +8,251 @@
 
     <include layout="@layout/include_secondary_header" />
 
-    <!-- Page header -->
-    <LinearLayout
+    <!-- Subtitle -->
+    <com.anokix.distributor.ui.views.RobotoTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
-        android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="12dp"
+        android:text="@string/notifications_subtitle"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+
+    <!-- ===== Summary stats (horizontal scroll) ===== -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="14dp"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <!-- All Notifications -->
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                style="@style/DeliveryStatCard"
+                android:layout_marginEnd="10dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
-                    android:id="@+id/unreadCount"
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_kpi_icon_purple">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_notifications"
+                        app:tint="@color/purple_primary" />
+                </FrameLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 unread"
-                    android:textColor="@color/purple_primary"
-                    android:textSize="12sp" />
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/DeliveryStatLabel"
+                        android:text="@string/all_notifications" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:id="@+id/statAll"
+                        style="@style/DeliveryStatValue"
+                        android:text="0" />
+
+                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                        style="@style/DeliveryStatSub"
+                        android:text="@string/total_notifications_sub" />
+                </LinearLayout>
             </LinearLayout>
 
+            <!-- Read -->
             <LinearLayout
-                android:id="@+id/markAllRead"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_btn_view_order"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
+                style="@style/DeliveryStatCard"
+                android:layout_marginEnd="10dp">
 
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_check_purple" />
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_kpi_icon_green">
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_check_circle"
+                        app:tint="@color/success" />
+                </FrameLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="@string/mark_all_read"
-                    android:textColor="@color/purple_primary"
-                    android:textSize="12sp" />
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/DeliveryStatLabel"
+                        android:text="@string/read_label" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:id="@+id/statRead"
+                        style="@style/DeliveryStatValue"
+                        android:text="0" />
+
+                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                        android:id="@+id/lblRead"
+                        style="@style/DeliveryStatSub"
+                        android:text="0%"
+                        android:textColor="@color/success" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Unread -->
+            <LinearLayout
+                style="@style/DeliveryStatCard"
+                android:layout_marginEnd="10dp">
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_kpi_icon_orange">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_notifications"
+                        app:tint="@color/warning" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/DeliveryStatLabel"
+                        android:text="@string/unread" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:id="@+id/statUnread"
+                        style="@style/DeliveryStatValue"
+                        android:text="0"
+                        android:textColor="@color/warning" />
+
+                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                        android:id="@+id/lblUnread"
+                        style="@style/DeliveryStatSub"
+                        android:text="0%"
+                        android:textColor="@color/warning" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Important -->
+            <LinearLayout style="@style/DeliveryStatCard">
+
+                <FrameLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_kpi_icon_red">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_warning_box"
+                        app:tint="@color/danger" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <com.anokix.distributor.ui.views.RobotoTextView
+                        style="@style/DeliveryStatLabel"
+                        android:text="@string/important_label" />
+
+                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        android:id="@+id/statImportant"
+                        style="@style/DeliveryStatValue"
+                        android:text="0" />
+
+                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                        style="@style/DeliveryStatSub"
+                        android:text="@string/important_sub" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </HorizontalScrollView>
 
-    <!-- Filter tabs -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border" />
+
+    <!-- Tabs (All / Unread) + Mark all as read -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="4dp">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
 
-        <LinearLayout
-            android:id="@+id/tabAllWrap"
-            android:layout_width="0dp"
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/tabAll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="4dp">
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:text="@string/tab_all"
+            android:textColor="@color/purple_primary"
+            android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
-                android:id="@+id/tabAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="@string/tab_all"
-                android:textColor="@color/purple_primary"
-                android:textSize="14sp" />
-
-            <View
-                android:id="@+id/tabAllIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="@drawable/bg_tab_indicator_purple" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tabUnreadWrap"
-            android:layout_width="0dp"
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/tabUnread"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="4dp">
+            android:layout_marginStart="20dp"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:text="@string/unread"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
-                android:id="@+id/tabUnread"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="@string/unread"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <View
-                android:id="@+id/tabUnreadIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="@drawable/bg_tab_indicator_purple"
-                android:visibility="invisible" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/tabOrdersWrap"
+        <View
             android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.anokix.distributor.ui.views.RobotoBoldTextView
+            android:id="@+id/markAllRead"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="4dp">
-
-            <com.anokix.distributor.ui.views.RobotoTextView
-                android:id="@+id/tabOrders"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="@string/nav_orders"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <View
-                android:id="@+id/tabOrdersIndicator"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="@drawable/bg_tab_indicator_purple"
-                android:visibility="invisible" />
-        </LinearLayout>
+            android:background="?attr/selectableItemBackground"
+            android:padding="6dp"
+            android:text="@string/mark_all_read"
+            android:textColor="@color/purple_primary"
+            android:textSize="13sp" />
     </LinearLayout>
 
     <View
@@ -160,14 +260,100 @@
         android:layout_height="1dp"
         android:background="@color/border" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notificationsList"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="16dp" />
+        android:layout_weight="1">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notificationsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp" />
+
+        <LinearLayout
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:alpha="0.4"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_notifications"
+                app:tint="@color/text_secondary" />
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/notif_empty_title"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <com.anokix.distributor.ui.views.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/notif_empty_sub"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Pagination footer -->
+    <LinearLayout
+        android:id="@+id/paginationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/surface"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone">
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:id="@+id/pageInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Showing 1 to 8 of 15"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <ImageButton
+            android:id="@+id/btnPrev"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/previous"
+            android:rotation="180"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/text_primary" />
+
+        <ImageButton
+            android:id="@+id/btnNext"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/next"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/text_primary" />
+    </LinearLayout>
 </LinearLayout>

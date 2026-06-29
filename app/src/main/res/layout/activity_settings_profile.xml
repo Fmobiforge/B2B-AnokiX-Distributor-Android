@@ -117,11 +117,30 @@
                         style="@style/StoreFieldLabel"
                         android:text="@string/phone_label" />
 
-                    <com.anokix.distributor.ui.views.RobotoEditText
-                        android:id="@+id/etPhone"
-                        style="@style/StoreFieldInput"
-                        android:hint="@string/hint_phone_number"
-                        android:inputType="phone" />
+                    <LinearLayout style="@style/SettingsPhoneRow">
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/ccpPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            app:ccp_contentColor="@color/text_primary"
+                            app:ccp_defaultNameCode="ZA"
+                            app:ccp_showNameCode="false"
+                            app:ccp_textSize="14sp"
+                            app:ccpDialog_showTitle="true" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="24dp"
+                            android:background="@color/border" />
+
+                        <com.anokix.distributor.ui.views.RobotoEditText
+                            android:id="@+id/etPhone"
+                            style="@style/SettingsPhoneInput"
+                            android:hint="@string/hint_phone_number"
+                            android:inputType="phone" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

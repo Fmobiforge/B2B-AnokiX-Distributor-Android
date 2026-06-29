@@ -98,7 +98,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             holder.image.setVisibility(View.VISIBLE);
             Glide.with(holder.image.getContext())
                     .load(item.imageUrl)
-                    .fitCenter()
+                    .centerCrop()
                     .into(holder.image);
         } else {
             holder.image.setVisibility(View.GONE);

@@ -40,22 +40,22 @@ public class MockDistributorRepository implements DistributorRepository {
                     "Order #ORD-10456 has been placed by Sunrise Traders.",
                     "2m ago", "orders",
                     R.drawable.ic_orders, R.drawable.bg_kpi_icon_purple,
-                    R.color.purple_primary, "View order", true),
+                    R.color.purple_primary, "View order", true, false),
             new NotificationItem("n2", "Low stock alert",
                     "5 products are low on stock. Please restock soon.",
                     "1h ago", "inventory",
                     R.drawable.ic_warning_box, R.drawable.bg_kpi_icon_orange,
-                    R.color.warning, "View items", true),
+                    R.color.warning, "View items", true, false),
             new NotificationItem("n3", "Delivery delayed",
                     "Delivery for order #ORD-10432 has been delayed.",
                     "3h ago", "deliveries",
                     R.drawable.ic_deliveries, R.drawable.bg_kpi_icon_red,
-                    R.color.danger, "View order", true),
+                    R.color.danger, "View order", true, true),
             new NotificationItem("n4", "Order delivered",
                     "Order #ORD-10428 has been delivered successfully.",
                     "Yesterday, 6:20 PM", "orders",
                     R.drawable.ic_check_green, R.drawable.bg_kpi_icon_green,
-                    R.color.success, "", false)
+                    R.color.success, "", false, false)
     ));
 
     private final List<NotificationPreference> preferences = new ArrayList<>(Arrays.asList(
@@ -136,7 +136,7 @@ public class MockDistributorRepository implements DistributorRepository {
         for (int i = 0; i < notifications.size(); i++) {
             NotificationItem n = notifications.get(i);
             notifications.set(i, new NotificationItem(n.id, n.title, n.message, n.relativeTime,
-                    n.type, n.iconRes, n.iconBgRes, n.iconTintRes, n.actionLabel, false));
+                    n.type, n.iconRes, n.iconBgRes, n.iconTintRes, n.actionLabel, false, n.important));
         }
     }
 

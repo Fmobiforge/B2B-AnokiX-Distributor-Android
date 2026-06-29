@@ -24,6 +24,7 @@ import com.anokix.distributor.network.ApiClient;
 import com.anokix.distributor.network.dto.DashboardData;
 import com.anokix.distributor.session.SessionManager;
 import com.anokix.distributor.ui.MainActivity;
+import com.anokix.distributor.ui.NotificationBadge;
 import com.anokix.distributor.ui.NotificationsActivity;
 import com.anokix.distributor.ui.TradersActivity;
 import com.anokix.distributor.ui.views.DonutChartView;
@@ -68,6 +69,14 @@ public class DashboardFragment extends Fragment {
         buildKpiGrid(view);
         buildSummaryCards(view, MockData.fallbackSummaryCards());
         loadDashboard(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() != null) {
+            NotificationBadge.refresh(requireContext(), getView().findViewById(R.id.notificationBadge));
+        }
     }
 
     private void bindWelcome(View view) {
