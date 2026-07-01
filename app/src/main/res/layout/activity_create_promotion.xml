@@ -27,7 +27,7 @@
             android:src="@drawable/ic_chevron_right"
             app:tint="@android:color/white" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/screenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,15 +78,15 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_type_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/PromoStepSubtitle"
                     android:text="@string/promo_step_type_sub" />
 
-                <com.anokix.distributor.ui.views.FlowLayout
+                <com.anokix.distributorapp.ui.views.FlowLayout
                     android:id="@+id/typeContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,21 +106,21 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_details_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/StoreFieldLabel"
                     android:text="@string/promo_campaign_name" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/etCampaignName"
                     style="@style/StoreFieldInput"
                     android:hint="@string/promo_campaign_name_hint"
                     android:inputType="textCapWords" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/StoreFieldLabel"
                     android:text="@string/promo_objective" />
 
@@ -128,7 +128,7 @@
                     android:id="@+id/objectiveField"
                     style="@style/ProductDropdown">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/objectiveLabel"
                         style="@style/ProductDropdownLabel"
                         android:text="@string/promo_select_objective" />
@@ -149,7 +149,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             style="@style/StoreFieldLabel"
                             android:text="@string/promo_start_date" />
 
@@ -157,7 +157,7 @@
                             android:id="@+id/startDateField"
                             style="@style/ProductDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/startDateLabel"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/promo_select_date" />
@@ -178,7 +178,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             style="@style/StoreFieldLabel"
                             android:text="@string/promo_end_date" />
 
@@ -186,7 +186,7 @@
                             android:id="@+id/endDateField"
                             style="@style/ProductDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/endDateLabel"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/promo_select_date" />
@@ -214,11 +214,11 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             style="@style/StoreFieldLabel"
                             android:text="@string/promo_budget" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etBudget"
                             style="@style/StoreFieldInput"
                             android:hint="5000.00"
@@ -232,11 +232,11 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             style="@style/StoreFieldLabel"
                             android:text="@string/promo_daily_budget" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etDailyBudget"
                             style="@style/StoreFieldInput"
                             android:hint="500.00"
@@ -244,11 +244,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/StoreFieldLabel"
                     android:text="@string/promo_description" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -277,15 +277,15 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_targeting_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/StoreFieldLabel"
                     android:text="@string/promo_business_address" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/etAddressSearch"
                     style="@style/StoreFieldInput"
                     android:hint="@string/promo_search_address"
@@ -297,15 +297,15 @@
                     android:layout_height="220dp"
                     android:layout_marginTop="10dp" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/StoreFieldLabel"
                     android:text="@string/promo_trader_segments" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/PromoStepSubtitle"
                     android:text="@string/promo_trader_segments_sub" />
 
-                <com.anokix.distributor.ui.views.FlowLayout
+                <com.anokix.distributorapp.ui.views.FlowLayout
                     android:id="@+id/segmentContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -325,11 +325,11 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_creative_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/PromoStepSubtitle"
                     android:text="@string/promo_step_creative_sub" />
 
@@ -340,7 +340,7 @@
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/tabImage"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -351,7 +351,7 @@
                         android:textColor="@color/purple_primary"
                         android:textSize="14sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/tabVideo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -397,7 +397,7 @@
                                 android:src="@drawable/ic_add"
                                 app:tint="@color/purple_primary" />
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
@@ -440,7 +440,7 @@
                             android:src="@drawable/ic_add"
                             app:tint="@color/purple_primary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:id="@+id/videoLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -466,23 +466,23 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_products_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/PromoStepSubtitle"
                     android:text="@string/promo_step_products_sub" />
 
                 <!-- Single Products -->
                 <LinearLayout style="@style/PromoSectionHeader">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/singleHeader"
                         style="@style/PromoSectionTitle"
                         android:text="@string/promo_single_products" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/btnAddSingle"
                         style="@style/PromoAddButton"
                         android:text="@string/promo_add" />
@@ -497,12 +497,12 @@
                 <!-- Combo Deals -->
                 <LinearLayout style="@style/PromoSectionHeader">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/comboHeader"
                         style="@style/PromoSectionTitle"
                         android:text="@string/promo_combo_deals" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/btnAddCombo"
                         style="@style/PromoAddButton"
                         android:text="@string/promo_add" />
@@ -517,12 +517,12 @@
                 <!-- Buy1Get1 -->
                 <LinearLayout style="@style/PromoSectionHeader">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/b1g1Header"
                         style="@style/PromoSectionTitle"
                         android:text="@string/promo_b1g1_deals" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/btnAddB1g1"
                         style="@style/PromoAddButton"
                         android:text="@string/promo_add" />
@@ -548,11 +548,11 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_budget_title" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoCardTitle"
                     android:layout_marginTop="10dp"
                     android:text="@string/promo_budget_summary" />
@@ -561,49 +561,49 @@
                     android:id="@+id/budgetSummaryCard"
                     style="@style/PromoCard">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoCardCaption"
                         android:text="@string/promo_total_budget" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/budgetTotal"
                         style="@style/PromoCardValue"
                         android:text="R0" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoCardCaption"
                         android:text="@string/promo_daily_budget" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/budgetDaily"
                         style="@style/PromoCardValue"
                         android:text="R0" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoCardCaption"
                         android:text="@string/promo_duration" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/budgetDuration"
                         style="@style/PromoCardValue"
                         android:text="-" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoCardCaption"
                         android:text="@string/promo_products_cost" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/budgetProductsCost"
                         style="@style/PromoCardValue"
                         android:text="R0" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/budgetBreakdown"
                         style="@style/PromoCardCaption"
                         android:text="" />
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoCardTitle"
                     android:layout_marginTop="14dp"
                     android:text="@string/promo_estimated_performance" />
@@ -626,7 +626,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/PromoStepTitle"
                     android:text="@string/promo_step_review_title" />
 
@@ -646,7 +646,7 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -663,7 +663,7 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="40dp"

@@ -16,7 +16,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/traderName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/traderCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="11sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/traderLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:gravity="end"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/segmentTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:textColor="@color/text_secondary"
                 android:textSize="11sp" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/newTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -19,14 +19,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notif_order_alerts_title"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -35,7 +35,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+        <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
             android:id="@+id/switchOrderAlerts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,14 +62,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notif_low_stock_title"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -78,7 +78,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+        <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
             android:id="@+id/switchLowStock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,14 +105,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notif_delivery_title"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -121,7 +121,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+        <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
             android:id="@+id/switchDeliveryUpdates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,14 +148,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notif_finance_title"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -164,7 +164,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+        <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
             android:id="@+id/switchFinanceReminders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -191,14 +191,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notif_report_title"
                 android:textColor="@color/text_primary"
                 android:textSize="12sp" />
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -207,7 +207,7 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoSwitchCompat
+        <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
             android:id="@+id/switchReportReady"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

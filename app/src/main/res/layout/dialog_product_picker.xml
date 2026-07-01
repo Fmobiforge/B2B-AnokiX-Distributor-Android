@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/pickerToggleBuy"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -27,7 +27,7 @@
             android:textColor="@color/purple_primary"
             android:textSize="13sp" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/pickerToggleFree"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -55,7 +55,7 @@
             android:src="@drawable/ic_search"
             app:tint="@color/text_secondary" />
 
-        <com.anokix.distributor.ui.views.RobotoEditText
+        <com.anokix.distributorapp.ui.views.RobotoEditText
             android:id="@+id/pickerSearch"
             android:layout_width="0dp"
             android:layout_height="match_parent"

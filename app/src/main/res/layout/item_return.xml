@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/returnNumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:textColor="@color/purple_primary"
                 android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/statusBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/reasonLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/avatar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/traderName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     android:textColor="@color/text_primary"
                     android:textSize="12sp" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/traderPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -128,14 +128,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/submitted_label"
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/dateValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,14 +153,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/items_label"
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/itemsValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -185,14 +185,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quantity_label"
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/qtyValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,14 +208,14 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/credit_note_label"
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/creditValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -259,7 +259,7 @@
                     android:src="@drawable/ic_eye"
                     app:tint="@color/purple_primary" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"

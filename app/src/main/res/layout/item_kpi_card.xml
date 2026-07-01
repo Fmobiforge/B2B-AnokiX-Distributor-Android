@@ -28,7 +28,7 @@
                 android:src="@drawable/ic_shopping_bag" />
         </FrameLayout>
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/kpiTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <com.anokix.distributor.ui.views.RobotoBoldTextView
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
         android:id="@+id/kpiValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         android:orientation="horizontal"
         android:paddingVertical="2dp">
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/kpiActionTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

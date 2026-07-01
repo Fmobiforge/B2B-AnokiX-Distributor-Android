@@ -25,7 +25,7 @@
             android:src="@drawable/ic_stores"
             app:tint="@color/purple_primary" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/menuTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -17,7 +17,7 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -106,14 +106,14 @@
                             android:orientation="vertical"
                             android:padding="16dp">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/mediaTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_title" />
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/mediaDescription"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/promo_summary_title"
@@ -164,7 +164,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/promo_added_products"
@@ -178,7 +178,7 @@
                         android:layout_marginTop="12dp"
                         android:orientation="vertical" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/productsEmpty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/promo_stock_logs"
@@ -214,7 +214,7 @@
                         android:layout_marginTop="12dp"
                         android:orientation="vertical" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/stockLogsEmpty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
         android:padding="16dp"
         android:visibility="gone">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/btnEdit"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -250,7 +250,7 @@
             android:textColor="@color/purple_primary"
             android:textSize="@dimen/text_body" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/btnClose"
             android:layout_width="0dp"
             android:layout_height="48dp"

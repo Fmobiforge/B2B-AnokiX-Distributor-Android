@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304349087062:android:71fecd9a55af1a9fbe82f7",
+        "mobilesdk_app_id": "1:304349087062:android:bb83773be9648a06be82f7",
         "android_client_info": {
-          "package_name": "com.anokix.distributor"
+          "package_name": "com.anokix.distributorapp"
         }
       },
       "oauth_client": [],
@@ -26,9 +26,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304349087062:android:dcd7bd312c511c19be82f7",
+        "mobilesdk_app_id": "1:304349087062:android:ae788265b8fff554be82f7",
         "android_client_info": {
-          "package_name": "com.anokix.trader"
+          "package_name": "com.anokix.traderapp"
         }
       },
       "oauth_client": [],

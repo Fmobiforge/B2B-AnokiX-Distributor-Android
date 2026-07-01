@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"
                         android:layout_marginTop="0dp"
                         android:text="@string/language_label" />
@@ -48,7 +48,7 @@
                         style="@style/StoreFieldInput"
                         android:spinnerMode="dropdown" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"
                         android:text="@string/currency_label" />
 
@@ -57,7 +57,7 @@
                         style="@style/StoreFieldInput"
                         android:spinnerMode="dropdown" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"
                         android:text="@string/time_zone_label" />
 
@@ -66,7 +66,7 @@
                         style="@style/StoreFieldInput"
                         android:spinnerMode="dropdown" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         style="@style/StoreFieldLabel"
                         android:text="@string/date_format_label" />
 

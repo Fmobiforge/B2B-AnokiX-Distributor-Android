@@ -41,7 +41,7 @@
                 android:src="@drawable/ic_orders" />
         </FrameLayout>
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintStart_toEndOf="@id/iconContainer"
             app:layout_constraintTop_toTopOf="@id/iconContainer" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/importantTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             app:layout_constraintStart_toEndOf="@id/iconContainer"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             app:layout_constraintStart_toEndOf="@id/iconContainer"
             app:layout_constraintTop_toBottomOf="@id/importantTag" />
 
-        <com.anokix.distributor.ui.views.RobotoLightTextView
+        <com.anokix.distributorapp.ui.views.RobotoLightTextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             app:layout_constraintStart_toEndOf="@id/iconContainer"
             app:layout_constraintTop_toBottomOf="@id/message" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/actionButton"
             android:layout_width="wrap_content"
             android:layout_height="30dp"

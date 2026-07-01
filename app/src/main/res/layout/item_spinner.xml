@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Closed (selected) spinner item — matches StoreFieldInput text size. -->
-<com.anokix.distributor.ui.views.RobotoTextView
+<com.anokix.distributorapp.ui.views.RobotoTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="match_parent"

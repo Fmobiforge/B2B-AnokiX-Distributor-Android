@@ -50,11 +50,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_company_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_company_sub" />
 
@@ -99,14 +99,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/biz_company_logo"
                             android:textColor="@color/text_primary"
                             android:textSize="13sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -120,22 +120,22 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_company_legal_name" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etCompanyLegalName"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_trading_name" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etTradingName"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
@@ -145,22 +145,22 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_registration_number" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etRegNumber"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_vat_number" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etVatNumber"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
@@ -170,11 +170,11 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_company_email" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etCompanyEmail"
                             style="@style/SettingsFieldInput"
                             android:inputType="textEmailAddress" />
@@ -182,7 +182,7 @@
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/biz_company_phone" />
 
@@ -204,7 +204,7 @@
                                 android:layout_height="24dp"
                                 android:background="@color/border" />
 
-                            <com.anokix.distributor.ui.views.RobotoEditText
+                            <com.anokix.distributorapp.ui.views.RobotoEditText
                                 android:id="@+id/etCompanyPhone"
                                 style="@style/SettingsPhoneInput"
                                 android:hint="82 123 4567"
@@ -231,11 +231,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_business_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_business_sub" />
 
@@ -243,7 +243,7 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/type_of_business" />
 
@@ -251,7 +251,7 @@
                             android:id="@+id/fieldBusinessType"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblBusinessType"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -264,7 +264,7 @@
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/year_established" />
 
@@ -272,7 +272,7 @@
                             android:id="@+id/fieldYear"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblYear"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -288,7 +288,7 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/number_of_employees" />
 
@@ -296,7 +296,7 @@
                             android:id="@+id/fieldEmployees"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblEmployees"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -309,7 +309,7 @@
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/annual_turnover" />
 
@@ -317,7 +317,7 @@
                             android:id="@+id/fieldTurnover"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblTurnover"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -333,7 +333,7 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/bank_name" />
 
@@ -341,7 +341,7 @@
                             android:id="@+id/fieldBank"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblBank"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -354,11 +354,11 @@
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/account_holder_name" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etAccountHolder"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
@@ -368,18 +368,18 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/account_number" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etAccountNumber"
                             style="@style/SettingsFieldInput" />
                     </LinearLayout>
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/account_type" />
 
@@ -387,7 +387,7 @@
                             android:id="@+id/fieldAccountType"
                             style="@style/SettingsDropdown">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/lblAccountType"
                                 style="@style/ProductDropdownLabel"
                                 android:text="@string/select_option" />
@@ -399,11 +399,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsFieldLabel"
                     android:text="@string/branch_code" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/etBranchCode"
                     style="@style/SettingsFieldInput" />
 
@@ -425,11 +425,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_contacts_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_contacts_sub" />
 
@@ -441,7 +441,7 @@
                     android:orientation="vertical"
                     android:padding="14dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/biz_primary_contact"
@@ -452,22 +452,22 @@
 
                         <LinearLayout style="@style/SettingsCol">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 style="@style/SettingsFieldLabel"
                                 android:text="@string/full_name" />
 
-                            <com.anokix.distributor.ui.views.RobotoEditText
+                            <com.anokix.distributorapp.ui.views.RobotoEditText
                                 android:id="@+id/etPrimaryName"
                                 style="@style/SettingsFieldInput" />
                         </LinearLayout>
 
                         <LinearLayout style="@style/SettingsColEnd">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 style="@style/SettingsFieldLabel"
                                 android:text="@string/position_label" />
 
-                            <com.anokix.distributor.ui.views.RobotoEditText
+                            <com.anokix.distributorapp.ui.views.RobotoEditText
                                 android:id="@+id/etPrimaryPosition"
                                 style="@style/SettingsFieldInput" />
                         </LinearLayout>
@@ -477,7 +477,7 @@
 
                         <LinearLayout style="@style/SettingsCol">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 style="@style/SettingsFieldLabel"
                                 android:text="@string/phone_label" />
 
@@ -499,7 +499,7 @@
                                     android:layout_height="24dp"
                                     android:background="@color/border" />
 
-                                <com.anokix.distributor.ui.views.RobotoEditText
+                                <com.anokix.distributorapp.ui.views.RobotoEditText
                                     android:id="@+id/etPrimaryMobile"
                                     style="@style/SettingsPhoneInput"
                                     android:hint="82 123 4567"
@@ -509,11 +509,11 @@
 
                         <LinearLayout style="@style/SettingsColEnd">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 style="@style/SettingsFieldLabel"
                                 android:text="@string/email_label" />
 
-                            <com.anokix.distributor.ui.views.RobotoEditText
+                            <com.anokix.distributorapp.ui.views.RobotoEditText
                                 android:id="@+id/etPrimaryEmail"
                                 style="@style/SettingsFieldInput"
                                 android:inputType="textEmailAddress" />
@@ -527,7 +527,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/btnAddContact"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -557,19 +557,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_location_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_location_sub" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsFieldLabel"
                     android:text="@string/biz_address_label" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/etAddressSearch"
                     style="@style/SettingsFieldInput"
                     android:hint="@string/biz_address_hint"
@@ -601,11 +601,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_documents_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_documents_sub" />
 
@@ -616,7 +616,7 @@
                     android:layout_marginTop="14dp"
                     android:orientation="vertical" />
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -642,15 +642,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_service_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_service_sub" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsFieldLabel"
                     android:text="@string/distribution_coverage" />
 
@@ -671,12 +671,12 @@
                             android:contentDescription="@null"
                             android:src="@drawable/ic_location_pin" />
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/titleCoverageLocal"
                             style="@style/CoverageTitle"
                             android:text="@string/coverage_local" />
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             style="@style/CoverageSub"
                             android:text="@string/coverage_local_sub" />
                     </LinearLayout>
@@ -691,12 +691,12 @@
                             android:contentDescription="@null"
                             android:src="@drawable/ic_deliveries" />
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/titleCoverageRegional"
                             style="@style/CoverageTitle"
                             android:text="@string/coverage_regional" />
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             style="@style/CoverageSub"
                             android:text="@string/coverage_regional_sub" />
                     </LinearLayout>
@@ -711,18 +711,18 @@
                             android:contentDescription="@null"
                             android:src="@drawable/ic_shopping_bag" />
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/titleCoverageNational"
                             style="@style/CoverageTitle"
                             android:text="@string/coverage_national" />
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             style="@style/CoverageSub"
                             android:text="@string/coverage_national_sub" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsFieldLabel"
                     android:text="@string/service_categories" />
 
@@ -736,7 +736,7 @@
                     android:orientation="vertical"
                     android:padding="8dp">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/categoryHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -745,7 +745,7 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
-                    <com.anokix.distributor.ui.views.FlowLayout
+                    <com.anokix.distributorapp.ui.views.FlowLayout
                         android:id="@+id/categoryChips"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -755,11 +755,11 @@
 
                     <LinearLayout style="@style/SettingsCol">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/active_clients" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etActiveClients"
                             style="@style/SettingsFieldInput"
                             android:inputType="number" />
@@ -767,18 +767,18 @@
 
                     <LinearLayout style="@style/SettingsColEnd">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             style="@style/SettingsFieldLabel"
                             android:text="@string/delivery_fleet_vehicles" />
 
-                        <com.anokix.distributor.ui.views.RobotoEditText
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
                             android:id="@+id/etFleetSize"
                             style="@style/SettingsFieldInput"
                             android:inputType="number" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsFieldLabel"
                     android:text="@string/preferred_delivery_days" />
 
@@ -790,7 +790,7 @@
                     android:orientation="horizontal"
                     android:paddingHorizontal="4dp">
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
@@ -798,7 +798,7 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="10sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -807,7 +807,7 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="10sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -816,7 +816,7 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="10sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -825,7 +825,7 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="10sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -859,11 +859,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/SettingsStepTitle"
                     android:text="@string/biz_wallet_title" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     style="@style/SettingsStepSub"
                     android:text="@string/biz_wallet_sub" />
 
@@ -890,14 +890,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/biz_wallet_card_title"
                             android:textColor="@color/text_primary"
                             android:textSize="14sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -914,7 +914,7 @@
                     android:layout_marginTop="14dp"
                     android:orientation="vertical" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="16dp"

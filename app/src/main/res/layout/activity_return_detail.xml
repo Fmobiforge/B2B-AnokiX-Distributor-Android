@@ -25,7 +25,7 @@
             android:src="@drawable/ic_close"
             app:tint="@color/text_primary" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -65,7 +65,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/detailReturnNumber"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                         android:textColor="@color/purple_primary"
                         android:textSize="20sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/detailStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 </LinearLayout>
 
                 <!-- Trader -->
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/detailTraderName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/detailTraderPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,14 +133,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/reason_caps"
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/detailReason"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -156,14 +156,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/submitted_caps"
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/detailSubmitted"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -192,14 +192,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/trader_note_caps"
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:id="@+id/detailNote"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
                             android:paddingHorizontal="14dp"
                             android:paddingVertical="10dp">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -243,7 +243,7 @@
                                 android:textColor="@color/text_secondary"
                                 android:textSize="11sp" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
@@ -251,7 +251,7 @@
                                 android:textColor="@color/text_secondary"
                                 android:textSize="11sp" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
@@ -302,7 +302,7 @@
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/detailCreditNumber"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -310,7 +310,7 @@
                                 android:textColor="@color/success"
                                 android:textSize="14sp" />
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:id="@+id/detailCreditSub"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -341,14 +341,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoLightTextView
+                        <com.anokix.distributorapp.ui.views.RobotoLightTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/decision_note_caps"
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:id="@+id/detailDecision"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -369,7 +369,7 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/rejectButton"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
@@ -383,7 +383,7 @@
                         android:textColor="@color/danger"
                         android:textSize="15sp" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/approveButton"
                         android:layout_width="0dp"
                         android:layout_height="50dp"

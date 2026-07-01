@@ -16,13 +16,13 @@
         android:paddingTop="48dp"
         android:paddingBottom="@dimen/spacing_xl">
 
-        <com.anokix.distributor.ui.views.ResizableImageView
+        <com.anokix.distributorapp.ui.views.ResizableImageView
             android:layout_width="@dimen/drawer_logo_width"
             android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_anokix_logo" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_sm"
@@ -70,7 +70,7 @@
             android:src="@drawable/ic_logout"
             app:tint="@color/drawer_text_muted" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_md"

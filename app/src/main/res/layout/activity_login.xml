@@ -20,12 +20,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
 
-        <com.anokix.distributor.ui.views.ResizableImageView
+        <com.anokix.distributorapp.ui.views.ResizableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_anokix_logo"/>
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="0.08"
@@ -66,7 +66,7 @@
             android:orientation="horizontal"
             android:padding="4dp">
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/tabEmail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -77,7 +77,7 @@
                 android:textColor="@color/purple_primary"
                 android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/tabPhone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -103,7 +103,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="8dp">
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -126,7 +126,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/ic_email" />
 
-                    <com.anokix.distributor.ui.views.RobotoEditText
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
                         android:id="@+id/emailInput"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -140,7 +140,7 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -163,7 +163,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/ic_lock" />
 
-                    <com.anokix.distributor.ui.views.RobotoEditText
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
                         android:id="@+id/passwordInput"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -187,7 +187,7 @@
                         android:src="@drawable/ic_visibility" />
                 </LinearLayout>
 
-                <com.anokix.distributor.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/forgotPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                     android:textColor="@color/purple_primary"
                     android:textSize="13sp" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/loginButton"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -224,7 +224,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/ic_person_add" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

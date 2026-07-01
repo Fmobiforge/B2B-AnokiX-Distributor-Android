@@ -9,14 +9,14 @@
     android:paddingTop="@dimen/spacing_lg"
     android:paddingBottom="@dimen/spacing_md">
 
-    <com.anokix.distributor.ui.views.RobotoBoldTextView
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
         android:id="@+id/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AnokiX.Headline"
         android:textColor="@color/text_primary" />
 
-    <com.anokix.distributor.ui.views.RobotoTextView
+    <com.anokix.distributorapp.ui.views.RobotoTextView
         android:id="@+id/pageSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

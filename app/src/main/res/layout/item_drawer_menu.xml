@@ -21,7 +21,7 @@
             android:contentDescription="@null"
             app:tint="@color/drawer_text_muted" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/drawerItemTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

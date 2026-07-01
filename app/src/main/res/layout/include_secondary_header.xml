@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/screenTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_headline" />
 
-        <com.anokix.distributor.ui.views.RobotoLightTextView
+        <com.anokix.distributorapp.ui.views.RobotoLightTextView
             android:id="@+id/screenSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -25,7 +25,7 @@
                 android:contentDescription="@null"
                 android:scaleType="centerCrop" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/itemQty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/itemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             android:textColor="@color/text_primary"
             android:textSize="13sp" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/itemPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <com.anokix.distributor.ui.views.RobotoBoldTextView
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
         android:id="@+id/itemLineTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

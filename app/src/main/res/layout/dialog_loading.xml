@@ -35,7 +35,7 @@
                 android:indeterminateDrawable="@drawable/loading_white" />
         </RelativeLayout>
 
-        <com.anokix.distributor.ui.views.RobotoLightTextView
+        <com.anokix.distributorapp.ui.views.RobotoLightTextView
             android:id="@+id/loading_msg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

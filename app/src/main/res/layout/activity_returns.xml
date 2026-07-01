@@ -60,16 +60,16 @@
                             android:layout_marginStart="8dp"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 style="@style/DeliveryStatLabel"
                                 android:text="@string/total_returns" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/valTotalReturns"
                                 style="@style/DeliveryStatValue"
                                 android:text="0" />
 
-                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                                 style="@style/DeliveryStatSub"
                                 android:text="@string/in_selected_range" />
                         </LinearLayout>
@@ -100,16 +100,16 @@
                             android:layout_marginStart="8dp"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 style="@style/DeliveryStatLabel"
                                 android:text="@string/approved" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/valApproved"
                                 style="@style/DeliveryStatValue"
                                 android:text="0" />
 
-                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                                 style="@style/DeliveryStatSub"
                                 android:text="@string/in_selected_range" />
                         </LinearLayout>
@@ -140,16 +140,16 @@
                             android:layout_marginStart="8dp"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 style="@style/DeliveryStatLabel"
                                 android:text="@string/pending" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/valPending"
                                 style="@style/DeliveryStatValue"
                                 android:text="0" />
 
-                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                                 style="@style/DeliveryStatSub"
                                 android:text="@string/awaiting_review" />
                         </LinearLayout>
@@ -180,16 +180,16 @@
                             android:layout_marginStart="8dp"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 style="@style/DeliveryStatLabel"
                                 android:text="@string/rejected" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/valRejected"
                                 style="@style/DeliveryStatValue"
                                 android:text="0" />
 
-                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                                 style="@style/DeliveryStatSub"
                                 android:text="@string/in_selected_range" />
                         </LinearLayout>
@@ -218,16 +218,16 @@
                             android:layout_marginStart="8dp"
                             android:orientation="vertical">
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 style="@style/DeliveryStatLabel"
                                 android:text="@string/credit_issued" />
 
-                            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:id="@+id/valCreditIssued"
                                 style="@style/DeliveryStatValue"
                                 android:text="R0.00" />
 
-                            <com.anokix.distributor.ui.views.RobotoLightTextView
+                            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                                 style="@style/DeliveryStatSub"
                                 android:text="@string/in_selected_range" />
                         </LinearLayout>
@@ -253,7 +253,7 @@
                     android:src="@drawable/ic_search"
                     app:tint="@color/text_secondary" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/searchInput"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -299,7 +299,7 @@
                         android:src="@drawable/ic_filter"
                         app:tint="@color/text_secondary" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/reasonFilterLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -338,7 +338,7 @@
                         android:src="@drawable/ic_calendar"
                         app:tint="@color/text_secondary" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/dateRangeLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -368,24 +368,24 @@
                     android:orientation="horizontal"
                     android:padding="4dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/tabAll"
                         style="@style/DeliveryTab"
                         android:background="@drawable/bg_segment_tab_selected"
                         android:text="@string/all_returns"
                         android:textColor="#FFFFFF" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/tabPending"
                         style="@style/DeliveryTab"
                         android:text="@string/pending" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/tabApproved"
                         style="@style/DeliveryTab"
                         android:text="@string/approved" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/tabRejected"
                         style="@style/DeliveryTab"
                         android:text="@string/rejected" />
@@ -400,7 +400,7 @@
                 android:layout_marginTop="14dp"
                 android:nestedScrollingEnabled="false" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/emptyView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

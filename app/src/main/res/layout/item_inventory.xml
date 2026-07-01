@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingVertical="@dimen/spacing_sm">
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/rowTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textAppearance="@style/TextAppearance.AnokiX.Body"
             android:textSize="@dimen/text_micro" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/rowSku"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:textAppearance="@style/TextAppearance.AnokiX.Caption"
             android:textSize="@dimen/text_micro"/>
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/rowStock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:progress="75"
                 android:progressDrawable="@drawable/bg_stock_progress" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/outLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

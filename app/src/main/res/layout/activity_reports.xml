@@ -31,7 +31,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="12dp">
 
-                <com.anokix.distributor.ui.views.RobotoLightTextView
+                <com.anokix.distributorapp.ui.views.RobotoLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reports_subtitle"
@@ -69,7 +69,7 @@
                     android:src="@drawable/ic_document"
                     app:tint="#FFFFFF" />
 
-                <com.anokix.distributor.ui.views.RobotoBoldTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="16dp"
@@ -113,7 +113,7 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp">
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
@@ -121,7 +121,7 @@
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1.4"
@@ -129,7 +129,7 @@
                             android:textColor="@color/text_secondary"
                             android:textSize="11sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.8"

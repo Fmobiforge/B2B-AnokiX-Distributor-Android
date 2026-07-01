@@ -41,7 +41,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valActiveCampaigns"
                             style="@style/PromoSummaryValue"
                             android:text="0" />
@@ -62,11 +62,11 @@
                     </LinearLayout>
 
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/active_campaigns" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendActiveCampaigns"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -83,7 +83,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valRevenue"
                             style="@style/PromoSummaryValue"
                             android:text="R0" />
@@ -103,11 +103,11 @@
                         </FrameLayout>
                     </LinearLayout>
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/campaign_revenue" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendRevenue"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -122,7 +122,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valReach"
                             style="@style/PromoSummaryValue"
                             android:text="0" />
@@ -142,11 +142,11 @@
                         </FrameLayout>
                     </LinearLayout>
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/campaign_reach" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendReach"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -172,7 +172,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valClicks"
                             style="@style/PromoSummaryValue"
                             android:text="0" />
@@ -192,11 +192,11 @@
                         </FrameLayout>
                     </LinearLayout>
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/campaign_clicks" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendClicks"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -213,7 +213,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valCtr"
                             style="@style/PromoSummaryValue"
                             android:text="0.0%" />
@@ -233,11 +233,11 @@
                         </FrameLayout>
                     </LinearLayout>
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/ctr" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendCtr"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -252,7 +252,7 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/valSales"
                             style="@style/PromoSummaryValue"
                             android:text="R0.00" />
@@ -273,11 +273,11 @@
 
                     </LinearLayout>
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/PromoSummaryLabel"
                         android:text="@string/attributed_sales" />
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/trendSales"
                         style="@style/PromoSummaryTrend"
                         android:text="" />
@@ -301,7 +301,7 @@
                     android:src="@drawable/ic_search"
                     app:tint="@color/text_secondary" />
 
-                <com.anokix.distributor.ui.views.RobotoEditText
+                <com.anokix.distributorapp.ui.views.RobotoEditText
                     android:id="@+id/searchInput"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -339,7 +339,7 @@
                     android:orientation="horizontal"
                     android:paddingHorizontal="12dp">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/statusFilterLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -369,7 +369,7 @@
                     android:orientation="horizontal"
                     android:paddingHorizontal="12dp">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         android:id="@+id/typeFilterLabel"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -397,7 +397,7 @@
                 android:layout_marginTop="14dp"
                 android:nestedScrollingEnabled="false" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/emptyView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -428,7 +428,7 @@
             android:src="@drawable/ic_add"
             app:tint="#FFFFFF" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

@@ -41,7 +41,7 @@
                     android:orientation="horizontal"
                     android:padding="16dp">
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/profileInitials"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
@@ -58,7 +58,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <com.anokix.distributor.ui.views.RobotoBoldTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/profileName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="14sp" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:id="@+id/profileEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                                 android:src="@drawable/ic_shield_check"
                                 app:tint="@color/purple_primary" />
 
-                            <com.anokix.distributor.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
@@ -141,7 +141,7 @@
                             android:src="@drawable/ic_person"
                             app:tint="@color/text_secondary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
@@ -181,7 +181,7 @@
                             android:src="@drawable/ic_briefcase"
                             app:tint="@color/text_secondary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
@@ -221,7 +221,7 @@
                             android:src="@drawable/ic_notifications"
                             app:tint="@color/text_secondary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
@@ -261,7 +261,7 @@
                             android:src="@drawable/ic_shield"
                             app:tint="@color/text_secondary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
@@ -301,7 +301,7 @@
                             android:src="@drawable/ic_tune"
                             app:tint="@color/text_secondary" />
 
-                        <com.anokix.distributor.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
@@ -320,7 +320,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.anokix.distributor.ui.views.RobotoLightTextView
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

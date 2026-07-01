@@ -20,7 +20,7 @@
             android:contentDescription="@null"
             android:src="@drawable/welcome_storefront" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -28,7 +28,7 @@
             android:textColor="@android:color/white"
             android:textSize="28sp" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:minHeight="40dp" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -55,7 +55,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/createAccountButton"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -74,14 +74,14 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_have_account"
                 android:textColor="#8A93B2"
                 android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/signInButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,14 +109,14 @@
                 android:src="@drawable/ic_headset"
                 app:tint="#8A93B2" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_need_help"
                 android:textColor="#8A93B2"
                 android:textSize="14sp" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding1"

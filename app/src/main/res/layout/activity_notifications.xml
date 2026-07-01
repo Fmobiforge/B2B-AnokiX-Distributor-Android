@@ -9,7 +9,7 @@
     <include layout="@layout/include_secondary_header" />
 
     <!-- Subtitle -->
-    <com.anokix.distributor.ui.views.RobotoTextView
+    <com.anokix.distributorapp.ui.views.RobotoTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
@@ -60,16 +60,16 @@
                     android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/DeliveryStatLabel"
                         android:text="@string/all_notifications" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/statAll"
                         style="@style/DeliveryStatValue"
                         android:text="0" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         style="@style/DeliveryStatSub"
                         android:text="@string/total_notifications_sub" />
                 </LinearLayout>
@@ -100,16 +100,16 @@
                     android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/DeliveryStatLabel"
                         android:text="@string/read_label" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/statRead"
                         style="@style/DeliveryStatValue"
                         android:text="0" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:id="@+id/lblRead"
                         style="@style/DeliveryStatSub"
                         android:text="0%"
@@ -142,17 +142,17 @@
                     android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/DeliveryStatLabel"
                         android:text="@string/unread" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/statUnread"
                         style="@style/DeliveryStatValue"
                         android:text="0"
                         android:textColor="@color/warning" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:id="@+id/lblUnread"
                         style="@style/DeliveryStatSub"
                         android:text="0%"
@@ -183,16 +183,16 @@
                     android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
-                    <com.anokix.distributor.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
                         style="@style/DeliveryStatLabel"
                         android:text="@string/important_label" />
 
-                    <com.anokix.distributor.ui.views.RobotoBoldTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/statImportant"
                         style="@style/DeliveryStatValue"
                         android:text="0" />
 
-                    <com.anokix.distributor.ui.views.RobotoLightTextView
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         style="@style/DeliveryStatSub"
                         android:text="@string/important_sub" />
                 </LinearLayout>
@@ -216,7 +216,7 @@
         android:paddingTop="12dp"
         android:paddingBottom="10dp">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/tabAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
             android:textColor="@color/purple_primary"
             android:textSize="14sp" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/tabUnread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -244,7 +244,7 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/markAllRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
                 android:src="@drawable/ic_notifications"
                 app:tint="@color/text_secondary" />
 
-            <com.anokix.distributor.ui.views.RobotoBoldTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
@@ -298,7 +298,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="15sp" />
 
-            <com.anokix.distributor.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -328,7 +328,7 @@
         android:paddingVertical="8dp"
         android:visibility="gone">
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/pageInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

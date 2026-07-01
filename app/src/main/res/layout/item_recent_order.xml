@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/orderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
-        <com.anokix.distributor.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoTextView
             android:id="@+id/orderTrader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textColor="@color/text_secondary"
             android:textSize="11sp" />
 
-        <com.anokix.distributor.ui.views.RobotoLightTextView
+        <com.anokix.distributorapp.ui.views.RobotoLightTextView
             android:id="@+id/orderDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:gravity="end"
         android:orientation="vertical">
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/orderAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/orderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
