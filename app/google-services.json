@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "304349087062",
+    "project_id": "anokix-57e18",
+    "storage_bucket": "anokix-57e18.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304349087062:android:71fecd9a55af1a9fbe82f7",
+        "android_client_info": {
+          "package_name": "com.anokix.distributor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6LeJQxGBsW-Hh4bU4CWDxXsvPvban7PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304349087062:android:dcd7bd312c511c19be82f7",
+        "android_client_info": {
+          "package_name": "com.anokix.trader"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6LeJQxGBsW-Hh4bU4CWDxXsvPvban7PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

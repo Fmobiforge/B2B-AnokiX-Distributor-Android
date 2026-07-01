@@ -3,6 +3,11 @@
     <string name="app_name">AnokiX Distributor</string>
     <string name="version_info">AnokiX Distributor v1.0</string>
 
+    <!-- Firebase Cloud Messaging default channel (orders, deliveries, returns, stock, etc.). -->
+    <string name="fcm_default_channel_id">anokix_distributor_default</string>
+    <string name="fcm_default_channel_name">AnokiX Distributor Alerts</string>
+    <string name="fcm_default_channel_desc">Orders, deliveries, returns, stock and account alerts.</string>
+
     <string name="login_title">LOGIN</string>
     <string name="login_subtitle">Distributor App</string>
     <string name="distributor_portal">Distributor Portal</string>
@@ -16,6 +21,15 @@
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="join_portal">Join Distributor App now</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="forgot_password_title">Forgot Password?</string>
+    <string name="forgot_password_subtitle">Enter the email linked to your account and we\'ll send you a link to reset your password.</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="sending">Sending…</string>
+    <string name="enter_email_prompt">Please enter your email address</string>
+    <string name="enter_valid_email">Please enter a valid email address</string>
+    <string name="reset_link_sent_title">Check your email</string>
+    <string name="reset_link_sent_message">If an account exists for %1$s, a password reset link is on its way. Please check your inbox and spam folder.</string>
+    <string name="open_email_app">Open Email App</string>
     <string name="toggle_password_visibility">Toggle password visibility</string>
     <string name="open_menu">Open menu</string>
     <string name="back">Back</string>

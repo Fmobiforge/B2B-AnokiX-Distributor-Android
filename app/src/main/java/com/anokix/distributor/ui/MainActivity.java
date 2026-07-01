@@ -1,10 +1,16 @@
 package com.anokix.distributor.ui;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributor.R;
 import com.anokix.distributor.data.MockData;
+import com.anokix.distributor.messaging.PushManager;
 import com.anokix.distributor.model.MenuItem;
 import com.anokix.distributor.session.SessionManager;
 import com.anokix.distributor.ui.adapter.DrawerMenuAdapter;
@@ -29,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private DrawerMenuAdapter drawerAdapter;
 
+    /** POST_NOTIFICATIONS prompt (Android 13+); result is ignored — pushes degrade gracefully. */
+    private final ActivityResultLauncher<String> notificationPermission =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {});
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +53,34 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             bottomNav.setSelectedItemId(R.id.nav_home);
+        }
+
+        // FCM: ensure the channel exists, ask for the runtime permission, register the
+        // token, then apply any routing a notification tap carried in.
+        PushManager.ensureChannel(this);
+        requestNotificationPermission();
+        PushManager.syncToken(this);
+        applyPushRouting(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        applyPushRouting(intent);
+    }
+
+    /** Open the screen a tapped notification points at (order/return/delivery/stock), then clear it. */
+    private void applyPushRouting(Intent intent) {
+        PushManager.handleRouting(this, intent);
+        PushManager.clearRouting(intent);
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS);
         }
     }
 
@@ -101,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void performLogout() {
+        PushManager.unregister(this);   // drop this device's token server-side
         SessionManager.get(this).clear();
         Glide.get(this).clearMemory();
         Intent intent = new Intent(this, LoginActivity.class);

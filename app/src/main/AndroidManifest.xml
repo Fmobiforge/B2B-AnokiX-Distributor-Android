@@ -3,6 +3,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Required to show push notifications on Android 13+ (runtime-requested). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -21,6 +23,26 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <!-- Firebase Cloud Messaging: receives push tokens + messages. -->
+        <service
+            android:name=".messaging.AxFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Defaults applied to notifications that arrive while the app is backgrounded. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purple_primary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/fcm_default_channel_id" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -52,6 +74,11 @@
             android:exported="true"
             android:theme="@style/Theme.AnokiXDistributor.Login">
         </activity>
+
+        <activity
+            android:name=".ui.ForgotPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AnokiXDistributor.Login" />
 
         <activity
             android:name=".ui.MainActivity"

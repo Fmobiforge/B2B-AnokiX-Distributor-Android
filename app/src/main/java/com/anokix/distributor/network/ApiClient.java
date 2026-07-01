@@ -89,6 +89,46 @@ public final class ApiClient {
         });
     }
 
+    /**
+     * Request a password reset email. Public endpoint (no token). The backend always
+     * returns a generic success message and never reveals whether the email exists, so
+     * only the status/message matter here.
+     */
+    public void forgotPassword(String email, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("email", email);
+        form.put("portal_type", "distributor");
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/common/forgot-password", form, null);
+            deliverStatusOnly(r, cb);
+        });
+    }
+
+    // ---- Push / device tokens (FCM) -------------------------------------
+
+    /**
+     * Register this device's FCM token so the backend can target it with pushes
+     * (api/common/device-tokens). Best-effort: only status/message matter, and a
+     * failure (e.g. the endpoint not yet live) is surfaced via {@code onError}
+     * but never crashes the app.
+     */
+    public void registerDeviceToken(String token, ApiCallback<Void> cb) {
+        // Field is `device_token` (not `token` — that key is reserved by the API gateway).
+        Map<String, String> form = new HashMap<>();
+        form.put("device_token", token == null ? "" : token);
+        form.put("platform", "android");
+        io.execute(() -> deliverStatusOnly(
+                Http.postForm(BASE_URL, "api/common/device-tokens", form, session.getToken()), cb));
+    }
+
+    /** Remove this device's FCM token on logout (api/common/device-tokens/delete). */
+    public void unregisterDeviceToken(String token, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("device_token", token == null ? "" : token);
+        io.execute(() -> deliverStatusOnly(
+                Http.postForm(BASE_URL, "api/common/device-tokens/delete", form, session.getToken()), cb));
+    }
+
     public void getDashboard(ApiCallback<DashboardData> cb) {
         getAuthed("api/distributor/dashboard", null, DashboardData.class, cb);
     }

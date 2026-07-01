@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         forgotPassword.setOnClickListener(v ->
-                Toast.makeText(this, "Password reset coming soon", Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, ForgotPasswordActivity.class)));
 
         loginButton.setOnClickListener(v -> {
             String email = emailInput.getText() != null ? emailInput.getText().toString().trim() : "";

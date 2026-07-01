@@ -17,6 +17,8 @@ public class SessionManager {
     private static final String KEY_ROLE_LABEL = "role_label";
     private static final String KEY_COMPANY_NAME = "company_name";
     private static final String KEY_COMPANY_LOGO_URL = "company_logo_url";
+    private static final String KEY_FCM_TOKEN = "fcm_token";
+    private static final String KEY_FCM_TOKEN_REGISTERED = "fcm_token_registered";
 
     private static SessionManager instance;
 
@@ -90,6 +92,29 @@ public class SessionManager {
     /** Absolute URL of the distributor company logo, or "" when none is available. */
     public String getCompanyLogoUrl() {
         return prefs.getString(KEY_COMPANY_LOGO_URL, "");
+    }
+
+    // ---- FCM push token --------------------------------------------------
+
+    /**
+     * Caches the latest FCM token plus whether it has been registered with the
+     * backend, so {@code syncToken} only POSTs when the token actually changed.
+     */
+    public void saveFcmToken(String token, boolean registered) {
+        prefs.edit()
+                .putString(KEY_FCM_TOKEN, token == null ? "" : token)
+                .putBoolean(KEY_FCM_TOKEN_REGISTERED, registered)
+                .apply();
+    }
+
+    public String getFcmToken() {
+        return prefs.getString(KEY_FCM_TOKEN, "");
+    }
+
+    /** True when {@code token} is the cached token and it is already on the server. */
+    public boolean isFcmTokenRegistered(String token) {
+        if (token == null) return false;
+        return token.equals(getFcmToken()) && prefs.getBoolean(KEY_FCM_TOKEN_REGISTERED, false);
     }
 
     public void clear() {
