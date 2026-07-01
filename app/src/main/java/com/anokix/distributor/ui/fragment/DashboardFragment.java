@@ -2,8 +2,10 @@ package com.anokix.distributor.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,11 @@ import com.anokix.distributor.ui.TradersActivity;
 import com.anokix.distributor.ui.views.DonutChartView;
 import com.anokix.distributor.ui.views.LineChartView;
 import com.anokix.distributor.ui.views.SparklineView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -66,6 +73,7 @@ public class DashboardFragment extends Fragment {
         }
 
         bindWelcome(view);
+        bindProfileBadge(view);
         buildKpiGrid(view);
         buildSummaryCards(view, MockData.fallbackSummaryCards());
         loadDashboard(view);
@@ -87,6 +95,64 @@ public class DashboardFragment extends Fragment {
                     ? getString(R.string.welcome_back_generic)
                     : getString(R.string.welcome_back_named, firstName));
         }
+    }
+
+    /**
+     * Fills the header avatar circle: shows the distributor company logo (from the login
+     * {@code portal_info}) when a valid URL is available, otherwise the user's initial.
+     */
+    private void bindProfileBadge(View view) {
+        TextView initials = view.findViewById(R.id.profileInitials);
+        ImageView logo = view.findViewById(R.id.profileLogo);
+        if (initials == null || logo == null) {
+            return;
+        }
+
+        SessionManager session = SessionManager.get(requireContext());
+        initials.setText(initialOf(session.getFirstName()));
+
+        String logoUrl = session.getCompanyLogoUrl();
+        if (!isLoadableUrl(logoUrl)) {
+            logo.setVisibility(View.GONE);
+            initials.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        Glide.with(this)
+                .load(logoUrl)
+                // Decode at original size so loading does not depend on the (initially gone)
+                // view being measured — otherwise onResourceReady never fires.
+                .override(Target.SIZE_ORIGINAL)
+                .circleCrop()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                @NonNull Target<Drawable> target, boolean isFirstResource) {
+                        logo.setVisibility(View.GONE);
+                        initials.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(@NonNull Drawable resource, @NonNull Object model,
+                                                   Target<Drawable> target, @NonNull DataSource dataSource,
+                                                   boolean isFirstResource) {
+                        initials.setVisibility(View.GONE);
+                        logo.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(logo);
+    }
+
+    private static String initialOf(String name) {
+        return (name == null || name.trim().isEmpty())
+                ? "" : name.trim().substring(0, 1).toUpperCase(java.util.Locale.US);
+    }
+
+    private static boolean isLoadableUrl(String url) {
+        return !TextUtils.isEmpty(url)
+                && (url.startsWith("http://") || url.startsWith("https://"));
     }
 
     private void buildKpiGrid(View view) {

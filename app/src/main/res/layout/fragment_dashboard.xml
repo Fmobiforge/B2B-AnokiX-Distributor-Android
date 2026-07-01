@@ -76,14 +76,29 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-        <com.anokix.distributor.ui.views.RobotoBoldTextView
+        <FrameLayout
             android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/bg_profile_circle"
-            android:gravity="center"
-            android:text="C"
-            android:textColor="@color/purple_primary"
-            android:textSize="14sp" />
+            android:layout_height="36dp">
+
+            <com.anokix.distributor.ui.views.RobotoBoldTextView
+                android:id="@+id/profileInitials"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_profile_circle"
+                android:gravity="center"
+                android:text="C"
+                android:textColor="@color/purple_primary"
+                android:textSize="14sp" />
+
+            <!-- Distributor company logo (from login portal_info); falls back to the initials. -->
+            <ImageView
+                android:id="@+id/profileLogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+        </FrameLayout>
     </LinearLayout>
 
     <ScrollView

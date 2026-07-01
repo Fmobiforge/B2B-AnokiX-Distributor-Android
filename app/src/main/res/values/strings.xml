@@ -97,6 +97,8 @@
     <string name="create_promotion">Create Promotion</string>
     <string name="add_product">Add Product</string>
     <string name="logout">Logout</string>
+    <string name="logout_confirm_title">Log out</string>
+    <string name="logout_confirm_message">Are you sure you want to log out?</string>
     <string name="search_orders">Search orders&#8230;</string>
     <string name="search_orders_detail">Search by trader name, order ID&#8230;</string>
     <string name="search_inventory">Search inventory&#8230;</string>

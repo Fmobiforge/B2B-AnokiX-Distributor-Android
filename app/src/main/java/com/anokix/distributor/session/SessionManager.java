@@ -15,6 +15,8 @@ public class SessionManager {
     private static final String KEY_LAST_NAME = "last_name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_ROLE_LABEL = "role_label";
+    private static final String KEY_COMPANY_NAME = "company_name";
+    private static final String KEY_COMPANY_LOGO_URL = "company_logo_url";
 
     private static SessionManager instance;
 
@@ -71,6 +73,23 @@ public class SessionManager {
 
     public String getRoleLabel() {
         return prefs.getString(KEY_ROLE_LABEL, "");
+    }
+
+    /** Stores the distributor company branding returned in the login {@code portal_info}. */
+    public void setCompany(String companyName, String companyLogoUrl) {
+        prefs.edit()
+                .putString(KEY_COMPANY_NAME, companyName == null ? "" : companyName)
+                .putString(KEY_COMPANY_LOGO_URL, companyLogoUrl == null ? "" : companyLogoUrl)
+                .apply();
+    }
+
+    public String getCompanyName() {
+        return prefs.getString(KEY_COMPANY_NAME, "");
+    }
+
+    /** Absolute URL of the distributor company logo, or "" when none is available. */
+    public String getCompanyLogoUrl() {
+        return prefs.getString(KEY_COMPANY_LOGO_URL, "");
     }
 
     public void clear() {

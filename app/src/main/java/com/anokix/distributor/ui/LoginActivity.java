@@ -93,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                     session.setUser(data.user.first_name, data.user.last_name,
                             data.user.email, data.user.role_label);
                 }
+                if (data.portal_info != null) {
+                    session.setCompany(data.portal_info.company_name,
+                            data.portal_info.company_logo_url);
+                }
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }

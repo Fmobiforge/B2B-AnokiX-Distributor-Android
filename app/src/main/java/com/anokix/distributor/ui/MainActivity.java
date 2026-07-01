@@ -3,6 +3,7 @@ package com.anokix.distributor.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -12,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anokix.distributor.R;
 import com.anokix.distributor.data.MockData;
 import com.anokix.distributor.model.MenuItem;
+import com.anokix.distributor.session.SessionManager;
 import com.anokix.distributor.ui.adapter.DrawerMenuAdapter;
 import com.anokix.distributor.ui.fragment.DashboardFragment;
 import com.anokix.distributor.ui.fragment.InventoryFragment;
 import com.anokix.distributor.ui.fragment.OrdersFragment;
 import com.anokix.distributor.ui.fragment.ProductsFragment;
 import com.anokix.distributor.ui.views.TypefaceCache;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -84,6 +87,26 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setLayoutManager(new LinearLayoutManager(this));
         drawerAdapter = new DrawerMenuAdapter(MockData.getDrawerMenuItems(), this::onDrawerItemClicked);
         drawerList.setAdapter(drawerAdapter);
+
+        findViewById(R.id.drawerLogout).setOnClickListener(v -> confirmLogout());
+    }
+
+    private void confirmLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.logout_confirm_title)
+                .setMessage(R.string.logout_confirm_message)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.logout, (dialog, which) -> performLogout())
+                .show();
+    }
+
+    private void performLogout() {
+        SessionManager.get(this).clear();
+        Glide.get(this).clearMemory();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void onDrawerItemClicked(MenuItem item) {

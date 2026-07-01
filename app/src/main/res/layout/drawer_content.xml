@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,4 +45,38 @@
         android:paddingTop="@dimen/spacing_xs"
         android:paddingBottom="@dimen/spacing_lg"
         android:scrollbars="none" />
+
+    <!-- Logout (pinned to the bottom) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/drawer_padding_horizontal"
+        android:background="@color/drawer_divider" />
+
+    <LinearLayout
+        android:id="@+id/drawerLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/drawer_padding_horizontal"
+        android:paddingVertical="@dimen/spacing_lg">
+
+        <ImageView
+            android:layout_width="@dimen/drawer_icon_size"
+            android:layout_height="@dimen/drawer_icon_size"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_logout"
+            app:tint="@color/drawer_text_muted" />
+
+        <com.anokix.distributor.ui.views.RobotoTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:layout_weight="1"
+            android:text="@string/logout"
+            android:textColor="@color/drawer_text_muted"
+            android:textSize="@dimen/drawer_text_size" />
+    </LinearLayout>
 </LinearLayout>

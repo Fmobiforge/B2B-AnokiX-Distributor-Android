@@ -30,6 +30,8 @@
     <color name="drawer_badge_bg">#161d4e</color>
     <color name="drawer_badge_fg">#3e3389</color>
     <color name="drawer_badge_text">#C4B5FD</color>
+    <color name="drawer_divider">#1B2440</color>
+    <color name="drawer_logout">#F87171</color>
     <color name="stat_low_stock">#EA580C</color>
     <color name="stat_out_of_stock">#DC2626</color>
     <color name="stat_expiring">#D97706</color>
