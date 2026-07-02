@@ -31,7 +31,7 @@ public class SplashActivity extends BaseActivity {
 
         new Handler().postDelayed(() -> {
             // Already signed in → straight to the app; otherwise show the welcome screen.
-            if (false && SessionManager.get(this).isLoggedIn()) {
+            if (SessionManager.get(this).isLoggedIn()) {
                 goToMain();
             } else {
                 goToWelcome();
