@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.data.MockData;
 import com.anokix.distributorapp.model.MenuItem;
+import com.anokix.distributorapp.ui.AirtimeActivity;
 import com.anokix.distributorapp.ui.DeliveriesActivity;
 import com.anokix.distributorapp.ui.NotificationBadge;
 import com.anokix.distributorapp.ui.FinancesActivity;
@@ -67,6 +68,9 @@ public class MoreFragment extends Fragment {
                 break;
             case "products":
                 target = ProductsActivity.class;
+                break;
+            case "airtime":
+                target = AirtimeActivity.class;
                 break;
             case "promotions":
                 target = PromotionsActivity.class;

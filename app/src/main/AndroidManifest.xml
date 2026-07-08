@@ -104,6 +104,7 @@
         <activity android:name=".ui.DeliveryDetailActivity" android:exported="false" />
         <activity android:name=".ui.ReturnsActivity" android:exported="false" />
         <activity android:name=".ui.ReturnDetailActivity" android:exported="false" />
+        <activity android:name=".ui.AirtimeActivity" android:exported="false" />
         <activity android:name=".ui.NotificationsActivity" android:exported="false" />
         <activity android:name=".ui.SettingsActivity" android:exported="false" />
         <activity android:name=".ui.SettingsProfileActivity" android:exported="false" />

@@ -164,6 +164,9 @@ public class MainActivity extends AppCompatActivity {
             case "products":
                 bottomNav.setSelectedItemId(R.id.nav_products);
                 break;
+            case "airtime":
+                startActivity(new Intent(this, AirtimeActivity.class));
+                break;
             case "stores":
                 startActivity(new Intent(this, StoresActivity.class));
                 break;

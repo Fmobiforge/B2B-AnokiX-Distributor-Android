@@ -32,6 +32,9 @@ import com.anokix.distributorapp.network.dto.RegisterDistributorData;
 import com.anokix.distributorapp.network.dto.StoreDetailData;
 import com.anokix.distributorapp.network.dto.StoresData;
 import com.anokix.distributorapp.network.dto.TradersData;
+import com.anokix.distributorapp.network.dto.VasCategoriesData;
+import com.anokix.distributorapp.network.dto.VasProductsData;
+import com.anokix.distributorapp.network.dto.VasTransactionsData;
 import com.anokix.distributorapp.session.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -567,6 +570,54 @@ public final class ApiClient {
 
     public void updateStore(Map<String, String> form, ApiCallback<StoreDetailData> cb) {
         postAuthed("api/distributor/stores/update", form, StoreDetailData.class, cb);
+    }
+
+    // ---- Airtime & VAS (Limes, common) ----------------------------------
+
+    /**
+     * VAS dashboard: recent transactions, KPI summary (spend/count today, commission this
+     * month, wallet balance) and pagination (api/common/vas/transactions).
+     */
+    public void getVasTransactions(int page, int perPage, ApiCallback<VasTransactionsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/common/vas/transactions", q, VasTransactionsData.class, cb);
+    }
+
+    /** The Limes VAS category tree (api/common/vas/categories). Flatten via {@code leaves()}. */
+    public void getVasCategories(ApiCallback<VasCategoriesData> cb) {
+        getAuthed("api/common/vas/categories", null, VasCategoriesData.class, cb);
+    }
+
+    /** Purchasable products for one leaf category (api/common/vas/products). */
+    public void getVasProducts(String category, int page, int limit,
+                               ApiCallback<VasProductsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("category", category == null ? "" : category);
+        q.put("page", String.valueOf(page));
+        q.put("limit", String.valueOf(limit));
+        getAuthed("api/common/vas/products", q, VasProductsData.class, cb);
+    }
+
+    /**
+     * Buy a VAS product (api/common/vas/purchase). Paid from the anokiX wallet; the
+     * server debits and forwards to Limes. Only status/message decide success — the
+     * failure path carries the network's reason (e.g. inactive subscriber).
+     */
+    public void purchaseVas(String productId, String msisdn, double amount, String sku,
+                            String name, String category, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("product_id", productId == null ? "" : productId);
+        form.put("msisdn", msisdn == null ? "" : msisdn);
+        form.put("amount", String.valueOf(amount));
+        form.put("sku", sku == null ? "" : sku);
+        form.put("name", name == null ? "" : name);
+        form.put("category", category == null ? "" : category);
+        // Postman collection sends earn_commission=1 so the distributor accrues their VAS commission.
+        form.put("earn_commission", "1");
+        io.execute(() -> deliverStatusOnly(
+                Http.postForm(BASE_URL, "api/common/vas/purchase", form, session.getToken()), cb));
     }
 
     // ---- Internals -------------------------------------------------------

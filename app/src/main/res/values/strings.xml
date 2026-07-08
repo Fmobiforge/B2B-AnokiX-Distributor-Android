@@ -915,4 +915,48 @@
     <string name="estimated_approval_time">ESTIMATED APPROVAL TIME</string>
     <string name="approval_time_value">24 – 48 Hours</string>
     <string name="back_to_login">Back to Login</string>
+
+    <!-- Airtime & VAS -->
+    <string name="airtime_vas">Airtime &amp; VAS</string>
+    <string name="processing">Processing…</string>
+    <string name="vas_subtitle">Sell airtime, data and digital services to your customers instantly. Powered by Limes.</string>
+    <string name="vas_kpi_spend_today">VAS sales · today</string>
+    <string name="vas_kpi_txn_today">Transactions · today</string>
+    <string name="vas_kpi_month">Commission · month</string>
+    <string name="vas_kpi_wallet">Wallet balance</string>
+    <string name="vas_choose_category">1. Choose a category</string>
+    <string name="vas_view_all">View all</string>
+    <string name="vas_show_less">Show less</string>
+    <string name="vas_select_product">2. Select a product</string>
+    <string name="vas_no_products">No products available for this category.</string>
+    <string name="vas_order_summary">Order summary</string>
+    <string name="vas_recipient">Recipient</string>
+    <string name="vas_recipient_hint">082 123 4567</string>
+    <string name="vas_custom_amount">Custom amount (R)</string>
+    <string name="vas_custom_amount_hint">R e.g. 20</string>
+    <string name="vas_optional_reference">Optional reference</string>
+    <string name="vas_reference_hint">e.g. invoice, customer name</string>
+    <string name="vas_ref_counter_zero">0/30</string>
+    <string name="vas_ref_counter">%1$d/30</string>
+    <string name="vas_no_product_selected">No product selected</string>
+    <string name="vas_service_fee">Service fee</string>
+    <string name="vas_commission_est">Your commission (est.)</string>
+    <string name="vas_total">Total</string>
+    <string name="vas_buy_now">Sell now</string>
+    <string name="vas_wallet_note">Paid from your anokiX wallet. Change how you pay in Settings → Preferences.</string>
+    <string name="vas_recent_transactions">Recent VAS transactions</string>
+    <string name="vas_no_transactions">No transactions yet.</string>
+    <string name="vas_custom">Custom</string>
+    <string name="vas_validation_title">Check your details</string>
+    <string name="vas_err_select_product">Please select a product first.</string>
+    <string name="vas_err_recipient_empty">Please enter the recipient\'s mobile number.</string>
+    <string name="vas_err_recipient_invalid">Enter a valid mobile number, e.g. 082 123 4567.</string>
+    <string name="vas_err_amount">Please enter a valid amount greater than R0.00.</string>
+    <string name="vas_purchase_success_title">Sale successful</string>
+    <string name="vas_purchase_success_body">Your VAS sale has been submitted. Check Recent VAS transactions for the outcome.</string>
+
+    <plurals name="vas_bundles">
+        <item quantity="one">%1$d bundle</item>
+        <item quantity="other">%1$d bundles</item>
+    </plurals>
 </resources>
