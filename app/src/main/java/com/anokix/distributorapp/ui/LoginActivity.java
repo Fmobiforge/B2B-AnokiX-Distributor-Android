@@ -87,6 +87,14 @@ public class LoginActivity extends AppCompatActivity {
         ApiClient.get(this).login(email, password, new ApiCallback<LoginData>() {
             @Override
             public void onSuccess(LoginData data) {
+                // Account awaiting approval: no token is issued — show the review screen
+                // instead of proceeding into the app.
+                if (data != null && data.pending_approval) {
+                    startActivity(PendingApprovalActivity.newIntent(LoginActivity.this, data));
+                    loginButton.setEnabled(true);
+                    loginButton.setText(R.string.login_button);
+                    return;
+                }
                 SessionManager session = SessionManager.get(LoginActivity.this);
                 session.setToken(data.token);
                 if (data.user != null) {

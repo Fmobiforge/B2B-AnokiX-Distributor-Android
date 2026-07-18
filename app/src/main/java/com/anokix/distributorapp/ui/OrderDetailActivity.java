@@ -75,6 +75,11 @@ public class OrderDetailActivity extends AppCompatActivity {
         api.getOrderById(id, new ApiCallback<OrderDetailData>() {
             @Override
             public void onSuccess(OrderDetailData data) {
+                // Response can arrive after the user left; binding items (which calls Glide)
+                // on a destroyed activity would crash.
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 progress.setVisibility(View.GONE);
                 if (data == null || data.order == null) {
                     Toast.makeText(OrderDetailActivity.this, R.string.order_load_failed,

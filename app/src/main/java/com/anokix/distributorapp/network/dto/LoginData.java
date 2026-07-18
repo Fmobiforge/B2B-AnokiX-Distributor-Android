@@ -9,6 +9,26 @@ public class LoginData {
     public String portal_type;
     public PortalInfo portal_info;
 
+    // ---- Pending-approval branch -------------------------------------------
+    // When the distributor account is still awaiting approval the login call
+    // returns status=true but with no token; instead these fields describe the
+    // application under review (see PendingApprovalActivity).
+    public boolean pending_approval;
+    public String account_status;
+    public String registration_status;
+    public String submitted_at;
+    public String reference;
+    public String business_name;
+    public Wallet wallet;
+
+    public static class Wallet {
+        public String status;
+        public String account_number;
+        public String activated_at;
+        public String last_error;
+        public boolean configured;
+    }
+
     public static class User {
         public String id;
         public String first_name;

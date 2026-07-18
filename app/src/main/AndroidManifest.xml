@@ -82,6 +82,10 @@
             android:theme="@style/Theme.AnokiXDistributor.Login" />
 
         <activity
+            android:name=".ui.PendingApprovalActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
 

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="28dp">
+
+        <!-- Back to login link -->
+        <LinearLayout
+            android:id="@+id/backLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="6dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="@color/purple_primary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/pending_back_to_login"
+                android:textColor="@color/purple_primary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Clock icon tile -->
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_wallet_icon">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_clock"
+                android:tint="@color/white" />
+        </FrameLayout>
+
+        <!-- Title & subtitle -->
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/pending_title"
+            android:textColor="@color/top_title"
+            android:textSize="25sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/pending_subtitle_no_name"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <!-- Details card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_stat_card"
+            android:orientation="vertical"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="6dp">
+
+            <!-- Status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pending_status_label"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge_purple"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="5dp"
+                    android:text="@string/pending_status_value"
+                    android:textColor="@color/purple_primary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border_light" />
+
+            <!-- Business -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pending_business"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/valueBusiness"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="—"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border_light" />
+
+            <!-- Reference -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pending_reference"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/valueReference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.03"
+                    android:text="—"
+                    android:textColor="@color/info"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border_light" />
+
+            <!-- Submitted -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pending_submitted"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/valueSubmitted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border_light" />
+
+            <!-- IMB Wallet -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="52dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_wallet"
+                    android:tint="@color/text_secondary" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pending_wallet"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/valueWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_neutral"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="5dp"
+                    android:text="@string/pending_wallet_not_activated"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Wallet note -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/walletNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_wallet_note"
+            android:lineSpacingExtra="2dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="14dp"
+            android:paddingVertical="12dp"
+            android:text="@string/pending_wallet_note"
+            android:textColor="@color/purple_dark"
+            android:textSize="13sp" />
+
+        <!-- What happens next -->
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="@string/what_happens_next"
+            android:textColor="@color/top_title"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/nextStepsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical" />
+
+        <!-- Back to Login button -->
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/btnBackToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_btn_continue"
+            android:gravity="center"
+            android:text="@string/back_to_login"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <!-- Need help footer -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="6dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_email"
+                android:tint="@color/text_tertiary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pending_need_help"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/supportEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/support_email"
+                android:textColor="@color/purple_primary"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

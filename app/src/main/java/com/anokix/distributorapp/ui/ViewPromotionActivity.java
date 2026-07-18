@@ -114,6 +114,11 @@ public class ViewPromotionActivity extends AppCompatActivity {
         ApiClient.get(this).getPromotionById(promotionId, new ApiCallback<PromotionDetailData>() {
             @Override
             public void onSuccess(PromotionDetailData data) {
+                // Response can arrive after the user left; binding (which calls Glide.with(this))
+                // on a destroyed activity would crash.
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 loading.setVisibility(View.GONE);
                 if (data == null || data.promotion == null) {
                     Toast.makeText(ViewPromotionActivity.this,

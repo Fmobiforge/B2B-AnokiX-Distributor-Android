@@ -1382,6 +1382,10 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
         ApiClient.get(this).getPromotionById(editPromotionId, new ApiCallback<PromotionDetailData>() {
             @Override
             public void onSuccess(PromotionDetailData data) {
+                // prefillFromPromotion calls Glide.with(this); skip if the activity is gone.
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 if (data != null && data.promotion != null) {
                     prefillFromPromotion(data.promotion);
                 }

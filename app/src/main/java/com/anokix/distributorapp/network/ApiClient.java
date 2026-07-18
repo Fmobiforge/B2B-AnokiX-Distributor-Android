@@ -35,6 +35,7 @@ import com.anokix.distributorapp.network.dto.TradersData;
 import com.anokix.distributorapp.network.dto.VasCategoriesData;
 import com.anokix.distributorapp.network.dto.VasProductsData;
 import com.anokix.distributorapp.network.dto.VasTransactionsData;
+import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.session.SessionManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -134,6 +135,11 @@ public final class ApiClient {
 
     public void getDashboard(ApiCallback<DashboardData> cb) {
         getAuthed("api/distributor/dashboard", null, DashboardData.class, cb);
+    }
+
+    /** The distributor's anokiX (IMB) wallet — balance shown on the dashboard. */
+    public void getWallet(ApiCallback<WalletData> cb) {
+        getAuthed("api/common/wallet", null, WalletData.class, cb);
     }
 
     public void getStores(String keyword, ApiCallback<StoresData> cb) {

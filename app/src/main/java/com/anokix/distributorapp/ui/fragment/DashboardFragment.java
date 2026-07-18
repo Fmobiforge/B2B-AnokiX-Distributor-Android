@@ -24,6 +24,7 @@ import com.anokix.distributorapp.data.MockData;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.DashboardData;
+import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.session.SessionManager;
 import com.anokix.distributorapp.ui.MainActivity;
 import com.anokix.distributorapp.ui.NotificationBadge;
@@ -31,7 +32,7 @@ import com.anokix.distributorapp.ui.NotificationsActivity;
 import com.anokix.distributorapp.ui.TradersActivity;
 import com.anokix.distributorapp.ui.views.DonutChartView;
 import com.anokix.distributorapp.ui.views.LineChartView;
-import com.anokix.distributorapp.ui.views.SparklineView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -46,6 +47,10 @@ public class DashboardFragment extends Fragment {
     private final TextView[] kpiValueViews = new TextView[4];
     private final View[] kpiActionViews = new View[4];
     private String currencySymbol = "R";
+
+    private WalletData wallet;
+    private BottomSheetDialog walletSheet;
+    private View walletSheetContent;
 
     @Nullable
     @Override
@@ -72,11 +77,14 @@ public class DashboardFragment extends Fragment {
             recentViewAll.setOnClickListener(v -> selectTab(R.id.nav_orders));
         }
 
+        view.findViewById(R.id.walletCard).setOnClickListener(v -> showWalletSheet());
+
         bindWelcome(view);
         bindProfileBadge(view);
         buildKpiGrid(view);
         buildSummaryCards(view, MockData.fallbackSummaryCards());
         loadDashboard(view);
+        loadWallet(view);
     }
 
     @Override
@@ -282,11 +290,17 @@ public class DashboardFragment extends Fragment {
             int trendColor = up ? 0xFF16A34A : 0xFFDC2626;
             trend.setText(c.trend != null ? c.trend.label : "");
             trend.setTextColor(trendColor);
-            trend.setBackground(roundedRect((trendColor & 0x00FFFFFF) | 0x1A000000, 20));
 
-            SparklineView spark = card.findViewById(R.id.summarySparkline);
-            spark.setLineColor(accent);
-            spark.setValues(toFloatArray(c.sparkline));
+            TextView compare = card.findViewById(R.id.summaryCompare);
+            compare.setText(c.compare_label != null ? c.compare_label : "");
+
+            // Coloured accent underline (replaces the now-empty sparkline).
+            View underline = card.findViewById(R.id.summaryUnderline);
+            GradientDrawable bar = new GradientDrawable(
+                    GradientDrawable.Orientation.LEFT_RIGHT,
+                    new int[]{accent, (accent & 0x00FFFFFF) | 0x66000000});
+            bar.setCornerRadius(2 * density);
+            underline.setBackground(bar);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -374,7 +388,11 @@ public class DashboardFragment extends Fragment {
         LineChartView chart = root.findViewById(R.id.revenueChart);
         if (chart != null && revenue.chart != null && revenue.chart.values != null
                 && !revenue.chart.values.isEmpty()) {
+            chart.setCurrencySymbol(currencySymbol);
             chart.setValues(toFloatArray(revenue.chart.values));
+            if (revenue.chart.labels != null && !revenue.chart.labels.isEmpty()) {
+                chart.setLabels(revenue.chart.labels.toArray(new String[0]));
+            }
         }
     }
 
@@ -426,7 +444,7 @@ public class DashboardFragment extends Fragment {
             View row = inflater.inflate(R.layout.item_recent_order, list, false);
             ((TextView) row.findViewById(R.id.orderId)).setText(order.order_id);
             ((TextView) row.findViewById(R.id.orderTrader)).setText(order.trader);
-            ((TextView) row.findViewById(R.id.orderDate)).setText(order.formatted_date);
+            ((TextView) row.findViewById(R.id.orderDate)).setText(friendlyOrderDate(order));
             ((TextView) row.findViewById(R.id.orderAmount)).setText(order.formatted_amount);
 
             TextView status = row.findViewById(R.id.orderStatus);
@@ -534,5 +552,144 @@ public class DashboardFragment extends Fragment {
 
     private String formatCount(long value) {
         return String.format(java.util.Locale.US, "%,d", value);
+    }
+
+    // ---- Wallet -----------------------------------------------------------
+
+    private void loadWallet(View root) {
+        ApiClient.get(requireContext()).getWallet(new ApiCallback<WalletData>() {
+            @Override
+            public void onSuccess(WalletData data) {
+                if (!isAdded() || data == null) {
+                    return;
+                }
+                wallet = data;
+                bindWalletCard(root);
+                if (walletSheet != null && walletSheet.isShowing()) {
+                    bindWalletSheet(walletSheetContent);
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                // Wallet is best-effort — leave the card hidden if it can't be loaded.
+            }
+        });
+    }
+
+    /** Reveal + fill the top wallet card once a balance is available. */
+    private void bindWalletCard(View root) {
+        View card = root.findViewById(R.id.walletCard);
+        TextView value = root.findViewById(R.id.walletBalanceValue);
+        if (card == null || value == null || wallet == null || wallet.balance == null) {
+            return;
+        }
+        value.setText(formatMoney(wallet.balance.available));
+        card.setVisibility(View.VISIBLE);
+    }
+
+    private void showWalletSheet() {
+        if (wallet == null || wallet.balance == null) {
+            return;
+        }
+        walletSheet = new BottomSheetDialog(requireContext());
+        View content = LayoutInflater.from(requireContext())
+                .inflate(R.layout.sheet_wallet, null, false);
+        walletSheetContent = content;
+        walletSheet.setContentView(content);
+
+        content.findViewById(R.id.walletRefresh).setOnClickListener(v -> refreshWallet(content));
+
+        bindWalletSheet(content);
+        walletSheet.show();
+    }
+
+    private void bindWalletSheet(View content) {
+        if (content == null || wallet == null || wallet.balance == null) {
+            return;
+        }
+        setText(content, R.id.walletAvailable, formatMoney(wallet.balance.available));
+        setText(content, R.id.walletCurrent, formatMoney(wallet.balance.current));
+        setText(content, R.id.walletPending, formatMoney(wallet.balance.pending));
+
+        String asOf = parseTime(wallet.balance.as_of);
+        TextView asOfView = content.findViewById(R.id.walletAsOf);
+        if (asOfView != null) {
+            if (asOf.isEmpty()) {
+                asOfView.setVisibility(View.GONE);
+            } else {
+                asOfView.setVisibility(View.VISIBLE);
+                asOfView.setText(getString(R.string.wallet_as_of, asOf));
+            }
+        }
+    }
+
+    private void refreshWallet(View content) {
+        final ImageView icon = content.findViewById(R.id.walletRefreshIcon);
+        if (icon != null) {
+            icon.animate().rotationBy(360f).setDuration(600).start();
+        }
+        ApiClient.get(requireContext()).getWallet(new ApiCallback<WalletData>() {
+            @Override
+            public void onSuccess(WalletData data) {
+                if (!isAdded() || data == null) {
+                    return;
+                }
+                wallet = data;
+                bindWalletSheet(content);
+                if (getView() != null) {
+                    bindWalletCard(getView());
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                // Keep the previous values on a refresh failure.
+            }
+        });
+    }
+
+    private void setText(View parent, int id, String text) {
+        TextView view = parent.findViewById(id);
+        if (view != null) {
+            view.setText(text);
+        }
+    }
+
+    private String formatMoney(double value) {
+        return currencySymbol + String.format(java.util.Locale.US, "%,.2f", value);
+    }
+
+    /** Recent-order timestamp: the API's {@code formatted_date} is a broken epoch, so
+     * format the raw {@code date} ("dd/MM/yyyy HH:mm:ss") into a readable label. */
+    private String friendlyOrderDate(DashboardData.RecentOrder order) {
+        if (order.date != null && !order.date.isEmpty()) {
+            try {
+                java.text.SimpleDateFormat in =
+                        new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.US);
+                java.text.SimpleDateFormat out =
+                        new java.text.SimpleDateFormat("dd MMM yyyy, HH:mm", java.util.Locale.US);
+                return out.format(in.parse(order.date));
+            } catch (Exception ignored) {
+                return order.date;
+            }
+        }
+        return order.formatted_date == null ? "" : order.formatted_date;
+    }
+
+    /** Extract "HH:mm" (device-local) from an ISO-8601 timestamp; "" if unparseable. */
+    private String parseTime(String iso) {
+        if (iso == null || iso.isEmpty()) {
+            return "";
+        }
+        try {
+            java.text.SimpleDateFormat in =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", java.util.Locale.US);
+            java.text.SimpleDateFormat out =
+                    new java.text.SimpleDateFormat("HH:mm", java.util.Locale.US);
+            return out.format(in.parse(iso));
+        } catch (Exception ignored) {
+            return "";
+        }
     }
 }

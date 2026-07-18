@@ -573,6 +573,11 @@ public class CreateProductActivity extends AppCompatActivity {
         ApiClient.get(this).getProductById(productId, new ApiCallback<ProductDetailData>() {
             @Override
             public void onSuccess(ProductDetailData data) {
+                // The response can arrive after the user has left this screen; touching the
+                // (destroyed) activity — e.g. Glide.with(this) in prefill — would crash.
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 if (data != null && data.product != null) {
                     prefill(data.product);
                 }

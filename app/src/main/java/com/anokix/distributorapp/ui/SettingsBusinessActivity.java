@@ -209,6 +209,10 @@ public class SettingsBusinessActivity extends BaseSecondaryActivity implements O
         ApiClient.get(this).getBusinessProfile(new ApiCallback<BusinessProfileData>() {
             @Override
             public void onSuccess(BusinessProfileData data) {
+                // bindProfile calls Glide.with(this); skip if the activity is already gone.
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 if (data != null && data.profile != null) {
                     bindProfile(data.profile);
                 }

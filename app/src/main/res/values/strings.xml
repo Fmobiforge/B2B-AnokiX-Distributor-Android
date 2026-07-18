@@ -119,6 +119,17 @@
     <string name="search_products">Search products&#8230;</string>
     <string name="revenue_overview">Revenue Overview</string>
     <string name="this_week">This Week</string>
+
+    <!-- Dashboard wallet -->
+    <string name="wallet_balance">Wallet Balance</string>
+    <string name="wallet_powered_by">anokiX · IMB</string>
+    <string name="wallet_powered_by_full">Powered by IMB</string>
+    <string name="wallet_title">anokiX wallet</string>
+    <string name="wallet_available">Available</string>
+    <string name="wallet_current">Current</string>
+    <string name="wallet_pending">Pending</string>
+    <string name="wallet_refresh">Refresh wallet</string>
+    <string name="wallet_as_of">as of %1$s</string>
     <string name="recent_orders">Recent Orders</string>
     <string name="overview">Overview</string>
     <string name="top_selling_categories">Top Selling Categories</string>
@@ -915,6 +926,25 @@
     <string name="estimated_approval_time">ESTIMATED APPROVAL TIME</string>
     <string name="approval_time_value">24 – 48 Hours</string>
     <string name="back_to_login">Back to Login</string>
+
+    <!-- Pending approval (login → account awaiting review) -->
+    <string name="pending_back_to_login">Back to login</string>
+    <string name="pending_title">Application Under Review</string>
+    <string name="pending_subtitle">%1$s, thanks for registering. Our team is reviewing your application and documents.</string>
+    <string name="pending_subtitle_no_name">Thanks for registering. Our team is reviewing your application and documents.</string>
+    <string name="pending_status_label">Status</string>
+    <string name="pending_status_value">Pending Approval</string>
+    <string name="pending_business">Business</string>
+    <string name="pending_reference">Reference</string>
+    <string name="pending_submitted">Submitted</string>
+    <string name="pending_wallet">IMB Wallet</string>
+    <string name="pending_wallet_active">Active</string>
+    <string name="pending_wallet_not_activated">Not activated</string>
+    <string name="pending_wallet_note">You chose to activate your wallet later. You can set it up from your profile once your account is approved.</string>
+    <string name="pending_next_1">We verify your business details and uploaded documents.</string>
+    <string name="pending_next_2">You\'ll get an email as soon as your account is approved.</string>
+    <string name="pending_next_3">Sign in again once approved to reach your dashboard.</string>
+    <string name="pending_need_help">Need help? </string>
 
     <!-- Airtime & VAS -->
     <string name="airtime_vas">Airtime &amp; VAS</string>

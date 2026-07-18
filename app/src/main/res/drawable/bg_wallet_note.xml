@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Info note with a purple left accent strip (achieved by clipping a full purple
+     rectangle under the surface-coloured note inset from the left). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/purple_primary" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item android:left="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/purple_light" />
+            <corners
+                android:topRightRadius="8dp"
+                android:bottomRightRadius="8dp" />
+        </shape>
+    </item>
+</layer-list>
