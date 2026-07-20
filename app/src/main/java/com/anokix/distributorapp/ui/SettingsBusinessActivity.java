@@ -41,6 +41,7 @@ import com.anokix.distributorapp.network.dto.AutocompleteData;
 import com.anokix.distributorapp.network.dto.BusinessProfileData;
 import com.anokix.distributorapp.network.dto.CoordinateData;
 import com.anokix.distributorapp.network.dto.ReferenceData;
+import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.ui.views.FlowLayout;
 import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
@@ -68,7 +69,8 @@ import java.util.TreeMap;
  * Settings → Business: a 7-step editor (Company · Business · Contacts · Location · Documents ·
  * Service · Wallet) pre-filled from GET api/distributor/business/profile. Every step has its own
  * Save Changes button that posts just that step's fields to api/distributor/business/profile/update
- * (multipart). Wallet is informational only. Mirrors the public Create Account flow.
+ * (multipart). Wallet is read-only and comes from GET api/common/wallet. Mirrors the public
+ * Create Account flow.
  */
 public class SettingsBusinessActivity extends BaseSecondaryActivity implements OnMapReadyCallback {
 
@@ -141,6 +143,8 @@ public class SettingsBusinessActivity extends BaseSecondaryActivity implements O
     private android.widget.ListPopupWindow addressPopup;
     private final List<AutocompleteData.Prediction> predictions = new ArrayList<>();
 
+    private WalletData wallet;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_settings_business;
@@ -180,7 +184,8 @@ public class SettingsBusinessActivity extends BaseSecondaryActivity implements O
         buildStepper();
         buildDeliveryDayTable();
         buildDocumentRows();
-        buildWalletBenefits();
+        findViewById(R.id.walletRefresh).setOnClickListener(v -> loadWallet(true));
+        loadWallet(false);
         setupDropdowns();
         setupCoverage();
         bindStepFooter(R.id.footerCompany, this::saveCompany);
@@ -955,31 +960,155 @@ public class SettingsBusinessActivity extends BaseSecondaryActivity implements O
         }).start();
     }
 
-    // ---- Wallet benefits -------------------------------------------------
+    // ---- Wallet ----------------------------------------------------------
 
-    private void buildWalletBenefits() {
-        LinearLayout container = findViewById(R.id.walletBenefits);
-        int[] benefits = {R.string.benefit_faster_payments, R.string.benefit_access_credit,
-                R.string.benefit_insurance, R.string.benefit_rewards, R.string.benefit_growth_tools};
-        for (int res : benefits) {
-            LinearLayout row = new LinearLayout(this);
-            row.setOrientation(LinearLayout.HORIZONTAL);
-            row.setGravity(Gravity.CENTER_VERTICAL);
-            row.setPadding(0, dp(6), 0, dp(6));
-            ImageView check = new ImageView(this);
-            check.setLayoutParams(new LinearLayout.LayoutParams(dp(18), dp(18)));
-            check.setImageResource(R.drawable.ic_check_green);
-            row.addView(check);
-            RobotoTextView label = new RobotoTextView(this);
-            label.setText(res);
-            label.setTextSize(14);
-            label.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+    /** GET api/common/wallet — balances, IMB account details and the recent ledger. */
+    private void loadWallet(boolean spin) {
+        if (spin) {
+            View icon = findViewById(R.id.walletRefreshIcon);
+            if (icon != null) icon.animate().rotationBy(360f).setDuration(600).start();
+        }
+        ApiClient.get(this).getWallet(new ApiCallback<WalletData>() {
+            @Override
+            public void onSuccess(WalletData data) {
+                if (isFinishing() || data == null) return;
+                wallet = data;
+                bindWallet();
+            }
+
+            @Override
+            public void onError(String message) {
+                if (isFinishing() || wallet != null) return;   // keep what we already show
+                setStatusPill(false, getString(R.string.biz_wallet_load_failed));
+            }
+        });
+    }
+
+    private void bindWallet() {
+        boolean active = "active".equalsIgnoreCase(wallet.status);
+        setStatusPill(active, active
+                ? getString(R.string.biz_wallet_status_active)
+                : getString(R.string.biz_wallet_status_inactive));
+
+        TextView account = findViewById(R.id.walletAccountNumber);
+        account.setText(TextUtils.isEmpty(wallet.account_number)
+                ? getString(R.string.wallet_placeholder) : wallet.account_number);
+
+        TextView activated = findViewById(R.id.walletActivatedAt);
+        if (TextUtils.isEmpty(wallet.activated_at)) {
+            activated.setVisibility(View.GONE);
+        } else {
+            activated.setVisibility(View.VISIBLE);
+            activated.setText(getString(R.string.biz_wallet_activated, wallet.activated_at));
+        }
+
+        WalletData.Balance balance = wallet.balance;
+        ((TextView) findViewById(R.id.walletAvailable))
+                .setText(money(balance == null ? 0 : balance.available));
+        ((TextView) findViewById(R.id.walletCurrent))
+                .setText(money(balance == null ? 0 : balance.current));
+        ((TextView) findViewById(R.id.walletPending))
+                .setText(money(balance == null ? 0 : balance.pending));
+
+        buildTransactions(balance == null ? null : balance.transactions);
+    }
+
+    private void setStatusPill(boolean active, String label) {
+        TextView pill = findViewById(R.id.walletStatusPill);
+        pill.setText(label);
+        pill.setBackgroundResource(active ? R.drawable.bg_badge_success : R.drawable.bg_badge_warning);
+        pill.setTextColor(ContextCompat.getColor(this, active ? R.color.success : R.color.warning));
+        pill.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                active ? R.drawable.ic_check_badge_green : 0, 0, 0, 0);
+    }
+
+    private void buildTransactions(@Nullable List<WalletData.Transaction> transactions) {
+        LinearLayout container = findViewById(R.id.walletTransactions);
+        View empty = findViewById(R.id.walletTransactionsEmpty);
+        container.removeAllViews();
+        if (transactions == null || transactions.isEmpty()) {
+            empty.setVisibility(View.VISIBLE);
+            return;
+        }
+        empty.setVisibility(View.GONE);
+        for (WalletData.Transaction tx : transactions) {
+            container.addView(buildTransactionRow(tx));
+        }
+    }
+
+    private View buildTransactionRow(WalletData.Transaction tx) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(dp(12), dp(12), dp(12), dp(12));
+
+        RobotoTextView date = new RobotoTextView(this);
+        date.setText(walletDate(tx.date));
+        date.setTextSize(13);
+        date.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        date.setLayoutParams(new LinearLayout.LayoutParams(0,
+                ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(date);
+
+        if (tx.pending) {
+            RobotoTextView flag = new RobotoTextView(this);
+            flag.setText(R.string.biz_wallet_pending_flag);
+            flag.setTextSize(11);
+            flag.setTextColor(ContextCompat.getColor(this, R.color.warning));
+            flag.setBackgroundResource(R.drawable.bg_badge_warning);
+            flag.setPadding(dp(6), dp(2), dp(6), dp(2));
+            LinearLayout.LayoutParams flagLp = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            lp.leftMargin = dp(10);
-            label.setLayoutParams(lp);
-            row.addView(label);
-            container.addView(row);
+            flagLp.rightMargin = dp(8);
+            flag.setLayoutParams(flagLp);
+            row.addView(flag);
+        }
+
+        double amount = parseAmount(tx.amount);
+        RobotoBoldTextView value = new RobotoBoldTextView(this);
+        value.setText(money(amount));
+        value.setTextSize(13);
+        value.setTextColor(ContextCompat.getColor(this,
+                amount < 0 ? R.color.danger : R.color.text_primary));
+        row.addView(value);
+
+        LinearLayout wrapper = new LinearLayout(this);
+        wrapper.setOrientation(LinearLayout.VERTICAL);
+        wrapper.addView(row, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        View divider = new View(this);
+        divider.setBackgroundColor(ContextCompat.getColor(this, R.color.border_light));
+        wrapper.addView(divider, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(1)));
+        return wrapper;
+    }
+
+    private double parseAmount(String amount) {
+        try {
+            return Double.parseDouble(amount);
+        } catch (Exception ignored) {
+            return 0d;
+        }
+    }
+
+    /** ZA money: {@code R 40 168,50} — space thousands, comma decimals, sign kept. */
+    private String money(double value) {
+        String formatted = String.format(Locale.US, "%,.2f", Math.abs(value))
+                .replace(',', ' ').replace('.', ',');
+        return (value < 0 ? "R -" : "R ") + formatted;
+    }
+
+    /** ISO-8601 ledger timestamp → "15 Jul 2026, 15:58"; falls back to the raw value. */
+    private String walletDate(String iso) {
+        if (TextUtils.isEmpty(iso)) return "";
+        try {
+            java.text.SimpleDateFormat in =
+                    new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US);
+            java.text.SimpleDateFormat out =
+                    new java.text.SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.US);
+            return out.format(in.parse(iso));
+        } catch (Exception ignored) {
+            return iso;
         }
     }
 
