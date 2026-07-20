@@ -243,13 +243,13 @@ public final class MockData {
     /** Placeholder summary KPI cards shown before the dashboard API responds. */
     public static List<DashboardData.SummaryCard> fallbackSummaryCards() {
         List<DashboardData.SummaryCard> cards = new ArrayList<>();
-        cards.add(summaryCard("total_revenue", "Total Revenue", "R1,245,600.00", "↑ 18.6%", "purple",
+        cards.add(summaryCard("total_revenue", "Total Revenue", "R0.00", "↑ 0.0%", "purple",
                 new float[]{4.2f, 3.8f, 5.1f, 4.7f, 5.6f, 4.9f, 6.2f}));
-        cards.add(summaryCard("total_orders", "Total Orders", "1,286", "↑ 15.3%", "blue",
+        cards.add(summaryCard("total_orders", "Total Orders", "0", "↑ 0.0%", "blue",
                 new float[]{9.8f, 10.2f, 10.5f, 11f, 11.5f, 12f, 12.86f}));
-        cards.add(summaryCard("active_traders", "Active Traders", "2,453", "↑ 21.4%", "green",
+        cards.add(summaryCard("active_traders", "Active Traders", "0", "↑ 0.0%", "green",
                 new float[]{21f, 21.5f, 22f, 22.8f, 23.2f, 23.8f, 24.53f}));
-        cards.add(summaryCard("products_sold", "Products Sold", "24,560", "↑ 12.7%", "orange",
+        cards.add(summaryCard("products_sold", "Products Sold", "0", "↑ 0.0%", "orange",
                 new float[]{20.1f, 20.8f, 21.4f, 22f, 22.9f, 23.6f, 24.56f}));
         return cards;
     }
