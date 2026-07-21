@@ -1312,6 +1312,446 @@
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <!-- ==== Wallet information (only when "Create Wallet Now") ==== -->
+                <LinearLayout
+                    android:id="@+id/walletInfoPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Signing-owner verification notice -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_wallet_notice"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="top"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_check_badge_green"
+                            app:tint="@color/purple_primary" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/wallet_owner_notice"
+                            android:textColor="@color/purple_dark"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/wallet_owner_identity"
+                        android:textColor="@color/top_title"
+                        android:textSize="15sp" />
+
+                    <!-- ID Type -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_id_type" />
+
+                    <FrameLayout
+                        android:id="@+id/walletIdTypeField"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_login_input"
+                        android:paddingHorizontal="12dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/walletIdTypeLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/wallet_select_id_type"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:contentDescription="@null"
+                            android:rotation="90"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/text_secondary" />
+                    </FrameLayout>
+
+                    <!-- ID / document number (label varies by type) -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/walletIdNumberLabel"
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_sa_id_number" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etWalletIdNumber"
+                        style="@style/StoreFieldInput"
+                        android:hint="@string/wallet_hint_sa_id"
+                        android:inputType="number"
+                        android:maxLength="13" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/walletIdError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/danger"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/walletIdHint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:drawablePadding="4dp"
+                        android:text="@string/wallet_id_read_hint"
+                        android:textColor="@color/success"
+                        android:textSize="11sp"
+                        android:visibility="gone"
+                        app:drawableStartCompat="@drawable/ic_check_circle" />
+
+                    <!-- Passport-only fields -->
+                    <LinearLayout
+                        android:id="@+id/walletPassportGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            style="@style/StoreFieldLabel"
+                            android:text="@string/wallet_passport_country" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
+                            android:id="@+id/etWalletPassportCountry"
+                            style="@style/StoreFieldInput"
+                            android:hint="@string/wallet_hint_passport_country"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="2" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/wallet_passport_country_hint"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            style="@style/StoreFieldLabel"
+                            android:text="@string/wallet_passport_exp" />
+
+                        <FrameLayout
+                            android:id="@+id/walletPassportExpField"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_login_input"
+                            android:paddingHorizontal="12dp">
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:id="@+id/walletPassportExpLabel"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/wallet_select_date"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="13sp" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center_vertical|end"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_calendar"
+                                app:tint="@color/text_secondary" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <!-- Date of birth -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_dob" />
+
+                    <FrameLayout
+                        android:id="@+id/walletDobField"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_login_input"
+                        android:paddingHorizontal="12dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/walletDobLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/wallet_select_date"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_calendar"
+                            app:tint="@color/text_secondary" />
+                    </FrameLayout>
+
+                    <!-- Gender -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_gender" />
+
+                    <FrameLayout
+                        android:id="@+id/walletGenderField"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_login_input"
+                        android:paddingHorizontal="12dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/walletGenderLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/wallet_select_gender"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:contentDescription="@null"
+                            android:rotation="90"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/text_secondary" />
+                    </FrameLayout>
+
+                    <!-- Residential address -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="@string/wallet_residential_address"
+                        android:textColor="@color/top_title"
+                        android:textSize="15sp" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_street_address" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etWalletStreet"
+                        style="@style/StoreFieldInput"
+                        android:hint="@string/wallet_hint_street"
+                        android:inputType="textPostalAddress|textCapWords" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_suburb" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etWalletSuburb"
+                        style="@style/StoreFieldInput"
+                        android:hint="@string/wallet_hint_suburb"
+                        android:inputType="textCapWords" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_city" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etWalletCity"
+                        style="@style/StoreFieldInput"
+                        android:hint="@string/wallet_hint_city"
+                        android:inputType="textCapWords" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_province" />
+
+                    <FrameLayout
+                        android:id="@+id/walletProvinceField"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_login_input"
+                        android:paddingHorizontal="12dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/walletProvinceLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/wallet_select_province"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:contentDescription="@null"
+                            android:rotation="90"
+                            android:src="@drawable/ic_chevron_right"
+                            app:tint="@color/text_secondary" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/wallet_post_code" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etWalletPostCode"
+                        style="@style/StoreFieldInput"
+                        android:hint="@string/wallet_hint_post_code"
+                        android:inputType="number"
+                        android:maxLength="10" />
+
+                    <!-- Wallet access -->
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="@string/wallet_access"
+                        android:textColor="@color/top_title"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:id="@+id/walletUssdTile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_wallet_access_on"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <ImageView
+                            android:id="@+id/walletUssdCheck"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_checkbox_on" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/wallet_access_ussd"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/wallet_access_ussd_sub"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/walletInternetTile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_wallet_access_on"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <ImageView
+                            android:id="@+id/walletInternetCheck"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_checkbox_on" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/wallet_access_online"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/wallet_access_online_sub"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/walletCrossBorderTile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_wallet_access_off"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <ImageView
+                            android:id="@+id/walletCrossBorderCheck"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_checkbox_off" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/wallet_access_cross"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/wallet_access_cross_sub"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

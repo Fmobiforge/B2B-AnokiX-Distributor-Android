@@ -1,6 +1,7 @@
 package com.anokix.distributorapp.ui;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -67,7 +68,9 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -92,6 +95,7 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
     private static final int STEP_LOCATION = 3;
     private static final int STEP_DOCUMENTS = 4;
     private static final int STEP_SERVICE = 5;
+    private static final int STEP_WALLET = 6;
     private static final int STEP_TERMS = 7;
 
     private static final String[] STEP_KEYS = {
@@ -190,6 +194,31 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
     // Wallet
     private boolean createWalletNow = true;
 
+    // Wallet › signing-owner identity + residential address (only sent when "Create Wallet Now")
+    private static final String[] ID_TYPE_LABELS = {"SA ID Number", "Passport", "Asylum Document"};
+    private static final String[] ID_TYPE_CODES = {"ID", "passport", "asylum"};
+    private static final String[] GENDER_VALUES = {"Male", "Female", "Other"};
+    // Province display names + ISO 3166-2:ZA codes used by the payload (e.g. "ZA-FS").
+    private static final String[] PROVINCE_LABELS = {
+            "Eastern Cape", "Free State", "Gauteng", "Limpopo", "Mpumalanga",
+            "Northern Cape", "Kwa-Zulu Natal", "North West", "Western Cape"};
+    private static final String[] PROVINCE_CODES = {
+            "ZA-EC", "ZA-FS", "ZA-GP", "ZA-LP", "ZA-MP",
+            "ZA-NC", "ZA-KZN", "ZA-NW", "ZA-WC"};
+
+    private String walletIdTypeCode;     // "ID" / "passport" / "asylum"
+    private String walletGender;         // "Male" / "Female" / "Other"
+    private String walletProvinceCode;   // e.g. "ZA-FS"
+    private String walletDobIso;         // yyyy-MM-dd
+    private String walletPassportExpIso; // yyyy-MM-dd
+    private boolean walletUssd = true;
+    private boolean walletInternet = true;
+    private boolean walletCrossBorder = false;
+    private boolean walletSaIdValid;     // true once a valid 13-digit SA ID is parsed
+
+    private final SimpleDateFormat walletIsoFmt = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    private final SimpleDateFormat walletReadableFmt = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
     // Image / file pickers
     private String pendingTarget;          // LOGO_TARGET or a document key
     private Uri pendingCameraUri;
@@ -236,6 +265,7 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
         setupCategoryField();
         setupContacts();
         setupWalletOptions();
+        setupWalletFields();
         setupNavigation();
         setupPickers();
         setupAddressAutocomplete();
@@ -383,6 +413,8 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
             case STEP_SERVICE:
                 if (selectedCoverage == null) return fail(R.string.err_coverage);
                 return true;
+            case STEP_WALLET:
+                return validateWallet();
             case STEP_TERMS:
                 if (!checked(R.id.cbAccurate) || !checked(R.id.cbTos)
                         || !checked(R.id.cbKyc) || !checked(R.id.cbComms)) {
@@ -392,6 +424,33 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
             default:
                 return true;
         }
+    }
+
+    /** Wallet step: nothing required when "Activate Later"; full identity + address otherwise. */
+    private boolean validateWallet() {
+        if (!createWalletNow) {
+            return true;
+        }
+        if (walletIdTypeCode == null) return fail(R.string.err_wallet_id_type);
+        String idNumber = text(R.id.etWalletIdNumber);
+        if (idNumber.isEmpty()) return fail(R.string.err_wallet_id_number);
+        if ("ID".equals(walletIdTypeCode) && !walletSaIdValid) {
+            return fail(R.string.err_wallet_sa_id);
+        }
+        if ("passport".equals(walletIdTypeCode)) {
+            if (text(R.id.etWalletPassportCountry).isEmpty()) {
+                return fail(R.string.err_wallet_passport_country);
+            }
+            if (walletPassportExpIso == null) return fail(R.string.err_wallet_passport_exp);
+        }
+        if (walletDobIso == null) return fail(R.string.err_wallet_dob);
+        if (walletGender == null) return fail(R.string.err_wallet_gender);
+        if (text(R.id.etWalletStreet).isEmpty()) return fail(R.string.err_wallet_street);
+        if (text(R.id.etWalletSuburb).isEmpty()) return fail(R.string.err_wallet_suburb);
+        if (text(R.id.etWalletCity).isEmpty()) return fail(R.string.err_wallet_city);
+        if (walletProvinceCode == null) return fail(R.string.err_wallet_province);
+        if (text(R.id.etWalletPostCode).isEmpty()) return fail(R.string.err_wallet_post_code);
+        return true;
     }
 
     private boolean fail(int msgRes) {
@@ -614,6 +673,273 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
                 now ? R.drawable.ic_radio_selected : R.drawable.ic_radio_unselected);
         ((ImageView) findViewById(R.id.radioActivateLater)).setImageResource(
                 now ? R.drawable.ic_radio_unselected : R.drawable.ic_radio_selected);
+        // "Activate Later" hides the whole identity/address panel (design Register7-new4).
+        findViewById(R.id.walletInfoPanel).setVisibility(now ? View.VISIBLE : View.GONE);
+    }
+
+    // ---- Wallet identity + residential address --------------------------
+
+    private void setupWalletFields() {
+        // Default to SA ID Number (matches the design mockup).
+        walletIdTypeCode = "ID";
+        TextView idTypeLabel = findViewById(R.id.walletIdTypeLabel);
+        idTypeLabel.setText(ID_TYPE_LABELS[0]);
+        idTypeLabel.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+
+        // ID Type picker.
+        findViewById(R.id.walletIdTypeField).setOnClickListener(v ->
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.wallet_id_type)
+                        .setItems(ID_TYPE_LABELS, (d, which) -> {
+                            walletIdTypeCode = ID_TYPE_CODES[which];
+                            TextView label = findViewById(R.id.walletIdTypeLabel);
+                            label.setText(ID_TYPE_LABELS[which]);
+                            label.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                            applyIdType();
+                        })
+                        .show());
+
+        // Live SA-ID validation + auto DOB/gender derivation.
+        ((EditText) findViewById(R.id.etWalletIdNumber)).addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) { }
+            @Override public void onTextChanged(CharSequence s, int a, int b, int c) { }
+            @Override public void afterTextChanged(Editable e) {
+                if ("ID".equals(walletIdTypeCode)) {
+                    validateSaId(e.toString().trim());
+                }
+            }
+        });
+
+        // Date pickers (guarded so SA-ID DOB stays read-only/auto).
+        findViewById(R.id.walletDobField).setOnClickListener(v -> {
+            if ("ID".equals(walletIdTypeCode)) return; // auto-filled from the ID number
+            pickWalletDate(walletDobIso, iso -> {
+                walletDobIso = iso;
+                setFieldValue(R.id.walletDobLabel, readableDate(iso));
+            });
+        });
+        findViewById(R.id.walletPassportExpField).setOnClickListener(v ->
+                pickWalletDate(walletPassportExpIso, iso -> {
+                    walletPassportExpIso = iso;
+                    setFieldValue(R.id.walletPassportExpLabel, readableDate(iso));
+                }));
+
+        // Gender picker (guarded so SA-ID gender stays read-only/auto).
+        findViewById(R.id.walletGenderField).setOnClickListener(v -> {
+            if ("ID".equals(walletIdTypeCode)) return;
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.wallet_gender)
+                    .setItems(GENDER_VALUES, (d, which) -> {
+                        walletGender = GENDER_VALUES[which];
+                        setFieldValue(R.id.walletGenderLabel, walletGender);
+                    })
+                    .show();
+        });
+
+        // Province picker.
+        findViewById(R.id.walletProvinceField).setOnClickListener(v ->
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.wallet_province)
+                        .setItems(PROVINCE_LABELS, (d, which) -> {
+                            walletProvinceCode = PROVINCE_CODES[which];
+                            setFieldValue(R.id.walletProvinceLabel, PROVINCE_LABELS[which]);
+                        })
+                        .show());
+
+        // Wallet-access toggles.
+        findViewById(R.id.walletUssdTile).setOnClickListener(v -> {
+            walletUssd = !walletUssd;
+            renderAccessTile(R.id.walletUssdTile, R.id.walletUssdCheck, walletUssd);
+        });
+        findViewById(R.id.walletInternetTile).setOnClickListener(v -> {
+            walletInternet = !walletInternet;
+            renderAccessTile(R.id.walletInternetTile, R.id.walletInternetCheck, walletInternet);
+        });
+        findViewById(R.id.walletCrossBorderTile).setOnClickListener(v -> {
+            walletCrossBorder = !walletCrossBorder;
+            renderAccessTile(R.id.walletCrossBorderTile, R.id.walletCrossBorderCheck, walletCrossBorder);
+        });
+
+        // Apply the SA-ID default state (dims the derived DOB + gender fields).
+        applyIdType();
+    }
+
+    /** Reconfigures the identity fields when the ID type changes. */
+    private void applyIdType() {
+        boolean saId = "ID".equals(walletIdTypeCode);
+        boolean passport = "passport".equals(walletIdTypeCode);
+
+        EditText idInput = findViewById(R.id.etWalletIdNumber);
+        TextView idLabel = findViewById(R.id.walletIdNumberLabel);
+        if (saId) {
+            idLabel.setText(R.string.wallet_sa_id_number);
+            idInput.setHint(R.string.wallet_hint_sa_id);
+            idInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+            idInput.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(13)});
+        } else {
+            idLabel.setText(passport ? R.string.wallet_passport_number : R.string.wallet_asylum_number);
+            idInput.setHint(R.string.wallet_hint_document_number);
+            idInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+            idInput.setFilters(new android.text.InputFilter[0]);
+        }
+
+        findViewById(R.id.walletPassportGroup).setVisibility(passport ? View.VISIBLE : View.GONE);
+
+        // DOB + gender are derived (read-only) for SA ID, manual otherwise.
+        setAutoField(R.id.walletDobField);
+        setAutoField(R.id.walletGenderField);
+
+        if (saId) {
+            validateSaId(idInput.getText().toString().trim());
+        } else {
+            // Leaving SA ID clears the derived values + validation UI.
+            walletSaIdValid = false;
+            findViewById(R.id.walletIdError).setVisibility(View.GONE);
+            findViewById(R.id.walletIdHint).setVisibility(View.GONE);
+            walletDobIso = null;
+            walletGender = null;
+            resetFieldValue(R.id.walletDobLabel, R.string.wallet_select_date);
+            resetFieldValue(R.id.walletGenderLabel, R.string.wallet_select_gender);
+        }
+    }
+
+    /** Validates a South African ID and, when valid, fills DOB + gender. */
+    private void validateSaId(String id) {
+        TextView error = findViewById(R.id.walletIdError);
+        TextView hint = findViewById(R.id.walletIdHint);
+        walletSaIdValid = false;
+        walletDobIso = null;
+        walletGender = null;
+
+        if (id.isEmpty()) {
+            error.setVisibility(View.GONE);
+            hint.setVisibility(View.GONE);
+            resetFieldValue(R.id.walletDobLabel, R.string.wallet_select_date);
+            resetFieldValue(R.id.walletGenderLabel, R.string.wallet_select_gender);
+            return;
+        }
+
+        if (id.length() != 13 || !id.matches("\\d{13}")) {
+            showIdError(R.string.wallet_err_id_length);
+            return;
+        }
+        String dobIso = saIdDob(id);
+        if (dobIso == null) {
+            showIdError(R.string.wallet_err_id_date);
+            return;
+        }
+        if (!luhnValid(id)) {
+            showIdError(R.string.wallet_err_id_checksum);
+            return;
+        }
+
+        // Valid: derive DOB + gender.
+        walletSaIdValid = true;
+        walletDobIso = dobIso;
+        int seq = Integer.parseInt(id.substring(6, 10));
+        walletGender = seq >= 5000 ? "Male" : "Female";
+        error.setVisibility(View.GONE);
+        hint.setVisibility(View.VISIBLE);
+        setFieldValue(R.id.walletDobLabel, readableDate(dobIso));
+        setFieldValue(R.id.walletGenderLabel, walletGender);
+    }
+
+    private void showIdError(int msgRes) {
+        TextView error = findViewById(R.id.walletIdError);
+        error.setText(msgRes);
+        error.setVisibility(View.VISIBLE);
+        findViewById(R.id.walletIdHint).setVisibility(View.GONE);
+        resetFieldValue(R.id.walletDobLabel, R.string.wallet_select_date);
+        resetFieldValue(R.id.walletGenderLabel, R.string.wallet_select_gender);
+    }
+
+    /** Returns yyyy-MM-dd for a valid YYMMDD prefix, or null if the date is invalid. */
+    @Nullable
+    private String saIdDob(String id) {
+        int yy = Integer.parseInt(id.substring(0, 2));
+        int mm = Integer.parseInt(id.substring(2, 4));
+        int dd = Integer.parseInt(id.substring(4, 6));
+        if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return null;
+        int currentYy = Calendar.getInstance().get(Calendar.YEAR) % 100;
+        int year = yy > currentYy ? 1900 + yy : 2000 + yy;
+        Calendar c = Calendar.getInstance();
+        c.clear();
+        c.setLenient(false);
+        c.set(year, mm - 1, dd);
+        try {
+            c.getTime(); // triggers validation (e.g. rejects 31 Feb)
+        } catch (Exception e) {
+            return null;
+        }
+        return walletIsoFmt.format(c.getTime());
+    }
+
+    private boolean luhnValid(String num) {
+        int sum = 0;
+        boolean doubleDigit = false;
+        for (int i = num.length() - 1; i >= 0; i--) {
+            int d = num.charAt(i) - '0';
+            if (doubleDigit) {
+                d *= 2;
+                if (d > 9) d -= 9;
+            }
+            sum += d;
+            doubleDigit = !doubleDigit;
+        }
+        return sum % 10 == 0;
+    }
+
+    private interface WalletDatePicked { void onPicked(String iso); }
+
+    private void pickWalletDate(@Nullable String currentIso, WalletDatePicked cb) {
+        Calendar c = Calendar.getInstance();
+        if (currentIso != null) {
+            try {
+                c.setTime(walletIsoFmt.parse(currentIso));
+            } catch (Exception ignored) {
+            }
+        }
+        new DatePickerDialog(this, (view, year, month, day) -> {
+            Calendar picked = Calendar.getInstance();
+            picked.clear();
+            picked.set(year, month, day);
+            cb.onPicked(walletIsoFmt.format(picked.getTime()));
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private String readableDate(String iso) {
+        try {
+            return walletReadableFmt.format(walletIsoFmt.parse(iso));
+        } catch (Exception e) {
+            return iso;
+        }
+    }
+
+    private void setFieldValue(int labelId, String value) {
+        TextView label = findViewById(labelId);
+        label.setText(value);
+        label.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+    }
+
+    private void resetFieldValue(int labelId, int hintRes) {
+        TextView label = findViewById(labelId);
+        label.setText(hintRes);
+        label.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+    }
+
+    /** Dims a dropdown-style field when it is derived/read-only (SA-ID DOB + gender). */
+    private void setAutoField(int fieldId) {
+        boolean editable = !"ID".equals(walletIdTypeCode);
+        View field = findViewById(fieldId);
+        field.setClickable(editable);
+        field.setAlpha(editable ? 1f : 0.6f);
+    }
+
+    private void renderAccessTile(int tileId, int checkId, boolean on) {
+        findViewById(tileId).setBackgroundResource(
+                on ? R.drawable.bg_wallet_access_on : R.drawable.bg_wallet_access_off);
+        ((ImageView) findViewById(checkId)).setImageResource(
+                on ? R.drawable.ic_checkbox_on : R.drawable.ic_checkbox_off);
     }
 
     private void buildBenefits() {
@@ -1149,7 +1475,28 @@ public class RegisterDistributorActivity extends AppCompatActivity implements On
         }
         form.put("service_product_categories", joinLongs(selectedCategoryIds));
         form.put("preferred_delivery_days", buildDeliveryDays());
-        form.put("payment_method", createWalletNow ? "wallet" : "later");
+
+        // ---- Wallet ----
+        form.put("payment_method", "wallet");
+        form.put("wallet_activation", createWalletNow ? "now" : "later");
+        if (createWalletNow) {
+            form.put("wallet_id_type", walletIdTypeCode);
+            form.put("wallet_id_number", text(R.id.etWalletIdNumber));
+            if ("passport".equals(walletIdTypeCode)) {
+                form.put("wallet_passport_country", text(R.id.etWalletPassportCountry));
+                form.put("wallet_passport_exp_date", walletPassportExpIso);
+            }
+            form.put("wallet_dob", walletDobIso);
+            form.put("wallet_gender", walletGender);
+            form.put("wallet_street_address", text(R.id.etWalletStreet));
+            form.put("wallet_suburb", text(R.id.etWalletSuburb));
+            form.put("wallet_city", text(R.id.etWalletCity));
+            form.put("wallet_province", walletProvinceCode);
+            form.put("wallet_post_code", text(R.id.etWalletPostCode));
+            form.put("wallet_ussd", walletUssd ? "1" : "0");
+            form.put("wallet_internet", walletInternet ? "1" : "0");
+            form.put("wallet_cross_border", walletCrossBorder ? "1" : "0");
+        }
 
         List<Http.FilePart> files = new ArrayList<>();
         for (Map.Entry<String, Uri> e : docUris.entrySet()) {

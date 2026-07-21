@@ -539,6 +539,47 @@
     <string name="create_wallet_now">Create Wallet Now</string>
     <string name="activate_later">Activate Later</string>
 
+    <!-- Step 7: Wallet › signing-owner identity + residential address -->
+    <string name="wallet_owner_notice">IMB opens the account in the name of the signing owner, not the company — so it needs their ID and home address. A company registration number cannot be used here.</string>
+    <string name="wallet_owner_identity">Signing Owner Identity</string>
+    <string name="wallet_id_type">ID Type</string>
+    <string name="wallet_select_id_type">Select ID type</string>
+    <string name="wallet_sa_id_number">SA ID Number</string>
+    <string name="wallet_hint_sa_id">13-digit ID number</string>
+    <string name="wallet_passport_number">Passport Number</string>
+    <string name="wallet_asylum_number">Asylum Document Number</string>
+    <string name="wallet_hint_document_number">Document number</string>
+    <string name="wallet_passport_country">Passport Country</string>
+    <string name="wallet_hint_passport_country">e.g. ZA</string>
+    <string name="wallet_passport_country_hint">Two-letter country code.</string>
+    <string name="wallet_passport_exp">Passport Expiry Date</string>
+    <string name="wallet_dob">Date of Birth</string>
+    <string name="wallet_gender">Gender</string>
+    <string name="wallet_select_gender">Select gender</string>
+    <string name="wallet_select_date">Select date</string>
+    <string name="wallet_id_read_hint">Date of birth and gender read from the ID number.</string>
+    <string name="wallet_err_id_length">A South African ID number must be 13 digits.</string>
+    <string name="wallet_err_id_date">The first six digits of the ID number are not a valid date.</string>
+    <string name="wallet_err_id_checksum">This ID number is not valid.</string>
+    <string name="wallet_residential_address">Residential Address</string>
+    <string name="wallet_street_address">Street Address</string>
+    <string name="wallet_hint_street">17 New Haven Ave</string>
+    <string name="wallet_suburb">Suburb</string>
+    <string name="wallet_hint_suburb">Bethesda</string>
+    <string name="wallet_city">City</string>
+    <string name="wallet_hint_city">Cape Town</string>
+    <string name="wallet_province">Province</string>
+    <string name="wallet_select_province">Select province</string>
+    <string name="wallet_post_code">Postal Code</string>
+    <string name="wallet_hint_post_code">8001</string>
+    <string name="wallet_access">Wallet Access</string>
+    <string name="wallet_access_ussd">USSD access</string>
+    <string name="wallet_access_ussd_sub">Check balances and transact from any phone, no data needed.</string>
+    <string name="wallet_access_online">Online &amp; app access</string>
+    <string name="wallet_access_online_sub">Use the anokiX app and web portal.</string>
+    <string name="wallet_access_cross">Cross-border payments</string>
+    <string name="wallet_access_cross_sub">Send and receive outside South Africa.</string>
+
     <!-- Step 8: Terms -->
     <string name="terms_conditions">Terms &amp; Conditions</string>
     <string name="terms_conditions_sub">Please review and accept to continue.</string>
@@ -911,6 +952,18 @@
     <string name="err_primary_contact_mobile">Please enter the primary contact mobile number.</string>
     <string name="err_coverage">Please select your distribution coverage.</string>
     <string name="err_required_documents">Please upload all required documents.</string>
+    <string name="err_wallet_id_type">Please choose an ID type.</string>
+    <string name="err_wallet_id_number">Please enter the owner\'s ID / document number.</string>
+    <string name="err_wallet_sa_id">Please enter a valid 13-digit South African ID number.</string>
+    <string name="err_wallet_passport_country">Please enter the passport country.</string>
+    <string name="err_wallet_passport_exp">Please select the passport expiry date.</string>
+    <string name="err_wallet_dob">Please select the date of birth.</string>
+    <string name="err_wallet_gender">Please select a gender.</string>
+    <string name="err_wallet_street">Please enter the street address.</string>
+    <string name="err_wallet_suburb">Please enter the suburb.</string>
+    <string name="err_wallet_city">Please enter the city.</string>
+    <string name="err_wallet_province">Please select a province.</string>
+    <string name="err_wallet_post_code">Please enter the postal code.</string>
     <string name="err_terms_reg">Please accept all terms to continue.</string>
     <string name="register_success">Registration submitted successfully.</string>
 
