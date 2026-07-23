@@ -54,6 +54,37 @@
     <string name="products">Products</string>
     <string name="promotions">Ads &amp; Promotions</string>
     <string name="finances">Finances</string>
+    <string name="finances_subtitle">Your anokiX wallet ledger — payments received from traders.</string>
+    <!-- Finances KPI cards -->
+    <string name="finance_revenue_month">Revenue (This Month)</string>
+    <string name="finance_revenue_month_sub">Received this month</string>
+    <string name="finance_commission_month">Commission (This Month)</string>
+    <string name="finance_commission_month_sub">Platform fee this month</string>
+    <string name="finance_received_payments">Received Payments</string>
+    <string name="finance_pending">Pending</string>
+    <string name="finance_pending_sub">Awaiting settlement</string>
+    <string name="finance_overdue">Overdue Amount</string>
+    <string name="finance_overdue_sub">None overdue</string>
+    <string name="finance_transactions_count">%1$d transactions</string>
+    <!-- Finances search + filters -->
+    <string name="search_finances">Search reference, order ID, trader or …</string>
+    <string name="all_statuses">All Statuses</string>
+    <string name="all_methods">All Methods</string>
+    <string name="finance_date_label">Date</string>
+    <string name="finance_method_label">Method</string>
+    <string name="finance_status_label">Status</string>
+    <string name="finance_type_label">Type</string>
+    <string name="finance_date_range">Date range</string>
+    <string name="finance_row_menu">Transaction options</string>
+    <string name="finance_view_details">View details</string>
+    <string name="finance_pdf_coming_soon">PDF download coming soon.</string>
+    <string name="finance_wallet_method">anokiX Wallet (IMB)</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="clear">Clear</string>
+    <string name="no_finances">No transactions found</string>
+    <string name="no_finances_hint">Your wallet payments will appear here. Try adjusting the filters or date range.</string>
+    <string name="showing_transactions_zero">Showing 0 transactions</string>
+    <string name="finances_load_failed">Failed to load finances.</string>
     <string name="reports">Reports</string>
     <string name="deliveries">Deliveries</string>
     <string name="returns">Returns</string>

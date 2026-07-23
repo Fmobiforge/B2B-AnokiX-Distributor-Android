@@ -1,98 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginVertical="5dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:contentPadding="0dp"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingVertical="@dimen/spacing_sm">
+        android:orientation="vertical"
+        android:padding="14dp">
 
-        <FrameLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_kpi_icon_purple">
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_document"
-                app:tint="@color/purple_primary" />
-        </FrameLayout>
-
+        <!-- Header: type badge + status badge -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_md"
-            android:layout_marginEnd="@dimen/spacing_sm"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Payment from Mega Traders"
-                android:textAppearance="@style/TextAppearance.AnokiX.Title"
-                android:textSize="@dimen/text_body_sm" />
-
-            <com.anokix.distributorapp.ui.views.RobotoTextView
-                android:id="@+id/invoiceId"
+                android:id="@+id/txnType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="INV-10023"
-                android:textAppearance="@style/TextAppearance.AnokiX.Caption" />
-
-            <com.anokix.distributorapp.ui.views.RobotoLightTextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:text="24 May 2025"
-                android:textAppearance="@style/TextAppearance.AnokiX.Label" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="vertical">
-
-            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                android:id="@+id/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+R250,000"
-                android:textColor="@color/success"
-                android:textSize="@dimen/text_body_sm" />
-
-            <com.anokix.distributorapp.ui.views.RobotoTextView
-                android:id="@+id/statusBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
                 android:background="@drawable/bg_badge_success"
-                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="3dp"
+                android:text="Payment"
+                android:textColor="@color/success"
+                android:textSize="10sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/txnStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_badge_success"
+                android:paddingHorizontal="10dp"
                 android:paddingVertical="3dp"
                 android:text="Paid"
                 android:textColor="@color/success"
-                android:textSize="@dimen/text_micro" />
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Counterparty: avatar + name + phone + amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/txnAvatar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/bg_avatar"
+                android:backgroundTint="@color/purple_primary"
+                android:gravity="center"
+                android:text="P"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/txnCounterparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="PizzaShop"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/txnPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="27123123112"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/txnAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="R60.00"
+                android:textColor="@color/success"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Description -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/txnDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Order payment · ORD000029"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp" />
+
+        <!-- Reference + date -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/txnMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="d32ebbe5… · 15 Jul 2026"
+            android:textColor="@color/text_tertiary"
+            android:textSize="10sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divider" />
+
+        <!-- Method + actions -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_wallet"
+                app:tint="@color/text_secondary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/txnMethod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="anokiX Wallet (IMB)"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnView"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="16dp"
+                android:text="@string/view_btn"
+                android:textColor="@color/purple_primary"
+                android:textSize="12sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/purple_primary"
+                app:strokeWidth="1dp" />
+
+            <ImageButton
+                android:id="@+id/btnMore"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_dropdown_pill"
+                android:contentDescription="@string/finance_row_menu"
+                android:src="@drawable/ic_more_vert"
+                app:tint="@color/text_secondary" />
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/border" />
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

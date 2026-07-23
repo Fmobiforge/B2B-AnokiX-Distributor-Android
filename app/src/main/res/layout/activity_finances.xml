@@ -8,104 +8,272 @@
 
     <include layout="@layout/include_secondary_header" />
 
-    <ScrollView
+    <!-- ===== KPI cards (horizontal scroll — 5 metrics) ===== -->
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
         android:clipToPadding="false"
-        android:fillViewport="true"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:scrollbars="none">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/kpiRevenue"
+                layout="@layout/item_finance_kpi"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp" />
+
+            <include
+                android:id="@+id/kpiCommission"
+                layout="@layout/item_finance_kpi"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp" />
+
+            <include
+                android:id="@+id/kpiReceived"
+                layout="@layout/item_finance_kpi"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp" />
+
+            <include
+                android:id="@+id/kpiPending"
+                layout="@layout/item_finance_kpi"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp" />
+
+            <include
+                android:id="@+id/kpiOverdue"
+                layout="@layout/item_finance_kpi"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- ===== Search + filters ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp">
+
+        <!-- Search bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_search_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_search"
+                app:tint="@color/text_secondary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/searchInput"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/search_finances"
+                android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="0dp"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Status / Type / Method dropdowns — equal thirds -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing_lg">
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
-            <!-- Summary cards -->
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:layout_marginTop="@dimen/screen_padding_vertical"
-                android:paddingHorizontal="@dimen/screen_padding_horizontal"
-                android:paddingBottom="@dimen/spacing_md"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:id="@+id/summaryRow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </HorizontalScrollView>
-
-            <!-- Filter tabs -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/screen_padding_horizontal"
-                android:paddingBottom="@dimen/spacing_md">
+                android:id="@+id/statusDropdown"
+                style="@style/FinanceDropdownPill"
+                android:layout_marginEnd="8dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/bg_segment_container"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/statusLabel"
+                    style="@style/FinanceDropdownLabel"
+                    android:text="@string/finance_status_label" />
 
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:id="@+id/tabAll"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_segment_tab_selected"
-                        android:gravity="center"
-                        android:text="@string/tab_all"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/text_body_sm" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/tabIncome"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/income"
-                        android:textColor="@color/text_primary"
-                        android:textSize="@dimen/text_body_sm" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/tabExpenses"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/expenses"
-                        android:textColor="@color/text_primary"
-                        android:textSize="@dimen/text_body_sm" />
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/statusChevron"
+                    style="@style/FinanceDropdownChevron" />
             </LinearLayout>
 
-            <!-- Transaction list card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/screen_padding_horizontal"
-                app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="@dimen/radius_lg"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/border"
-                app:strokeWidth="1dp">
+            <LinearLayout
+                android:id="@+id/typeDropdown"
+                style="@style/FinanceDropdownPill"
+                android:layout_marginEnd="8dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/transactionsList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never"
-                    android:paddingVertical="@dimen/spacing_xs" />
-            </com.google.android.material.card.MaterialCardView>
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/typeLabel"
+                    style="@style/FinanceDropdownLabel"
+                    android:text="@string/finance_type_label" />
+
+                <ImageView
+                    android:id="@+id/typeChevron"
+                    style="@style/FinanceDropdownChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/methodDropdown"
+                style="@style/FinanceDropdownPill">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/methodLabel"
+                    style="@style/FinanceDropdownLabel"
+                    android:text="@string/finance_method_label" />
+
+                <ImageView
+                    android:id="@+id/methodChevron"
+                    style="@style/FinanceDropdownChevron" />
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+
+        <!-- Date range -->
+        <LinearLayout
+            android:id="@+id/dateRangePill"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_filter_pill"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="10dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_calendar"
+                app:tint="@color/text_secondary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/dateRangeLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/finance_date_range"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/dateClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_filter_pill_active"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="@string/clear"
+                android:textColor="@color/purple_primary"
+                android:textSize="11sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Result count -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/resultCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:paddingHorizontal="4dp"
+            android:text="@string/showing_transactions_zero"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/txnList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="16dp" />
+
+            <LinearLayout
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:alpha="0.4"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_finances"
+                    app:tint="@color/text_secondary" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/no_finances"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/no_finances_hint"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/purple_primary"
+                android:visibility="gone" />
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

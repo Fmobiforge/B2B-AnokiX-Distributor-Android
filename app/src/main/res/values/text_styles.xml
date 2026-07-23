@@ -292,6 +292,37 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <!-- Finances filter dropdowns (Status / Type / Payment Method) -->
+    <style name="FinanceDropdownPill">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_filter_pill</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">10dp</item>
+    </style>
+
+    <style name="FinanceDropdownLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="FinanceDropdownChevron">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:src">@drawable/ic_chevron_down</item>
+        <item name="android:tint">@color/text_secondary</item>
+    </style>
+
     <!-- Settings · Business 7-step editor -->
     <style name="SettingsStepTitle">
         <item name="android:layout_width">match_parent</item>

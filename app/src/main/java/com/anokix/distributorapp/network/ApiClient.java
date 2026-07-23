@@ -11,6 +11,7 @@ import com.anokix.distributorapp.network.dto.BusinessProfileData;
 import com.anokix.distributorapp.network.dto.CoordinateData;
 import com.anokix.distributorapp.network.dto.CreateTraderData;
 import com.anokix.distributorapp.network.dto.DashboardData;
+import com.anokix.distributorapp.network.dto.FinancesData;
 import com.anokix.distributorapp.network.dto.DeliveriesData;
 import com.anokix.distributorapp.network.dto.DeliveryDetailData;
 import com.anokix.distributorapp.network.dto.NotificationsData;
@@ -363,6 +364,17 @@ public final class ApiClient {
         q.put("page", String.valueOf(page));
         q.put("per_page", String.valueOf(perPage));
         getAuthed("api/distributor/grns", q, ReturnsData.class, cb);
+    }
+
+    /**
+     * Finances ledger — GET {@code api/distributor/finances}. Optionally scoped to a date range
+     * (the screen drives it from the range picker); returns the transaction list + KPI summary.
+     */
+    public void getFinances(String dateFrom, String dateTo, ApiCallback<FinancesData> cb) {
+        Map<String, String> q = new HashMap<>();
+        if (dateFrom != null && !dateFrom.isEmpty()) q.put("date_from", dateFrom);
+        if (dateTo != null && !dateTo.isEmpty()) q.put("date_to", dateTo);
+        getAuthed("api/distributor/finances", q.isEmpty() ? null : q, FinancesData.class, cb);
     }
 
     /** Full return detail (+ items) for the detail screen. */
