@@ -9,10 +9,12 @@
     <LinearLayout
         android:id="@+id/drawerItemRoot"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/drawer_item_height"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:minHeight="@dimen/drawer_item_height"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/spacing_md">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="4dp">
 
         <ImageView
             android:id="@+id/drawerItemIcon"
@@ -21,13 +23,28 @@
             android:contentDescription="@null"
             app:tint="@color/drawer_text_muted" />
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
-            android:id="@+id/drawerItemTitle"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_md"
             android:layout_weight="1"
-            android:textColor="@color/drawer_text_muted"
-            android:textSize="@dimen/drawer_text_size" />
+            android:orientation="vertical">
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/drawerItemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/drawer_text_muted"
+                android:textSize="@dimen/drawer_text_size" />
+
+            <!-- Second line for the branded entries ("Powered by IMB" / "Powered by Limes"). -->
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                android:id="@+id/drawerItemSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/drawer_text_muted"
+                android:textSize="@dimen/text_caption"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

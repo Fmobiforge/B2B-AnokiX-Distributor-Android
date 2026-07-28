@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Purple gradient hero on the anokiX wallet screen (wallet02.png balance card). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:startColor="#7C3AED"
+        android:centerColor="#6D3AEA"
+        android:endColor="#5B21B6"
+        android:type="linear" />
+    <corners android:radius="@dimen/radius_xl" />
+</shape>

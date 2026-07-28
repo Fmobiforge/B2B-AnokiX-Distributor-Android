@@ -103,6 +103,23 @@
         <activity android:name=".ui.CreatePromotionActivity" android:exported="false" />
         <activity android:name=".ui.ViewPromotionActivity" android:exported="false" />
         <activity android:name=".ui.FinancesActivity" android:exported="false" />
+
+        <!--
+            anokiX wallet. Exported with the anokix://wallet deep link so PayCloud's
+            hosted checkout can send the user straight back here after a top-up; the
+            screen then polls api/common/topup/status for the credit.
+        -->
+        <activity
+            android:name=".ui.WalletActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="anokix" android:host="wallet" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.ReportsActivity" android:exported="false" />
         <activity android:name=".ui.DeliveriesActivity" android:exported="false" />
         <activity android:name=".ui.DeliveryDetailActivity" android:exported="false" />

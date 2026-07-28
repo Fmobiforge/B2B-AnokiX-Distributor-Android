@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  anokiX wallet (drawer › anokiX wallet). Mobile adaptation of the web layout in
+  newDesign/wallet/wallet02.png: the balance hero, settlement account, quick actions,
+  recipients strip, live transactions, loan offers, statements and the microfinance
+  promos, stacked into one scroll column.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_secondary_header" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp">
+
+                <!-- ===================== Balance hero ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_wallet_balance_card"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.9"
+                            android:text="@string/wallet_total_balance"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_body_sm" />
+
+                        <FrameLayout
+                            android:id="@+id/btnRefresh"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/bg_wallet_glass">
+
+                            <ImageView
+                                android:id="@+id/refreshIcon"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/wallet_refresh"
+                                android:src="@drawable/ic_refresh"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/btnHideBalance"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_wallet_glass">
+
+                            <ImageView
+                                android:id="@+id/hideIcon"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@string/wallet_hide_balance"
+                                android:src="@drawable/ic_visibility"
+                                app:tint="@color/white" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/totalBalance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:letterSpacing="-0.02"
+                        android:text="@string/wallet_placeholder"
+                        android:textColor="@color/white"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.85"
+                                android:text="@string/wallet_available_balance"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_caption" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:id="@+id/availableBalance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/wallet_placeholder"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_headline" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:alpha="0.85"
+                                android:text="@string/wallet_pending_balance"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_caption" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:id="@+id/pendingBalance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/wallet_placeholder"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_headline" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                        android:id="@+id/asOfLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:alpha="0.8"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_caption"
+                        android:visibility="gone" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/btnTopUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_wallet_white_button"
+                        android:drawableStart="@drawable/ic_add"
+                        android:drawablePadding="6dp"
+                        android:drawableTint="@color/purple_primary"
+                        android:gravity="center"
+                        android:paddingHorizontal="16dp"
+                        android:text="@string/wallet_top_up"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="@dimen/text_title" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_wallet_divider_light" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.85"
+                            android:text="@string/wallet_footer_brand"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_label" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_wallet_imb_chip"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:text="@string/wallet_imb"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_label" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Wallet not active / stale balance notice -->
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/walletNotice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_badge_warning"
+                    android:padding="12dp"
+                    android:textColor="@color/warning"
+                    android:textSize="@dimen/text_body_sm"
+                    android:visibility="gone" />
+
+                <!-- ===================== Settlement account ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wallet_settlement_account"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_headline" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/btnManageSettlement"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingHorizontal="4dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/wallet_manage"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/bg_wallet_action_tile">
+
+                            <ImageView
+                                android:layout_width="19dp"
+                                android:layout_height="19dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_bank"
+                                app:tint="@color/purple_primary" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/wallet_imb_business_account"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_body" />
+
+                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                                android:id="@+id/settlementAccountNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_sm" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/wallet_available_for_settlement"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_sm" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:id="@+id/settlementAvailable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:textColor="@color/success"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/settlementNext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_sm" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/btnSettlementHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_outlined_button_purple"
+                        android:gravity="center"
+                        android:text="@string/wallet_view_settlement_history"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="@dimen/text_body" />
+                </LinearLayout>
+
+                <!-- ===================== Quick actions ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wallet_quick_actions"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline" />
+
+                    <!-- Filled in code as rows of four equal-weight tiles. -->
+                    <LinearLayout
+                        android:id="@+id/quickActionGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <!-- ===================== Send money quickly ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:paddingVertical="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wallet_send_money_quickly"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_headline" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/btnRecipientsViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:drawableEnd="@drawable/ic_arrow_right_line"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="@color/purple_primary"
+                            android:paddingHorizontal="4dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/view_all"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:clipToPadding="false"
+                        android:overScrollMode="never"
+                        android:paddingHorizontal="10dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/recipientStrip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <!-- ===================== Recent transactions ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wallet_recent_transactions"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_headline" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/btnTxnViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingHorizontal="4dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/view_all"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/txnList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:orientation="vertical" />
+
+                    <LinearLayout
+                        android:id="@+id/txnEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingVertical="26dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:alpha="0.35"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_wallet"
+                            app:tint="@color/text_secondary" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/wallet_no_transactions"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_body" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:gravity="center"
+                            android:text="@string/wallet_no_transactions_hint"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- ===================== Loan offers ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wallet_loan_offers"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_headline" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/btnLoansViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingHorizontal="4dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/view_all"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/loanList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <!-- ===================== Statements ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_stat_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wallet_statements"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_headline" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/btnStatementsViewAll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingHorizontal="4dp"
+                            android:paddingVertical="2dp"
+                            android:text="@string/view_all"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_body_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/statementList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <!-- ===================== Microfinance promo ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_microfinance_card"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wallet_microfinance_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_display" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/wallet_microfinance_body"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_sm" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/btnExploreMicrofinance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_outlined_button_purple"
+                        android:gravity="center"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/wallet_explore_microfinance"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="@dimen/text_body" />
+                </LinearLayout>
+
+                <!-- ===================== Need more funds ===================== -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_wallet_balance_card"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wallet_need_funds"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_display" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.9"
+                        android:text="@string/wallet_need_funds_sub"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_body_sm" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/btnApplyMicrofinance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_button_white_pill"
+                        android:gravity="center"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/wallet_apply_microfinance"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="@dimen/text_body" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

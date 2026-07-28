@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Top up your wallet" dialog (newDesign/wallet/wallet03.png). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_top"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <!-- Grabber -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_pill_neutral" />
+
+    <!-- Title row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="12dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/topup_title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_display" />
+
+        <ImageView
+            android:id="@+id/topupClose"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/promo_close"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/border" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:lineSpacingExtra="3dp"
+        android:paddingHorizontal="20dp"
+        android:text="@string/topup_body"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_body" />
+
+    <!-- Quick amount chips — one equal-width row, as on the web dialog. -->
+    <LinearLayout
+        android:id="@+id/amountChips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:paddingHorizontal="20dp"
+        android:text="@string/topup_amount_label"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_body" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/topupAmount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_search_bar"
+        android:hint="@string/topup_amount_hint"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingHorizontal="14dp"
+        android:singleLine="true"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_tertiary"
+        android:textSize="@dimen/text_title" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/topupError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/danger"
+        android:textSize="@dimen/text_body_sm"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:paddingHorizontal="20dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/topupProceed"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_login_button_primary"
+            android:drawableStart="@drawable/ic_card"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/white"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/topup_proceed"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title" />
+
+        <ProgressBar
+            android:id="@+id/topupProgress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

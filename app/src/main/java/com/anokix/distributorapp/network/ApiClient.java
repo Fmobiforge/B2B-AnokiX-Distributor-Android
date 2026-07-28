@@ -32,6 +32,8 @@ import com.anokix.distributorapp.network.dto.ReferenceData;
 import com.anokix.distributorapp.network.dto.RegisterDistributorData;
 import com.anokix.distributorapp.network.dto.StoreDetailData;
 import com.anokix.distributorapp.network.dto.StoresData;
+import com.anokix.distributorapp.network.dto.TopupCreateData;
+import com.anokix.distributorapp.network.dto.TopupStatusData;
 import com.anokix.distributorapp.network.dto.TradersData;
 import com.anokix.distributorapp.network.dto.VasCategoriesData;
 import com.anokix.distributorapp.network.dto.VasProductsData;
@@ -44,6 +46,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -140,7 +143,43 @@ public final class ApiClient {
 
     /** The distributor's anokiX (IMB) wallet — balance shown on the dashboard. */
     public void getWallet(ApiCallback<WalletData> cb) {
-        getAuthed("api/common/wallet", null, WalletData.class, cb);
+        getWallet(false, cb);
+    }
+
+    /**
+     * The anokiX (IMB) wallet. Pass {@code refresh=true} to bypass the short-lived
+     * balance cache — used by the manual refresh button on the wallet screen.
+     */
+    public void getWallet(boolean refresh, ApiCallback<WalletData> cb) {
+        Map<String, String> q = null;
+        if (refresh) {
+            q = new HashMap<>();
+            q.put("refresh", "1");
+        }
+        getAuthed("api/common/wallet", q, WalletData.class, cb);
+    }
+
+    /**
+     * Open a PayCloud Hosted Checkout to fund the wallet (api/common/topup/create).
+     * Returns the {@code pay_url} the app must open plus the {@code merchant_order_no}
+     * to poll afterwards. {@code returnUrl} is where PayCloud sends the user back.
+     */
+    public void createTopup(double amount, String returnUrl, ApiCallback<TopupCreateData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("amount", String.format(Locale.US, "%.2f", amount));
+        form.put("return_url", returnUrl);
+        form.put("portal", "distributor");
+        postAuthed("api/common/topup/create", form, TopupCreateData.class, cb);
+    }
+
+    /**
+     * Poll a top-up after the user comes back from PayCloud (api/common/topup/status).
+     * The money has landed only when {@code credit_status=credited}.
+     */
+    public void getTopupStatus(String merchantOrderNo, ApiCallback<TopupStatusData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("merchant_order_no", merchantOrderNo == null ? "" : merchantOrderNo);
+        getAuthed("api/common/topup/status", q, TopupStatusData.class, cb);
     }
 
     public void getStores(String keyword, ApiCallback<StoresData> cb) {

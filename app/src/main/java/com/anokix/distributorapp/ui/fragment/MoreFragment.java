@@ -27,6 +27,7 @@ import com.anokix.distributorapp.ui.ReturnsActivity;
 import com.anokix.distributorapp.ui.SettingsActivity;
 import com.anokix.distributorapp.ui.StoresActivity;
 import com.anokix.distributorapp.ui.TradersActivity;
+import com.anokix.distributorapp.ui.WalletActivity;
 import com.anokix.distributorapp.ui.adapter.MenuAdapter;
 
 public class MoreFragment extends Fragment {
@@ -77,6 +78,9 @@ public class MoreFragment extends Fragment {
                 break;
             case "finances":
                 target = FinancesActivity.class;
+                break;
+            case "wallet":
+                target = WalletActivity.class;
                 break;
             case "reports":
                 target = ReportsActivity.class;

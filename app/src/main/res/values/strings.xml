@@ -1086,4 +1086,98 @@
         <item quantity="one">%1$d bundle</item>
         <item quantity="other">%1$d bundles</item>
     </plurals>
+
+    <!-- ===== anokiX wallet screen (drawer › anokiX wallet) ===== -->
+    <string name="wallet_screen_title">anokiX wallet</string>
+    <string name="wallet_screen_subtitle">Your IMB business account — balances, payments and settlements.</string>
+    <string name="wallet_total_balance">Total Wallet Balance</string>
+    <string name="wallet_available_balance">Available Balance</string>
+    <string name="wallet_pending_balance">Pending</string>
+    <string name="wallet_top_up">Top Up Wallet</string>
+    <string name="wallet_footer_brand">anokiX wallet · Powered by IMB</string>
+    <string name="wallet_imb">IMB</string>
+    <string name="wallet_hide_balance">Hide balance</string>
+    <string name="wallet_balance_masked">R ••••••</string>
+    <string name="wallet_stale_notice">Showing the last known balance — the live read failed.</string>
+    <string name="wallet_inactive_title">Wallet not active yet</string>
+    <string name="wallet_inactive_body">Your IMB account is not active, so balances and payments are unavailable. Finish wallet activation in Settings › Business to start transacting.</string>
+
+    <!-- Settlement account card -->
+    <string name="wallet_settlement_account">Settlement Account</string>
+    <string name="wallet_manage">Manage</string>
+    <string name="wallet_imb_business_account">IMB Business Account</string>
+    <string name="wallet_available_for_settlement">Available for Settlement:</string>
+    <string name="wallet_next_settlement">Next Settlement: %1$s</string>
+    <string name="wallet_view_settlement_history">View Settlement History</string>
+
+    <!-- Quick actions -->
+    <string name="wallet_quick_actions">Quick Actions</string>
+    <string name="wallet_action_send_money">Send Money</string>
+    <string name="wallet_action_receive_money">Receive Money</string>
+    <string name="wallet_action_buy_airtime">Buy Airtime</string>
+    <string name="wallet_action_pay_bills">Pay Bills</string>
+    <string name="wallet_action_add_money">Add Money</string>
+    <string name="wallet_action_move_to_bank">Move to Bank</string>
+    <string name="wallet_action_qr_payment">QR Payment</string>
+    <string name="wallet_action_more">More</string>
+
+    <!-- Send money quickly -->
+    <string name="wallet_send_money_quickly">Send Money Quickly</string>
+    <string name="wallet_new_recipient">New Recipient</string>
+
+    <!-- Transactions -->
+    <string name="wallet_recent_transactions">Recent Transactions</string>
+    <string name="wallet_money_received">Money Received</string>
+    <string name="wallet_money_sent">Money Sent</string>
+    <string name="wallet_txn_reference">Reference %1$s</string>
+    <string name="wallet_txn_success">Success</string>
+    <string name="wallet_txn_pending">Pending</string>
+    <string name="wallet_no_transactions">No wallet movements yet.</string>
+    <string name="wallet_no_transactions_hint">Top-ups, payments and settlements will appear here.</string>
+
+    <!-- Loan offers -->
+    <string name="wallet_loan_offers">Loan Offers for You</string>
+    <string name="wallet_loan_amount">Loan Amount</string>
+    <string name="wallet_interest_rate">Interest Rate</string>
+    <string name="wallet_apply_now">Apply Now</string>
+    <string name="wallet_loan_business_boost">Business Boost Loan</string>
+    <string name="wallet_loan_stock_finance">Stock Finance</string>
+    <string name="wallet_loan_equipment_finance">Equipment Finance</string>
+    <string name="wallet_badge_recommended">Recommended</string>
+    <string name="wallet_badge_popular">Popular</string>
+
+    <!-- Statements -->
+    <string name="wallet_statements">Statements</string>
+    <string name="wallet_statement_today">Today</string>
+    <string name="wallet_statement_yesterday">Yesterday</string>
+    <string name="wallet_statement_this_week">This Week</string>
+    <string name="wallet_statement_this_month">This Month</string>
+    <string name="wallet_statement_custom">Custom Range</string>
+
+    <!-- Microfinance -->
+    <string name="wallet_microfinance_title">Microfinance that works for you</string>
+    <string name="wallet_microfinance_body">Quick approvals. Flexible repayments. Grow your business with IMB.</string>
+    <string name="wallet_explore_microfinance">Explore Microfinance</string>
+    <string name="wallet_need_funds">Need more funds?</string>
+    <string name="wallet_need_funds_sub">Get a microloan in minutes</string>
+    <string name="wallet_apply_microfinance">Apply for Microfinance</string>
+
+    <!-- Top-up dialog -->
+    <string name="topup_title">Top up your wallet</string>
+    <string name="topup_body">Add money to your anokiX wallet with a card, QR, or bank payment. You\'ll be taken to our secure PayCloud checkout to complete the payment.</string>
+    <string name="topup_amount_label">Amount (ZAR)</string>
+    <string name="topup_amount_hint">R 0.00</string>
+    <string name="topup_proceed">Proceed to payment</string>
+    <string name="topup_err_amount">Please enter an amount to top up.</string>
+    <string name="topup_err_min">The minimum top-up is R1.00.</string>
+    <string name="topup_err_max">The maximum top-up is R500 000,00.</string>
+    <string name="topup_opening">Opening secure checkout…</string>
+    <string name="topup_no_browser">No browser is available to open the payment page.</string>
+    <string name="topup_checking">Checking your payment…</string>
+    <string name="topup_credited">Top-up successful — %1$s added to your wallet.</string>
+    <string name="topup_pending_notice">Payment received. Your wallet will be credited shortly.</string>
+    <string name="topup_not_completed">No completed payment yet for this top-up. Nothing has been charged.</string>
+    <string name="topup_failed_notice">That payment did not go through. Nothing was charged to your wallet.</string>
+
+    <string name="wallet_coming_soon">%1$s is coming soon.</string>
 </resources>

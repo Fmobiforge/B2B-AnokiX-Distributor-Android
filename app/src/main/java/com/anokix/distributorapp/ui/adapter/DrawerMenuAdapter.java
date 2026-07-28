@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.model.MenuItem;
+import com.anokix.distributorapp.ui.views.RobotoLightTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
 
 import java.util.List;
@@ -66,6 +67,15 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
         holder.icon.setColorFilter(selected ? white : muted);
         holder.title.setTextColor(selected ? white : muted);
 
+        boolean hasSubtitle = item.subtitle != null && !item.subtitle.isEmpty();
+        holder.subtitle.setVisibility(hasSubtitle ? View.VISIBLE : View.GONE);
+        if (hasSubtitle) {
+            holder.subtitle.setText(item.subtitle);
+            // Keep the second line readable but secondary on both the plain and purple rows.
+            holder.subtitle.setTextColor(selected ? white : muted);
+            holder.subtitle.setAlpha(selected ? 0.85f : 0.75f);
+        }
+
         if (selected) {
             holder.itemRoot.setBackgroundResource(R.drawable.bg_drawer_item_selected);
             holder.title.setTypeface(holder.title.getTypeface(), android.graphics.Typeface.BOLD);
@@ -94,6 +104,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final RobotoTextView title;
+        final RobotoLightTextView subtitle;
         final ImageView icon;
         final LinearLayout itemRoot;
 
@@ -101,6 +112,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
             super(itemView);
             itemRoot = itemView.findViewById(R.id.drawerItemRoot);
             title = itemView.findViewById(R.id.drawerItemTitle);
+            subtitle = itemView.findViewById(R.id.drawerItemSubtitle);
             icon = itemView.findViewById(R.id.drawerItemIcon);
         }
     }

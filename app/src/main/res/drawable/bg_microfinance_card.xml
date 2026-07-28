@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pale-blue microfinance promo panel (wallet02.png). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:startColor="#DBEAFE"
+        android:endColor="#EFF6FF"
+        android:type="linear" />
+    <corners android:radius="@dimen/radius_lg" />
+</shape>
