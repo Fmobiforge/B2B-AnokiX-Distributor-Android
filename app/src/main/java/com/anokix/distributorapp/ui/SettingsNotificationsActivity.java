@@ -10,9 +10,12 @@ import com.anokix.distributorapp.network.dto.PreferencesData;
 import com.anokix.distributorapp.ui.views.RobotoSwitchCompat;
 
 /**
- * Notification Preferences — the 5 toggles, loaded from GET api/common/preferences and saved
+ * Notification Preferences — the 6 toggles, loaded from GET api/common/preferences and saved
  * via POST api/common/preferences/update (3-Settings-Notifications.png). When the server has
  * no notification settings yet, every toggle defaults to on.
+ *
+ * The keys match the Trader app one-for-one so a single backend gate covers both portals —
+ * see {@code FCM-settings/3-Event-Catalogue.md} §7.
  */
 public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
 
@@ -40,6 +43,7 @@ public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
                 setChecked(R.id.switchOrderAlerts, p == null || p.notif("orderAlerts"));
                 setChecked(R.id.switchLowStock, p == null || p.notif("lowStockAlerts"));
                 setChecked(R.id.switchDeliveryUpdates, p == null || p.notif("deliveryUpdates"));
+                setChecked(R.id.switchPromotionAlerts, p == null || p.notif("promotionAlerts"));
                 setChecked(R.id.switchFinanceReminders, p == null || p.notif("financeReminders"));
                 setChecked(R.id.switchReportReady, p == null || p.notif("reportReady"));
             }
@@ -50,6 +54,7 @@ public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
                 setChecked(R.id.switchOrderAlerts, true);
                 setChecked(R.id.switchLowStock, true);
                 setChecked(R.id.switchDeliveryUpdates, true);
+                setChecked(R.id.switchPromotionAlerts, true);
                 setChecked(R.id.switchFinanceReminders, true);
                 setChecked(R.id.switchReportReady, true);
             }
@@ -74,6 +79,7 @@ public class SettingsNotificationsActivity extends BaseSettingsFormActivity {
                 isChecked(R.id.switchOrderAlerts),
                 isChecked(R.id.switchLowStock),
                 isChecked(R.id.switchDeliveryUpdates),
+                isChecked(R.id.switchPromotionAlerts),
                 isChecked(R.id.switchFinanceReminders),
                 isChecked(R.id.switchReportReady),
                 new ApiCallback<Void>() {

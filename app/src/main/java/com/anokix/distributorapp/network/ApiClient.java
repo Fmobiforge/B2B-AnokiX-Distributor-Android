@@ -512,14 +512,20 @@ public final class ApiClient {
         });
     }
 
-    /** Update the 5 notification toggles (api/common/preferences/update, JSON body). */
+    /**
+     * Update the 6 notification toggles (api/common/preferences/update, JSON body). The key
+     * set matches the Trader app exactly so one backend gate serves both portals — see
+     * {@code FCM-settings/3-Event-Catalogue.md} §7.
+     */
     public void updateNotificationPrefs(boolean orderAlerts, boolean lowStockAlerts,
-                                        boolean deliveryUpdates, boolean financeReminders,
-                                        boolean reportReady, ApiCallback<Void> cb) {
+                                        boolean deliveryUpdates, boolean promotionAlerts,
+                                        boolean financeReminders, boolean reportReady,
+                                        ApiCallback<Void> cb) {
         Map<String, Object> notifications = new HashMap<>();
         notifications.put("orderAlerts", orderAlerts);
         notifications.put("lowStockAlerts", lowStockAlerts);
         notifications.put("deliveryUpdates", deliveryUpdates);
+        notifications.put("promotionAlerts", promotionAlerts);
         notifications.put("financeReminders", financeReminders);
         notifications.put("reportReady", reportReady);
         Map<String, Object> body = new HashMap<>();

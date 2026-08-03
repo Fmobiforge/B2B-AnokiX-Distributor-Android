@@ -3,8 +3,11 @@
     <string name="app_name">AnokiX Distributor</string>
     <string name="version_info">AnokiX Distributor v1.0</string>
 
-    <!-- Firebase Cloud Messaging default channel (orders, deliveries, returns, stock, etc.). -->
-    <string name="fcm_default_channel_id">anokix_distributor_default</string>
+    <!-- Firebase Cloud Messaging default channel (orders, deliveries, returns, stock, etc.).
+         The id must match android.notification.channel_id in the server payload
+         (app/Config/Fcm.php) — a notification naming a channel the app never created
+         is drawn on Firebase's own fallback channel with the wrong importance. -->
+    <string name="fcm_default_channel_id">anokix_default</string>
     <string name="fcm_default_channel_name">AnokiX Distributor Alerts</string>
     <string name="fcm_default_channel_desc">Orders, deliveries, returns, stock and account alerts.</string>
 
@@ -377,6 +380,12 @@
     <string name="view_returns">View Returns</string>
     <string name="view_delivery">View Delivery</string>
     <string name="view_inventory">View Inventory</string>
+    <string name="view_finances">View Finances</string>
+    <string name="view_wallet">View Wallet</string>
+    <string name="view_airtime">View Airtime</string>
+    <string name="view_promotion">View Promotion</string>
+    <string name="view_report">View Report</string>
+    <string name="view_trader">View Trader</string>
     <string name="verified_distributor">Verified Distributor</string>
     <string name="search_stores">Search stores&#8230;</string>
     <string name="search_traders">Search traders&#8230;</string>
@@ -795,6 +804,8 @@
     <string name="notif_low_stock_sub">Receive alerts when products fall below minimum stock.</string>
     <string name="notif_delivery_title">Delivery Updates</string>
     <string name="notif_delivery_sub">Track delivery status changes and delays.</string>
+    <string name="notif_promotion_title">Promotion Alerts</string>
+    <string name="notif_promotion_sub">Campaign performance and promotion reminders.</string>
     <string name="notif_finance_title">Finance Reminders</string>
     <string name="notif_finance_sub">Reminders for overdue invoices and payments.</string>
     <string name="notif_report_title">Report Ready</string>
