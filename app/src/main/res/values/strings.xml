@@ -1098,6 +1098,111 @@
         <item quantity="other">%1$d bundles</item>
     </plurals>
 
+    <!-- Airtime & VAS · how the page works + tabs -->
+    <string name="vas_how_it_works"><![CDATA[<b>How this page works:</b> <b>Onboard customer</b> → activate their SIM under <b>Subscription</b> (you hand in the SIM\'s <b>ICCID</b>; Limes hands back the <b>phone number</b>) → then sell airtime, data &amp; bundles to that number under <b>Catalog &amp; orders</b> or <b>Dynamic services</b>, and track it all under <b>Recent transactions</b>. Airtime &amp; data top-ups go straight to any <b>active</b> number — onboarding is only needed when signing a customer up to a SIM subscription.]]></string>
+    <string name="vas_tab_onboard">Onboard customer</string>
+    <string name="vas_tab_customers">Customers</string>
+    <string name="vas_tab_subscription">Subscription</string>
+    <string name="vas_tab_catalog">Catalog &amp; orders</string>
+    <string name="vas_tab_dynamic">Dynamic services</string>
+    <string name="vas_tab_transactions">Recent transactions</string>
+    <string name="vas_error_title">Something went wrong</string>
+    <string name="vas_close">Close</string>
+
+    <!-- Airtime & VAS · onboard customer -->
+    <string name="vas_onboard_title">Onboard a customer</string>
+    <string name="vas_onboard_body">Register the customer with Limes so an account exists before you assign them a SIM &amp; number. The system codes are pre-filled with the values the Limes API expects.</string>
+    <string name="vas_onboard_hint"><![CDATA[<b>When do I need this?</b> Only when signing a customer up to a SIM / contract subscription — onboard them here, then activate their SIM on the <b>Subscription</b> tab. For airtime, data or bundle top-ups you don\'t need this: use <b>Catalog &amp; orders</b> or <b>Dynamic services</b>, which provision straight to a phone number.]]></string>
+    <string name="vas_f_title">Title</string>
+    <string name="vas_f_firstname">First name</string>
+    <string name="vas_f_lastname">Last name</string>
+    <string name="vas_f_id_type">ID type</string>
+    <string name="vas_f_id_number">ID number</string>
+    <string name="vas_f_id_number_hint">13 digits</string>
+    <string name="vas_f_passport_hint">Passport number</string>
+    <string name="vas_f_email">Email</string>
+    <string name="vas_f_email_hint">name@example.com</string>
+    <string name="vas_f_mobile">Mobile number</string>
+    <string name="vas_f_mobile_hint">27821234567</string>
+    <string name="vas_f_tax_scheme">Tax scheme</string>
+    <string name="vas_f_collection_plan">Collection plan</string>
+    <string name="vas_f_bill_language">Bill language</string>
+    <string name="vas_f_contact_role">Contact role</string>
+    <string name="vas_f_bill_media">Bill media</string>
+    <string name="vas_f_country">Country</string>
+    <string name="vas_f_billing_address">Billing address</string>
+    <string name="vas_f_street_no">Street no.</string>
+    <string name="vas_f_street_name">Street name</string>
+    <string name="vas_f_suburb">Suburb</string>
+    <string name="vas_f_city">City</string>
+    <string name="vas_f_province">Province</string>
+    <string name="vas_f_post_code">Postal code</string>
+    <string name="vas_create_customer">Create customer</string>
+    <string name="vas_view_request_body">View request body</string>
+    <string name="vas_request_body_title">Request body</string>
+    <string name="vas_onboard_success_title">Customer created</string>
+    <string name="vas_onboard_success_body">The customer is registered with Limes. Activate their SIM on the Subscription tab.</string>
+    <string name="vas_onboard_exists_body">Limes already had this customer. Go straight to the Subscription tab to activate their SIM.</string>
+    <string name="vas_err_firstname">Please enter the customer\'s first name.</string>
+    <string name="vas_err_lastname">Please enter the customer\'s last name.</string>
+    <string name="vas_err_id_number">Please enter the customer\'s ID or passport number.</string>
+    <string name="vas_err_email">Please enter a valid email address.</string>
+
+    <!-- Airtime & VAS · customers -->
+    <string name="vas_customers_title">Onboarded customers</string>
+    <string name="vas_customers_body">Customers you\'ve registered with Limes. Use the account number when activating their SIM on the Subscription tab.</string>
+    <string name="vas_customers_search_hint">Search name, ID, phone, email or account no.</string>
+    <string name="vas_refresh">Refresh</string>
+    <string name="vas_no_customers">No customers onboarded yet.</string>
+    <string name="vas_customer_account">Account no. %1$s</string>
+    <plurals name="vas_customer_count">
+        <item quantity="one">%1$d customer</item>
+        <item quantity="other">%1$d customers</item>
+    </plurals>
+
+    <!-- Airtime & VAS · subscription -->
+    <string name="vas_subscription_title">Assign a SIM &amp; subscription</string>
+    <string name="vas_subscription_body">Pick a subscription product and hand in the SIM\'s ICCID. Limes assigns the phone number (MSISDN) — that number, not the ICCID, is what you recharge under Catalog &amp; orders.</string>
+    <string name="vas_f_product">Product</string>
+    <string name="vas_f_product_hint">Select a product</string>
+    <string name="vas_f_esim">eSIM</string>
+    <string name="vas_f_iccid">ICCID (SIM)</string>
+    <string name="vas_f_iccid_hint">8927078220001234567</string>
+    <string name="vas_iccid_note">The 19–20 digit serial printed on the SIM card — not a phone number.</string>
+    <string name="vas_create_subscription">Create subscription</string>
+    <string name="vas_activated_sims">Activated SIMs</string>
+    <string name="vas_no_subscriptions">No SIMs activated yet.</string>
+    <string name="vas_msisdn_pending">Number pending</string>
+    <string name="vas_subscription_success_title">Subscription created</string>
+    <string name="vas_subscription_success_body">The SIM has been submitted for activation. The assigned number appears under Activated SIMs.</string>
+    <string name="vas_err_select_subscription_product">Please select a subscription product.</string>
+    <string name="vas_err_iccid">Enter the SIM\'s ICCID (19–20 digits), or switch on eSIM.</string>
+
+    <!-- Airtime & VAS · dynamic services -->
+    <string name="vas_dynamic_title">Compose a custom bundle</string>
+    <string name="vas_dynamic_body">Build exact-value bundles and provision them straight onto the number. Data is entered in GB and converted to bytes for you.</string>
+    <string name="vas_f_msisdn">Phone number (MSISDN)</string>
+    <string name="vas_bundle_lines">Bundle lines</string>
+    <string name="vas_f_service">Service</string>
+    <string name="vas_f_expires">Expires</string>
+    <string name="vas_f_expires_hint">Select date</string>
+    <string name="vas_f_price">Price (R)</string>
+    <string name="vas_f_price_hint">R 0.00</string>
+    <string name="vas_add_service">+ Add service</string>
+    <string name="vas_remove_service">Remove</string>
+    <string name="vas_bundle_total">Bundle total</string>
+    <string name="vas_provision_services">Provision services</string>
+    <string name="vas_amount_minutes">Amount (minutes)</string>
+    <string name="vas_amount_gb">Amount (GB)</string>
+    <string name="vas_amount_messages">Amount (messages)</string>
+    <string name="vas_amount_rand">Amount (Rand)</string>
+    <string name="vas_bytes_note">= %1$s bytes</string>
+    <string name="vas_dynamic_success_title">Services provisioned</string>
+    <string name="vas_dynamic_success_body">Your custom bundle has been submitted. Check Recent transactions for the outcome.</string>
+    <string name="vas_err_service_amount">Enter an amount greater than zero for every service line.</string>
+    <string name="vas_err_service_price">Enter a price greater than R0.00 for every service line.</string>
+    <string name="vas_err_no_services">Add at least one service line.</string>
+
     <!-- ===== anokiX wallet screen (drawer › anokiX wallet) ===== -->
     <string name="wallet_screen_title">anokiX wallet</string>
     <string name="wallet_screen_subtitle">Your IMB business account — balances, payments and settlements.</string>

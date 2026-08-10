@@ -36,7 +36,12 @@ import com.anokix.distributorapp.network.dto.TopupCreateData;
 import com.anokix.distributorapp.network.dto.TopupStatusData;
 import com.anokix.distributorapp.network.dto.TradersData;
 import com.anokix.distributorapp.network.dto.VasCategoriesData;
+import com.anokix.distributorapp.network.dto.VasCustomersData;
+import com.anokix.distributorapp.network.dto.VasOnboardCustomerData;
+import com.anokix.distributorapp.network.dto.VasOnboardPreviewData;
 import com.anokix.distributorapp.network.dto.VasProductsData;
+import com.anokix.distributorapp.network.dto.VasSubscriptionProductsData;
+import com.anokix.distributorapp.network.dto.VasSubscriptionsData;
 import com.anokix.distributorapp.network.dto.VasTransactionsData;
 import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.session.SessionManager;
@@ -681,6 +686,83 @@ public final class ApiClient {
         form.put("earn_commission", "1");
         io.execute(() -> deliverStatusOnly(
                 Http.postForm(BASE_URL, "api/common/vas/purchase", form, session.getToken()), cb));
+    }
+
+    /**
+     * Register an end-customer in the Limes CRM (api/common/vas/onboard-customer). Step 1 of
+     * signing someone up to a SIM subscription; upserts by ID number, so a retry reports
+     * {@code already_exists} rather than creating a duplicate.
+     */
+    public void onboardVasCustomer(Map<String, String> form, ApiCallback<VasOnboardCustomerData> cb) {
+        postAuthed("api/common/vas/onboard-customer", form, VasOnboardCustomerData.class, cb);
+    }
+
+    /**
+     * Build — but do not send — the JSON body an onboard would POST to Limes
+     * (api/common/vas/onboard-customer/preview). Runs no validation, so a half-filled form
+     * still previews.
+     */
+    public void previewVasOnboard(Map<String, String> form, ApiCallback<VasOnboardPreviewData> cb) {
+        postAuthed("api/common/vas/onboard-customer/preview", form, VasOnboardPreviewData.class, cb);
+    }
+
+    /** End-customers this distributor has onboarded (api/common/vas/customers). */
+    public void getVasCustomers(String search, int limit, ApiCallback<VasCustomersData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("search", search == null ? "" : search);
+        q.put("limit", String.valueOf(limit));
+        getAuthed("api/common/vas/customers", q, VasCustomersData.class, cb);
+    }
+
+    /** SIM subscription products offered by the "Assign a SIM" form (never hardcode these). */
+    public void getVasSubscriptionProducts(ApiCallback<VasSubscriptionProductsData> cb) {
+        getAuthed("api/common/vas/subscription-products", null, VasSubscriptionProductsData.class, cb);
+    }
+
+    /** SIMs already activated by this distributor, with the MSISDN Limes assigned to each. */
+    public void getVasSubscriptions(ApiCallback<VasSubscriptionsData> cb) {
+        getAuthed("api/common/vas/subscriptions", null, VasSubscriptionsData.class, cb);
+    }
+
+    /**
+     * Activate a SIM / create a subscription (api/common/vas/subscribe). An eSIM carries no
+     * ICCID, so {@code e_sim=1} is sent instead of the serial; a physical "SIM in hand"
+     * sends its ICCID and activates immediately.
+     */
+    public void subscribeVas(String productId, String iccid, boolean eSim, ApiCallback<Void> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("product_id", productId == null ? "" : productId);
+        if (eSim) {
+            form.put("e_sim", "1");
+        } else {
+            form.put("iccid", iccid == null ? "" : iccid);
+        }
+        io.execute(() -> deliverStatusOnly(
+                Http.postForm(BASE_URL, "api/common/vas/subscribe", form, session.getToken()), cb));
+    }
+
+    /**
+     * Provision custom/variable-value bundles straight onto a number
+     * (api/common/vas/dynamic-services) — the path Limes recommends over order/create for
+     * amounts the fixed catalog cannot express. Expects a JSON body, so the service lines go
+     * through {@link Http#postJson}; the charge is the sum of {@code priceInCents}.
+     *
+     * Each entry of {@code services} carries {@code definitionCode}, {@code value},
+     * {@code priceInCents} and an optional {@code expiryDate}; Gson serialises them so no
+     * caller has to hand-build JSON.
+     */
+    public void provisionVasDynamicServices(String msisdn, List<Map<String, Object>> services,
+                                            ApiCallback<Void> cb) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("msisdn", msisdn == null ? "" : msisdn);
+        // Postman collection sends earn_commission=1 so the distributor accrues their commission.
+        body.put("earn_commission", 1);
+        body.put("services", services == null ? new java.util.ArrayList<>() : services);
+
+        final String json = gson.toJson(body);
+        io.execute(() -> deliverStatusOnly(
+                Http.postJson(BASE_URL, "api/common/vas/dynamic-services", json,
+                        session.getToken()), cb));
     }
 
     // ---- Internals -------------------------------------------------------

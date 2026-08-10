@@ -48,7 +48,7 @@ public class VasTransactionAdapter extends RecyclerView.Adapter<VasTransactionAd
     public void onBindViewHolder(@NonNull VH h, int position) {
         VasTransactionsData.Transaction t = items.get(position);
         h.product.setText(t.name == null ? "—" : t.name);
-        h.meta.setText(formatNumber(t.msisdn) + " · " + formatTime(t.created_at));
+        h.meta.setText(VasFormat.msisdn(t.msisdn) + " · " + formatTime(t.created_at));
         h.amount.setText(VasFormat.money(t.amount));
         styleStatus(h.status, t.status);
     }
@@ -66,19 +66,6 @@ public class VasTransactionAdapter extends RecyclerView.Adapter<VasTransactionAd
         } catch (ParseException ignored) {
         }
         return createdAt;
-    }
-
-    /** 27821234567 / 0821234567 → "082 123 4567" when it resolves to a 10-digit local number. */
-    private String formatNumber(String msisdn) {
-        if (msisdn == null) return "";
-        String digits = msisdn.replaceAll("[^0-9]", "");
-        if (digits.startsWith("27") && digits.length() == 11) {
-            digits = "0" + digits.substring(2);
-        }
-        if (digits.length() == 10) {
-            return digits.substring(0, 3) + " " + digits.substring(3, 6) + " " + digits.substring(6);
-        }
-        return msisdn;
     }
 
     private void styleStatus(TextView view, String status) {

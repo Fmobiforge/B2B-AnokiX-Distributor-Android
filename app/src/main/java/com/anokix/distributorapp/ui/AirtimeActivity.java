@@ -1,71 +1,79 @@
 package com.anokix.distributorapp.ui;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.graphics.Typeface;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
-import com.anokix.distributorapp.network.dto.VasCategoriesData;
-import com.anokix.distributorapp.network.dto.VasProductsData;
 import com.anokix.distributorapp.network.dto.VasTransactionsData;
-import com.anokix.distributorapp.ui.adapter.VasCategoryAdapter;
-import com.anokix.distributorapp.ui.adapter.VasProductAdapter;
 import com.anokix.distributorapp.ui.adapter.VasTransactionAdapter;
+import com.anokix.distributorapp.ui.vas.CatalogSection;
+import com.anokix.distributorapp.ui.vas.CustomersSection;
+import com.anokix.distributorapp.ui.vas.DynamicServicesSection;
+import com.anokix.distributorapp.ui.vas.OnboardSection;
+import com.anokix.distributorapp.ui.vas.SubscriptionSection;
+import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
 /**
- * Airtime & VAS (Limes, live). Flattens the VAS category tree to selectable leaves
- * (horizontal scroll, expandable to a grid), loads that category's products, and mirrors
- * the web portal's "Order summary" — recipient, optional custom amount for ad-hoc
- * products, reference, and a wallet-paid "Buy now". Recent transactions + KPI summary
- * come from {@code api/common/vas/transactions}.
+ * Airtime &amp; VAS (Limes, live). Mirrors the web portal: a KPI strip and an explainer
+ * that always stay on screen, then one of six sections at a time —
+ * <ol>
+ *   <li><b>Onboard customer</b> — register an end-customer in the Limes CRM</li>
+ *   <li><b>Customers</b> — who you have onboarded, with their Limes account no.</li>
+ *   <li><b>Subscription</b> — assign a SIM; Limes hands back the phone number</li>
+ *   <li><b>Catalog &amp; orders</b> — sell a catalog product to a number</li>
+ *   <li><b>Dynamic services</b> — compose an exact-value bundle</li>
+ *   <li><b>Recent transactions</b> — the VAS history + KPI figures</li>
+ * </ol>
+ * Only onboarding + subscription need each other; airtime and data top-ups go straight to
+ * any number that is already active on the network.
  */
 public class AirtimeActivity extends AppCompatActivity {
 
-    private static final int PRODUCT_LIMIT = 60;
+    public static final int TAB_ONBOARD = 0;
+    public static final int TAB_CUSTOMERS = 1;
+    public static final int TAB_SUBSCRIPTION = 2;
+    public static final int TAB_CATALOG = 3;
+    public static final int TAB_DYNAMIC = 4;
+    public static final int TAB_TRANSACTIONS = 5;
+
     private static final int TXN_PER_PAGE = 20;
 
-    private VasCategoryAdapter categoryAdapter;
-    private VasProductAdapter productAdapter;
+    private static final int[] TAB_TITLES = {
+            R.string.vas_tab_onboard,
+            R.string.vas_tab_customers,
+            R.string.vas_tab_subscription,
+            R.string.vas_tab_catalog,
+            R.string.vas_tab_dynamic,
+            R.string.vas_tab_transactions
+    };
+
+    private final View[] sections = new View[TAB_TITLES.length];
+    private final TextView[] tabs = new TextView[TAB_TITLES.length];
+
+    private CustomersSection customersSection;
+    private SubscriptionSection subscriptionSection;
+    private CatalogSection catalogSection;
+
     private VasTransactionAdapter txnAdapter;
-
-    private RecyclerView categoryList;
-    private ProgressBar categoryLoading, productLoading;
-    private TextView categoryToggle, productCategoryLabel, productEmpty, txnEmpty;
+    private TextView txnEmpty;
     private TextView kpiSpendToday, kpiTxnToday, kpiMonth, kpiWallet;
-    private TextView summaryProductName, summaryProductAmount, summaryServiceFee, summaryCommission, summaryTotal;
-    private TextView referenceCounter;
-    private android.widget.EditText recipientInput, customAmountInput, referenceInput;
-    private View customAmountBlock;
-    private MaterialButton buyButton;
 
-    private VasCategoriesData.Node selectedCategory;
-    private VasProductsData.Product selectedProduct;
-    private boolean categoriesExpanded;
-    /** Distributor VAS commission rate from api/common/vas/categories (e.g. 0.05 = 5%). */
-    private double commissionRate;
+    private int currentTab = TAB_ONBOARD;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,325 +83,125 @@ public class AirtimeActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        bindViews();
-        setupLists();
-        setupInputs();
+        bindHeader();
+        bindSections();
+        buildTabs();
+        selectTab(TAB_ONBOARD);
 
         loadTransactions();
-        loadCategories();
     }
 
-    private void bindViews() {
-        categoryList = findViewById(R.id.categoryList);
-        categoryLoading = findViewById(R.id.categoryLoading);
-        productLoading = findViewById(R.id.productLoading);
-        categoryToggle = findViewById(R.id.categoryToggle);
-        productCategoryLabel = findViewById(R.id.productCategoryLabel);
-        productEmpty = findViewById(R.id.productEmpty);
-        txnEmpty = findViewById(R.id.txnEmpty);
-
+    private void bindHeader() {
         kpiSpendToday = findViewById(R.id.kpiSpendToday);
         kpiTxnToday = findViewById(R.id.kpiTxnToday);
         kpiMonth = findViewById(R.id.kpiMonth);
         kpiWallet = findViewById(R.id.kpiWallet);
 
-        summaryProductName = findViewById(R.id.summaryProductName);
-        summaryProductAmount = findViewById(R.id.summaryProductAmount);
-        summaryServiceFee = findViewById(R.id.summaryServiceFee);
-        summaryCommission = findViewById(R.id.summaryCommission);
-        summaryTotal = findViewById(R.id.summaryTotal);
-
-        recipientInput = findViewById(R.id.recipientInput);
-        customAmountInput = findViewById(R.id.customAmountInput);
-        referenceInput = findViewById(R.id.referenceInput);
-        referenceCounter = findViewById(R.id.referenceCounter);
-        customAmountBlock = findViewById(R.id.customAmountBlock);
-        buyButton = findViewById(R.id.buyButton);
+        // The explainer carries <b> markup so each step name stands out, as on the web.
+        TextView howItWorks = findViewById(R.id.vasHowItWorks);
+        howItWorks.setText(HtmlCompat.fromHtml(getString(R.string.vas_how_it_works),
+                HtmlCompat.FROM_HTML_MODE_COMPACT));
     }
 
-    private void setupLists() {
-        categoryAdapter = new VasCategoryAdapter(this::selectCategory);
-        categoryList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        categoryList.setAdapter(categoryAdapter);
+    private void bindSections() {
+        sections[TAB_ONBOARD] = findViewById(R.id.sectionOnboard);
+        sections[TAB_CUSTOMERS] = findViewById(R.id.sectionCustomers);
+        sections[TAB_SUBSCRIPTION] = findViewById(R.id.sectionSubscription);
+        sections[TAB_CATALOG] = findViewById(R.id.sectionCatalog);
+        sections[TAB_DYNAMIC] = findViewById(R.id.sectionDynamic);
+        sections[TAB_TRANSACTIONS] = findViewById(R.id.sectionTransactions);
 
-        productAdapter = new VasProductAdapter(this::selectProduct);
-        RecyclerView productList = findViewById(R.id.productList);
-        productList.setLayoutManager(new GridLayoutManager(this, 2));
-        productList.setAdapter(productAdapter);
+        // Onboard and Dynamic services are self-contained — they wire their own views and
+        // are kept alive by those listeners, so only the sections this activity calls back
+        // into are held as fields.
+        new OnboardSection(this, sections[TAB_ONBOARD]);
+        new DynamicServicesSection(this, sections[TAB_DYNAMIC]);
+        customersSection = new CustomersSection(this, sections[TAB_CUSTOMERS]);
+        subscriptionSection = new SubscriptionSection(this, sections[TAB_SUBSCRIPTION]);
+        catalogSection = new CatalogSection(this, sections[TAB_CATALOG]);
 
+        txnEmpty = sections[TAB_TRANSACTIONS].findViewById(R.id.txnEmpty);
         txnAdapter = new VasTransactionAdapter();
-        RecyclerView txnList = findViewById(R.id.txnList);
+        RecyclerView txnList = sections[TAB_TRANSACTIONS].findViewById(R.id.txnList);
         txnList.setLayoutManager(new LinearLayoutManager(this));
         txnList.setAdapter(txnAdapter);
-
-        categoryToggle.setOnClickListener(v -> toggleCategories());
     }
 
-    private void setupInputs() {
-        SimpleWatcher summaryWatcher = new SimpleWatcher(this::updateSummary);
-        recipientInput.addTextChangedListener(summaryWatcher);
-        customAmountInput.addTextChangedListener(summaryWatcher);
-        referenceInput.addTextChangedListener(new SimpleWatcher(() ->
-                referenceCounter.setText(getString(R.string.vas_ref_counter,
-                        referenceInput.getText().length()))));
-
-        buyButton.setOnClickListener(v -> purchase());
-        // Buy Now stays enabled so a tap always validates + prompts; only disabled mid-request.
-        buyButton.setEnabled(true);
-        updateSummary();
-    }
-
-    // ---- Categories ------------------------------------------------------
-
-    private void loadCategories() {
-        categoryLoading.setVisibility(View.VISIBLE);
-        categoryList.setVisibility(View.GONE);
-        ApiClient.get(this).getVasCategories(new ApiCallback<VasCategoriesData>() {
-            @Override
-            public void onSuccess(VasCategoriesData data) {
-                if (isFinishing() || isDestroyed()) return;
-                categoryLoading.setVisibility(View.GONE);
-                categoryList.setVisibility(View.VISIBLE);
-                commissionRate = data == null ? 0 : data.commission_rate;
-                List<VasCategoriesData.Node> leaves = data == null ? null : data.leaves();
-                categoryAdapter.setItems(leaves);
-                if (leaves != null && !leaves.isEmpty()) {
-                    selectCategory(leaves.get(0));
-                }
-            }
-
-            @Override
-            public void onError(String message) {
-                if (isFinishing() || isDestroyed()) return;
-                categoryLoading.setVisibility(View.GONE);
-                categoryList.setVisibility(View.VISIBLE);
-                Toast.makeText(AirtimeActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void toggleCategories() {
-        categoriesExpanded = !categoriesExpanded;
-        categoryToggle.setText(categoriesExpanded ? R.string.vas_show_less : R.string.vas_view_all);
-        categoryList.setLayoutManager(categoriesExpanded
-                ? new GridLayoutManager(this, 3)
-                : new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        categoryAdapter.setExpanded(categoriesExpanded);
-    }
-
-    private void selectCategory(VasCategoriesData.Node node) {
-        selectedCategory = node;
-        categoryAdapter.setSelectedId(node.id);
-        productCategoryLabel.setText(buildPoweredByLabel(node.name));
-        // Reset the product selection when switching category.
-        selectedProduct = null;
-        productAdapter.setSelectedId(null);
-        customAmountBlock.setVisibility(View.GONE);
-        updateSummary();
-        loadProducts(node.id);
-    }
+    // ---- Tabs ------------------------------------------------------------
 
     /**
-     * Builds the "&lt;Category&gt; powered by Limes" label as three styled parts:
-     * the category name (primary text), " powered by " (dark gray) and "Limes" (green).
+     * Builds the pill tab bar. It lives in a HorizontalScrollView because six labels never
+     * fit across a phone, and each pill is a plain TextView so the selected state is a
+     * single background swap.
      */
-    private CharSequence buildPoweredByLabel(String categoryName) {
-        String name = categoryName == null ? "" : categoryName;
-        String poweredBy = " powered by ";
-        String limes = "Limes";
-        SpannableStringBuilder sb = new SpannableStringBuilder();
+    private void buildTabs() {
+        LinearLayout strip = findViewById(R.id.vasTabStrip);
+        float density = getResources().getDisplayMetrics().density;
+        int hPad = (int) (16 * density);
+        int vPad = (int) (9 * density);
+        int gap = (int) (8 * density);
 
-        int start = sb.length();
-        sb.append(name);
-        sb.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.text_primary)),
-                start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new StyleSpan(Typeface.BOLD),
-                start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        for (int i = 0; i < TAB_TITLES.length; i++) {
+            // RobotoBoldTextView so the pills carry the same Inter face as the rest of the app.
+            TextView tab = new RobotoBoldTextView(this);
+            tab.setText(TAB_TITLES[i]);
+            tab.setTextSize(13);
+            tab.setGravity(Gravity.CENTER);
+            tab.setPadding(hPad, vPad, hPad, vPad);
 
-        start = sb.length();
-        sb.append(poweredBy);
-        sb.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.text_secondary)),
-                start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if (i > 0) lp.setMarginStart(gap);
+            tab.setLayoutParams(lp);
 
-        start = sb.length();
-        sb.append(limes);
-        sb.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.success)),
-                start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        sb.setSpan(new StyleSpan(Typeface.BOLD),
-                start, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return sb;
-    }
-
-    // ---- Products --------------------------------------------------------
-
-    private void loadProducts(String categoryId) {
-        productLoading.setVisibility(View.VISIBLE);
-        productEmpty.setVisibility(View.GONE);
-        productAdapter.setItems(null);
-        ApiClient.get(this).getVasProducts(categoryId, 1, PRODUCT_LIMIT,
-                new ApiCallback<VasProductsData>() {
-                    @Override
-                    public void onSuccess(VasProductsData data) {
-                        if (isFinishing() || isDestroyed()) return;
-                        productLoading.setVisibility(View.GONE);
-                        List<VasProductsData.Product> products = data == null ? null : data.products;
-                        productAdapter.setItems(products);
-                        productEmpty.setVisibility(
-                                products == null || products.isEmpty() ? View.VISIBLE : View.GONE);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        if (isFinishing() || isDestroyed()) return;
-                        productLoading.setVisibility(View.GONE);
-                        productEmpty.setVisibility(View.VISIBLE);
-                        Toast.makeText(AirtimeActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void selectProduct(VasProductsData.Product product) {
-        selectedProduct = product;
-        productAdapter.setSelectedId(product.id);
-        customAmountBlock.setVisibility(product.isAdHoc ? View.VISIBLE : View.GONE);
-        updateSummary();
-    }
-
-    // ---- Order summary ---------------------------------------------------
-
-    /** The amount that will be charged: ad-hoc → custom input; fixed → the product price. */
-    private double currentAmount() {
-        if (selectedProduct == null) return 0;
-        if (selectedProduct.isAdHoc) {
-            String raw = customAmountInput.getText().toString().trim();
-            try {
-                return raw.isEmpty() ? 0 : Double.parseDouble(raw);
-            } catch (NumberFormatException e) {
-                return 0;
-            }
+            final int index = i;
+            tab.setOnClickListener(v -> selectTab(index));
+            strip.addView(tab);
+            tabs[i] = tab;
         }
-        return selectedProduct.price;
     }
 
-    private void updateSummary() {
-        double amount = currentAmount();
-        double serviceFee = 0; // No per-product fee in the VAS feed — wallet-paid at face value.
-        double total = amount + serviceFee;
-
-        if (selectedProduct == null) {
-            summaryProductName.setText(R.string.vas_no_product_selected);
-            summaryProductName.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-            summaryProductAmount.setText("");
-        } else {
-            summaryProductName.setText(selectedProduct.name);
-            summaryProductName.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-            summaryProductAmount.setText(VasFormat.money(amount));
+    private void selectTab(int index) {
+        currentTab = index;
+        for (int i = 0; i < tabs.length; i++) {
+            boolean selected = i == index;
+            tabs[i].setBackgroundResource(
+                    selected ? R.drawable.bg_vas_tab_active : R.drawable.bg_filter_pill);
+            tabs[i].setTextColor(ContextCompat.getColor(this,
+                    selected ? R.color.success : R.color.text_secondary));
+            sections[i].setVisibility(selected ? View.VISIBLE : View.GONE);
         }
-        summaryServiceFee.setText(VasFormat.money(serviceFee));
-        // Distributor's estimated earning — informational, not added to the wallet-paid total.
-        summaryCommission.setText(VasFormat.money(amount * commissionRate));
-        summaryTotal.setText(VasFormat.money(total));
-
-        // Clear any validation flag as soon as the buyer edits the fields.
-        recipientInput.setError(null);
-        customAmountInput.setError(null);
+        // Sections fetch their own data the first time they are opened, so switching tabs
+        // never costs a request that the operator did not ask for.
+        switch (index) {
+            case TAB_CUSTOMERS:
+                customersSection.onShown();
+                break;
+            case TAB_SUBSCRIPTION:
+                subscriptionSection.onShown();
+                break;
+            case TAB_CATALOG:
+                catalogSection.onShown();
+                break;
+            default:
+                break;
+        }
     }
 
-    // ---- Purchase --------------------------------------------------------
-
-    /**
-     * Validate the order before purchase; on the first problem, prompt the user, flag the
-     * offending field and return false. Buy Now stays clickable so tapping it always
-     * explains what is missing rather than silently doing nothing.
-     */
-    private boolean validateOrder() {
-        if (selectedProduct == null) {
-            showValidation(R.string.vas_err_select_product, null);
-            return false;
-        }
-        String msisdn = recipientInput.getText().toString().trim();
-        if (msisdn.isEmpty()) {
-            showValidation(R.string.vas_err_recipient_empty, recipientInput);
-            return false;
-        }
-        if (!isValidMsisdn(msisdn)) {
-            showValidation(R.string.vas_err_recipient_invalid, recipientInput);
-            return false;
-        }
-        if (currentAmount() <= 0) {
-            showValidation(R.string.vas_err_amount,
-                    selectedProduct.isAdHoc ? customAmountInput : null);
-            return false;
-        }
-        return true;
+    /** True while {@code tab} is the section on screen — used to skip pointless reloads. */
+    public boolean isSectionVisible(int tab) {
+        return currentTab == tab;
     }
 
-    /** True for a SA mobile number as 10 digits (0xxxxxxxxx) or 11 digits (27xxxxxxxxx). */
-    private boolean isValidMsisdn(String raw) {
-        String digits = raw.replaceAll("[^0-9]", "");
-        return (digits.length() == 10 && digits.startsWith("0"))
-                || (digits.length() == 11 && digits.startsWith("27"));
+    // ---- Cross-section callbacks -----------------------------------------
+
+    /** A new customer was onboarded: the Customers tab must not show a stale list. */
+    public void onCustomerOnboarded() {
+        customersSection.reload();
     }
 
-    private void showValidation(int messageRes, @Nullable android.widget.EditText field) {
-        if (field != null) {
-            field.setError(getString(messageRes));
-            field.requestFocus();
-        }
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.vas_validation_title)
-                .setMessage(messageRes)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-    }
-
-    private void purchase() {
-        if (!validateOrder() || selectedCategory == null) return;
-        String msisdn = recipientInput.getText().toString().trim();
-        double amount = currentAmount();
-
-        buyButton.setEnabled(false);
-        buyButton.setText(R.string.processing);
-        final VasProductsData.Product product = selectedProduct;
-        ApiClient.get(this).purchaseVas(product.id, msisdn, amount, product.sku, product.name,
-                selectedCategory.name, new ApiCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void data) {
-                        if (isFinishing() || isDestroyed()) return;
-                        buyButton.setText(R.string.vas_buy_now);
-                        buyButton.setEnabled(true);
-                        onPurchaseComplete();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        if (isFinishing() || isDestroyed()) return;
-                        buyButton.setText(R.string.vas_buy_now);
-                        buyButton.setEnabled(true);
-                        updateSummary();
-                        new AlertDialog.Builder(AirtimeActivity.this)
-                                .setTitle(R.string.vas_buy_now)
-                                .setMessage(message)
-                                .setPositiveButton(android.R.string.ok, null)
-                                .show();
-                    }
-                });
-    }
-
-    private void onPurchaseComplete() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.vas_purchase_success_title)
-                .setMessage(R.string.vas_purchase_success_body)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
-        // Reset the form and refresh the dashboard.
-        selectedProduct = null;
-        productAdapter.setSelectedId(null);
-        customAmountBlock.setVisibility(View.GONE);
-        customAmountInput.setText("");
-        referenceInput.setText("");
-        updateSummary();
+    /** Re-reads the VAS history + KPI figures after any sale or provisioning. */
+    public void refreshTransactions() {
         loadTransactions();
     }
 
@@ -426,25 +234,10 @@ public class AirtimeActivity extends AppCompatActivity {
         kpiWallet.setText(VasFormat.money(s.wallet_balance));
     }
 
-    /** Minimal TextWatcher that runs a callback on every change. */
-    private static class SimpleWatcher implements TextWatcher {
-        private final Runnable onChange;
-
-        SimpleWatcher(Runnable onChange) {
-            this.onChange = onChange;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            onChange.run();
-        }
+    /** True for a SA mobile number as 10 digits (0xxxxxxxxx) or 11 digits (27xxxxxxxxx). */
+    public static boolean isValidMsisdn(String raw) {
+        String digits = raw == null ? "" : raw.replaceAll("[^0-9]", "");
+        return (digits.length() == 10 && digits.startsWith("0"))
+                || (digits.length() == 11 && digits.startsWith("27"));
     }
 }

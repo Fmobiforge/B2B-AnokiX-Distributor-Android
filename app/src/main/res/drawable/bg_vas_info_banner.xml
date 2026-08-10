@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pale blue "How this page works" / "When do I need this?" explainer block. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#F0F7FF" />
+    <corners android:radius="@dimen/radius_md" />
+    <stroke
+        android:width="1dp"
+        android:color="#CFE3FA" />
+</shape>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Airtime & VAS › Subscription. Pick a subscription product and hand in the SIM's ICCID;
+  Limes assigns the MSISDN. Switching eSIM on hides the ICCID block — an eSIM has no
+  printed serial, so the request carries e_sim=1 instead.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_stat_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vas_subscription_title"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/vas_subscription_body"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            style="@style/StoreFieldLabel"
+            android:text="@string/vas_f_product" />
+
+        <LinearLayout
+            android:id="@+id/subProductField"
+            style="@style/ProductDropdown">
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/subProductLabel"
+                style="@style/ProductDropdownLabel"
+                android:text="@string/vas_f_product_hint" />
+
+            <ImageView style="@style/ProductDropdownChevron" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/vas_f_esim"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoSwitchCompat
+                android:id="@+id/subEsimSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subIccidBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/vas_f_iccid" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/subIccidInput"
+                style="@style/StoreFieldInput"
+                android:hint="@string/vas_f_iccid_hint"
+                android:inputType="number" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/vas_iccid_note"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/subCreateButton"
+            style="@style/Widget.AnokiX.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/vas_create_subscription"
+            app:backgroundTint="@color/success" />
+    </LinearLayout>
+
+    <!-- ===== Activated SIMs ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_stat_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vas_activated_sims"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/simEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="18dp"
+            android:gravity="center"
+            android:text="@string/vas_no_subscriptions"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/simList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:nestedScrollingEnabled="false"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_vas_subscription" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Airtime & VAS › Dynamic services. Compose an exact-value bundle (one or more service
+  lines) and provision it straight onto a number — the path Limes recommends over the
+  fixed catalog when the amount cannot be expressed as a catalog product.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_stat_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vas_dynamic_title"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/vas_dynamic_body"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            style="@style/StoreFieldLabel"
+            android:text="@string/vas_f_msisdn" />
+
+        <com.anokix.distributorapp.ui.views.RobotoEditText
+            android:id="@+id/dynamicMsisdnInput"
+            style="@style/StoreFieldInput"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="8dp"
+            android:hint="@string/vas_recipient_hint"
+            android:inputType="phone" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/vas_bundle_lines"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <!-- Service lines are inflated into here from item_vas_service_line.xml -->
+        <LinearLayout
+            android:id="@+id/dynamicLinesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/dynamicAddService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_filter_pill"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="9dp"
+            android:text="@string/vas_add_service"
+            android:textColor="@color/purple_primary"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- ===== Bundle total + provision ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_stat_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/vas_bundle_total"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/dynamicTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/purple_primary"
+                android:textSize="20sp"
+                tools:text="R 10,00" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dynamicProvisionButton"
+            style="@style/Widget.AnokiX.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/vas_provision_services"
+            app:backgroundTint="@color/success" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/vas_wallet_note"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+    </LinearLayout>
+</LinearLayout>

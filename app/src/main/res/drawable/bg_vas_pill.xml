@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Status pill for the Airtime & VAS lists. Opaque on purpose: the colour is applied at
+  runtime with a background tint, and tinting is SRC_IN — a semi-transparent shape would
+  multiply the pale badge colours (success_bg / danger_bg) down to near-white.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FFFFFFFF" />
+    <corners android:radius="20dp" />
+</shape>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Airtime & VAS › Onboard customer. Single column so every field stays thumb-width on a
+  phone; the system codes (tax scheme, collection plan, contact role) are dropdowns
+  pre-filled with the values the Limes API expects.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_stat_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vas_onboard_title"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/vas_onboard_body"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/onboardHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_vas_info_banner"
+        android:lineSpacingExtra="2dp"
+        android:padding="12dp"
+        android:text="@string/vas_onboard_hint"
+        android:textColor="@color/text_primary"
+        android:textSize="12sp" />
+
+    <!-- ===== Identity ===== -->
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_title" />
+
+    <LinearLayout
+        android:id="@+id/onboardTitleField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardTitleLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="Mr" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_firstname" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardFirstName"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_firstname"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_lastname" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardLastName"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_lastname"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_id_type" />
+
+    <LinearLayout
+        android:id="@+id/onboardIdTypeField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardIdTypeLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="SA ID" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_id_number" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardIdNumber"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_id_number_hint"
+        android:inputType="number" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_email" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardEmail"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_email_hint"
+        android:inputType="textEmailAddress" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_mobile" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardPhone"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_mobile_hint"
+        android:inputType="phone" />
+
+    <!-- ===== Limes system codes ===== -->
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_tax_scheme" />
+
+    <LinearLayout
+        android:id="@+id/onboardTaxField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardTaxLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="VB8 · VAT 15%" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_collection_plan" />
+
+    <LinearLayout
+        android:id="@+id/onboardPlanField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardPlanLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="STD9 · Standard" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_bill_language" />
+
+    <LinearLayout
+        android:id="@+id/onboardLanguageField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardLanguageLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="English" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_contact_role" />
+
+    <LinearLayout
+        android:id="@+id/onboardRoleField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardRoleLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="Customer" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_bill_media" />
+
+    <LinearLayout
+        android:id="@+id/onboardMediaField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardMediaLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="Email" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_country" />
+
+    <LinearLayout
+        android:id="@+id/onboardCountryField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/onboardCountryLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="South Africa" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <!-- ===== Billing address ===== -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/border" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="@string/vas_f_billing_address"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_street_no" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardStreetNo"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_street_no"
+        android:inputType="text" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_street_name" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardStreetName"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_street_name"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_suburb" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardSuburb"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_suburb"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_city" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardCity"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_city"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_province" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardProvince"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_province"
+        android:inputType="textCapWords" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_post_code" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/onboardPostCode"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_post_code"
+        android:inputType="number" />
+
+    <!-- ===== Actions ===== -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/onboardCreateButton"
+        style="@style/Widget.AnokiX.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/vas_create_customer"
+        app:backgroundTint="@color/success" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/onboardPreviewButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/vas_view_request_body"
+        android:textColor="@color/text_primary"
+        app:strokeColor="@color/border" />
+</LinearLayout>

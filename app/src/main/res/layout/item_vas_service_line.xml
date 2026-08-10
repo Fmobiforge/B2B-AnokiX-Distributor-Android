@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One "bundle line" in Dynamic services: service · amount · expiry · price. The amount
+  label and the bytes hint below it change with the selected service (Data/WhatsApp are
+  entered in GB and converted to bytes for the API).
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_vas_service_line"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/vas_f_service"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/lineRemove"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/vas_remove_service"
+            android:padding="6dp"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/danger" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lineServiceField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/lineServiceLabel"
+            style="@style/ProductDropdownLabel"
+            tools:text="Voice" />
+
+        <ImageView style="@style/ProductDropdownChevron" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        android:id="@+id/lineAmountLabel"
+        style="@style/StoreFieldLabel"
+        tools:text="Amount (minutes)" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/lineAmountInput"
+        style="@style/StoreFieldInput"
+        android:hint="0"
+        android:inputType="numberDecimal" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/lineBytesNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/success"
+        android:textSize="11sp"
+        android:visibility="gone"
+        tools:text="= 1 073 741 824 bytes"
+        tools:visibility="visible" />
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_expires" />
+
+    <LinearLayout
+        android:id="@+id/lineExpiryField"
+        style="@style/ProductDropdown">
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/lineExpiryLabel"
+            style="@style/ProductDropdownLabel"
+            android:text="@string/vas_f_expires_hint" />
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        style="@style/StoreFieldLabel"
+        android:text="@string/vas_f_price" />
+
+    <com.anokix.distributorapp.ui.views.RobotoEditText
+        android:id="@+id/linePriceInput"
+        style="@style/StoreFieldInput"
+        android:hint="@string/vas_f_price_hint"
+        android:inputType="numberDecimal" />
+</LinearLayout>

@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:background="@drawable/bg_status_pill"
+            android:background="@drawable/bg_vas_pill"
             android:paddingHorizontal="10dp"
             android:paddingVertical="3dp"
             android:textSize="10sp"

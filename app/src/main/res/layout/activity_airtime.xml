@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Airtime & VAS. Mirrors the web portal: KPI strip + "how this page works" explainer, a
+  scrollable tab bar, and one visible section at a time (onboard → subscription →
+  catalog/dynamic → transactions).
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,6 +22,7 @@
         app:titleTextColor="#FFFFFF" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/vasScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -25,7 +31,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp">
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:layout_width="wrap_content"
@@ -155,350 +163,77 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 1. Choose a category -->
-            <LinearLayout
+            <!-- How this page works -->
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/vasHowItWorks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/bg_stat_card"
-                android:orientation="vertical"
-                android:padding="14dp">
+                android:background="@drawable/bg_vas_info_banner"
+                android:lineSpacingExtra="3dp"
+                android:padding="12dp"
+                android:text="@string/vas_how_it_works"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vas_choose_category"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:id="@+id/categoryToggle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="@string/vas_view_all"
-                        android:textColor="@color/success"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/categoryLoading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="20dp"
-                    android:indeterminateTint="@color/purple_primary"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/categoryList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false"
-                    tools:itemCount="4"
-                    tools:listitem="@layout/item_vas_category"
-                    tools:orientation="horizontal" />
-            </LinearLayout>
-
-            <!-- 2. Select a product -->
-            <LinearLayout
+            <!-- Tabs -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_stat_card"
-                android:orientation="vertical"
-                android:padding="14dp">
+                android:layout_marginTop="14dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
-                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                <LinearLayout
+                    android:id="@+id/vasTabStrip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/vas_select_product"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
-                <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:id="@+id/productCategoryLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp"
-                    tools:text="Limes CellC Recharges powered by Limes" />
-
-                <ProgressBar
-                    android:id="@+id/productLoading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="20dp"
-                    android:indeterminateTint="@color/purple_primary"
-                    android:visibility="gone" />
-
-                <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:id="@+id/productEmpty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="18dp"
-                    android:gravity="center"
-                    android:text="@string/vas_no_products"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/productList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:nestedScrollingEnabled="false"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_vas_product"
-                    tools:spanCount="2" />
-            </LinearLayout>
-
-            <!-- Order summary -->
-            <LinearLayout
+            <!-- Sections — exactly one is visible at a time -->
+            <include
+                android:id="@+id/sectionOnboard"
+                layout="@layout/include_vas_onboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_stat_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="14dp" />
 
-                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/vas_order_summary"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
-
-                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                    style="@style/StoreFieldLabel"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/vas_recipient" />
-
-                <com.anokix.distributorapp.ui.views.RobotoEditText
-                    android:id="@+id/recipientInput"
-                    style="@style/StoreFieldInput"
-                    android:drawableStart="@drawable/ic_person"
-                    android:drawablePadding="8dp"
-                    android:hint="@string/vas_recipient_hint"
-                    android:inputType="phone" />
-
-                <LinearLayout
-                    android:id="@+id/customAmountBlock"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        style="@style/StoreFieldLabel"
-                        android:text="@string/vas_custom_amount" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoEditText
-                        android:id="@+id/customAmountInput"
-                        style="@style/StoreFieldInput"
-                        android:hint="@string/vas_custom_amount_hint"
-                        android:inputType="numberDecimal" />
-                </LinearLayout>
-
-                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                    style="@style/StoreFieldLabel"
-                    android:text="@string/vas_optional_reference" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <com.anokix.distributorapp.ui.views.RobotoEditText
-                        android:id="@+id/referenceInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp"
-                        android:background="@drawable/bg_login_input"
-                        android:gravity="center_vertical"
-                        android:hint="@string/vas_reference_hint"
-                        android:inputType="text"
-                        android:maxLength="30"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="46dp"
-                        android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
-                        android:textSize="13sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/referenceCounter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|end"
-                        android:layout_marginEnd="12dp"
-                        android:text="@string/vas_ref_counter_zero"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp" />
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/summaryProductName"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vas_no_product_selected"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/summaryProductAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        tools:text="R 0,00" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vas_service_fee"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/summaryServiceFee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        tools:text="R 0,00" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vas_commission_est"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/summaryCommission"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/success"
-                        android:textSize="13sp"
-                        tools:text="R 0,00" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="12dp"
-                    android:background="@color/border" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/vas_total"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:id="@+id/summaryTotal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/purple_primary"
-                        android:textSize="20sp"
-                        tools:text="R 0,00" />
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buyButton"
-                    style="@style/Widget.AnokiX.Button.Primary"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/vas_buy_now" />
-
-                <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/vas_wallet_note"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            <!-- Recent VAS transactions -->
-            <LinearLayout
+            <include
+                android:id="@+id/sectionCustomers"
+                layout="@layout/include_vas_customers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_stat_card"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="14dp" />
 
-                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/vas_recent_transactions"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp" />
+            <include
+                android:id="@+id/sectionSubscription"
+                layout="@layout/include_vas_subscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" />
 
-                <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:id="@+id/txnEmpty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="18dp"
-                    android:gravity="center"
-                    android:text="@string/vas_no_transactions"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:visibility="gone" />
+            <include
+                android:id="@+id/sectionCatalog"
+                layout="@layout/include_vas_catalog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/txnList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:nestedScrollingEnabled="false"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_vas_transaction" />
-            </LinearLayout>
+            <include
+                android:id="@+id/sectionDynamic"
+                layout="@layout/include_vas_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" />
+
+            <include
+                android:id="@+id/sectionTransactions"
+                layout="@layout/include_vas_transactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
