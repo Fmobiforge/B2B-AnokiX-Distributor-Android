@@ -20,7 +20,9 @@ import com.anokix.distributorapp.network.dto.ProfileUpdateData;
 import com.anokix.distributorapp.network.dto.ReturnDetailData;
 import com.anokix.distributorapp.network.dto.ReturnsData;
 import com.anokix.distributorapp.network.dto.UnreadCountData;
+import com.anokix.distributorapp.network.dto.InventoryPageData;
 import com.anokix.distributorapp.network.dto.InventorySummaryData;
+import com.anokix.distributorapp.network.dto.StockHistoryData;
 import com.anokix.distributorapp.network.dto.LoginData;
 import com.anokix.distributorapp.network.dto.OrderDetailData;
 import com.anokix.distributorapp.network.dto.OrdersData;
@@ -310,6 +312,69 @@ public final class ApiClient {
 
     public void getInventorySummary(ApiCallback<InventorySummaryData> cb) {
         getAuthed("api/distributor/inventory/summary", null, InventorySummaryData.class, cb);
+    }
+
+    /** Everything the Inventory screen needs: summary, rows, chart, movements, warehouses. */
+    public void getInventoryPage(ApiCallback<InventoryPageData> cb) {
+        getAuthed("api/distributor/inventory/page", null, InventoryPageData.class, cb);
+    }
+
+    /** Stock ledger for one product (Inventory → item → History). */
+    public void getStockHistory(String productId, int limit, ApiCallback<StockHistoryData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("product_id", productId == null ? "" : productId);
+        q.put("limit", String.valueOf(limit));
+        getAuthed("api/distributor/inventory/history", q, StockHistoryData.class, cb);
+    }
+
+    /**
+     * Sets the counted quantity for a product (Adjust Stock). The callback receives the
+     * server's confirmation message, e.g. "Stock updated from 1000 to 950.".
+     */
+    public void setStock(String productId, long quantity, String notes, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("product_id", productId == null ? "" : productId);
+        form.put("quantity", String.valueOf(quantity));
+        if (notes != null && !notes.isEmpty()) {
+            form.put("notes", notes);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/inventory/set-stock", form, session.getToken()), cb));
+    }
+
+    /** Moves units between warehouses; the total on hand does not change. */
+    public void transferStock(String productId, String fromWarehouseId, String toWarehouseId,
+                              long quantity, String notes, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("product_id", productId == null ? "" : productId);
+        form.put("from_warehouse_id", fromWarehouseId == null ? "" : fromWarehouseId);
+        form.put("to_warehouse_id", toWarehouseId == null ? "" : toWarehouseId);
+        form.put("quantity", String.valueOf(quantity));
+        if (notes != null && !notes.isEmpty()) {
+            form.put("notes", notes);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/inventory/transfer", form, session.getToken()), cb));
+    }
+
+    /** Books new stock into a warehouse (Add Stock / Receive). */
+    public void receiveStock(String warehouseId, String productId, long quantity, String unitCost,
+                             String batchNumber, String expiryDate, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("warehouse_id", warehouseId == null ? "" : warehouseId);
+        form.put("product_id", productId == null ? "" : productId);
+        form.put("quantity", String.valueOf(quantity));
+        if (unitCost != null && !unitCost.isEmpty()) {
+            form.put("unit_cost", unitCost);
+        }
+        if (batchNumber != null && !batchNumber.isEmpty()) {
+            form.put("batch_number", batchNumber);
+        }
+        if (expiryDate != null && !expiryDate.isEmpty()) {
+            form.put("expiry_date", expiryDate);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/inventory/receive", form, session.getToken()), cb));
     }
 
     // ---- Orders ----------------------------------------------------------
@@ -830,6 +895,40 @@ public final class ApiClient {
      * of {@code data}. Used by endpoints (e.g. products/delete) whose {@code data} block
      * is not a typed object — parsing it into one would throw and surface a false error.
      */
+    /**
+     * Like {@link #deliverStatusOnly} but hands the envelope's {@code message} to the
+     * callback — the inventory mutations echo what changed ("100 units moved.").
+     */
+    private void deliverMessageOnly(Http.Result r, ApiCallback<String> cb) {
+        String error = null;
+        String message = null;
+        try {
+            if (r.body == null || r.body.isEmpty()) {
+                error = "Network error (HTTP " + r.code + ")";
+            } else {
+                ApiResponse<?> resp = gson.fromJson(r.body, ApiResponse.class);
+                if (resp == null || !resp.status) {
+                    error = (resp != null && resp.message != null) ? resp.message : "Request failed";
+                } else {
+                    message = resp.message;
+                }
+            }
+        } catch (Exception e) {
+            Log.e(Http.TAG, "parse failed: " + e, e);
+            error = "Unexpected response from server";
+        }
+
+        final String errorMessage = error;
+        final String successMessage = message;
+        main.post(() -> {
+            if (errorMessage == null) {
+                cb.onSuccess(successMessage);
+            } else {
+                cb.onError(errorMessage);
+            }
+        });
+    }
+
     private <T> void deliverStatusOnly(Http.Result r, ApiCallback<T> cb) {
         String error = null;
         try {

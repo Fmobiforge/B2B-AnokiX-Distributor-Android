@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Product swatch on an inventory card; the solid colour is replaced at bind time
+     with the imageColor the API returns for the row. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/purple_primary" />
+    <corners android:radius="@dimen/radius_sm" />
+</shape>

@@ -1,82 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginBottom="10dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:contentPadding="12dp"
+    app:strokeColor="@color/border"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:minHeight="44dp"
-        android:orientation="horizontal"
-        android:paddingVertical="@dimen/spacing_sm">
+        android:orientation="vertical">
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
-            android:id="@+id/rowTitle"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Product Name"
-            android:textAppearance="@style/TextAppearance.AnokiX.Body"
-            android:textSize="@dimen/text_micro" />
+            android:orientation="horizontal">
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
-            android:id="@+id/rowSku"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="SKU-001"
-            android:textAppearance="@style/TextAppearance.AnokiX.Caption"
-            android:textSize="@dimen/text_micro"/>
+            <View
+                android:id="@+id/itemSwatch"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_inventory_swatch" />
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
-            android:id="@+id/rowStock"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="186"
-            android:textAppearance="@style/TextAppearance.AnokiX.Body"
-            android:textSize="@dimen/text_micro" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:minHeight="20dp">
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/itemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textAppearance="@style/TextAppearance.AnokiX.Title"
+                    android:textSize="@dimen/text_body" />
 
-            <ProgressBar
-                android:id="@+id/stockProgress"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="20dp"
-                android:max="100"
-                android:progress="75"
-                android:progressDrawable="@drawable/bg_stock_progress" />
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/itemMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption" />
+            </LinearLayout>
 
-            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                android:id="@+id/outLabel"
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/itemStatusBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:text="@string/out_label"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_micro"
-                android:visibility="gone" />
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_badge_success"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/success"
+                android:textSize="@dimen/text_micro" />
+        </LinearLayout>
 
-        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/itemUnits"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_caption" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/itemWarehouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/text_tertiary"
+                android:textSize="@dimen/text_micro" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/itemStockProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="6dp"
+            android:max="100"
+            android:progressDrawable="@drawable/bg_stock_progress" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/itemValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textColor="@color/purple_primary"
+                android:textSize="@dimen/text_body" />
+
+            <ImageButton
+                android:id="@+id/itemViewButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/bg_search_bar"
+                android:contentDescription="@string/view_details"
+                android:padding="8dp"
+                android:src="@drawable/ic_eye"
+                app:tint="@color/text_secondary" />
+
+            <ImageButton
+                android:id="@+id/itemMoreButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_search_bar"
+                android:contentDescription="@string/more_actions"
+                android:padding="8dp"
+                android:src="@drawable/ic_more_vert"
+                app:tint="@color/text_secondary" />
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:id="@+id/rowDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/border" />
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -222,23 +222,32 @@ public final class MockData {
         );
     }
 
+    /**
+     * Drawer navigation, in the order agreed for the new design (New-Design/Menu).
+     * "card_machine", "warehouse_staff" and "support" have no screens yet — MainActivity
+     * answers those with a "coming soon" message.
+     */
     public static List<MenuItem> getDrawerMenuItems() {
         return Arrays.asList(
             new MenuItem("home", "Dashboard", R.drawable.ic_dashboard),
-            new MenuItem("orders", "Orders", R.drawable.ic_orders),
-            new MenuItem("inventory", "Inventory", R.drawable.ic_inventory),
             new MenuItem("stores", "Stores", R.drawable.ic_stores),
-            new MenuItem("traders", "Traders", R.drawable.ic_traders),
             new MenuItem("products", "Products", R.drawable.ic_shopping_bag),
             new MenuItem("promotions", "Ads & Promotions", R.drawable.ic_promotions),
+            new MenuItem("orders", "Orders", R.drawable.ic_orders),
+            new MenuItem("deliveries", "Deliveries", R.drawable.ic_deliveries),
+            new MenuItem("returns", "Returns", R.drawable.ic_returns),
+            new MenuItem("inventory", "Inventory", R.drawable.ic_inventory),
             new MenuItem("finances", "Finances", R.drawable.ic_finances),
+            new MenuItem("card_machine", "Card Machine", R.drawable.ic_card, "Powered by PayCloud"),
             new MenuItem("wallet", "anokiX wallet", R.drawable.ic_wallet, "Powered by IMB"),
             new MenuItem("airtime", "Airtime & VAS", R.drawable.ic_vas, "Powered by Limes"),
             new MenuItem("reports", "Reports", R.drawable.ic_reports),
-            new MenuItem("deliveries", "Deliveries", R.drawable.ic_deliveries),
-            new MenuItem("returns", "Returns", R.drawable.ic_returns),
+            new MenuItem("traders", "Traders", R.drawable.ic_traders),
+            new MenuItem("warehouse_staff", "Warehouse Staff", R.drawable.ic_person_add,
+                    "Who can pick and pack"),
             new MenuItem("notifications", "Notifications", R.drawable.ic_notifications),
-            new MenuItem("settings", "Settings", R.drawable.ic_settings)
+            new MenuItem("settings", "Settings", R.drawable.ic_settings),
+            new MenuItem("support", "Support Centre", R.drawable.ic_headset)
         );
     }
 

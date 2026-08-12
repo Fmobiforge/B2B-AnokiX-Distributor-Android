@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inventory → Add Stock / Receive (New-Design/Inventory/7.Inventory-Add-Stock.png). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_top"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_pill_neutral" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="12dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/sheetTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/receive_stock_title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_headline" />
+
+        <ImageView
+            android:id="@+id/sheetClose"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cancel_btn"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/border" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/receiveWarehouseField"
+                style="@style/ProductDropdown"
+                android:layout_marginTop="14dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/receiveWarehouseLabel"
+                    style="@style/ProductDropdownLabel"
+                    android:text="@string/receive_warehouse_hint" />
+
+                <ImageView style="@style/ProductDropdownChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/receiveProductField"
+                style="@style/ProductDropdown"
+                android:layout_marginTop="10dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/receiveProductLabel"
+                    style="@style/ProductDropdownLabel"
+                    android:text="@string/receive_product_hint" />
+
+                <ImageView style="@style/ProductDropdownChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/receiveQuantity"
+                    style="@style/StoreFieldInput"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.1"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/receive_quantity_hint"
+                    android:inputType="number" />
+
+                <LinearLayout
+                    android:id="@+id/receiveUnitField"
+                    style="@style/ProductDropdown"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/receiveUnitLabel"
+                        style="@style/ProductDropdownLabel"
+                        android:text="@string/receive_cases" />
+
+                    <ImageView style="@style/ProductDropdownChevron" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/receiveCost"
+                style="@style/StoreFieldInput"
+                android:layout_marginTop="10dp"
+                android:hint="@string/receive_cost_per_case"
+                android:inputType="numberDecimal" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/receiveHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_micro" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/receiveBatch"
+                style="@style/StoreFieldInput"
+                android:layout_marginTop="10dp"
+                android:hint="@string/receive_batch_hint"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:id="@+id/receiveExpiryField"
+                style="@style/ProductDropdown"
+                android:layout_marginTop="10dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/receiveExpiryLabel"
+                    style="@style/ProductDropdownLabel"
+                    android:text="@string/receive_expiry_hint" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/text_secondary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/sheetCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_login_button_outlined"
+                    android:gravity="center"
+                    android:text="@string/cancel_btn"
+                    android:textColor="@color/purple_primary"
+                    android:textSize="15sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/sheetSubmit"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_login_button_primary"
+                    android:gravity="center"
+                    android:text="@string/receive_action"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

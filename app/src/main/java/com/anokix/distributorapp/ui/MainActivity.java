@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -196,6 +197,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "settings":
                 startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            default:
+                // Card Machine / Warehouse Staff / Support Centre: menu entries are in
+                // place, their screens are still to come.
+                Toast.makeText(this, getString(R.string.feature_coming_soon, item.title),
+                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
