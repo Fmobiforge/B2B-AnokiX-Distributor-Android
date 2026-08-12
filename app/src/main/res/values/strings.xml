@@ -169,6 +169,13 @@
     <string name="tab_slow_moving">Slow Moving</string>
     <string name="tab_damaged">Damaged</string>
     <string name="inventory_units_of_capacity">%1$s / %2$s units</string>
+    <string name="inventory_on_hand">On hand</string>
+    <string name="inventory_stock_value">Stock value</string>
+    <string name="inventory_capacity_percent">%1$d%% of capacity</string>
+    <string name="inventory_summary_title">Inventory Summary</string>
+    <string name="inventory_product_facts">Product facts</string>
+    <string name="inventory_item_title">Stock item</string>
+    <string name="inventory_total_units_short">units</string>
     <string name="inventory_count">%1$d of %2$d items</string>
     <string name="no_inventory_yet">No stock yet. Tap Add Stock to receive your first delivery.</string>
     <string name="no_inventory_match">No stock matches your search or filters.</string>

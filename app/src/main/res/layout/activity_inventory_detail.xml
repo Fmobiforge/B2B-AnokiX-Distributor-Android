@@ -85,12 +85,168 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- ===== Hero ===== -->
+            <LinearLayout
+                android:id="@+id/heroCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_stat_card"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/heroSwatch"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_inventory_swatch">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_package"
+                            app:tint="#FFFFFF" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:id="@+id/heroName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="2"
+                            android:textColor="@color/top_title"
+                            android:textSize="@dimen/text_title" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/heroMeta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_caption" />
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/heroStatusBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_badge_success"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:textColor="@color/success"
+                        android:textSize="@dimen/text_micro" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/border_light" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            style="@style/InventoryStatLabel"
+                            android:text="@string/inventory_on_hand" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:id="@+id/heroUnits"
+                            style="@style/InventoryStatValue"
+                            android:textSize="@dimen/text_headline" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            style="@style/InventoryStatLabel"
+                            android:text="@string/inventory_stock_value" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:id="@+id/heroValue"
+                            style="@style/InventoryStatValue"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="@dimen/text_headline" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/heroAdjust"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_login_button_outlined"
+                        android:gravity="center"
+                        android:text="@string/adjust_stock"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="@dimen/text_body_sm" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/heroTransfer"
+                        android:layout_width="0dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_login_button_primary"
+                        android:gravity="center"
+                        android:text="@string/transfer_stock"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/text_body_sm" />
+                </LinearLayout>
+            </LinearLayout>
+
             <!-- ===== Details ===== -->
             <LinearLayout
                 android:id="@+id/detailsPane"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
                 android:orientation="vertical">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/inventory_product_facts"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_title" />
 
                 <LinearLayout
                     android:id="@+id/detailRows"
@@ -98,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_stat_card"
                     android:orientation="vertical"
-                    android:padding="4dp" />
+                    android:paddingHorizontal="14dp" />
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:layout_width="wrap_content"

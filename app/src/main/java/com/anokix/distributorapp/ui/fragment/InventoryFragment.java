@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -60,6 +62,15 @@ public class InventoryFragment extends Fragment {
     private static final int TAB_OUT = 4;
     private static final int TAB_DAMAGED = 5;
     private static final int TAB_EXPIRED = 6;
+
+    /** The detail screen can adjust or transfer stock, so refresh when it reports a change. */
+    private final ActivityResultLauncher<Intent> detailLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == android.app.Activity.RESULT_OK) {
+                    loadPage();
+                }
+            });
 
     private InventoryAdapter adapter;
     private final List<InventoryPageData.Row> allRows = new ArrayList<>();
@@ -118,6 +129,7 @@ public class InventoryFragment extends Fragment {
         list.setAdapter(adapter);
 
         donutChart = view.findViewById(R.id.inventoryDonutChart);
+        donutChart.setStrokeWidthDp(11f);
         donutLegend = view.findViewById(R.id.donutLegend);
         countLabel = view.findViewById(R.id.inventoryCount);
         emptyView = view.findViewById(R.id.emptyView);
@@ -265,6 +277,9 @@ public class InventoryFragment extends Fragment {
         ((TextView) view.findViewById(R.id.kpiLowStock)).setText(String.valueOf(low));
         ((TextView) view.findViewById(R.id.kpiOutOfStock)).setText(String.valueOf(out));
         ((TextView) view.findViewById(R.id.kpiMovements)).setText(String.valueOf(movements));
+
+        // The donut hole carries the headline number the cards break down.
+        donutChart.setCenterText(count(units), getString(R.string.inventory_total_units_short));
     }
 
     /** Donut + legend from the chart slices the API returns (In Stock / Low / Out / Damaged). */
@@ -446,7 +461,8 @@ public class InventoryFragment extends Fragment {
     }
 
     private void openDetails(InventoryPageData.Row row, boolean startOnHistory) {
-        startActivity(InventoryDetailActivity.intent(requireContext(), row, startOnHistory));
+        detailLauncher.launch(InventoryDetailActivity.intent(
+                requireContext(), row, warehouses, startOnHistory));
     }
 
     // ---- helpers ---------------------------------------------------------
