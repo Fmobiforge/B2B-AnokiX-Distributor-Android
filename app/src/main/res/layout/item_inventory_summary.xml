@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scrolling header of the Inventory list: page title, KPI cards and the stock-mix donut.
+  It rides inside the RecyclerView so the stock cards always own the remaining height —
+  on short screens a fixed header left nothing to scroll.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="14dp">
+
+    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/inventory_overview"
+        android:textAppearance="@style/TextAppearance.AnokiX.Headline" />
+
+    <com.anokix.distributorapp.ui.views.RobotoLightTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/inventory_subtitle"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_caption" />
+
+    <!-- ===== KPI cards ===== -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_purple">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_package"
+                            app:tint="@color/purple_primary" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_stock_value" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiStockValue"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    style="@style/InventoryKpiCaption"
+                    android:text="@string/kpi_stock_value_sub"
+                    android:textColor="@color/success" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_green">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_inventory"
+                            app:tint="@color/success" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_total_units" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiTotalUnits"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    style="@style/InventoryKpiCaption"
+                    android:text="@string/kpi_total_units_sub"
+                    android:textColor="@color/success" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_orange">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_warning_box"
+                            app:tint="@color/warning" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_low_stock_items" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiLowStock"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    style="@style/InventoryKpiCaption"
+                    android:text="@string/kpi_low_stock_sub"
+                    android:textColor="@color/warning" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_red">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_cancel_circle"
+                            app:tint="@color/danger" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_out_of_stock_items" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiOutOfStock"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    style="@style/InventoryKpiCaption"
+                    android:text="@string/kpi_out_of_stock_sub"
+                    android:textColor="@color/danger" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/InventoryKpiCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_blue">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_finance_report"
+                            app:tint="@color/info" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_stock_movement" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiMovements"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    style="@style/InventoryKpiCaption"
+                    android:text="@string/kpi_stock_movement_sub"
+                    android:textColor="@color/info" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- ===== Stock mix donut ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_stat_card"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inventory_summary_title"
+            android:textColor="@color/top_title"
+            android:textSize="@dimen/text_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.DonutChartView
+                android:id="@+id/inventoryDonutChart"
+                android:layout_width="104dp"
+                android:layout_height="104dp" />
+
+            <LinearLayout
+                android:id="@+id/donutLegend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

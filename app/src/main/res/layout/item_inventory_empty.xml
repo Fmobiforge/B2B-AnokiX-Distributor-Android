@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Empty state shown below the summary header when no stock matches. -->
+<com.anokix.distributorapp.ui.views.RobotoTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/emptyMessage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="40dp"
+    android:textColor="@color/text_secondary"
+    android:textSize="@dimen/text_body" />

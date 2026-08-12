@@ -86,7 +86,7 @@ public class InventoryFragment extends Fragment {
 
     private final List<TextView> tabLabels = new ArrayList<>();
     private final List<View> tabIndicators = new ArrayList<>();
-    private TextView categoryLabel, brandLabel, countLabel, emptyView;
+    private TextView categoryLabel, brandLabel, countLabel;
     private DonutChartView donutChart;
     private LinearLayout donutLegend;
 
@@ -126,13 +126,11 @@ public class InventoryFragment extends Fragment {
                 showRowMenu(row, anchor);
             }
         });
+        // The KPI cards and donut ride in the list header so the cards keep the rest.
+        adapter.setHeaderBinder(this::bindSummaryHeader);
         list.setAdapter(adapter);
 
-        donutChart = view.findViewById(R.id.inventoryDonutChart);
-        donutChart.setStrokeWidthDp(11f);
-        donutLegend = view.findViewById(R.id.donutLegend);
         countLabel = view.findViewById(R.id.inventoryCount);
-        emptyView = view.findViewById(R.id.emptyView);
         categoryLabel = view.findViewById(R.id.categoryFilterLabel);
         brandLabel = view.findViewById(R.id.brandFilterLabel);
 
@@ -188,9 +186,8 @@ public class InventoryFragment extends Fragment {
                     summary = data.summary;
                     chart = data.chart == null ? new ArrayList<>() : data.chart;
                 }
-                bindSummary();
-                bindDonut();
-                applyFilters();
+                applyFilters();          // rebinds the rows …
+                adapter.refreshHeader(); // … and the KPI / donut header above them
             }
 
             @Override
@@ -260,34 +257,38 @@ public class InventoryFragment extends Fragment {
         }
     }
 
-    private void bindSummary() {
-        View view = getView();
-        if (view == null) {
-            return;
-        }
+    /** Fills the list header (KPI cards + stock-mix donut) whenever it is (re)bound. */
+    private void bindSummaryHeader(View header) {
         double stockValue = summary == null ? 0 : summary.total_stock_value;
         long units = summary == null ? 0 : summary.total_units;
         int low = summary == null ? 0 : summary.low_stock_count;
         int out = summary == null ? 0 : summary.out_of_stock_count;
         int movements = summary == null ? 0 : summary.movements_this_week;
 
-        ((TextView) view.findViewById(R.id.kpiStockValue))
+        ((TextView) header.findViewById(R.id.kpiStockValue))
                 .setText(String.format(Locale.US, "R%,.0f", stockValue));
-        ((TextView) view.findViewById(R.id.kpiTotalUnits)).setText(count(units));
-        ((TextView) view.findViewById(R.id.kpiLowStock)).setText(String.valueOf(low));
-        ((TextView) view.findViewById(R.id.kpiOutOfStock)).setText(String.valueOf(out));
-        ((TextView) view.findViewById(R.id.kpiMovements)).setText(String.valueOf(movements));
+        ((TextView) header.findViewById(R.id.kpiTotalUnits)).setText(count(units));
+        ((TextView) header.findViewById(R.id.kpiLowStock)).setText(String.valueOf(low));
+        ((TextView) header.findViewById(R.id.kpiOutOfStock)).setText(String.valueOf(out));
+        ((TextView) header.findViewById(R.id.kpiMovements)).setText(String.valueOf(movements));
 
+        donutChart = header.findViewById(R.id.inventoryDonutChart);
+        donutLegend = header.findViewById(R.id.donutLegend);
+        donutChart.setStrokeWidthDp(11f);
         // The donut hole carries the headline number the cards break down.
         donutChart.setCenterText(count(units), getString(R.string.inventory_total_units_short));
+        bindDonut();
     }
 
     /** Donut + legend from the chart slices the API returns (In Stock / Low / Out / Damaged). */
     private void bindDonut() {
+        if (donutChart == null || donutLegend == null) {
+            return;
+        }
         donutLegend.removeAllViews();
+        int emptyColor = ContextCompat.getColor(requireContext(), R.color.border);
         if (chart.isEmpty()) {
-            donutChart.setData(new float[]{1f}, new int[]{
-                    ContextCompat.getColor(requireContext(), R.color.border)});
+            donutChart.setData(new float[]{1f}, new int[]{emptyColor});
             return;
         }
 
@@ -304,12 +305,8 @@ public class InventoryFragment extends Fragment {
                     ContextCompat.getColor(requireContext(), R.color.purple_primary));
             donutLegend.addView(legendRow(slice, total, colors[i]));
         }
-        if (total <= 0) {
-            donutChart.setData(new float[]{1f}, new int[]{
-                    ContextCompat.getColor(requireContext(), R.color.border)});
-        } else {
-            donutChart.setData(values, colors);
-        }
+        donutChart.setData(total <= 0 ? new float[]{1f} : values,
+                total <= 0 ? new int[]{emptyColor} : colors);
     }
 
     private View legendRow(InventoryPageData.ChartSlice slice, double total, int color) {
@@ -355,11 +352,10 @@ public class InventoryFragment extends Fragment {
                 filtered.add(row);
             }
         }
-        adapter.setItems(filtered);
+        adapter.setItems(filtered, getString(allRows.isEmpty()
+                ? R.string.no_inventory_yet : R.string.no_inventory_match));
         bindTabs();
         countLabel.setText(getString(R.string.inventory_count, filtered.size(), allRows.size()));
-        emptyView.setText(allRows.isEmpty() ? R.string.no_inventory_yet : R.string.no_inventory_match);
-        emptyView.setVisibility(filtered.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private boolean matchesTab(InventoryPageData.Row row) {

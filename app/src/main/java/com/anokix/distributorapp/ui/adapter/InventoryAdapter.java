@@ -38,30 +38,93 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         void onMore(InventoryPageData.Row row, View anchor);
     }
 
+    /** Fills the KPI / donut header that scrolls above the stock cards. */
+    public interface HeaderBinder {
+        void bindHeader(View header);
+    }
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ROW = 1;
+    private static final int TYPE_EMPTY = 2;
+
     private final List<InventoryPageData.Row> items = new ArrayList<>();
     private OnRowAction listener;
+    private HeaderBinder headerBinder;
+    private String emptyMessage = "";
 
     public void setOnRowActionListener(OnRowAction listener) {
         this.listener = listener;
     }
 
-    public void setItems(List<InventoryPageData.Row> data) {
+    /**
+     * Adds a summary header as the first row. Keeping it inside the list means the stock
+     * cards always own the leftover height — a fixed header left nothing to scroll on
+     * short screens.
+     */
+    public void setHeaderBinder(HeaderBinder binder) {
+        this.headerBinder = binder;
+        notifyDataSetChanged();
+    }
+
+    /** Re-renders the header in place (after the page reloads). */
+    public void refreshHeader() {
+        if (headerBinder != null) {
+            notifyItemChanged(0);
+        }
+    }
+
+    /** Shown in place of the rows when nothing matches; keeps the header visible. */
+    public void setItems(List<InventoryPageData.Row> data, String emptyMessage) {
         items.clear();
         if (data != null) items.addAll(data);
+        this.emptyMessage = emptyMessage == null ? "" : emptyMessage;
         notifyDataSetChanged();
+    }
+
+    private boolean hasHeader() {
+        return headerBinder != null;
+    }
+
+    private boolean showsEmptyState() {
+        return items.isEmpty() && hasHeader();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (hasHeader() && position == 0) {
+            return TYPE_HEADER;
+        }
+        return showsEmptyState() ? TYPE_EMPTY : TYPE_ROW;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_inventory, parent, false);
+        int layout;
+        if (viewType == TYPE_HEADER) {
+            layout = R.layout.item_inventory_summary;
+        } else if (viewType == TYPE_EMPTY) {
+            layout = R.layout.item_inventory_empty;
+        } else {
+            layout = R.layout.item_inventory;
+        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        InventoryPageData.Row row = items.get(position);
+        int type = getItemViewType(position);
+        if (type == TYPE_HEADER) {
+            headerBinder.bindHeader(holder.itemView);
+            return;
+        }
+        if (type == TYPE_EMPTY) {
+            ((TextView) holder.itemView).setText(emptyMessage);
+            return;
+        }
+
+        InventoryPageData.Row row = items.get(hasHeader() ? position - 1 : position);
         Context context = holder.itemView.getContext();
 
         holder.name.setText(row.name);
@@ -194,7 +257,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     @Override
     public int getItemCount() {
-        return items.size();
+        int rows = showsEmptyState() ? 1 : items.size();
+        return rows + (hasHeader() ? 1 : 0);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
