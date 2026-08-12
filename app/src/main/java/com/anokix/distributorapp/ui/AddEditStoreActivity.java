@@ -21,6 +21,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -83,6 +84,7 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
     private final List<BaseInfoData.Currency> currencies = new ArrayList<>();
 
     private String storeId;
+    private String storeName;
     // pending values prefilled before spinner data arrives
     private String pendingTimeZone;
     private String pendingCurrencyId;
@@ -162,11 +164,42 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
         if (title != null) {
             String name = getIntent().getStringExtra(EXTRA_STORE_NAME);
             if (isEditMode() && name != null && !name.isEmpty()) {
+                storeName = name;
                 title.setText(getString(R.string.edit_store_prefix, name));
             } else {
                 title.setText(R.string.add_store);
             }
         }
+        View delete = findViewById(R.id.btnDelete);
+        if (delete != null && isEditMode()) {
+            delete.setVisibility(View.VISIBLE);
+            delete.setOnClickListener(v -> confirmDelete());
+        }
+    }
+
+    private void confirmDelete() {
+        String name = storeName == null || storeName.isEmpty() ? text(etName) : storeName;
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.store_delete_confirm_title)
+                .setMessage(getString(R.string.store_delete_confirm_msg, name))
+                .setNegativeButton(R.string.cancel_btn, null)
+                .setPositiveButton(R.string.delete, (d, w) -> ApiClient.get(this)
+                        .deleteStore(storeId, new ApiCallback<StoreDetailData>() {
+                            @Override
+                            public void onSuccess(StoreDetailData data) {
+                                Toast.makeText(AddEditStoreActivity.this,
+                                        R.string.store_deleted_msg, Toast.LENGTH_SHORT).show();
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(String message) {
+                                Toast.makeText(AddEditStoreActivity.this, message,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }))
+                .show();
     }
 
     // ---- Fulfillment -----------------------------------------------------
@@ -574,6 +607,7 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
     private void prefill(StoreDetailData.Store s) {
         TextView title = findViewById(R.id.screenTitle);
         if (title != null && s.name != null) {
+            storeName = s.name;
             title.setText(getString(R.string.edit_store_prefix, s.name));
         }
         etName.setText(s.name);

@@ -6,7 +6,48 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/include_secondary_header" />
+    <!-- Header — include_secondary_header plus a delete action (edit mode only). -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_chevron_right"
+            android:rotation="180"
+            app:tint="@android:color/white" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/screenTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:letterSpacing="-0.01"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_headline" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/delete_store"
+            android:padding="8dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
+            app:tint="@android:color/white" />
+    </LinearLayout>
 
     <!-- Stepper -->
     <LinearLayout

@@ -640,6 +640,18 @@ public final class ApiClient {
         postAuthed("api/distributor/stores/update", form, StoreDetailData.class, cb);
     }
 
+    /** Soft-deletes a store (is_closed=1) — api/distributor/stores/delete. */
+    public void deleteStore(String id, ApiCallback<StoreDetailData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> {
+            Http.Result r = Http.postForm(BASE_URL, "api/distributor/stores/delete",
+                    form, session.getToken());
+            // Like products/delete, the response carries no store object — status only.
+            deliverStatusOnly(r, cb);
+        });
+    }
+
     // ---- Airtime & VAS (Limes, common) ----------------------------------
 
     /**
