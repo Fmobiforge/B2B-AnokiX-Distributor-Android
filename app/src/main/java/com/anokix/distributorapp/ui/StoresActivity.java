@@ -1,6 +1,10 @@
 package com.anokix.distributorapp.ui;
 
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,22 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.data.ApiMapper;
-import com.anokix.distributorapp.data.MockData;
 import com.anokix.distributorapp.model.StoreItem;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.StoresData;
 import com.anokix.distributorapp.ui.adapter.StoreAdapter;
-import com.anokix.distributorapp.ui.util.FilterUiHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class StoresActivity extends BaseSecondaryActivity {
 
     private StoreAdapter adapter;
     private List<StoreItem> allItems = new ArrayList<>();
-    private String selectedArea = "All Areas";
+    private String keyword = "";
+
+    private TextView countPill;
+    private TextView emptyView;
 
     private final ActivityResultLauncher<Intent> editorLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -54,19 +60,27 @@ public class StoresActivity extends BaseSecondaryActivity {
         adapter.setOnItemClickListener(this::openEditor);
         list.setAdapter(adapter);
 
+        countPill = findViewById(R.id.storeCountPill);
+        emptyView = findViewById(R.id.emptyView);
+
         findViewById(R.id.addStoreButton).setOnClickListener(v -> openCreate());
 
-        TextView areaLabel = findViewById(R.id.areaFilterLabel);
-        FilterUiHelper.setDropdownContentDescription(areaLabel, getString(R.string.all_areas));
-        FilterUiHelper.bindDropdown(
-                findViewById(R.id.areaFilterButton),
-                areaLabel,
-                MockData.getFilterStatus(),
-                0,
-                (index, value) -> {
-                    selectedArea = value;
-                    applyFilters();
-                });
+        EditText search = findViewById(R.id.searchInput);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                keyword = s == null ? "" : s.toString().trim();
+                applyFilters();
+            }
+        });
+
+        applyFilters();
     }
 
     @Override
@@ -96,17 +110,41 @@ public class StoresActivity extends BaseSecondaryActivity {
         editorLauncher.launch(intent);
     }
 
+    /** Local search over name, address and tags — mirrors the web store list search. */
     private void applyFilters() {
-        if ("All Areas".equals(selectedArea)) {
-            adapter.setItems(allItems);
-            return;
-        }
-        List<StoreItem> filtered = new ArrayList<>();
-        for (StoreItem item : allItems) {
-            if (selectedArea.equals(item.area)) {
-                filtered.add(item);
+        List<StoreItem> filtered;
+        if (keyword.isEmpty()) {
+            filtered = allItems;
+        } else {
+            String needle = keyword.toLowerCase(Locale.getDefault());
+            filtered = new ArrayList<>();
+            for (StoreItem item : allItems) {
+                if (matches(item, needle)) {
+                    filtered.add(item);
+                }
             }
         }
         adapter.setItems(filtered);
+
+        countPill.setText(getResources().getQuantityString(
+                R.plurals.stores_count, filtered.size(), filtered.size()));
+        emptyView.setText(allItems.isEmpty() ? R.string.no_stores_yet : R.string.no_stores_found);
+        emptyView.setVisibility(filtered.isEmpty() ? View.VISIBLE : View.GONE);
+    }
+
+    private boolean matches(StoreItem item, String needle) {
+        if (contains(item.name, needle) || contains(item.address, needle)) {
+            return true;
+        }
+        for (String tag : item.tags) {
+            if (contains(tag, needle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean contains(String value, String needle) {
+        return value != null && value.toLowerCase(Locale.getDefault()).contains(needle);
     }
 }

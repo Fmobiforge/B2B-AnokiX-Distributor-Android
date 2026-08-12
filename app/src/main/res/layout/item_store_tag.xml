@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Read-only tag chip shown on a store card (item_store.xml). -->
+<com.anokix.distributorapp.ui.views.RobotoTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tagText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="6dp"
+    android:background="@drawable/bg_tag_chip"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="4dp"
+    android:textColor="@color/purple_primary"
+    android:textSize="@dimen/text_caption" />

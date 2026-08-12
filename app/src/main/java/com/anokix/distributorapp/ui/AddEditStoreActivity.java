@@ -70,8 +70,6 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
             etCountry, etPostal;
     private Spinner timeZoneSpinner, currencySpinner;
     private LinearLayout tagContainer, tradingContainer;
-    private View statsRow;
-    private TextView followerCount, reviewCount;
     private View cardCollect, cardDeliver;
     private View checkCollect, checkDeliver;
     private TextView btnSubmit;
@@ -147,9 +145,6 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
         currencySpinner = findViewById(R.id.currencySpinner);
         tagContainer = findViewById(R.id.tagContainer);
         tradingContainer = findViewById(R.id.tradingContainer);
-        statsRow = findViewById(R.id.statsRow);
-        followerCount = findViewById(R.id.followerCount);
-        reviewCount = findViewById(R.id.reviewCount);
 
         cardCollect = findViewById(R.id.cardClickCollect);
         cardDeliver = findViewById(R.id.cardClickDeliver);
@@ -581,10 +576,6 @@ public class AddEditStoreActivity extends AppCompatActivity implements OnMapRead
         if (title != null && s.name != null) {
             title.setText(getString(R.string.edit_store_prefix, s.name));
         }
-        statsRow.setVisibility(View.VISIBLE);
-        followerCount.setText(String.valueOf(s.follower_count));
-        reviewCount.setText(String.valueOf(s.review_count));
-
         etName.setText(s.name);
         etBuilding.setText(s.building_number);
         etContact.setText(s.contact_number);

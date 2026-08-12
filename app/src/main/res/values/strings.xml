@@ -387,7 +387,14 @@
     <string name="view_report">View Report</string>
     <string name="view_trader">View Trader</string>
     <string name="verified_distributor">Verified Distributor</string>
-    <string name="search_stores">Search stores&#8230;</string>
+    <string name="search_stores">Search name, address or tags&#8230;</string>
+    <string name="no_stores_yet">No stores yet. Tap Add Store to create your first one.</string>
+    <string name="no_stores_found">No stores match your search.</string>
+    <string name="more_tags">+%1$d</string>
+    <plurals name="stores_count">
+        <item quantity="one">%1$d Store</item>
+        <item quantity="other">%1$d Stores</item>
+    </plurals>
     <string name="search_traders">Search traders&#8230;</string>
     <string name="all_areas">All Areas</string>
     <string name="all_segments">All Segments</string>
