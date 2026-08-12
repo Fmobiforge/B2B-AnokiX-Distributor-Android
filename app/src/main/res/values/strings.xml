@@ -150,6 +150,48 @@
     <string name="search_orders_detail">Search by trader name, order ID&#8230;</string>
     <string name="search_products">Search name, SKU or barcode&#8230;</string>
 
+    <!-- Card Machine (PayCloud POS) -->
+    <string name="card_machine">Card Machine</string>
+    <string name="card_machine_subtitle">Take card payments on your PayCloud terminal</string>
+    <string name="pos_take_payment">Take a card payment</string>
+    <string name="pos_take_payment_sub">The amount is sent to the machine — the customer taps, inserts or swipes there. Card details never pass through this screen.</string>
+    <string name="pos_no_machine_title">No card machine added yet</string>
+    <string name="pos_no_machine_body">Add one below using the serial number printed on the device.</string>
+    <string name="pos_amount">Amount</string>
+    <string name="currency_symbol">R</string>
+    <string name="pos_amount_hint">0.00</string>
+    <string name="pos_card_machine">Card machine</string>
+    <string name="pos_select_machine">Select a machine</string>
+    <string name="pos_reference">Reference (optional)</string>
+    <string name="pos_reference_hint">e.g. Invoice INV-1042</string>
+    <string name="pos_send_to_machine">Send to machine</string>
+    <string name="pos_your_machines">Your card machines</string>
+    <string name="pos_machines_sub">Identified by the serial number printed on the device.</string>
+    <string name="pos_add_machine">Add machine</string>
+    <string name="pos_add_machine_title">Add a card machine</string>
+    <string name="pos_serial_number">Serial number</string>
+    <string name="pos_serial_hint">e.g. WPHK002352000111</string>
+    <string name="pos_serial_help">Printed on the back of the machine, or under Settings on the device.</string>
+    <string name="pos_machine_name">Name (optional)</string>
+    <string name="pos_machine_name_hint">e.g. Front counter</string>
+    <string name="pos_no_machines">No card machines yet.</string>
+    <string name="pos_remove">Remove</string>
+    <string name="pos_removed">Removed</string>
+    <string name="pos_remove_confirm_title">Remove this machine?</string>
+    <string name="pos_remove_confirm_msg">"%1$s" will no longer accept payments from this app. You can add it again with the same serial number.</string>
+    <string name="pos_payments">Card machine payments</string>
+    <string name="pos_payments_sub">Every payment taken on a machine, newest first.</string>
+    <string name="pos_no_payments">No payments yet.</string>
+    <string name="pos_payment_range">%1$d–%2$d of %3$d payments</string>
+    <string name="pos_previous_page">Previous page</string>
+    <string name="pos_next_page">Next page</string>
+    <string name="pos_sent_to_machine">Sent to the machine — ask the customer to tap or insert their card.</string>
+    <string name="pos_err_amount">Enter an amount.</string>
+    <string name="pos_err_machine">Select a card machine.</string>
+    <string name="pos_err_serial">Enter the machine\'s serial number.</string>
+    <string name="pos_not_configured">Card machine payments are not switched on for this account yet.</string>
+    <string name="pos_card_masked">Card %1$s</string>
+
     <!-- Inventory: KPI cards, tabs, item cards, stock actions -->
     <string name="inventory_subtitle">Track, manage and optimise your stock in real-time.</string>
     <string name="add_stock_receive">Add Stock</string>

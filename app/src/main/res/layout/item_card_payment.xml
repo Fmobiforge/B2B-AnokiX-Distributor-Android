@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One card-machine payment: amount + status, then when / description / card details. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_stat_card"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/paymentAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:textColor="@color/top_title"
+            android:textSize="@dimen/text_headline" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/paymentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_badge_success"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:textColor="@color/success"
+            android:textSize="@dimen/text_micro" />
+    </LinearLayout>
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/paymentDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_body" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/paymentMeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_caption" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/paymentError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_badge_danger"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:padding="8dp"
+        android:textColor="@color/danger"
+        android:textSize="@dimen/text_micro"
+        android:visibility="gone" />
+</LinearLayout>

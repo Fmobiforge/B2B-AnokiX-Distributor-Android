@@ -15,6 +15,8 @@ import com.anokix.distributorapp.network.dto.FinancesData;
 import com.anokix.distributorapp.network.dto.DeliveriesData;
 import com.anokix.distributorapp.network.dto.DeliveryDetailData;
 import com.anokix.distributorapp.network.dto.NotificationsData;
+import com.anokix.distributorapp.network.dto.PosPaymentsData;
+import com.anokix.distributorapp.network.dto.PosTerminalsData;
 import com.anokix.distributorapp.network.dto.PreferencesData;
 import com.anokix.distributorapp.network.dto.ProfileUpdateData;
 import com.anokix.distributorapp.network.dto.ReturnDetailData;
@@ -511,6 +513,56 @@ public final class ApiClient {
     }
 
     // ---- Notifications (common) ------------------------------------------
+
+    // ---- Card machine (PayCloud POS) -------------------------------------
+
+    /** Card machines linked to this account (api/common/pos/terminals). */
+    public void getPosTerminals(ApiCallback<PosTerminalsData> cb) {
+        getAuthed("api/common/pos/terminals", null, PosTerminalsData.class, cb);
+    }
+
+    /** Payments pushed to a card machine, newest first (api/common/pos/payments). */
+    public void getPosPayments(int page, int perPage, ApiCallback<PosPaymentsData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("page", String.valueOf(page));
+        q.put("per_page", String.valueOf(perPage));
+        getAuthed("api/common/pos/payments", q, PosPaymentsData.class, cb);
+    }
+
+    /** Links a card machine by the serial printed on the device. */
+    public void addPosTerminal(String terminalSn, String label, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("terminal_sn", terminalSn == null ? "" : terminalSn);
+        if (label != null && !label.isEmpty()) {
+            form.put("label", label);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/common/pos/terminals", form, session.getToken()), cb));
+    }
+
+    /** Unlinks a card machine (api/common/pos/terminals/remove). */
+    public void removePosTerminal(long terminalId, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("terminal_id", String.valueOf(terminalId));
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/common/pos/terminals/remove", form, session.getToken()), cb));
+    }
+
+    /**
+     * Pushes an amount to a card machine so the customer can tap / insert / swipe there.
+     * Card details never reach the app.
+     */
+    public void sendPosPayment(String amount, long terminalId, String description,
+                               ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("amount", amount == null ? "" : amount);
+        form.put("terminal_id", String.valueOf(terminalId));
+        if (description != null && !description.isEmpty()) {
+            form.put("description", description);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/common/pos/payments", form, session.getToken()), cb));
+    }
 
     /** Live unread-notification count (api/common/notifications/unread-count). */
     public void getUnreadCount(ApiCallback<UnreadCountData> cb) {

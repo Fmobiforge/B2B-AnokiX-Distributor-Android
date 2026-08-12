@@ -189,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
             case "wallet":
                 startActivity(new Intent(this, WalletActivity.class));
                 break;
+            case "card_machine":
+                startActivity(new Intent(this, CardMachineActivity.class));
+                break;
             case "reports":
                 startActivity(new Intent(this, ReportsActivity.class));
                 break;
