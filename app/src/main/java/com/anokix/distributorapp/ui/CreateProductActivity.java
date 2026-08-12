@@ -391,6 +391,11 @@ public class CreateProductActivity extends AppCompatActivity {
 
     private void pickDate(boolean isStart) {
         Calendar c = Calendar.getInstance();
+        // Open on the date the product already carries, not on today.
+        int[] parts = splitApiDate(isStart ? promoStartDate : promoEndDate);
+        if (parts != null) {
+            c.set(parts[0], parts[1] - 1, parts[2]);
+        }
         new android.app.DatePickerDialog(this, (view, year, month, day) -> {
             String api = String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, day);
             String shown = String.format(Locale.US, "%02d/%02d/%04d", day, month + 1, year);
@@ -402,6 +407,53 @@ public class CreateProductActivity extends AppCompatActivity {
                 setDropdownLabel(R.id.promoEndLabel, shown);
             }
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    /**
+     * Shows a promotion date returned by the API (yyyy-MM-dd) on the matching field.
+     * The form keeps the API format for submission and displays dd/MM/yyyy, so editing
+     * a product no longer leaves the promotion dates looking empty.
+     */
+    private void applyPromoDate(String apiDate, boolean isStart) {
+        int[] parts = splitApiDate(apiDate);
+        if (parts == null) {
+            return;
+        }
+        String api = String.format(Locale.US, "%04d-%02d-%02d", parts[0], parts[1], parts[2]);
+        String shown = String.format(Locale.US, "%02d/%02d/%04d", parts[2], parts[1], parts[0]);
+        if (isStart) {
+            promoStartDate = api;
+            setDropdownLabel(R.id.promoStartLabel, shown);
+        } else {
+            promoEndDate = api;
+            setDropdownLabel(R.id.promoEndLabel, shown);
+        }
+    }
+
+    /**
+     * Splits an API date into {year, month, day}, tolerating a trailing time component.
+     * Returns null for empty values and the "0000-00-00" placeholder the backend uses
+     * when no promotion window is set.
+     */
+    private int[] splitApiDate(String apiDate) {
+        if (apiDate == null || apiDate.trim().isEmpty()) {
+            return null;
+        }
+        String[] parts = apiDate.trim().split("[ T]")[0].split("-");
+        if (parts.length != 3) {
+            return null;
+        }
+        try {
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int day = Integer.parseInt(parts[2]);
+            if (year <= 0 || month <= 0 || day <= 0) {
+                return null;
+            }
+            return new int[]{year, month, day};
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private void setDropdownLabel(int id, String value) {
@@ -626,8 +678,8 @@ public class CreateProductActivity extends AppCompatActivity {
         String dimType = p.dim_type != null ? p.dim_type : p.measurements_type;
         applyMeasurement("pound_inch".equals(dimType) ? 1 : 0);
 
-        if (p.promotion_start_date != null) promoStartDate = p.promotion_start_date;
-        if (p.promotion_end_date != null) promoEndDate = p.promotion_end_date;
+        applyPromoDate(p.promotion_start_date, true);
+        applyPromoDate(p.promotion_end_date, false);
 
         ((SwitchCompat) findViewById(R.id.switchAvailable))
                 .setChecked(!"0".equals(p.available_for_ordering));

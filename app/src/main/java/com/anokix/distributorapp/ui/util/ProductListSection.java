@@ -375,8 +375,11 @@ public class ProductListSection {
 
     private void showStatusPicker() {
         List<String> labels = new ArrayList<>();
+        // The API documents Active / Pending / InActive; anything else a product carries
+        // is appended below so the filter always covers the data on screen.
         labels.add(context.getString(R.string.all_status));
         labels.add(context.getString(R.string.active));
+        labels.add(context.getString(R.string.pending));
         labels.add(context.getString(R.string.inactive));
         for (ProductItem item : allItems) {
             if (!item.status.isEmpty() && !labels.contains(item.status)) {
