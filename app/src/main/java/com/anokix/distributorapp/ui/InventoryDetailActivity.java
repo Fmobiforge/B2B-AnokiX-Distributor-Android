@@ -55,7 +55,11 @@ public class InventoryDetailActivity extends BaseSecondaryActivity {
     private InventoryPageData.Row row;
     private List<InventoryPageData.Warehouse> warehouses = new ArrayList<>();
     private boolean showingHistory;
+    /** A history fetch has been started (so we don't ask twice). */
     private boolean historyLoaded;
+    /** A history response has been rendered, and whether it came back empty. */
+    private boolean historyRendered;
+    private boolean historyIsEmpty;
 
     private View detailsPane, historyPane, historyEmpty;
     private TextView tabDetails, tabHistory;
@@ -183,7 +187,10 @@ public class InventoryDetailActivity extends BaseSecondaryActivity {
                     warehouses = data.warehouses;
                 }
                 render();
+                // The ledger just changed, so drop what we rendered before re-asking.
                 historyLoaded = false;
+                historyRendered = false;
+                updateHistoryEmptyState();
                 if (showingHistory) {
                     loadHistory();
                 }
@@ -301,7 +308,7 @@ public class InventoryDetailActivity extends BaseSecondaryActivity {
         showingHistory = history;
         detailsPane.setVisibility(history ? View.GONE : View.VISIBLE);
         historyPane.setVisibility(history ? View.VISIBLE : View.GONE);
-        historyEmpty.setVisibility(View.GONE);
+        updateHistoryEmptyState();
 
         int primary = ContextCompat.getColor(this, R.color.purple_primary);
         int secondary = ContextCompat.getColor(this, R.color.text_secondary);
@@ -335,14 +342,24 @@ public class InventoryDetailActivity extends BaseSecondaryActivity {
     private void renderHistory(List<StockMovement> movements) {
         LinearLayout container = findViewById(R.id.historyPane);
         container.removeAllViews();
-        if (movements == null || movements.isEmpty()) {
-            historyEmpty.setVisibility(showingHistory ? View.VISIBLE : View.GONE);
-            return;
+        historyRendered = true;
+        historyIsEmpty = movements == null || movements.isEmpty();
+        if (!historyIsEmpty) {
+            for (StockMovement movement : movements) {
+                container.addView(historyCard(movement));
+            }
         }
-        historyEmpty.setVisibility(View.GONE);
-        for (StockMovement movement : movements) {
-            container.addView(historyCard(movement));
-        }
+        updateHistoryEmptyState();
+    }
+
+    /**
+     * The "nothing has moved yet" panel belongs to the History tab only, and only once a
+     * response has actually come back empty — so it survives switching tabs and never
+     * flashes while the ledger is still loading.
+     */
+    private void updateHistoryEmptyState() {
+        historyEmpty.setVisibility(showingHistory && historyRendered && historyIsEmpty
+                ? View.VISIBLE : View.GONE);
     }
 
     private View historyCard(StockMovement movement) {

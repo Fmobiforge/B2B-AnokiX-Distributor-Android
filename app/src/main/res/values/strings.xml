@@ -187,7 +187,7 @@
     <string name="inventory_details">Details</string>
     <string name="inventory_history">History</string>
     <string name="inventory_where_units_sit">Where those units sit</string>
-    <string name="inventory_no_history">No stock movements recorded yet.</string>
+    <string name="inventory_no_history">Nothing has moved for this product yet.</string>
     <string name="label_sku">SKU</string>
     <string name="label_barcode">Barcode</string>
     <string name="label_category">Category</string>
