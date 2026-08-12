@@ -2,12 +2,9 @@ package com.anokix.distributorapp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,16 +19,19 @@ import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.data.ApiMapper;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
+import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.ProductsData;
 import com.anokix.distributorapp.ui.AddProductOptionsActivity;
 import com.anokix.distributorapp.ui.CreateProductActivity;
 import com.anokix.distributorapp.ui.NotificationBadge;
 import com.anokix.distributorapp.ui.NotificationsActivity;
 import com.anokix.distributorapp.ui.adapter.ProductAdapter;
+import com.anokix.distributorapp.ui.util.ProductListSection;
 
 public class ProductsFragment extends Fragment {
 
     private ProductAdapter adapter;
+    private ProductListSection section;
 
     private final ActivityResultLauncher<Intent> wizardLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -75,16 +75,11 @@ public class ProductsFragment extends Fragment {
         });
         list.setAdapter(adapter);
 
-        EditText searchInput = view.findViewById(R.id.searchInput);
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filter(s.toString());
-            }
-            @Override public void afterTextChanged(Editable s) {}
-        });
+        section = new ProductListSection(requireContext(), adapter::setItems);
+        section.bind(view);
 
         loadProducts();
+        loadFilterOptions();
     }
 
     private void loadProducts() {
@@ -92,7 +87,8 @@ public class ProductsFragment extends Fragment {
             @Override
             public void onSuccess(ProductsData data) {
                 if (isAdded()) {
-                    adapter.setItems(ApiMapper.toProductItems(data));
+                    section.setProducts(ApiMapper.toProductItems(data),
+                            data == null ? null : data.summary);
                 }
             }
 
@@ -101,6 +97,23 @@ public class ProductsFragment extends Fragment {
                 if (isAdded()) {
                     Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    /** Categories + brands for the filter pickers; failures leave the product-derived lists. */
+    private void loadFilterOptions() {
+        ApiClient.get(requireContext()).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                if (isAdded()) {
+                    section.setBaseInfo(data);
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                // Non-fatal: the pickers fall back to values found on the loaded products.
             }
         });
     }

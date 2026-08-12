@@ -84,6 +84,96 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <!-- Products list: KPI cards, stock tabs and filter pills (include_products_chrome) -->
+    <style name="ProductKpiCard">
+        <item name="android:layout_width">132dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_stat_card</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="ProductKpiLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_label</item>
+    </style>
+
+    <style name="ProductKpiValue">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:text">0</item>
+        <item name="android:textSize">@dimen/text_stat_value</item>
+    </style>
+
+    <style name="ProductKpiSub">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_tertiary</item>
+        <item name="android:textSize">@dimen/text_micro</item>
+    </style>
+
+    <style name="ProductTab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">18dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ProductTabLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_body_sm</item>
+    </style>
+
+    <style name="ProductTabIndicator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@drawable/bg_tab_indicator_purple</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="ProductFilterPill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/filter_pill_height</item>
+        <item name="android:background">@drawable/bg_filter_pill</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">10dp</item>
+    </style>
+
+    <style name="ProductFilterPillLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxWidth">150dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_body_sm</item>
+    </style>
+
+    <style name="ProductFilterPillChevron">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:src">@drawable/ic_chevron_down</item>
+        <item name="android:tint">@color/text_secondary</item>
+    </style>
+
     <!-- Create Product: tap-to-select dropdown field (opens a dialog) -->
     <style name="ProductDropdown">
         <item name="android:layout_width">match_parent</item>

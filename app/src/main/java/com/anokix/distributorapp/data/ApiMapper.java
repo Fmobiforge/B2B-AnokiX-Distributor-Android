@@ -105,14 +105,25 @@ public final class ApiMapper {
             return out;
         }
         for (ProductsData.Product p : data.products) {
+            int stock = parseInt(p.stockValue());
+            int reorder = parseInt(p.reorder_level);
             ProductItem item = new ProductItem(
                     safe(p.id),
                     safe(p.name),
                     safe(p.sku),
                     safe(p.category_title),
                     formatPrice(p.selling_price),
-                    stockStatus(p.stockValue()));
+                    stockStatus(stock, reorder));
             item.imageUrl = p.imageUrl();
+            item.brand = safe(p.brand_name);
+            item.brandId = safe(p.brand_id);
+            item.categoryId = safe(p.category_id);
+            item.parentCategoryId = safe(p.parent_category_id);
+            item.parentCategory = safe(p.parent_category_title);
+            item.status = isEmpty(p.status) ? "Active" : p.status;
+            item.barcode = safe(p.barcode);
+            item.stockQty = stock;
+            item.reorderLevel = reorder;
             out.add(item);
         }
         return out;
@@ -227,19 +238,30 @@ public final class ApiMapper {
     }
 
     private static String stockStatus(String stockValue) {
-        int stock;
-        try {
-            stock = (int) Double.parseDouble(stockValue);
-        } catch (Exception e) {
-            stock = 0;
-        }
+        return stockStatus(parseInt(stockValue), 0);
+    }
+
+    /**
+     * Stock label for a product row. The distributor's own reorder level decides what
+     * counts as low stock; without one, fall back to a flat threshold of 10 units.
+     */
+    private static String stockStatus(int stock, int reorderLevel) {
         if (stock <= 0) {
             return "Out of Stock";
         }
-        if (stock <= 10) {
+        int threshold = reorderLevel > 0 ? reorderLevel : 10;
+        if (stock <= threshold) {
             return "Low Stock";
         }
         return "In Stock";
+    }
+
+    private static int parseInt(String value) {
+        try {
+            return (int) Double.parseDouble(value);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     private static String initials(String name) {

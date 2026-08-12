@@ -1,129 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/include_secondary_header" />
+
+    <!-- KPI cards scroll away with the list; tabs, search and filters stay pinned. -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <include layout="@layout/include_secondary_header" />
-
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/surface"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="12dp">
+            android:stateListAnimator="@null"
+            app:elevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/surface"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <include layout="@layout/include_products_kpis" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/surface"
+                android:orientation="vertical">
+
+                <include layout="@layout/include_products_filters" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/border" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/productsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                    android:paddingTop="10dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption" />
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal"
+                android:paddingTop="@dimen/spacing_sm"
+                android:paddingBottom="80dp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:paddingHorizontal="32dp"
+                android:text="@string/no_products_yet"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/addProductFab"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_login_button_primary"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_add"
+                app:tint="#FFFFFF" />
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/products_title"
-                android:textAppearance="@style/TextAppearance.AnokiX.Headline" />
+                android:layout_marginStart="8dp"
+                android:text="@string/add_product"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/surface"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="12dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="42dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_search_bar"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_search"
-                    app:tint="@color/text_secondary" />
-
-                <com.anokix.distributorapp.ui.views.RobotoEditText
-                    android:id="@+id/searchInput"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:hint="@string/search_products"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingVertical="0dp"
-                    android:singleLine="true"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_secondary"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <ImageButton
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:background="@drawable/bg_search_bar"
-                android:contentDescription="@string/filters"
-                android:src="@drawable/ic_filter"
-                app:tint="@color/text_secondary" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/border" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/productsList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/background"
-            android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/screen_padding_horizontal"
-            android:paddingTop="@dimen/spacing_md"
-            android:paddingBottom="80dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/addProductFab"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_login_button_primary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_add"
-            app:tint="#FFFFFF" />
-
-        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/add_product"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -1,9 +1,6 @@
 package com.anokix.distributorapp.ui;
 
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -15,12 +12,15 @@ import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.data.ApiMapper;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
+import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.ProductsData;
 import com.anokix.distributorapp.ui.adapter.ProductAdapter;
+import com.anokix.distributorapp.ui.util.ProductListSection;
 
 public class ProductsActivity extends BaseSecondaryActivity {
 
     private ProductAdapter adapter;
+    private ProductListSection section;
 
     // Re-load the list whenever the create/edit wizard reports a change.
     private final ActivityResultLauncher<Intent> wizardLauncher =
@@ -41,6 +41,11 @@ public class ProductsActivity extends BaseSecondaryActivity {
     }
 
     @Override
+    protected String getScreenSubtitle() {
+        return getString(R.string.products_subtitle);
+    }
+
+    @Override
     protected void bindViews() {
         RecyclerView list = findViewById(R.id.productsList);
         list.setLayoutManager(new LinearLayoutManager(this));
@@ -52,17 +57,13 @@ public class ProductsActivity extends BaseSecondaryActivity {
         });
         list.setAdapter(adapter);
 
-        EditText searchInput = findViewById(R.id.searchInput);
-        searchInput.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.filter(s.toString());
-            }
-            @Override public void afterTextChanged(Editable s) {}
-        });
+        section = new ProductListSection(this, adapter::setItems);
+        section.bind(findViewById(android.R.id.content));
 
         findViewById(R.id.addProductFab).setOnClickListener(v ->
                 wizardLauncher.launch(new Intent(this, AddProductOptionsActivity.class)));
+
+        loadFilterOptions();
     }
 
     @Override
@@ -70,12 +71,28 @@ public class ProductsActivity extends BaseSecondaryActivity {
         ApiClient.get(this).getProducts(new ApiCallback<ProductsData>() {
             @Override
             public void onSuccess(ProductsData data) {
-                adapter.setItems(ApiMapper.toProductItems(data));
+                section.setProducts(ApiMapper.toProductItems(data),
+                        data == null ? null : data.summary);
             }
 
             @Override
             public void onError(String message) {
                 Toast.makeText(ProductsActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /** Categories + brands for the filter pickers; failures leave the product-derived lists. */
+    private void loadFilterOptions() {
+        ApiClient.get(this).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                section.setBaseInfo(data);
+            }
+
+            @Override
+            public void onError(String message) {
+                // Non-fatal: the pickers fall back to values found on the loaded products.
             }
         });
     }

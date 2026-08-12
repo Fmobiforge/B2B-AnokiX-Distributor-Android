@@ -150,7 +150,26 @@
     <string name="search_orders">Search orders&#8230;</string>
     <string name="search_orders_detail">Search by trader name, order ID&#8230;</string>
     <string name="search_inventory">Search inventory&#8230;</string>
-    <string name="search_products">Search products&#8230;</string>
+    <string name="search_products">Search name, SKU or barcode&#8230;</string>
+
+    <!-- Products list: KPI cards, tabs, filters -->
+    <string name="kpi_total_products">Total Products</string>
+    <string name="kpi_active_products">Active Products</string>
+    <string name="kpi_out_of_stock">Out of Stock</string>
+    <string name="kpi_low_stock">Low Stock</string>
+    <string name="kpi_percent_of_total">%1$d%% of total</string>
+    <string name="kpi_change_vs">%1$s %2$s</string>
+    <string name="tab_all_products">All Products</string>
+    <string name="tab_label_count">%1$s (%2$d)</string>
+    <string name="all_categories">All Categories</string>
+    <string name="all_brands">All Brands</string>
+    <string name="category_filter_title">Category</string>
+    <string name="brand_filter_title">Brand</string>
+    <string name="status_filter_title">Status</string>
+    <string name="child_category_prefix">— %1$s</string>
+    <string name="no_products_yet">No products yet. Tap Add Product to create your first one.</string>
+    <string name="no_products_match">No products match your search or filters.</string>
+    <string name="products_shown_count">%1$d of %2$d products</string>
     <string name="revenue_overview">Revenue Overview</string>
     <string name="this_week">This Week</string>
 

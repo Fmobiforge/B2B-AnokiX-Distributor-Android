@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Products KPI cards (total / active / out of stock / low stock). Sits in the
+  scroll-away part of the Products screen app bar; values bound by ProductListSection.
+-->
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    android:clipToPadding="false"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="12dp"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            style="@style/ProductKpiCard"
+            android:layout_marginEnd="8dp">
+
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                style="@style/ProductKpiLabel"
+                android:text="@string/kpi_total_products" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/kpiTotalValue"
+                style="@style/ProductKpiValue"
+                android:textColor="@color/purple_primary" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/kpiTotalSub"
+                style="@style/ProductKpiSub" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ProductKpiCard"
+            android:layout_marginEnd="8dp">
+
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                style="@style/ProductKpiLabel"
+                android:text="@string/kpi_active_products" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/kpiActiveValue"
+                style="@style/ProductKpiValue"
+                android:textColor="@color/success" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/kpiActiveSub"
+                style="@style/ProductKpiSub" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/ProductKpiCard"
+            android:layout_marginEnd="8dp">
+
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                style="@style/ProductKpiLabel"
+                android:text="@string/kpi_out_of_stock" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/kpiOutValue"
+                style="@style/ProductKpiValue"
+                android:textColor="@color/danger" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/kpiOutSub"
+                style="@style/ProductKpiSub" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ProductKpiCard">
+
+            <com.anokix.distributorapp.ui.views.RobotoLightTextView
+                style="@style/ProductKpiLabel"
+                android:text="@string/kpi_low_stock" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/kpiLowValue"
+                style="@style/ProductKpiValue"
+                android:textColor="@color/warning" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/kpiLowSub"
+                style="@style/ProductKpiSub" />
+        </LinearLayout>
+    </LinearLayout>
+</HorizontalScrollView>

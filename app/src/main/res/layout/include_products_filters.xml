@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pinned part of the Products screen chrome: stock tabs, keyword search and the
+  category / brand / status filter pills. Bound by ProductListSection.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <!-- ===== Stock tabs ===== -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout style="@style/ProductTab">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/tabAllLabel"
+                    style="@style/ProductTabLabel"
+                    android:text="@string/tab_all_products" />
+
+                <View
+                    android:id="@+id/tabAllIndicator"
+                    style="@style/ProductTabIndicator" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ProductTab">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/tabActiveLabel"
+                    style="@style/ProductTabLabel"
+                    android:text="@string/active" />
+
+                <View
+                    android:id="@+id/tabActiveIndicator"
+                    style="@style/ProductTabIndicator" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ProductTab">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/tabLowLabel"
+                    style="@style/ProductTabLabel"
+                    android:text="@string/low_stock" />
+
+                <View
+                    android:id="@+id/tabLowIndicator"
+                    style="@style/ProductTabIndicator" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ProductTab">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/tabOutLabel"
+                    style="@style/ProductTabLabel"
+                    android:text="@string/out_of_stock" />
+
+                <View
+                    android:id="@+id/tabOutIndicator"
+                    style="@style/ProductTabIndicator" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/border_light" />
+
+    <!-- ===== Keyword search ===== -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_bar_height"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_search"
+            app:tint="@color/text_secondary" />
+
+        <com.anokix.distributorapp.ui.views.RobotoEditText
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/search_products"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingVertical="0dp"
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:textSize="@dimen/text_body_sm" />
+    </LinearLayout>
+
+    <!-- ===== Category / brand / status filters ===== -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="10dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/categoryFilter"
+                style="@style/ProductFilterPill"
+                android:layout_marginEnd="8dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/categoryFilterLabel"
+                    style="@style/ProductFilterPillLabel"
+                    android:text="@string/all_categories" />
+
+                <ImageView style="@style/ProductFilterPillChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/brandFilter"
+                style="@style/ProductFilterPill"
+                android:layout_marginEnd="8dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/brandFilterLabel"
+                    style="@style/ProductFilterPillLabel"
+                    android:text="@string/all_brands" />
+
+                <ImageView style="@style/ProductFilterPillChevron" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/statusFilter"
+                style="@style/ProductFilterPill">
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/statusFilterLabel"
+                    style="@style/ProductFilterPillLabel"
+                    android:text="@string/all_status" />
+
+                <ImageView style="@style/ProductFilterPillChevron" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>
