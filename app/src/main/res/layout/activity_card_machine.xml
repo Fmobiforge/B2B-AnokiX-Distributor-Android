@@ -173,6 +173,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/bg_login_button_primary"
                         android:drawablePadding="8dp"
+                        android:paddingHorizontal="16dp"
                         android:gravity="center"
                         android:text="@string/pos_send_to_machine"
                         android:textColor="#FFFFFF"
