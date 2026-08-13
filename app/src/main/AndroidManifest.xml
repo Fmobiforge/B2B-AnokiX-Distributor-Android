@@ -100,6 +100,7 @@
         <activity android:name=".ui.CreateProductActivity" android:exported="false" />
         <activity android:name=".ui.InventoryDetailActivity" android:exported="false" />
         <activity android:name=".ui.CardMachineActivity" android:exported="false" />
+        <activity android:name=".ui.WarehouseStaffActivity" android:exported="false" />
         <activity android:name=".ui.OrderDetailActivity" android:exported="false" />
         <activity android:name=".ui.PromotionsActivity" android:exported="false" />
         <activity android:name=".ui.CreatePromotionActivity" android:exported="false" />

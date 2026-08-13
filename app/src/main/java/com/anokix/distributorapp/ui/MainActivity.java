@@ -192,6 +192,9 @@ public class MainActivity extends AppCompatActivity {
             case "card_machine":
                 startActivity(new Intent(this, CardMachineActivity.class));
                 break;
+            case "warehouse_staff":
+                startActivity(new Intent(this, WarehouseStaffActivity.class));
+                break;
             case "reports":
                 startActivity(new Intent(this, ReportsActivity.class));
                 break;

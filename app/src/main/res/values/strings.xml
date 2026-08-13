@@ -150,6 +150,42 @@
     <string name="search_orders_detail">Search by trader name, order ID&#8230;</string>
     <string name="search_products">Search name, SKU or barcode&#8230;</string>
 
+    <!-- Warehouse Staff -->
+    <string name="warehouse_staff">Warehouse Staff</string>
+    <string name="warehouse_staff_subtitle">Who can pick and pack</string>
+    <string name="staff_can_do_title">What staff can do</string>
+    <string name="staff_can_do_body">Warehouse staff can pick and pack orders, update shipment status and handle stock. They cannot change products or pricing, manage the wallet, or see financial reports.</string>
+    <string name="staff_your_staff">Your warehouse staff</string>
+    <string name="staff_your_staff_sub">Each person signs in with their own email and password.</string>
+    <string name="staff_add">Add staff</string>
+    <string name="staff_add_title">Add a warehouse staff member</string>
+    <string name="staff_add_action">Add</string>
+    <string name="staff_empty">No staff yet. Tap Add staff to give someone access.</string>
+    <string name="staff_first_name">First name *</string>
+    <string name="staff_last_name">Last name *</string>
+    <string name="staff_email">Email *</string>
+    <string name="staff_email_help">They sign in with this.</string>
+    <string name="staff_password_label">Password *</string>
+    <string name="staff_password_hint">At least 8 characters</string>
+    <string name="staff_password_help">Tell them the new password — they are not emailed.</string>
+    <string name="staff_job_title">Job title (optional)</string>
+    <string name="staff_job_title_hint">e.g. Picker</string>
+    <string name="staff_mobile">Mobile number (optional)</string>
+    <string name="staff_password">Password</string>
+    <string name="staff_set_password">Set password</string>
+    <string name="staff_password_title">New password for %1$s</string>
+    <string name="staff_can_sign_in">Can sign in</string>
+    <string name="staff_disabled">Disabled</string>
+    <string name="staff_disable">Disable</string>
+    <string name="staff_enable">Enable</string>
+    <string name="staff_disable_confirm_title">Stop %1$s signing in?</string>
+    <string name="staff_disable_confirm_msg">They keep their account, but cannot sign in until you enable them again.</string>
+    <string name="staff_added_on">Added %1$s</string>
+    <string name="staff_err_first_name">Enter a first name.</string>
+    <string name="staff_err_last_name">Enter a last name.</string>
+    <string name="staff_err_email">Enter a valid email address.</string>
+    <string name="staff_err_password">Use at least 8 characters.</string>
+
     <!-- Card Machine (PayCloud POS) -->
     <string name="card_machine">Card Machine</string>
     <string name="card_machine_subtitle">Take card payments on your PayCloud terminal</string>

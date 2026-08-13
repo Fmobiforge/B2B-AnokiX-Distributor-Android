@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Add a warehouse staff member (New-Design/Warehouse Staff/2.Add New Staff.png). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_top"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_pill_neutral" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="12dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/staff_add_title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_headline" />
+
+        <ImageView
+            android:id="@+id/sheetClose"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cancel_btn"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/border" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_first_name" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/firstNameInput"
+                style="@style/StoreFieldInput"
+                android:layout_height="48dp"
+                android:inputType="textCapWords"
+                android:maxLines="1" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_last_name" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/lastNameInput"
+                style="@style/StoreFieldInput"
+                android:layout_height="48dp"
+                android:inputType="textCapWords"
+                android:maxLines="1" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_email" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/emailInput"
+                style="@style/StoreFieldInput"
+                android:layout_height="48dp"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/staff_email_help"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_micro" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_password_label" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_login_input"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="4dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/passwordInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/staff_password_hint"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="@dimen/text_body" />
+
+                <ImageButton
+                    android:id="@+id/togglePassword"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/toggle_password_visibility"
+                    android:padding="9dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_visibility"
+                    app:tint="@color/text_secondary" />
+            </LinearLayout>
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_job_title" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/jobTitleInput"
+                style="@style/StoreFieldInput"
+                android:layout_height="48dp"
+                android:hint="@string/staff_job_title_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                style="@style/StoreFieldLabel"
+                android:text="@string/staff_mobile" />
+
+            <com.anokix.distributorapp.ui.views.RobotoEditText
+                android:id="@+id/phoneInput"
+                style="@style/StoreFieldInput"
+                android:layout_height="48dp"
+                android:inputType="phone"
+                android:maxLines="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/sheetCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_login_button_outlined"
+                    android:gravity="center"
+                    android:text="@string/cancel_btn"
+                    android:textColor="@color/purple_primary"
+                    android:textSize="15sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/sheetSubmit"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_login_button_primary"
+                    android:gravity="center"
+                    android:text="@string/staff_add_action"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

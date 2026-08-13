@@ -24,6 +24,7 @@ import com.anokix.distributorapp.network.dto.ReturnsData;
 import com.anokix.distributorapp.network.dto.UnreadCountData;
 import com.anokix.distributorapp.network.dto.InventoryPageData;
 import com.anokix.distributorapp.network.dto.InventorySummaryData;
+import com.anokix.distributorapp.network.dto.StaffData;
 import com.anokix.distributorapp.network.dto.StockHistoryData;
 import com.anokix.distributorapp.network.dto.LoginData;
 import com.anokix.distributorapp.network.dto.OrderDetailData;
@@ -513,6 +514,49 @@ public final class ApiClient {
     }
 
     // ---- Notifications (common) ------------------------------------------
+
+    // ---- Warehouse staff -------------------------------------------------
+
+    /** Warehouse staff who can sign in to pick, pack and handle stock. */
+    public void getStaff(ApiCallback<StaffData> cb) {
+        getAuthed("api/distributor/staff", null, StaffData.class, cb);
+    }
+
+    /** Creates a staff login (api/distributor/staff). */
+    public void addStaff(String firstName, String lastName, String email, String password,
+                         String phone, String jobTitle, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("first_name", firstName == null ? "" : firstName);
+        form.put("last_name", lastName == null ? "" : lastName);
+        form.put("email", email == null ? "" : email);
+        form.put("password", password == null ? "" : password);
+        if (phone != null && !phone.isEmpty()) {
+            form.put("phone_number", phone);
+        }
+        if (jobTitle != null && !jobTitle.isEmpty()) {
+            form.put("job_title", jobTitle);
+        }
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/staff", form, session.getToken()), cb));
+    }
+
+    /** Sets a new sign-in password for a staff member (they are not emailed). */
+    public void setStaffPassword(long staffId, String password, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("staff_id", String.valueOf(staffId));
+        form.put("password", password == null ? "" : password);
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/staff/password", form, session.getToken()), cb));
+    }
+
+    /** Turns a staff member's sign-in on ("active") or off ("disabled"). */
+    public void updateStaffStatus(long staffId, String status, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("staff_id", String.valueOf(staffId));
+        form.put("status", status == null ? "" : status);
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/staff/update", form, session.getToken()), cb));
+    }
 
     // ---- Card machine (PayCloud POS) -------------------------------------
 
