@@ -32,6 +32,22 @@
             android:text="@string/distributor_portal"
             android:textColor="@color/drawer_badge_text"
             android:textSize="@dimen/text_label" />
+
+        <!--
+          The signed-in distributor's registered legal name. Login does not return it —
+          it comes from base-info and is cached in the session — so the row stays hidden
+          until we know it rather than leaving an empty line under the badge.
+        -->
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/drawerCompanyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/drawer_text"
+            android:textSize="15sp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <!-- Menu items -->

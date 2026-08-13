@@ -33,17 +33,25 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <!--
+              Identity block, matching the web header's "ApplePay / Tam Ho": the
+              distributor's registered legal name on top, the signed-in user under it.
+            -->
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/welcomeText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome back, Cong"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.AnokiX.Title" />
 
             <com.anokix.distributorapp.ui.views.RobotoLightTextView
-                android:layout_width="wrap_content"
+                android:id="@+id/dashboardSubtitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/dashboard_subtitle"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />

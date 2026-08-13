@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -129,6 +131,24 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setAdapter(drawerAdapter);
 
         findViewById(R.id.drawerLogout).setOnClickListener(v -> confirmLogout());
+        bindDrawerHeader();
+    }
+
+    /**
+     * Names the distributor whose account is signed in, under the portal badge.
+     *
+     * <p>The legal name is cached in the session by the dashboard's base-info call, which
+     * may land after the drawer is built — so this also runs from {@link #openDrawer()},
+     * the moment the header actually becomes visible.
+     */
+    private void bindDrawerHeader() {
+        TextView companyName = findViewById(R.id.drawerCompanyName);
+        if (companyName == null) {
+            return;
+        }
+        String name = SessionManager.get(this).getDistributorName();
+        companyName.setText(name);
+        companyName.setVisibility(name.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void confirmLogout() {
@@ -215,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openDrawer() {
         if (drawerLayout != null) {
+            bindDrawerHeader();   // the legal name may have arrived since the drawer was built
             drawerLayout.openDrawer(findViewById(R.id.drawerContent));
         }
     }

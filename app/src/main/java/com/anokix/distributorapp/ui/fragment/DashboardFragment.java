@@ -23,6 +23,7 @@ import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.data.MockData;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
+import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.DashboardData;
 import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.session.SessionManager;
@@ -80,6 +81,7 @@ public class DashboardFragment extends Fragment {
         view.findViewById(R.id.walletCard).setOnClickListener(v -> showWalletSheet());
 
         bindWelcome(view);
+        loadDistributorName(view);
         bindProfileBadge(view);
         buildKpiGrid(view);
         buildSummaryCards(view, MockData.fallbackSummaryCards());
@@ -95,14 +97,61 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    /**
+     * Header identity block, matching the web dashboard's "ApplePay / Tam Ho": the
+     * distributor's registered legal name on top and the signed-in user under it.
+     *
+     * <p>Login only returns {@code portal_info.company_name}; the legal name comes from
+     * {@code base-info} and is cached in the session, so on later launches it paints
+     * before that call lands. Until any company name is known the greeting takes the top
+     * line, so the header is never blank.
+     */
     private void bindWelcome(View view) {
-        TextView welcome = view.findViewById(R.id.welcomeText);
-        if (welcome != null) {
-            String firstName = SessionManager.get(requireContext()).getFirstName();
-            welcome.setText(firstName.isEmpty()
-                    ? getString(R.string.welcome_back_generic)
-                    : getString(R.string.welcome_back_named, firstName));
+        TextView title = view.findViewById(R.id.welcomeText);
+        TextView subtitle = view.findViewById(R.id.dashboardSubtitle);
+        if (title == null) {
+            return;
         }
+
+        SessionManager session = SessionManager.get(requireContext());
+        String firstName = session.getFirstName();
+        String greeting = firstName.isEmpty()
+                ? getString(R.string.welcome_back_generic)
+                : getString(R.string.welcome_back_named, firstName);
+        String distributor = session.getDistributorName();
+
+        title.setText(distributor.isEmpty() ? greeting : distributor);
+        if (subtitle != null) {
+            subtitle.setText(distributor.isEmpty() ? getString(R.string.dashboard_subtitle) : greeting);
+        }
+    }
+
+    /**
+     * Fills in the distributor's registered legal name, which login does not return.
+     * Cached in the session so the header paints from it immediately next time.
+     */
+    private void loadDistributorName(View view) {
+        ApiClient.get(requireContext()).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                if (data == null || data.portal_info == null || !isAdded()) {
+                    return;
+                }
+                String legalName = data.portal_info.company_legal_name;
+                if (legalName == null || legalName.trim().isEmpty()) {
+                    // Fall back to the trading name rather than leaving the header on the
+                    // login-time display name, which may be neither.
+                    legalName = data.portal_info.trading_name;
+                }
+                SessionManager.get(requireContext()).setCompanyLegalName(legalName);
+                bindWelcome(view);
+            }
+
+            @Override
+            public void onError(String message) {
+                // The header already shows the login-time name; nothing to report here.
+            }
+        });
     }
 
     /**

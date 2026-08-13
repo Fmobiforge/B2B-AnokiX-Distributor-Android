@@ -48,7 +48,9 @@ import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.CoordinateData;
 import com.anokix.distributorapp.network.dto.CreateTraderData;
 import com.anokix.distributorapp.network.dto.ReferenceData;
+import com.anokix.distributorapp.network.dto.TraderDetailData;
 import com.anokix.distributorapp.network.dto.TradersData;
+import com.bumptech.glide.Glide;
 import com.anokix.distributorapp.ui.views.FlowLayout;
 import com.anokix.distributorapp.ui.views.LogoCropView;
 import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
@@ -182,10 +184,23 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
 
     // Documents
     private static final class DocDef {
-        final String key, title, sub;
+        /** Multipart field name used when uploading. */
+        final String key;
+        /**
+         * Key this document comes back under in the trader payload. The API reads
+         * "business_registration_document" but writes "registration_document", so the
+         * two names have to be tracked separately.
+         */
+        final String responseKey;
+        final String title, sub;
         final boolean required;
-        DocDef(String key, String title, String sub, boolean required) {
-            this.key = key; this.title = title; this.sub = sub; this.required = required;
+
+        DocDef(String key, String responseKey, String title, String sub, boolean required) {
+            this.key = key;
+            this.responseKey = responseKey;
+            this.title = title;
+            this.sub = sub;
+            this.required = required;
         }
     }
     private final List<DocDef> docDefs = new ArrayList<>();
@@ -249,6 +264,7 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         showStep(0);
         loadReference();
         loadCurrentDistributor();
+        loadTraderDetail();
     }
 
     @Nullable
@@ -320,25 +336,133 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         applyDeliveryDays(TradersData.parseDeliveryDays(trader.preferred_delivery_days));
         applyPaymentMethod(trader.payment_method);
 
-        // Nothing is re-uploaded unless the user picks a new file, so show what is on file.
-        for (DocDef def : docDefs) {
-            String name = trader.documentName(def.key);
-            TextView sub = docSubtitleViews.get(def.key);
-            TextView button = docButtons.get(def.key);
-            if (!name.isEmpty() && sub != null) {
-                sub.setText(getString(R.string.doc_on_file, name));
-                sub.setTextColor(ContextCompat.getColor(this, R.color.success));
-                if (button != null) {
-                    button.setText(R.string.replace);
-                }
-            }
-        }
+        renderStoredDocuments(trader);
+        loadExistingLogo(trader.company_logo_url);
 
         // An approved trader already accepted the terms; keep them ticked so an edit
         // does not force the distributor to re-consent on the owner's behalf.
         for (int id : new int[]{R.id.cbAccurate, R.id.cbTos, R.id.cbKyc, R.id.cbComms}) {
             ((CheckBox) findViewById(id)).setChecked(true);
         }
+    }
+
+    /**
+     * Pulls the full record for the trader being edited. The list row has no owner
+     * fields, so step 1 stays blank until this lands and fills in the linked user
+     * account's name, email and mobile number.
+     */
+    private void loadTraderDetail() {
+        if (!isEditing() || isBlank(editing.id)) {
+            return;
+        }
+        ApiClient.get(this).getTraderById(editing.id, new ApiCallback<TraderDetailData>() {
+            @Override
+            public void onSuccess(TraderDetailData data) {
+                if (data == null) {
+                    return;
+                }
+                if (data.trader != null) {
+                    // Detail is the fuller copy, but it lands after the screen is already
+                    // interactive — only fill what the list row could not, so a fast
+                    // typist's input is never overwritten.
+                    if (isBlank(data.trader.id)) {
+                        data.trader.id = editing.id;
+                    }
+                    editing = data.trader;
+                    fillGapsFromTrader(editing);
+                }
+                prefillOwner(data.user);
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(CreateTraderActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * Re-applies the parts of the record the list row could not supply. Text fields are
+     * only filled when still empty; the rest (selections, schedule, documents, logo)
+     * is repainted because the row carried no version of it to overwrite.
+     */
+    private void fillGapsFromTrader(TradersData.Trader trader) {
+        setTextIfEmpty(R.id.etIdNumber, trader.id_number);
+        setTextIfEmpty(R.id.etPassportNumber, trader.passport_number);
+        setTextIfEmpty(R.id.etBusinessName, trader.business_name);
+        setTextIfEmpty(R.id.etTradingName, trader.trading_name);
+        setTextIfEmpty(R.id.etBusinessReg, trader.business_registration_number);
+        setTextIfEmpty(R.id.etBusinessEmail, trader.business_email);
+        setTextIfEmpty(R.id.etAddressSearch, trader.address);
+        if (text(R.id.etBusinessPhone).isEmpty()) {
+            setPhone(ccpBusiness, R.id.etBusinessPhone, trader.business_phone_number);
+        }
+
+        if (pickedLat == null || pickedLng == null) {
+            if (trader.latitude != null && trader.longitude != null) {
+                pickedLat = trader.latitude;
+                pickedLng = trader.longitude;
+                moveMapTo(new LatLng(pickedLat, pickedLng), true);
+            }
+        }
+
+        selectedTraderTypeSlug = trader.traderTypeValue();
+        normaliseTraderTypeSelection();
+        applyTraderTypeSelection();
+
+        selectedCategoryIds.clear();
+        selectedCategoryIds.addAll(trader.categoryIds());
+        renderCategoryChips();
+
+        applyDeliveryDays(TradersData.parseDeliveryDays(trader.preferred_delivery_days));
+        applyPaymentMethod(trader.payment_method);
+        renderStoredDocuments(trader);
+        loadExistingLogo(trader.company_logo_url);
+    }
+
+    /** Owner Information (step 1) comes from the linked user account, not the trader row. */
+    private void prefillOwner(TraderDetailData.User user) {
+        if (user == null) {
+            return;
+        }
+        setTextIfEmpty(R.id.etFirstName, user.first_name);
+        setTextIfEmpty(R.id.etLastName, user.last_name);
+        setTextIfEmpty(R.id.etOwnerEmail, user.email);
+        if (text(R.id.etOwnerMobile).isEmpty()) {
+            setPhone(ccpOwner, R.id.etOwnerMobile, user.phone_number);
+        }
+    }
+
+    /** Documents already uploaded are listed by name; only replacements are re-sent. */
+    private void renderStoredDocuments(TradersData.Trader trader) {
+        for (DocDef def : docDefs) {
+            // Skip anything the user has already replaced in this session.
+            if (docUris.containsKey(def.key)) {
+                continue;
+            }
+            String name = trader.documentName(def.responseKey);
+            TextView sub = docSubtitleViews.get(def.key);
+            TextView button = docButtons.get(def.key);
+            if (name.isEmpty() || sub == null) {
+                continue;
+            }
+            sub.setText(getString(R.string.doc_on_file, name));
+            sub.setTextColor(ContextCompat.getColor(this, R.color.success));
+            if (button != null) {
+                button.setText(R.string.replace);
+            }
+        }
+    }
+
+    /** Shows the logo already on file so an edit does not look like it has none. */
+    private void loadExistingLogo(String url) {
+        if (isBlank(url) || logoBitmap != null) {
+            return; // A freshly cropped logo always wins.
+        }
+        ImageView preview = findViewById(R.id.logoPreview);
+        preview.setVisibility(View.VISIBLE);
+        findViewById(R.id.logoPlaceholder).setVisibility(View.GONE);
+        Glide.with(this).load(url).centerCrop().into(preview);
     }
 
     /** Ticks the saved days and fills their opening hours ("1:8.00-18.00"). */
@@ -372,6 +496,13 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     private void setText(int id, String value) {
         if (!isBlank(value)) {
             ((TextView) findViewById(id)).setText(value);
+        }
+    }
+
+    /** Used by the late-arriving detail response so it never overwrites typed input. */
+    private void setTextIfEmpty(int id, String value) {
+        if (text(id).isEmpty()) {
+            setText(id, value);
         }
     }
 
@@ -410,8 +541,10 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 if (!isBlank(portal.id)) {
                     currentDistributorId = portal.id;
                 }
-                String label = !isBlank(portal.trading_name)
-                        ? portal.trading_name : portal.company_legal_name;
+                // Registering a trader is a legal relationship, so the chip names the
+                // distributor's registered entity rather than its trading name.
+                String label = !isBlank(portal.company_legal_name)
+                        ? portal.company_legal_name : portal.trading_name;
                 TextView chip = findViewById(R.id.distributorChip);
                 chip.setText(isBlank(label) ? "" : label);
                 chip.setVisibility(isBlank(label) ? View.GONE : View.VISIBLE);
@@ -553,7 +686,7 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 for (DocDef d : docDefs) {
                     // When editing, a document already on file satisfies the requirement —
                     // only a replacement is re-uploaded.
-                    if (d.required && !docUris.containsKey(d.key) && !hasStoredDocument(d.key)) {
+                    if (d.required && !docUris.containsKey(d.key) && !hasStoredDocument(d)) {
                         return fail(R.string.err_documents);
                     }
                 }
@@ -974,17 +1107,17 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     // ---- Documents -------------------------------------------------------
 
     private void buildDocumentRows() {
-        docDefs.add(new DocDef("business_registration_document",
+        docDefs.add(new DocDef("business_registration_document", "registration_document",
                 getString(R.string.doc_business_reg), getString(R.string.doc_business_reg_sub), true));
-        docDefs.add(new DocDef("owner_id_document",
+        docDefs.add(new DocDef("owner_id_document", "id_document",
                 getString(R.string.doc_owner_id), getString(R.string.doc_owner_id_sub), true));
-        docDefs.add(new DocDef("proof_of_address",
+        docDefs.add(new DocDef("proof_of_address", "proof_of_address",
                 getString(R.string.doc_proof_address), getString(R.string.doc_proof_address_sub), true));
-        docDefs.add(new DocDef("store_front_photo",
+        docDefs.add(new DocDef("store_front_photo", "store_front_photo",
                 getString(R.string.doc_store_front), getString(R.string.doc_store_front_sub), true));
-        docDefs.add(new DocDef("store_interior_photo",
+        docDefs.add(new DocDef("store_interior_photo", "store_interior_photo",
                 getString(R.string.doc_store_interior), getString(R.string.doc_store_interior_sub), true));
-        docDefs.add(new DocDef("additional_documents",
+        docDefs.add(new DocDef("additional_documents", "additional_documents",
                 getString(R.string.doc_additional), getString(R.string.doc_additional_sub), false));
 
         LinearLayout container = findViewById(R.id.documentContainer);
@@ -1366,8 +1499,8 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     }
 
     /** True when the trader being edited already has a file stored for this document. */
-    private boolean hasStoredDocument(String key) {
-        return isEditing() && !editing.documentName(key).isEmpty();
+    private boolean hasStoredDocument(DocDef def) {
+        return isEditing() && !editing.documentName(def.responseKey).isEmpty();
     }
 
     // ---- File helpers ----------------------------------------------------

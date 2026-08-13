@@ -10,8 +10,6 @@ import com.anokix.distributorapp.model.NotificationItem;
 import com.anokix.distributorapp.model.NotificationPreference;
 import com.anokix.distributorapp.model.ProfileSettings;
 import com.anokix.distributorapp.model.PromotionItem;
-import com.anokix.distributorapp.model.ReportHistoryItem;
-import com.anokix.distributorapp.model.ReportTypeItem;
 import com.anokix.distributorapp.model.ReturnItem;
 import com.anokix.distributorapp.model.SettingsMenuEntry;
 import com.anokix.distributorapp.model.SettingsProfile;
@@ -193,31 +191,6 @@ public class MockDistributorRepository implements DistributorRepository {
             return expenses;
         }
         return all;
-    }
-
-    @Override
-    public List<ReportTypeItem> getReportTypes() {
-        return Arrays.asList(
-                new ReportTypeItem("sales", "Sales Report",
-                        "View sales performance", R.drawable.ic_reports),
-                new ReportTypeItem("inventory", "Inventory Report",
-                        "Track stock levels", R.drawable.ic_package),
-                new ReportTypeItem("traders", "Traders Report",
-                        "Analyze trader activity", R.drawable.ic_traders),
-                new ReportTypeItem("finance", "Finance Report",
-                        "Financial summaries", R.drawable.ic_finance_report)
-        );
-    }
-
-    @Override
-    public List<ReportHistoryItem> getRecentReports() {
-        return Arrays.asList(
-                new ReportHistoryItem("r1", "Sales Report - May 2025", "24 May 2025", "PDF"),
-                new ReportHistoryItem("r2", "Inventory Report - May 2025", "24 May 2025", "PDF"),
-                new ReportHistoryItem("r3", "Traders Report - May 2025", "23 May 2025", "PDF"),
-                new ReportHistoryItem("r4", "Finance Report - May 2025", "23 May 2025", "PDF"),
-                new ReportHistoryItem("r5", "Sales Report - April 2025", "30 Apr 2025", "PDF")
-        );
     }
 
     @Override

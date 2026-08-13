@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Generated report card (New-Design/Report/1.Dashboard.png).
+
+  The web row is an eight-column table. On a phone the same record reads as a card:
+  name + category badge on top, the period and generation time under it, then the
+  format / size / rows facts as one meta line. The Download button and the overflow
+  that opens Generate again / Delete (2.Item-Context-Menu.png) sit on the bottom row,
+  where a thumb reaches them.
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:contentPadding="0dp"
+    app:strokeColor="@color/border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_kpi_icon_purple">
+
+                <ImageView
+                    android:id="@+id/reportIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_document"
+                    app:tint="@color/purple_primary" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/reportName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/top_title"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/reportCategoryBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="3dp"
+                        android:textSize="@dimen/text_micro" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/reportStatusBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="3dp"
+                        android:textSize="@dimen/text_micro" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/reportMoreButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/more_actions"
+                android:src="@drawable/ic_more_vert"
+                app:tint="@color/text_secondary" />
+        </LinearLayout>
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/reportPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="6dp"
+            android:drawableTint="@color/text_tertiary"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/reportGenerated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="6dp"
+            android:drawableTint="@color/text_tertiary"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <!-- Format · size · rows · downloads, collapsed into one line the way a phone reads. -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/reportMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawablePadding="6dp"
+            android:drawableTint="@color/text_tertiary"
+            android:maxLines="1"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp" />
+
+        <!-- Only shown when the server reports a failure, so the row explains itself. -->
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/reportError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/danger"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/reportDownloadButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_login_button_outlined"
+            android:drawableStart="@drawable/ic_download"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/purple_primary"
+            android:gravity="center"
+            android:text="@string/report_download"
+            android:textColor="@color/purple_primary"
+            android:textSize="13sp" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

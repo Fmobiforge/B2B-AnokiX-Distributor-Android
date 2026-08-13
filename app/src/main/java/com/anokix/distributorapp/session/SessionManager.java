@@ -16,6 +16,7 @@ public class SessionManager {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_ROLE_LABEL = "role_label";
     private static final String KEY_COMPANY_NAME = "company_name";
+    private static final String KEY_COMPANY_LEGAL_NAME = "company_legal_name";
     private static final String KEY_COMPANY_LOGO_URL = "company_logo_url";
     private static final String KEY_FCM_TOKEN = "fcm_token";
     private static final String KEY_FCM_TOKEN_REGISTERED = "fcm_token_registered";
@@ -92,6 +93,29 @@ public class SessionManager {
     /** Absolute URL of the distributor company logo, or "" when none is available. */
     public String getCompanyLogoUrl() {
         return prefs.getString(KEY_COMPANY_LOGO_URL, "");
+    }
+
+    /**
+     * The registered entity name from {@code base-info}'s {@code portal_info}. Login only
+     * returns {@code company_name}, so this is cached separately once base-info answers
+     * and the dashboard can paint it immediately on the next launch.
+     */
+    public void setCompanyLegalName(String legalName) {
+        prefs.edit().putString(KEY_COMPANY_LEGAL_NAME,
+                legalName == null ? "" : legalName.trim()).apply();
+    }
+
+    public String getCompanyLegalName() {
+        return prefs.getString(KEY_COMPANY_LEGAL_NAME, "");
+    }
+
+    /**
+     * What to call the distributor on screen: the registered legal name when we know it,
+     * otherwise the display name login returned.
+     */
+    public String getDistributorName() {
+        String legal = getCompanyLegalName();
+        return legal.isEmpty() ? getCompanyName() : legal;
     }
 
     // ---- FCM push token --------------------------------------------------

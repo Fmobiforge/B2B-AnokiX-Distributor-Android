@@ -35,10 +35,12 @@ import com.anokix.distributorapp.network.dto.PromotionDetailData;
 import com.anokix.distributorapp.network.dto.PromotionsData;
 import com.anokix.distributorapp.network.dto.ReferenceData;
 import com.anokix.distributorapp.network.dto.RegisterDistributorData;
+import com.anokix.distributorapp.network.dto.ReportsData;
 import com.anokix.distributorapp.network.dto.StoreDetailData;
 import com.anokix.distributorapp.network.dto.StoresData;
 import com.anokix.distributorapp.network.dto.TopupCreateData;
 import com.anokix.distributorapp.network.dto.TopupStatusData;
+import com.anokix.distributorapp.network.dto.TraderDetailData;
 import com.anokix.distributorapp.network.dto.TradersData;
 import com.anokix.distributorapp.network.dto.VasCategoriesData;
 import com.anokix.distributorapp.network.dto.VasCustomersData;
@@ -74,6 +76,13 @@ import java.util.concurrent.Executors;
 public final class ApiClient {
 
     public static final String BASE_URL = "http://155.117.20.51/ax/";
+
+    /**
+     * Report files are served by their own service — a different port from the JSON API,
+     * with no {@code /ax/} prefix — which authenticates from the request body instead of
+     * an Authorization header. It is the only endpoint that does not sit under BASE_URL.
+     */
+    public static final String DOWNLOAD_URL = "http://155.117.20.51:5721/api/report-download";
 
     private static ApiClient instance;
 
@@ -777,6 +786,16 @@ public final class ApiClient {
         });
     }
 
+    /**
+     * Full trader record for the Edit wizard. Unlike the list row this also returns the
+     * linked user account, which carries the owner's name, email and mobile number.
+     */
+    public void getTraderById(String id, ApiCallback<TraderDetailData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("id", id == null ? "" : id);
+        getAuthed("api/distributor/traders/get-by-id", q, TraderDetailData.class, cb);
+    }
+
     /** Create a trader under the logged-in distributor (multipart, with KYC documents). */
     public void createTrader(Map<String, String> form, List<Http.FilePart> files,
                              ApiCallback<CreateTraderData> cb) {
@@ -810,6 +829,99 @@ public final class ApiClient {
         io.execute(() -> deliverMessageOnly(
                 Http.postForm(BASE_URL, "api/distributor/traders/delete", form,
                         session.getToken()), cb));
+    }
+
+    // ---- Reports ---------------------------------------------------------
+
+    /**
+     * Reports dashboard: the catalogue of reports that can be generated, everything
+     * already generated, and the KPI summary. Takes no parameters — the screen's search
+     * and category filters run over the returned list.
+     */
+    public void getReports(ApiCallback<ReportsData> cb) {
+        getAuthed("api/distributor/reports", null, ReportsData.class, cb);
+    }
+
+    /**
+     * Build a report for a period — {@code report_key} comes from {@code available[]}.
+     *
+     * <p>The response echoes the new report and a refreshed summary, but the screen
+     * reloads the whole list straight afterwards, so only the envelope's message
+     * ("Stock Levels ready — 10 rows.") is worth carrying back.
+     */
+    public void generateReport(String reportKey, String from, String to, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("report_key", reportKey == null ? "" : reportKey);
+        form.put("from", from == null ? "" : from);
+        form.put("to", to == null ? "" : to);
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/reports/generate", form,
+                        session.getToken()), cb));
+    }
+
+    /** Delete a generated report. The response only carries the refreshed summary. */
+    public void deleteReport(String id, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/reports/delete", form,
+                        session.getToken()), cb));
+    }
+
+    /**
+     * Fetch a generated report's file.
+     *
+     * <p>Downloads are served by a separate host and port from the JSON API, and that
+     * service authenticates from the request body rather than a Bearer header — so this
+     * is the one call that does not go through {@link #BASE_URL}.
+     */
+    public void downloadReport(String id, ApiCallback<Http.Download> cb) {
+        String json = "{\"id\":" + safeNumber(id) + ",\"token\":\""
+                + escapeJson(session.getToken()) + "\"}";
+        io.execute(() -> {
+            Http.Download download = Http.postJsonForFile(
+                    DOWNLOAD_URL, json, null);
+            main.post(() -> {
+                if (download.ok && !looksLikeJson(download)) {
+                    cb.onSuccess(download);
+                } else {
+                    cb.onError(downloadError(download));
+                }
+            });
+        });
+    }
+
+    /** A JSON body from the download service means an error, not a report. */
+    private boolean looksLikeJson(Http.Download download) {
+        return download.mimeType != null
+                && download.mimeType.toLowerCase(Locale.ROOT).contains("json");
+    }
+
+    /** Surface the download service's own message when it sent one. */
+    private String downloadError(Http.Download download) {
+        if (download.content != null && download.content.length > 0 && looksLikeJson(download)) {
+            try {
+                ApiResponse<?> resp = gson.fromJson(new String(download.content, "UTF-8"),
+                        ApiResponse.class);
+                if (resp != null && resp.message != null && !resp.message.isEmpty()) {
+                    return resp.message;
+                }
+            } catch (Exception ignored) {
+                // fall through to the generic message
+            }
+        }
+        return "Could not download the report (HTTP " + download.code + ")";
+    }
+
+    private static String safeNumber(String id) {
+        if (id == null || !id.trim().matches("\\d+")) {
+            return "0";
+        }
+        return id.trim();
+    }
+
+    private static String escapeJson(String value) {
+        return value == null ? "" : value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     public void getStore(String id, ApiCallback<StoreDetailData> cb) {

@@ -1525,4 +1525,61 @@
     <string name="delivery_close">Close</string>
     <string name="err_delivery_hours">Set an opening and closing time for every selected delivery day.</string>
     <string name="doc_on_file">On file: %1$s</string>
+
+    <!-- Reports (New-Design/Report) -->
+    <string name="reports_page_subtitle">Generate and download business insights</string>
+    <string name="search_reports">Search report name or period…</string>
+    <string name="reports_showing_count">Showing %1$d of %2$d reports</string>
+    <string name="reports_empty">No reports yet. Generate one to get started.</string>
+    <string name="reports_empty_filtered">No reports match your search.</string>
+
+    <string name="kpi_reports_generated">Reports Generated</string>
+    <string name="kpi_reports_generated_caption">All time</string>
+    <string name="kpi_report_downloads">Downloads</string>
+    <string name="kpi_report_downloads_caption">Across all reports</string>
+    <string name="kpi_reports_this_month">This Month</string>
+    <string name="kpi_reports_this_month_caption">Generated since the 1st</string>
+    <string name="kpi_reports_failed">Failed</string>
+    <string name="kpi_reports_failed_none">None</string>
+    <string name="kpi_reports_failed_some">Needs attention</string>
+
+    <string name="report_period_value">Period %1$s</string>
+    <string name="report_generated_value">Generated %1$s</string>
+    <string name="report_download">Download</string>
+    <string name="report_generate_again">Generate again</string>
+    <string name="report_delete">Delete</string>
+    <string name="report_delete_title">Delete report?</string>
+    <string name="report_delete_message">"%1$s" will be removed along with its file. This cannot be undone.</string>
+    <string name="report_deleted_msg">Report deleted.</string>
+
+    <plurals name="report_rows">
+        <item quantity="one">%d row</item>
+        <item quantity="other">%d rows</item>
+    </plurals>
+    <plurals name="report_downloads">
+        <item quantity="one">%d download</item>
+        <item quantity="other">%d downloads</item>
+    </plurals>
+
+    <!-- Generate a report sheet -->
+    <string name="generate_btn">Generate</string>
+    <string name="generate_report_title">Generate a report</string>
+    <string name="generate_report_help">Built from your own data and downloaded as a CSV, which opens in Excel, Numbers and Google Sheets.</string>
+    <string name="report_category_label">Category</string>
+    <string name="report_label">Report</string>
+    <string name="choose_a_report">Choose a report</string>
+    <string name="period_label">Period</string>
+    <string name="err_choose_report">Choose a report to generate.</string>
+    <string name="err_no_reports_in_category">No reports are available in that category.</string>
+    <string name="generating_report">Generating…</string>
+
+    <!-- Download result -->
+    <string name="report_downloaded_title">Report downloaded</string>
+    <string name="report_downloaded_message">%1$s was saved to your device.</string>
+    <string name="report_view">View</string>
+    <string name="report_share">Share</string>
+    <string name="report_downloading">Downloading…</string>
+    <string name="report_share_title">Share report</string>
+    <string name="err_no_viewer">No app on this device can open a %1$s file.</string>
+    <string name="err_save_download">Could not save the downloaded report.</string>
 </resources>

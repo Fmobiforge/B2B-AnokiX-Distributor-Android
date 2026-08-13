@@ -7,4 +7,11 @@
     <external-cache-path
         name="external_captures"
         path="captures/" />
+    <!-- Downloaded report files, shared out to a viewer or another app. -->
+    <external-files-path
+        name="downloads"
+        path="Download/" />
+    <files-path
+        name="internal_downloads"
+        path="downloads/" />
 </paths>

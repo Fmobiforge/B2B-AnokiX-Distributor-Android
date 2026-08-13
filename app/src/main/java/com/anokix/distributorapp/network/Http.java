@@ -84,6 +84,71 @@ public final class Http {
         return execute(request, token);
     }
 
+    /** A downloaded file: raw bytes plus whatever the server said they are. */
+    public static class Download {
+        public final int code;
+        public final byte[] content;
+        public final String fileName;
+        public final String mimeType;
+        public final boolean ok;
+
+        Download(int code, byte[] content, String fileName, String mimeType) {
+            this.code = code;
+            this.content = content;
+            this.fileName = fileName;
+            this.mimeType = mimeType;
+            this.ok = code >= 200 && code < 300 && content != null && content.length > 0;
+        }
+    }
+
+    /**
+     * JSON POST whose response is a file rather than an envelope — the report download
+     * service. The body is read as bytes, and the filename is taken from
+     * Content-Disposition when the server offers one.
+     *
+     * <p>An error here still arrives as JSON, so a JSON content-type is reported back and
+     * the caller can surface the server's message instead of saving a broken file.
+     */
+    public static Download postJsonForFile(String url, String json, String token) {
+        RequestBody body = RequestBody.create(
+                json == null ? "{}" : json, MediaType.parse("application/json; charset=utf-8"));
+        Request.Builder request = new Request.Builder().url(url).post(body);
+        request.header("Accept", "*/*");
+        if (token != null && !token.isEmpty()) {
+            request.header("Authorization", "Bearer " + token);
+        }
+        try (Response response = client.newCall(request.build()).execute()) {
+            byte[] content = response.body() != null ? response.body().bytes() : null;
+            String mimeType = response.header("Content-Type");
+            return new Download(response.code(), content,
+                    fileNameFrom(response.header("Content-Disposition")), mimeType);
+        } catch (Exception e) {
+            Log.e(TAG, "download failed: " + e, e);
+            return new Download(-1, null, null, null);
+        }
+    }
+
+    /** Pulls {@code filename="stock_levels-16.csv"} out of a Content-Disposition header. */
+    private static String fileNameFrom(String contentDisposition) {
+        if (contentDisposition == null) {
+            return null;
+        }
+        java.util.regex.Matcher matcher = java.util.regex.Pattern
+                .compile("filename\\*?=(?:UTF-8'')?\"?([^\";]+)\"?", java.util.regex.Pattern.CASE_INSENSITIVE)
+                .matcher(contentDisposition);
+        if (!matcher.find()) {
+            return null;
+        }
+        String name = matcher.group(1);
+        if (name == null) {
+            return null;
+        }
+        // Never let the server's name escape the directory we chose to write into.
+        name = name.trim().replace('\\', '/');
+        name = name.substring(name.lastIndexOf('/') + 1);
+        return name.isEmpty() ? null : name;
+    }
+
     /** A single file part for a multipart upload (content already read into memory). */
     public static class FilePart {
         public final String field;

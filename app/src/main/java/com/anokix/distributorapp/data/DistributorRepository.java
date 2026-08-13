@@ -9,8 +9,6 @@ import com.anokix.distributorapp.model.NotificationItem;
 import com.anokix.distributorapp.model.NotificationPreference;
 import com.anokix.distributorapp.model.ProfileSettings;
 import com.anokix.distributorapp.model.PromotionItem;
-import com.anokix.distributorapp.model.ReportHistoryItem;
-import com.anokix.distributorapp.model.ReportTypeItem;
 import com.anokix.distributorapp.model.ReturnItem;
 import com.anokix.distributorapp.model.SettingsMenuEntry;
 import com.anokix.distributorapp.model.SettingsProfile;
@@ -39,10 +37,6 @@ public interface DistributorRepository {
     List<FinanceSummary> getFinanceSummaries();
 
     List<FinanceTransaction> getFinanceTransactions(String typeFilter);
-
-    List<ReportTypeItem> getReportTypes();
-
-    List<ReportHistoryItem> getRecentReports();
 
     List<DeliveryItem> getDeliveries(String statusFilter);
 

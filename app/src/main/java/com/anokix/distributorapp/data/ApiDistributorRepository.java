@@ -9,8 +9,6 @@ import com.anokix.distributorapp.model.NotificationItem;
 import com.anokix.distributorapp.model.NotificationPreference;
 import com.anokix.distributorapp.model.ProfileSettings;
 import com.anokix.distributorapp.model.PromotionItem;
-import com.anokix.distributorapp.model.ReportHistoryItem;
-import com.anokix.distributorapp.model.ReportTypeItem;
 import com.anokix.distributorapp.model.ReturnItem;
 import com.anokix.distributorapp.model.SettingsMenuEntry;
 import com.anokix.distributorapp.model.SettingsProfile;
@@ -64,16 +62,6 @@ public class ApiDistributorRepository implements DistributorRepository {
 
     @Override
     public List<FinanceTransaction> getFinanceTransactions(String typeFilter) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ReportTypeItem> getReportTypes() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<ReportHistoryItem> getRecentReports() {
         return Collections.emptyList();
     }
 
