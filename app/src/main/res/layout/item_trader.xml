@@ -16,6 +16,7 @@
     app:cardBackgroundColor="@color/surface"
     app:cardCornerRadius="12dp"
     app:cardElevation="1dp"
+    app:contentPadding="0dp"
     app:strokeColor="@color/border"
     app:strokeWidth="1dp">
 
