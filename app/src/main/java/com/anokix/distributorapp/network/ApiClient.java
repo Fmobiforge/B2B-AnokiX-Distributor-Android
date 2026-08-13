@@ -204,13 +204,13 @@ public final class ApiClient {
         getTraders(search, "", "", cb);
     }
 
-    public void getTraders(String search, String status, String registrationStatus,
+    public void getTraders(String search, String status, String creditStatus,
                            ApiCallback<TradersData> cb) {
         Map<String, String> q = new HashMap<>();
         q.put("search", search == null ? "" : search);
         q.put("status", status == null ? "" : status);
-        q.put("registration_status", registrationStatus == null ? "" : registrationStatus);
-        q.put("credit_status", "");
+        q.put("credit_status", creditStatus == null ? "" : creditStatus);
+        q.put("registration_status", "");
         getAuthed("api/distributor/traders", q, TradersData.class, cb);
     }
 
@@ -785,6 +785,31 @@ public final class ApiClient {
                     form, files, session.getToken());
             deliver(r, CreateTraderData.class, cb);
         });
+    }
+
+    /**
+     * Update an existing trader. Same multipart shape as create plus an {@code id};
+     * documents and the logo are only re-sent when the user picked a new file.
+     */
+    public void updateTrader(Map<String, String> form, List<Http.FilePart> files,
+                             ApiCallback<CreateTraderData> cb) {
+        io.execute(() -> {
+            Http.Result r = Http.postMultipart(BASE_URL, "api/distributor/traders/update",
+                    form, files, session.getToken());
+            deliver(r, CreateTraderData.class, cb);
+        });
+    }
+
+    /**
+     * Delete a trader. Like products/delete the response carries no trader object,
+     * so only the status/message matter.
+     */
+    public void deleteTrader(String id, ApiCallback<String> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("id", id == null ? "" : id);
+        io.execute(() -> deliverMessageOnly(
+                Http.postForm(BASE_URL, "api/distributor/traders/delete", form,
+                        session.getToken()), cb));
     }
 
     public void getStore(String id, ApiCallback<StoreDetailData> cb) {

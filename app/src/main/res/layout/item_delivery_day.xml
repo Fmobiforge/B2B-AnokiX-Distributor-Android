@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One delivery day (16.Trader-Distributor.png): tick the day, then set the opening and
+  closing hour. The web table has a second optional shift per day; the API format only
+  round-trips one window ("1:8.00-18.00"), so a phone row carries just that one.
+
+  Times are whole hours on a 24-hour clock, which is what the API stores ("8.00-18.00").
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="6dp">
+
+    <CheckBox
+        android:id="@+id/dayCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="0dp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/dayLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_weight="1"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/dayOpen"
+        android:layout_width="72dp"
+        android:layout_height="38dp"
+        android:background="@drawable/bg_login_input"
+        android:gravity="center"
+        android:hint="@string/delivery_open"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_tertiary"
+        android:textSize="13sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:text="@string/dash_separator"
+        android:textColor="@color/text_tertiary"
+        android:textSize="13sp" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/dayClose"
+        android:layout_width="72dp"
+        android:layout_height="38dp"
+        android:background="@drawable/bg_login_input"
+        android:gravity="center"
+        android:hint="@string/delivery_close"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_tertiary"
+        android:textSize="13sp" />
+</LinearLayout>

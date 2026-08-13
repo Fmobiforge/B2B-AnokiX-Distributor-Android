@@ -4,7 +4,6 @@ import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.model.ProductItem;
 import com.anokix.distributorapp.model.PromotionItem;
 import com.anokix.distributorapp.model.StoreItem;
-import com.anokix.distributorapp.model.TraderItem;
 import com.anokix.distributorapp.network.dto.ProductsData;
 import com.anokix.distributorapp.network.dto.PromotionsData;
 import com.anokix.distributorapp.network.dto.StoresData;
@@ -70,31 +69,18 @@ public final class ApiMapper {
 
     // ---- Traders ---------------------------------------------------------
 
-    public static List<TraderItem> toTraderItems(TradersData data) {
-        List<TraderItem> out = new ArrayList<>();
-        if (data == null || data.traders == null) {
-            return out;
-        }
-        int i = 0;
-        for (TradersData.Trader t : data.traders) {
-            String name = !isEmpty(t.business_name) ? t.business_name : safe(t.name);
-            String phone = isEmpty(t.country_code)
-                    ? safe(t.phone_number)
-                    : "+" + t.country_code + " " + safe(t.phone_number);
-            out.add(new TraderItem(
-                    safe(t.id),
-                    name,
-                    t.trader_code,
-                    safe(t.address),
-                    phone.trim(),
-                    capitalize(t.store_type),
-                    safe(t.address),
-                    initials(name),
-                    AVATAR_COLORS[i % AVATAR_COLORS.length],
-                    "New".equalsIgnoreCase(t.status)));
-            i++;
-        }
-        return out;
+    /**
+     * Traders render straight from {@link TradersData.Trader} — the list response is the
+     * same record the Edit wizard prefills from, so flattening it into a view model would
+     * only throw away the fields the wizard needs.
+     */
+    public static int traderAvatarColor(int index) {
+        return AVATAR_COLORS[Math.abs(index) % AVATAR_COLORS.length];
+    }
+
+    /** Up to two uppercase initials for the avatar circle. */
+    public static String traderInitials(String name) {
+        return initials(name);
     }
 
     // ---- Products --------------------------------------------------------

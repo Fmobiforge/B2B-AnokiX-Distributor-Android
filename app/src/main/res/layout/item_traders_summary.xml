@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scrolling header of the Traders list: the four KPI cards from the web dashboard.
+
+  The fourth web card is "High Value Traders", but /traders only returns
+  pending_approval_* in its summary, so the card shows what the API actually knows —
+  how many traders are still waiting on approval.
+
+  It rides inside the RecyclerView so the trader cards always own the remaining
+  height (item_inventory_summary does the same on the Inventory screen).
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="12dp">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Total Traders -->
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_purple">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_traders"
+                            app:tint="@color/purple_primary" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_total_traders" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiTotalTraders"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/kpiTotalTradersCaption"
+                    style="@style/InventoryKpiCaption"
+                    android:textColor="@color/purple_primary" />
+            </LinearLayout>
+
+            <!-- Active Traders -->
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_green">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_check_circle"
+                            app:tint="@color/success" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_active_traders" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiActiveTraders"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/kpiActiveTradersCaption"
+                    style="@style/InventoryKpiCaption"
+                    android:textColor="@color/success" />
+            </LinearLayout>
+
+            <!-- New This Month -->
+            <LinearLayout
+                style="@style/InventoryKpiCard"
+                android:layout_marginEnd="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_blue">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_person_add"
+                            app:tint="@color/info" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_new_this_month" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiNewThisMonth"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/kpiNewThisMonthCaption"
+                    style="@style/InventoryKpiCaption"
+                    android:textColor="@color/info" />
+            </LinearLayout>
+
+            <!-- Pending Approval -->
+            <LinearLayout style="@style/InventoryKpiCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        style="@style/InventoryKpiIconTile"
+                        android:background="@drawable/bg_kpi_icon_orange">
+
+                        <ImageView
+                            style="@style/InventoryKpiIcon"
+                            android:src="@drawable/ic_clock"
+                            app:tint="@color/warning" />
+                    </FrameLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/InventoryKpiTitle"
+                        android:text="@string/kpi_pending_approval" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/kpiPendingApproval"
+                    style="@style/InventoryKpiValue" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/kpiPendingApprovalCaption"
+                    style="@style/InventoryKpiCaption"
+                    android:textColor="@color/warning" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

@@ -1480,4 +1480,49 @@
     <string name="topup_failed_notice">That payment did not go through. Nothing was charged to your wallet.</string>
 
     <string name="wallet_coming_soon">%1$s is coming soon.</string>
+
+    <!-- ===== Trader Management (New-Design/Traders) ===== -->
+    <string name="traders_subtitle">View, manage and support your network of traders.</string>
+    <string name="search_traders_hint">Search trader name, phone or code&#8230;</string>
+    <string name="all_credit_status">All Credit Status</string>
+    <string name="filter_credit_status">Credit Status</string>
+    <string name="kpi_total_traders">Total Traders</string>
+    <string name="kpi_active_traders">Active Traders</string>
+    <string name="kpi_new_this_month">New This Month</string>
+    <string name="kpi_pending_approval">Pending Approval</string>
+    <string name="traders_showing_count">Showing %1$d of %2$d traders</string>
+    <string name="traders_empty">No traders yet. Tap Add New Trader to register your first one.</string>
+    <string name="traders_empty_filtered">No traders match your search or filters.</string>
+    <string name="trader_edit">Edit Trader</string>
+    <string name="trader_delete">Delete</string>
+    <string name="trader_delete_title">Delete Confirmation</string>
+    <string name="trader_delete_message">Are you sure you want to delete \"%1$s\"?</string>
+    <string name="trader_deleted_msg">Trader deleted</string>
+    <string name="trader_updated_msg">Trader updated successfully</string>
+
+    <!-- Edit Trader wizard -->
+    <string name="edit_trader_title">Edit Trader</string>
+    <string name="edit_trader_subtitle">Update trader information.</string>
+    <string name="save_changes_btn">Save Changes</string>
+    <string name="saving">Saving&#8230;</string>
+    <string name="account_sign_in">Account sign-in</string>
+    <string name="account_sign_in_help_create">The owner signs in with this mobile number and email. Set the password they will use.</string>
+    <string name="account_sign_in_help_edit">Update the owner contact details below. Leave the password blank to keep the current password.</string>
+    <string name="password_label">Password</string>
+    <string name="confirm_password_field">Confirm Password</string>
+    <string name="password_hint_create">Enter password</string>
+    <string name="password_hint_edit">Enter new password (optional)</string>
+    <string name="confirm_password_hint_create">Confirm password</string>
+    <string name="confirm_password_hint_edit">Confirm new password (optional)</string>
+    <string name="password_help_create">Must be at least 8 characters.</string>
+    <string name="password_help_edit">Leave blank to keep current password. New password must be at least 8 characters.</string>
+    <string name="company_logo_optional">Company Logo (Optional)</string>
+    <string name="change_logo">Change logo</string>
+    <string name="dash_separator">–</string>
+    <string name="registered_under_you">This trader will be registered under your distributor account.</string>
+    <string name="delivery_days_help">Select the days you deliver and set the opening hours.</string>
+    <string name="delivery_open">Open</string>
+    <string name="delivery_close">Close</string>
+    <string name="err_delivery_hours">Set an opening and closing time for every selected delivery day.</string>
+    <string name="doc_on_file">On file: %1$s</string>
 </resources>

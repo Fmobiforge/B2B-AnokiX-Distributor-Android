@@ -35,13 +35,17 @@
             android:orientation="vertical">
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/screenTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/add_new_trader"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/screenSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -164,7 +168,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
 
-                <!-- Owner contact info box -->
+                <!-- Account sign-in info box (11.Trader-OwnerInfo.png) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -174,17 +178,19 @@
                     android:padding="12dp">
 
                     <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/signInBoxTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/owner_contact"
+                        android:text="@string/account_sign_in"
                         android:textColor="@color/info"
                         android:textSize="13sp" />
 
                     <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/signInBoxMessage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="@string/owner_contact_sub"
+                        android:text="@string/account_sign_in_help_create"
                         android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -242,6 +248,91 @@
                     style="@style/StoreFieldInput"
                     android:hint="@string/hint_email_address"
                     android:inputType="textEmailAddress" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/password_label" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/password_hint_create"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/togglePassword"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/toggle_password_visibility"
+                        android:src="@drawable/ic_visibility"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/confirm_password_field" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp">
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/etConfirmPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/confirm_password_hint_create"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/toggleConfirmPassword"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/toggle_password_visibility"
+                        android:src="@drawable/ic_visibility"
+                        app:tint="@color/text_secondary" />
+                </LinearLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/passwordHelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/password_help_create"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -272,6 +363,52 @@
                     android:text="@string/business_information_sub"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
+
+                <!-- Company logo (12.Trader-BizInfo1.png); cropped via dialog_crop_logo -->
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/company_logo_optional" />
+
+                <FrameLayout
+                    android:id="@+id/logoUploadBox"
+                    android:layout_width="150dp"
+                    android:layout_height="115dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_upload_dashed"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:id="@+id/logoPlaceholder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_add"
+                            app:tint="@color/purple_primary" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/logoUploadLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/upload_logo"
+                            android:textColor="@color/purple_primary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/logoPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/company_logo"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" /></FrameLayout>
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/StoreFieldLabel"
@@ -567,10 +704,10 @@
                     android:textAppearance="@style/TextAppearance.AnokiX.Title" />
 
                 <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/select_preferred_distributor_sub"
+                    android:text="@string/registered_under_you"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
@@ -582,29 +719,30 @@
                     android:textColor="@color/top_title"
                     android:textSize="16sp" />
 
+                <!--
+                  This is the distributor portal, so the trader always belongs to the
+                  signed-in distributor — the web multi-select is replaced by a read-only
+                  chip naming it (16.Trader-Distributor.png).
+                -->
                 <LinearLayout
-                    android:id="@+id/distributorField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_login_input"
+                    android:gravity="center_vertical"
                     android:minHeight="48dp"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:id="@+id/distributorHint"
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/distributorChip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="@string/select_distributors_hint"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
-
-                    <com.anokix.distributorapp.ui.views.FlowLayout
-                        android:id="@+id/distributorChips"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:background="@drawable/bg_badge_purple"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:textColor="@color/purple_primary"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
@@ -612,18 +750,22 @@
                     android:text="@string/preferred_delivery_days" />
 
                 <com.anokix.distributorapp.ui.views.RobotoTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="@string/select_all_apply"
+                    android:text="@string/delivery_days_help"
                     android:textColor="@color/text_tertiary"
                     android:textSize="12sp" />
 
-                <com.anokix.distributorapp.ui.views.FlowLayout
+                <!-- One row per day: checkbox + open/close time (populated in code). -->
+                <LinearLayout
                     android:id="@+id/deliveryDaysContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_login_input"
+                    android:orientation="vertical"
+                    android:paddingVertical="4dp" />
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     style="@style/StoreFieldLabel"

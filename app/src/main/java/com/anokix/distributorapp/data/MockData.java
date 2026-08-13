@@ -6,7 +6,6 @@ import com.anokix.distributorapp.model.MenuItem;
 import com.anokix.distributorapp.model.OrderItem;
 import com.anokix.distributorapp.model.ProductItem;
 import com.anokix.distributorapp.model.StoreItem;
-import com.anokix.distributorapp.model.TraderItem;
 import com.anokix.distributorapp.network.dto.DashboardData;
 
 import java.util.ArrayList;
@@ -64,25 +63,14 @@ public final class MockData {
         );
     }
 
-    public static List<TraderItem> getTraderItems() {
-        return Arrays.asList(
-                new TraderItem("t1", "John Mokoena", "T1", "Mabopane, Pretoria",
-                        "+27 82 123 4567", "Spaza", "Gauteng", "JM", R.color.purple_primary, true),
-                new TraderItem("t2", "Sarah Bhuda", "T1", "Emthombeni, Durban",
-                        "+27 83 234 5678", "Spaza", "KZN", "SB", R.color.success, false),
-                new TraderItem("t3", "Thabo Khumalo", "T1", "Rockingham, Durban",
-                        "+27 84 345 6789", "Spaza", "KZN", "TK", R.color.warning, true),
-                new TraderItem("t4", "Nomvula Phuphuthi", "T1", "Pinetown, Durban",
-                        "+27 85 456 7890", "Spaza", "KZN", "NP", R.color.info, false),
-                new TraderItem("t5", "Lunga Mthembu", "T1", "Soweto, Johannesburg",
-                        "+27 86 567 8901", "Spaza", "Gauteng", "LM", R.color.purple_dark, true),
-                new TraderItem("t6", "Peter Situngu", "T1", "Verulam, KZN",
-                        "+27 87 678 9012", "Spaza", "KZN", "PS", R.color.danger, false)
-        );
+    /** Trader status filter — matches the options in the web Status dropdown. */
+    public static String[] getFilterStatus() {
+        return new String[]{"All Status", "New", "Active", "Inactive", "Suspended"};
     }
 
-    public static String[] getFilterStatus() {
-        return new String[]{"All Status", "Active", "New", "Inactive", "Suspended", "Draft", "Pending Approval"};
+    /** Trader credit standing filter — matches the web Credit Status dropdown. */
+    public static String[] getFilterCreditStatus() {
+        return new String[]{"All Credit Status", "Good Standing", "Warning", "Overdue", "Suspended"};
     }
 
     public static String[] getFilterRegistrationStatus() {

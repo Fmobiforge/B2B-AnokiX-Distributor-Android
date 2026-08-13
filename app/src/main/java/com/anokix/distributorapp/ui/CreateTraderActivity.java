@@ -1,6 +1,10 @@
 package com.anokix.distributorapp.ui;
 
+import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -9,8 +13,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.OpenableColumns;
 import android.text.Editable;
-import android.text.TextUtils;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +23,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,12 +44,16 @@ import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.Http;
 import com.anokix.distributorapp.network.dto.AutocompleteData;
+import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.CoordinateData;
 import com.anokix.distributorapp.network.dto.CreateTraderData;
 import com.anokix.distributorapp.network.dto.ReferenceData;
+import com.anokix.distributorapp.network.dto.TradersData;
 import com.anokix.distributorapp.ui.views.FlowLayout;
+import com.anokix.distributorapp.ui.views.LogoCropView;
 import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
+import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -62,29 +73,45 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Eight-step "Add New Trader" wizard wired to /api/distributor/traders/create.
+ * Eight-step trader wizard, wired to /api/distributor/traders/create when adding and
+ * /api/distributor/traders/update when editing an existing trader.
  *
  * Steps: 1 Owner · 2 Business · 3 Trader · 4 Location · 5 Verify ·
  *        6 Distributor · 7 Wallet · 8 Terms.
  *
  * All step views live inside a {@link ViewFlipper}, so every field keeps its
  * value when the user navigates back and forth. Lookup data (trader types,
- * product categories, distributors) comes from {@link ApiClient#getReference}.
+ * product categories) comes from {@link ApiClient#getReference}; the distributor
+ * the trader belongs to is this portal's own, read from
+ * {@link ApiClient#getBaseInfo}.
+ *
+ * <p>Edit mode is launched with {@link #editIntent}: the Traders list already holds the
+ * full trader record, so the wizard prefills from it rather than re-fetching.
  */
 public class CreateTraderActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    /** JSON-encoded {@link TradersData.Trader} to edit; absent when adding a new one. */
+    private static final String EXTRA_TRADER = "extra_trader_json";
 
     private static final int STEP_COUNT = 8;
     private static final int STEP_TRADER = 2;     // 0-based
     private static final int STEP_LOCATION = 3;
     private static final int STEP_VERIFY = 4;
+    private static final int STEP_DISTRIBUTOR = 5;
     private static final int STEP_TERMS = 7;
+
+    private static final int MIN_PASSWORD = 8;
 
     private static final String[] STEP_KEYS = {
             "step_owner", "step_business", "step_trader", "step_location",
             "step_verify", "step_distributor", "step_wallet", "step_terms"
     };
 
-    private static final String[] DAY_LABELS = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+    /**
+     * Delivery days are stored by index with Sunday first ("1:8.00-18.00" is Monday),
+     * so the row order here doubles as the value sent to the API.
+     */
+    private static final String[] DAY_LABELS = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     private static final String[] PAYMENT_LABELS = {"Wallet", "EFT", "Cash", "Card"};
     private static final String[] PAYMENT_VALUES = {"wallet", "eft", "cash", "card"};
@@ -98,19 +125,56 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     private final TextView[] stepLabels = new TextView[STEP_COUNT];
     private int currentStep = 0;
 
+    /** The trader being edited, or null when registering a new one. */
+    @Nullable
+    private TradersData.Trader editing;
+
     // Reference data
     private final List<ReferenceData.TraderType> traderTypes = new ArrayList<>();
     private final List<ReferenceData.ProductCategory> primaryCategories = new ArrayList<>();
-    private final List<ReferenceData.Distributor> distributors = new ArrayList<>();
+
+    /** This portal's own distributor — the only one a trader can be registered under. */
+    private String currentDistributorId = "";
 
     // Selections
     private String selectedTraderTypeSlug;
     private final List<View> traderTypeCards = new ArrayList<>();
     private final List<Long> selectedCategoryIds = new ArrayList<>();
-    private final List<Long> selectedDistributorIds = new ArrayList<>();
-    private final List<String> selectedDays = new ArrayList<>();
+    private final List<DeliveryDayRow> deliveryDayRows = new ArrayList<>();
     private String paymentMethodValue;
     private boolean createWalletNow = true;
+
+    /** Cropped company logo, JPEG-encoded at submit time. */
+    @Nullable
+    private Bitmap logoBitmap;
+    private ActivityResultLauncher<String> logoPicker;
+
+    /** A day row on step 6: the tick plus its opening and closing time. */
+    private static final class DeliveryDayRow {
+        final int dayIndex;
+        final CheckBox check;
+        final TextView open;
+        final TextView close;
+
+        DeliveryDayRow(int dayIndex, CheckBox check, TextView open, TextView close) {
+            this.dayIndex = dayIndex;
+            this.check = check;
+            this.open = open;
+            this.close = close;
+        }
+
+        boolean isSelected() {
+            return check.isChecked();
+        }
+
+        String openText() {
+            return open.getText() == null ? "" : open.getText().toString().trim();
+        }
+
+        String closeText() {
+            return close.getText() == null ? "" : close.getText().toString().trim();
+        }
+    }
 
     // Phone country pickers (hbb20 CCP)
     private CountryCodePicker ccpOwner;
@@ -144,10 +208,23 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     private android.widget.ListPopupWindow addressPopup;
     private final List<AutocompleteData.Prediction> predictions = new ArrayList<>();
 
+    /** Opens the wizard on an existing trader; the list already holds the full record. */
+    public static Intent editIntent(Context context, TradersData.Trader trader) {
+        Intent intent = new Intent(context, CreateTraderActivity.class);
+        intent.putExtra(EXTRA_TRADER, new Gson().toJson(trader));
+        return intent;
+    }
+
+    private boolean isEditing() {
+        return editing != null;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trader);
+
+        editing = readTraderExtra();
 
         flipper = findViewById(R.id.stepFlipper);
         stepperContainer = findViewById(R.id.stepperContainer);
@@ -155,19 +232,196 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         btnBack = findViewById(R.id.btnBack);
 
         buildStepper();
-        buildDeliveryDayChips();
+        buildDeliveryDayRows();
         buildBenefits();
         buildDocumentRows();
         setupCountryPickers();
         setupSelectionFields();
+        setupPasswordFields();
+        setupLogoUpload();
         setupWalletOptions();
         setupNavigation();
         setupDocumentPicker();
         setupAddressAutocomplete();
         setupMap(savedInstanceState);
 
+        applyMode();
         showStep(0);
         loadReference();
+        loadCurrentDistributor();
+    }
+
+    @Nullable
+    private TradersData.Trader readTraderExtra() {
+        String json = getIntent() == null ? null : getIntent().getStringExtra(EXTRA_TRADER);
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+        try {
+            return new Gson().fromJson(json, TradersData.Trader.class);
+        } catch (Exception e) {
+            return null; // Malformed extra: fall back to the Add flow rather than crashing.
+        }
+    }
+
+    /** Retitles the screen and swaps the password copy between Add and Edit. */
+    private void applyMode() {
+        boolean editMode = isEditing();
+        ((TextView) findViewById(R.id.screenTitle)).setText(editMode
+                ? getString(R.string.edit_trader_title) : getString(R.string.add_new_trader));
+        ((TextView) findViewById(R.id.screenSubtitle)).setText(editMode
+                ? getString(R.string.edit_trader_subtitle) : getString(R.string.create_trader_subtitle));
+        ((TextView) findViewById(R.id.signInBoxMessage)).setText(editMode
+                ? R.string.account_sign_in_help_edit : R.string.account_sign_in_help_create);
+        ((TextView) findViewById(R.id.passwordHelp)).setText(editMode
+                ? R.string.password_help_edit : R.string.password_help_create);
+        ((EditText) findViewById(R.id.etPassword)).setHint(editMode
+                ? R.string.password_hint_edit : R.string.password_hint_create);
+        ((EditText) findViewById(R.id.etConfirmPassword)).setHint(editMode
+                ? R.string.confirm_password_hint_edit : R.string.confirm_password_hint_create);
+        ((TextView) findViewById(R.id.logoUploadLabel)).setText(editMode
+                ? R.string.change_logo : R.string.upload_logo);
+
+        if (editMode) {
+            prefillFromTrader(editing);
+        }
+    }
+
+    // ---- Prefill (edit mode) ---------------------------------------------
+
+    /**
+     * Paints the record onto every step. Trader type and categories need the reference
+     * lists, so those are re-applied in {@link #loadReference()} once they arrive.
+     */
+    private void prefillFromTrader(TradersData.Trader trader) {
+        setText(R.id.etFirstName, trader.ownerFirstName());
+        setText(R.id.etLastName, trader.ownerLastName());
+        setText(R.id.etIdNumber, trader.id_number);
+        setText(R.id.etPassportNumber, trader.passport_number);
+        setPhone(ccpOwner, R.id.etOwnerMobile, trader.mobile_number);
+        setText(R.id.etOwnerEmail, trader.email);
+
+        setText(R.id.etBusinessName, trader.business_name);
+        setText(R.id.etTradingName, trader.trading_name);
+        setText(R.id.etBusinessReg, trader.business_registration_number);
+        setPhone(ccpBusiness, R.id.etBusinessPhone, trader.business_phone_number);
+        setText(R.id.etBusinessEmail, trader.business_email);
+
+        selectedTraderTypeSlug = trader.traderTypeValue();
+        selectedCategoryIds.clear();
+        selectedCategoryIds.addAll(trader.categoryIds());
+
+        setText(R.id.etAddressSearch, trader.address);
+        if (trader.latitude != null && trader.longitude != null) {
+            pickedLat = trader.latitude;
+            pickedLng = trader.longitude;
+        }
+
+        applyDeliveryDays(TradersData.parseDeliveryDays(trader.preferred_delivery_days));
+        applyPaymentMethod(trader.payment_method);
+
+        // Nothing is re-uploaded unless the user picks a new file, so show what is on file.
+        for (DocDef def : docDefs) {
+            String name = trader.documentName(def.key);
+            TextView sub = docSubtitleViews.get(def.key);
+            TextView button = docButtons.get(def.key);
+            if (!name.isEmpty() && sub != null) {
+                sub.setText(getString(R.string.doc_on_file, name));
+                sub.setTextColor(ContextCompat.getColor(this, R.color.success));
+                if (button != null) {
+                    button.setText(R.string.replace);
+                }
+            }
+        }
+
+        // An approved trader already accepted the terms; keep them ticked so an edit
+        // does not force the distributor to re-consent on the owner's behalf.
+        for (int id : new int[]{R.id.cbAccurate, R.id.cbTos, R.id.cbKyc, R.id.cbComms}) {
+            ((CheckBox) findViewById(id)).setChecked(true);
+        }
+    }
+
+    /** Ticks the saved days and fills their opening hours ("1:8.00-18.00"). */
+    private void applyDeliveryDays(Map<Integer, String> saved) {
+        for (DeliveryDayRow row : deliveryDayRows) {
+            String hours = saved.get(row.dayIndex);
+            row.check.setChecked(hours != null);
+            if (hours == null) {
+                continue;
+            }
+            int dash = hours.indexOf('-');
+            if (dash > 0) {
+                row.open.setText(hours.substring(0, dash).trim());
+                row.close.setText(hours.substring(dash + 1).trim());
+            }
+        }
+    }
+
+    private void applyPaymentMethod(String value) {
+        for (int i = 0; i < PAYMENT_VALUES.length; i++) {
+            if (PAYMENT_VALUES[i].equalsIgnoreCase(value == null ? "" : value.trim())) {
+                paymentMethodValue = PAYMENT_VALUES[i];
+                TextView label = findViewById(R.id.paymentMethodLabel);
+                label.setText(PAYMENT_LABELS[i]);
+                label.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+                return;
+            }
+        }
+    }
+
+    private void setText(int id, String value) {
+        if (!isBlank(value)) {
+            ((TextView) findViewById(id)).setText(value);
+        }
+    }
+
+    /**
+     * Splits a stored MSISDN ("27821234567") back into the country picker and the
+     * national part so the field reads the way the user typed it.
+     */
+    private void setPhone(CountryCodePicker ccp, int fieldId, String stored) {
+        if (isBlank(stored)) {
+            return;
+        }
+        String digits = stored.trim();
+        if (!digits.startsWith("+")) {
+            digits = "+" + digits;
+        }
+        // Ask the picker to split it; when it cannot, show the raw number as typed.
+        try {
+            ccp.setFullNumber(digits);
+        } catch (Exception e) {
+            ((TextView) findViewById(fieldId)).setText(stored);
+        }
+    }
+
+    /**
+     * Resolves the distributor this portal signs in as. Traders created here always
+     * belong to it, so step 6 shows it as a fixed chip instead of a picker.
+     */
+    private void loadCurrentDistributor() {
+        ApiClient.get(this).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                BaseInfoData.PortalInfo portal = data == null ? null : data.portal_info;
+                if (portal == null) {
+                    return;
+                }
+                if (!isBlank(portal.id)) {
+                    currentDistributorId = portal.id;
+                }
+                String label = !isBlank(portal.trading_name)
+                        ? portal.trading_name : portal.company_legal_name;
+                TextView chip = findViewById(R.id.distributorChip);
+                chip.setText(isBlank(label) ? "" : label);
+                chip.setVisibility(isBlank(label) ? View.GONE : View.VISIBLE);
+            }
+
+            @Override
+            public void onError(String message) {
+                // Non-fatal: the trader keeps whatever distributor it already had.
+            }
+        });
     }
 
     // ---- Stepper ---------------------------------------------------------
@@ -260,7 +514,7 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     private void showStep(int index) {
         currentStep = index;
         flipper.setDisplayedChild(index);
-        btnContinue.setText(index == STEP_TERMS ? R.string.register_btn : R.string.continue_btn);
+        btnContinue.setText(index == STEP_TERMS ? submitLabel() : R.string.continue_btn);
         renderStepper();
         // Keep the active step chip visible in the horizontal stepper.
         stepperContainer.post(() -> {
@@ -285,23 +539,27 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 }
                 if (text(R.id.etOwnerMobile).isEmpty()) return fail(R.string.err_mobile);
                 if (!isValidEmail(text(R.id.etOwnerEmail))) return fail(R.string.err_email);
-                return true;
+                return validatePassword();
             case 1:
                 if (text(R.id.etBusinessName).isEmpty()) return fail(R.string.err_business_name);
                 return true;
             case STEP_TRADER:
-                if (selectedTraderTypeSlug == null) return fail(R.string.err_trader_type);
+                if (isBlank(selectedTraderTypeSlug)) return fail(R.string.err_trader_type);
                 return true;
             case STEP_LOCATION:
                 if (pickedLat == null || pickedLng == null) return fail(R.string.err_location);
                 return true;
             case STEP_VERIFY:
                 for (DocDef d : docDefs) {
-                    if (d.required && !docUris.containsKey(d.key)) {
+                    // When editing, a document already on file satisfies the requirement —
+                    // only a replacement is re-uploaded.
+                    if (d.required && !docUris.containsKey(d.key) && !hasStoredDocument(d.key)) {
                         return fail(R.string.err_documents);
                     }
                 }
                 return true;
+            case STEP_DISTRIBUTOR:
+                return validateDeliveryDays();
             case STEP_TERMS:
                 if (!checked(R.id.cbAccurate) || !checked(R.id.cbTos)
                         || !checked(R.id.cbKyc) || !checked(R.id.cbComms)) {
@@ -311,6 +569,35 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
             default:
                 return true;
         }
+    }
+
+    /**
+     * A new trader needs a password to sign in with. Editing leaves it blank to keep the
+     * current one, so the rules only apply once something has been typed.
+     */
+    private boolean validatePassword() {
+        String password = rawText(R.id.etPassword);
+        String confirm = rawText(R.id.etConfirmPassword);
+        if (isEditing() && password.isEmpty() && confirm.isEmpty()) {
+            return true;
+        }
+        if (password.length() < MIN_PASSWORD) {
+            return fail(R.string.err_password_length);
+        }
+        if (!password.equals(confirm)) {
+            return fail(R.string.err_password_match);
+        }
+        return true;
+    }
+
+    /** Every ticked delivery day needs both an opening and a closing time. */
+    private boolean validateDeliveryDays() {
+        for (DeliveryDayRow row : deliveryDayRows) {
+            if (row.isSelected() && (row.openText().isEmpty() || row.closeText().isEmpty())) {
+                return fail(R.string.err_delivery_hours);
+            }
+        }
+        return true;
     }
 
     private boolean fail(int msgRes) {
@@ -338,8 +625,111 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
 
     private void setupSelectionFields() {
         findViewById(R.id.categoryField).setOnClickListener(v -> showCategoryDialog());
-        findViewById(R.id.distributorField).setOnClickListener(v -> showDistributorDialog());
         findViewById(R.id.paymentMethodField).setOnClickListener(v -> showPaymentDialog());
+    }
+
+    // ---- Password --------------------------------------------------------
+
+    private void setupPasswordFields() {
+        bindPasswordToggle(findViewById(R.id.etPassword), findViewById(R.id.togglePassword));
+        bindPasswordToggle(findViewById(R.id.etConfirmPassword),
+                findViewById(R.id.toggleConfirmPassword));
+    }
+
+    /** Eye button that flips the field between dots and plain text. */
+    private void bindPasswordToggle(EditText field, ImageButton toggle) {
+        toggle.setOnClickListener(v -> {
+            boolean hidden = field.getTransformationMethod() instanceof PasswordTransformationMethod;
+            field.setInputType(InputType.TYPE_CLASS_TEXT | (hidden
+                    ? InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    : InputType.TYPE_TEXT_VARIATION_PASSWORD));
+            toggle.setImageResource(hidden ? R.drawable.ic_visibility_off : R.drawable.ic_visibility);
+            field.setSelection(field.getText() == null ? 0 : field.getText().length());
+        });
+    }
+
+    // ---- Company logo ----------------------------------------------------
+
+    private void setupLogoUpload() {
+        logoPicker = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                showCropDialog(uri);
+            }
+        });
+        findViewById(R.id.logoUploadBox).setOnClickListener(v -> logoPicker.launch("image/*"));
+    }
+
+    /** Scale / rotate / crop the picked image before it becomes company_logo. */
+    private void showCropDialog(Uri uri) {
+        Bitmap bitmap = decodeBitmap(uri, 1500);
+        if (bitmap == null) {
+            Toast.makeText(this, R.string.err_documents, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_crop_logo, null);
+        LogoCropView cropView = view.findViewById(R.id.cropView);
+        cropView.setBitmap(bitmap);
+
+        android.widget.SeekBar scale = view.findViewById(R.id.cropScale);
+        android.widget.SeekBar rotation = view.findViewById(R.id.cropRotation);
+        scale.setProgress(50); // 0.5 + 50/100 = 1.0
+        rotation.setProgress(0);
+        scale.setOnSeekBarChangeListener(new SimpleSeekBarListener() {
+            @Override public void onProgressChanged(android.widget.SeekBar sb, int p, boolean u) {
+                cropView.setUserScale(0.5f + p / 100f);
+            }
+        });
+        rotation.setOnSeekBarChangeListener(new SimpleSeekBarListener() {
+            @Override public void onProgressChanged(android.widget.SeekBar sb, int p, boolean u) {
+                cropView.setRotationDegrees(p);
+            }
+        });
+
+        AlertDialog dialog = new AlertDialog.Builder(this).setView(view).create();
+        view.findViewById(R.id.cropClose).setOnClickListener(v -> dialog.dismiss());
+        view.findViewById(R.id.cropCancel).setOnClickListener(v -> dialog.dismiss());
+        view.findViewById(R.id.cropUploadNew).setOnClickListener(v -> {
+            dialog.dismiss();
+            logoPicker.launch("image/*");
+        });
+        view.findViewById(R.id.cropOk).setOnClickListener(v -> {
+            Bitmap cropped = cropView.getCroppedBitmap();
+            if (cropped != null) {
+                logoBitmap = cropped;
+                ImageView preview = findViewById(R.id.logoPreview);
+                preview.setImageBitmap(cropped);
+                preview.setVisibility(View.VISIBLE);
+                findViewById(R.id.logoPlaceholder).setVisibility(View.GONE);
+            }
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    private abstract static class SimpleSeekBarListener
+            implements android.widget.SeekBar.OnSeekBarChangeListener {
+        @Override public void onStartTrackingTouch(android.widget.SeekBar seekBar) { }
+        @Override public void onStopTrackingTouch(android.widget.SeekBar seekBar) { }
+    }
+
+    /** Decodes a picked image, subsampled so a full-resolution photo cannot blow up memory. */
+    @Nullable
+    private Bitmap decodeBitmap(Uri uri, int maxDim) {
+        try {
+            BitmapFactory.Options bounds = new BitmapFactory.Options();
+            bounds.inJustDecodeBounds = true;
+            try (InputStream in = getContentResolver().openInputStream(uri)) {
+                BitmapFactory.decodeStream(in, null, bounds);
+            }
+            int longest = Math.max(bounds.outWidth, bounds.outHeight);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = Math.max(1, longest / Math.max(1, maxDim));
+            try (InputStream in = getContentResolver().openInputStream(uri)) {
+                return BitmapFactory.decodeStream(in, null, options);
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private void renderTraderTypes() {
@@ -435,46 +825,6 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
-    private void showDistributorDialog() {
-        if (distributors.isEmpty()) {
-            return;
-        }
-        String[] names = new String[distributors.size()];
-        boolean[] checkedItems = new boolean[distributors.size()];
-        for (int i = 0; i < distributors.size(); i++) {
-            names[i] = distributors.get(i).displayName();
-            checkedItems[i] = selectedDistributorIds.contains(distributors.get(i).id);
-        }
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.preferred_distributors)
-                .setMultiChoiceItems(names, checkedItems, (d, which, isChecked) -> {
-                    long id = distributors.get(which).id;
-                    if (isChecked) {
-                        if (!selectedDistributorIds.contains(id)) selectedDistributorIds.add(id);
-                    } else {
-                        selectedDistributorIds.remove(id);
-                    }
-                })
-                .setPositiveButton(android.R.string.ok, (d, w) -> renderDistributorChips())
-                .show();
-    }
-
-    private void renderDistributorChips() {
-        FlowLayout chips = findViewById(R.id.distributorChips);
-        chips.removeAllViews();
-        TextView hint = findViewById(R.id.distributorHint);
-        hint.setVisibility(selectedDistributorIds.isEmpty() ? View.VISIBLE : View.GONE);
-        for (ReferenceData.Distributor dist : distributors) {
-            if (!selectedDistributorIds.contains(dist.id)) {
-                continue;
-            }
-            chips.addView(buildChip(dist.displayName(), () -> {
-                selectedDistributorIds.remove(dist.id);
-                renderDistributorChips();
-            }));
-        }
-    }
-
     private void showPaymentDialog() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.preferred_payment_method)
@@ -487,28 +837,84 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 .show();
     }
 
-    private void buildDeliveryDayChips() {
-        FlowLayout container = findViewById(R.id.deliveryDaysContainer);
-        for (String day : DAY_LABELS) {
-            TextView chip = new TextView(this);
-            chip.setText(day);
-            chip.setTextSize(13);
-            chip.setPadding(dp(16), dp(8), dp(16), dp(8));
-            chip.setBackgroundResource(R.drawable.bg_chip_unselected);
-            chip.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-            chip.setOnClickListener(v -> {
-                if (selectedDays.contains(day)) {
-                    selectedDays.remove(day);
-                    chip.setBackgroundResource(R.drawable.bg_chip_unselected);
-                    chip.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-                } else {
-                    selectedDays.add(day);
-                    chip.setBackgroundResource(R.drawable.bg_trader_type_card_selected);
-                    chip.setTextColor(ContextCompat.getColor(this, R.color.purple_primary));
+    /**
+     * One row per day (16.Trader-Distributor.png): tick the day, then set its opening
+     * and closing time. Ticking a fresh day seeds the standard 08:00–18:00 window so the
+     * common case needs a single tap.
+     */
+    private void buildDeliveryDayRows() {
+        LinearLayout container = findViewById(R.id.deliveryDaysContainer);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (int day = 0; day < DAY_LABELS.length; day++) {
+            View row = inflater.inflate(R.layout.item_delivery_day, container, false);
+            CheckBox check = row.findViewById(R.id.dayCheck);
+            TextView label = row.findViewById(R.id.dayLabel);
+            TextView open = row.findViewById(R.id.dayOpen);
+            TextView close = row.findViewById(R.id.dayClose);
+            label.setText(DAY_LABELS[day]);
+
+            DeliveryDayRow dayRow = new DeliveryDayRow(day, check, open, close);
+            check.setOnCheckedChangeListener((button, checked) -> {
+                if (checked && dayRow.openText().isEmpty() && dayRow.closeText().isEmpty()) {
+                    open.setText("8.00");
+                    close.setText("18.00");
                 }
+                applyDayRowEnabled(dayRow);
             });
-            container.addView(chip);
+            label.setOnClickListener(v -> check.setChecked(!check.isChecked()));
+            open.setOnClickListener(v -> pickTime(open));
+            close.setOnClickListener(v -> pickTime(close));
+
+            applyDayRowEnabled(dayRow);
+            container.addView(row);
+            deliveryDayRows.add(dayRow);
         }
+    }
+
+    /** Times only make sense on a day that is actually selected. */
+    private void applyDayRowEnabled(DeliveryDayRow row) {
+        boolean enabled = row.isSelected();
+        row.open.setEnabled(enabled);
+        row.close.setEnabled(enabled);
+        row.open.setAlpha(enabled ? 1f : 0.45f);
+        row.close.setAlpha(enabled ? 1f : 0.45f);
+    }
+
+    /** Times round-trip as "8.00" / "18.30", which is the format the API stores. */
+    private void pickTime(TextView target) {
+        String current = target.getText() == null ? "" : target.getText().toString().trim();
+        int hour = 8;
+        int minute = 0;
+        int dot = current.indexOf('.');
+        try {
+            if (dot > 0) {
+                hour = Integer.parseInt(current.substring(0, dot));
+                minute = Integer.parseInt(current.substring(dot + 1));
+            } else if (!current.isEmpty()) {
+                hour = Integer.parseInt(current);
+            }
+        } catch (NumberFormatException ignored) {
+            // Unparsable value — open the picker on the default 08:00.
+        }
+        new TimePickerDialog(this, (view, pickedHour, pickedMinute) ->
+                target.setText(String.format(Locale.US, "%d.%02d", pickedHour, pickedMinute)),
+                hour, minute, true).show();
+    }
+
+    /** "1:8.00-18.00/3:8.00-18.00" — day index first, Sunday is 0. */
+    private String deliveryDaysParam() {
+        StringBuilder value = new StringBuilder();
+        for (DeliveryDayRow row : deliveryDayRows) {
+            if (!row.isSelected() || row.openText().isEmpty() || row.closeText().isEmpty()) {
+                continue;
+            }
+            if (value.length() > 0) {
+                value.append('/');
+            }
+            value.append(row.dayIndex).append(':')
+                    .append(row.openText()).append('-').append(row.closeText());
+        }
+        return value.toString();
     }
 
     /** A removable purple chip (reuses item_tag_chip). */
@@ -811,9 +1217,6 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 if (data.trader_types != null) {
                     traderTypes.addAll(data.trader_types);
                 }
-                if (data.distributors != null) {
-                    distributors.addAll(data.distributors);
-                }
                 if (data.product_categories != null) {
                     for (ReferenceData.ProductCategory c : data.product_categories) {
                         if (c.parent_id == null) {
@@ -821,7 +1224,11 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                         }
                     }
                 }
+                // The saved trader type and categories only become selectable now that
+                // the lookup lists have arrived.
+                normaliseTraderTypeSelection();
                 renderTraderTypes();
+                renderCategoryChips();
             }
 
             @Override
@@ -831,16 +1238,37 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         });
     }
 
+    /**
+     * The API stores trader_type as a numeric id on some records and as a slug on others.
+     * Resolve whichever came back to the slug the cards are keyed by.
+     */
+    private void normaliseTraderTypeSelection() {
+        if (isBlank(selectedTraderTypeSlug)) {
+            return;
+        }
+        String saved = selectedTraderTypeSlug.trim();
+        for (ReferenceData.TraderType type : traderTypes) {
+            if (saved.equalsIgnoreCase(type.slug) || saved.equals(String.valueOf(type.id))) {
+                selectedTraderTypeSlug = type.slug;
+                return;
+            }
+        }
+    }
+
     // ---- Submit ----------------------------------------------------------
 
     private void submit() {
         Map<String, String> form = new TreeMap<>();
+        if (isEditing()) {
+            form.put("id", editing.id == null ? "" : editing.id);
+        }
+
         form.put("first_name", text(R.id.etFirstName));
         form.put("last_name", text(R.id.etLastName));
         form.put("id_number", text(R.id.etIdNumber));
         form.put("passport_number", text(R.id.etPassportNumber));
         form.put("mobile_number", fullPhone(ccpOwner, R.id.etOwnerMobile));
-        form.put("email_address", text(R.id.etOwnerEmail));
+        form.put("email", text(R.id.etOwnerEmail));
 
         form.put("business_name", text(R.id.etBusinessName));
         form.put("trading_name", text(R.id.etTradingName));
@@ -848,7 +1276,7 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
         form.put("business_phone_number", fullPhone(ccpBusiness, R.id.etBusinessPhone));
         form.put("business_email", text(R.id.etBusinessEmail));
 
-        form.put("trader_type", selectedTraderTypeSlug == null ? "" : selectedTraderTypeSlug);
+        form.put("trader_type", isBlank(selectedTraderTypeSlug) ? "" : selectedTraderTypeSlug);
         form.put("primary_product_category_ids", joinLongs(selectedCategoryIds));
 
         form.put("address", text(R.id.etAddressSearch));
@@ -857,13 +1285,19 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
             form.put("longitude", String.valueOf(pickedLng));
         }
 
-        form.put("preferred_distributor_ids", joinLongs(selectedDistributorIds));
-        if (!selectedDistributorIds.isEmpty()) {
-            form.put("recommended_distributor", String.valueOf(selectedDistributorIds.get(0)));
+        // This is the distributor portal: the trader belongs to us and nobody else.
+        String distributorId = resolveDistributorId();
+        if (!distributorId.isEmpty()) {
+            form.put("preferred_distributor_ids", distributorId);
         }
-        form.put("preferred_delivery_days", TextUtils.join(",", selectedDays));
+        form.put("preferred_delivery_days", deliveryDaysParam());
         if (paymentMethodValue != null) {
             form.put("payment_method", paymentMethodValue);
+        }
+        // Blank on an edit means "keep the current password", so only send a real value.
+        String password = rawText(R.id.etPassword);
+        if (!password.isEmpty()) {
+            form.put("password", password);
         }
         form.put("create_wallet", createWalletNow ? "1" : "0");
 
@@ -874,14 +1308,19 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
                 files.add(part);
             }
         }
+        if (logoBitmap != null) {
+            files.add(logoFilePart());
+        }
 
         btnContinue.setEnabled(false);
-        btnContinue.setText(R.string.registering);
-        ApiClient.get(this).createTrader(form, files, new ApiCallback<CreateTraderData>() {
+        btnContinue.setText(isEditing() ? R.string.saving : R.string.registering);
+
+        ApiCallback<CreateTraderData> callback = new ApiCallback<CreateTraderData>() {
             @Override
             public void onSuccess(CreateTraderData data) {
                 Toast.makeText(CreateTraderActivity.this,
-                        R.string.trader_created_msg, Toast.LENGTH_SHORT).show();
+                        isEditing() ? R.string.trader_updated_msg : R.string.trader_created_msg,
+                        Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
             }
@@ -889,10 +1328,46 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onError(String message) {
                 btnContinue.setEnabled(true);
-                btnContinue.setText(R.string.register_btn);
+                btnContinue.setText(submitLabel());
                 Toast.makeText(CreateTraderActivity.this, message, Toast.LENGTH_LONG).show();
             }
-        });
+        };
+
+        if (isEditing()) {
+            ApiClient.get(this).updateTrader(form, files, callback);
+        } else {
+            ApiClient.get(this).createTrader(form, files, callback);
+        }
+    }
+
+    private int submitLabel() {
+        return isEditing() ? R.string.save_changes_btn : R.string.register_btn;
+    }
+
+    /**
+     * The signed-in distributor, falling back to whatever the record already carried if
+     * base-info has not answered yet — better to leave the link untouched than to clear it.
+     */
+    private String resolveDistributorId() {
+        if (!currentDistributorId.isEmpty()) {
+            return currentDistributorId;
+        }
+        if (isEditing() && !isBlank(editing.preferred_distributor_ids)) {
+            return editing.preferred_distributor_ids.trim();
+        }
+        return "";
+    }
+
+    /** JPEG-encodes the cropped logo for the company_logo part. */
+    private Http.FilePart logoFilePart() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        logoBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+        return new Http.FilePart("company_logo", "company_logo.jpg", "image/jpeg", out.toByteArray());
+    }
+
+    /** True when the trader being edited already has a file stored for this document. */
+    private boolean hasStoredDocument(String key) {
+        return isEditing() && !editing.documentName(key).isEmpty();
     }
 
     // ---- File helpers ----------------------------------------------------
@@ -938,6 +1413,16 @@ public class CreateTraderActivity extends AppCompatActivity implements OnMapRead
     private String text(int id) {
         TextView tv = findViewById(id);
         return tv.getText() == null ? "" : tv.getText().toString().trim();
+    }
+
+    /** Passwords are taken verbatim — trimming would silently change what the user typed. */
+    private String rawText(int id) {
+        TextView tv = findViewById(id);
+        return tv.getText() == null ? "" : tv.getText().toString();
+    }
+
+    private static boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty() || "null".equals(value);
     }
 
     private boolean checked(int id) {

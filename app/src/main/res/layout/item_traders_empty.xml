@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shown in place of the trader cards; the KPI header above it stays visible. -->
+<com.anokix.distributorapp.ui.views.RobotoTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="48dp"
+    android:textColor="@color/text_secondary"
+    android:textSize="@dimen/text_body" />
