@@ -155,6 +155,7 @@
             android:background="@drawable/bg_login_button_outlined"
             android:drawableStart="@drawable/ic_download"
             android:drawablePadding="8dp"
+            android:paddingHorizontal="16dp"
             android:drawableTint="@color/purple_primary"
             android:gravity="center"
             android:text="@string/report_download"
