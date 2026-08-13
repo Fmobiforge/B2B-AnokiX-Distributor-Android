@@ -168,9 +168,7 @@
     <string name="pos_your_machines">Your card machines</string>
     <string name="pos_machines_sub">Identified by the serial number printed on the device.</string>
     <string name="pos_add_machine">Add machine</string>
-    <string name="pos_add">Add</string>
     <string name="pos_sending">Sending to machine…</string>
-    <string name="pos_secure_note">Card details never pass through this app — Powered by PayCloud</string>
     <string name="pos_add_machine_title">Add a card machine</string>
     <string name="pos_serial_number">Serial number</string>
     <string name="pos_serial_hint">e.g. WPHK002352000111</string>

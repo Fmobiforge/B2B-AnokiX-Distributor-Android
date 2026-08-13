@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Card Machine (New-Design/Card-Machine/1.Card-Machine-Dashboard.png). The payment
-     panel borrows the anokiX wallet's purple hero so the two money screens match. -->
+<!-- Card Machine — follows New-Design/Card-Machine/1.Card-Machine-Dashboard.png: take a
+     payment, manage the linked PayCloud machines, review what was pushed to them. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -26,155 +26,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ===================== Payment hero ===================== -->
+            <!-- ===================== Take a card payment ===================== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_wallet_balance_card"
+                android:background="@drawable/bg_stat_card"
                 android:orientation="vertical"
-                android:padding="18dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:alpha="0.9"
-                        android:text="@string/pos_take_payment"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_body_sm" />
-
-                    <!-- Machine picker -->
-                    <LinearLayout
-                        android:id="@+id/terminalField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="34dp"
-                        android:background="@drawable/bg_wallet_glass"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="10dp">
-
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_card"
-                            app:tint="@color/white" />
-
-                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                            android:id="@+id/terminalLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:maxWidth="120dp"
-                            android:text="@string/pos_select_machine"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/text_caption" />
-
-                        <ImageView
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:layout_marginStart="6dp"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_chevron_down"
-                            app:tint="@color/white" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Amount -->
-                <LinearLayout
-                    android:id="@+id/amountRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:baselineAligned="false"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:alpha="0.75"
-                        android:text="@string/currency_symbol"
-                        android:textColor="@color/white"
-                        android:textSize="22sp" />
-
-                    <com.anokix.distributorapp.ui.views.RobotoEditText
-                        android:id="@+id/amountInput"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/pos_amount_hint"
-                        android:inputType="numberDecimal"
-                        android:letterSpacing="-0.02"
-                        android:maxLines="1"
-                        android:textColor="@color/white"
-                        android:textColorHint="#80FFFFFF"
-                        android:textSize="34sp" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/amountUnderline"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_wallet_divider_light" />
-
-                <!-- Quick amounts -->
-                <HorizontalScrollView
-                    android:id="@+id/quickAmountScroll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:clipToPadding="false"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:id="@+id/quickAmounts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
-
-                <!-- Reference -->
-                <com.anokix.distributorapp.ui.views.RobotoEditText
-                    android:id="@+id/referenceInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_pos_glass_input"
-                    android:gravity="center_vertical"
-                    android:hint="@string/pos_reference_hint"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1"
-                    android:paddingHorizontal="14dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="#99FFFFFF"
-                    android:textSize="@dimen/text_body" />
+                android:padding="16dp">
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                    android:id="@+id/sendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pos_take_payment"
+                    android:textColor="@color/top_title"
+                    android:textSize="@dimen/text_display" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_wallet_white_button"
-                    android:drawablePadding="8dp"
-                    android:gravity="center"
-                    android:text="@string/pos_send_to_machine"
-                    android:textColor="@color/purple_dark"
-                    android:textSize="15sp"
-                    app:drawableStartCompat="@drawable/ic_card"
-                    app:drawableTint="@color/purple_dark" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/pos_take_payment_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption" />
 
                 <!-- Shown until a machine is linked -->
                 <LinearLayout
@@ -182,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_pos_glass_input"
+                    android:background="@drawable/bg_info_box"
                     android:orientation="horizontal"
                     android:padding="14dp"
                     android:visibility="gone">
@@ -192,7 +66,7 @@
                         android:layout_height="20dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_check_circle"
-                        app:tint="@color/white" />
+                        app:tint="@color/info" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -206,7 +80,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/pos_no_machine_title"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_body" />
 
                         <com.anokix.distributorapp.ui.views.RobotoTextView
@@ -214,41 +88,101 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:alpha="0.85"
                             android:text="@string/pos_no_machine_body"
-                            android:textColor="@color/white"
+                            android:textColor="@color/text_secondary"
                             android:textSize="@dimen/text_caption" />
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- Payment form -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/paymentForm"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="13dp"
-                        android:layout_height="13dp"
-                        android:alpha="0.75"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_shield_check"
-                        app:tint="@color/white" />
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/pos_amount" />
 
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_weight="1"
-                        android:alpha="0.75"
-                        android:text="@string/pos_secure_note"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_micro" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/bg_login_input"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="12dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/currency_symbol"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoEditText
+                            android:id="@+id/amountInput"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:hint="@string/pos_amount_hint"
+                            android:inputType="numberDecimal"
+                            android:maxLines="1"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_secondary"
+                            android:textSize="@dimen/text_body" />
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/pos_card_machine" />
+
+                    <LinearLayout
+                        android:id="@+id/terminalField"
+                        style="@style/ProductDropdown"
+                        android:layout_height="48dp">
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/terminalLabel"
+                            style="@style/ProductDropdownLabel"
+                            android:text="@string/pos_select_machine" />
+
+                        <ImageView style="@style/ProductDropdownChevron" />
+                    </LinearLayout>
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        style="@style/StoreFieldLabel"
+                        android:text="@string/pos_reference" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoEditText
+                        android:id="@+id/referenceInput"
+                        style="@style/StoreFieldInput"
+                        android:layout_height="48dp"
+                        android:hint="@string/pos_reference_hint"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/sendButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_login_button_primary"
+                        android:drawablePadding="8dp"
+                        android:gravity="center"
+                        android:text="@string/pos_send_to_machine"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
+                        app:drawableStartCompat="@drawable/ic_card"
+                        app:drawableTint="#FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- ===================== Machines ===================== -->
+            <!-- ===================== Your card machines ===================== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -263,80 +197,59 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <FrameLayout
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@drawable/bg_kpi_icon_purple">
-
-                        <ImageView
-                            android:layout_width="17dp"
-                            android:layout_height="17dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_card"
-                            app:tint="@color/purple_primary" />
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/pos_your_machines"
-                            android:textColor="@color/top_title"
-                            android:textSize="@dimen/text_title" />
-
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp"
-                            android:text="@string/pos_machines_sub"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/text_micro" />
-                    </LinearLayout>
+                        android:text="@string/pos_your_machines"
+                        android:textColor="@color/top_title"
+                        android:textSize="@dimen/text_display" />
 
                     <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:id="@+id/addMachineButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="38dp"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/bg_login_button_outlined"
-                        android:drawablePadding="4dp"
+                        android:drawablePadding="6dp"
                         android:gravity="center"
-                        android:paddingHorizontal="12dp"
-                        android:text="@string/pos_add"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/pos_add_machine"
                         android:textColor="@color/purple_primary"
                         android:textSize="@dimen/text_body_sm"
                         app:drawableStartCompat="@drawable/ic_add"
                         app:drawableTint="@color/purple_primary" />
                 </LinearLayout>
 
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/pos_machines_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption" />
+
                 <LinearLayout
                     android:id="@+id/machineList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="vertical" />
 
                 <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:id="@+id/machinesEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
                     android:gravity="center"
                     android:text="@string/pos_no_machines"
                     android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/text_body_sm"
+                    android:textSize="@dimen/text_body"
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- ===================== Payments ===================== -->
+            <!-- ===================== Card machine payments ===================== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -345,60 +258,20 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <LinearLayout
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pos_payments"
+                    android:textColor="@color/top_title"
+                    android:textSize="@dimen/text_display" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@drawable/bg_kpi_icon_blue">
-
-                        <ImageView
-                            android:layout_width="17dp"
-                            android:layout_height="17dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@null"
-                            android:src="@drawable/ic_receipt"
-                            app:tint="@color/info" />
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/pos_payments"
-                            android:textColor="@color/top_title"
-                            android:textSize="@dimen/text_title" />
-
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp"
-                            android:text="@string/pos_payments_sub"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/text_micro" />
-                    </LinearLayout>
-
-                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                        android:id="@+id/paymentCountChip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_purple"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="4dp"
-                        android:textColor="@color/purple_primary"
-                        android:textSize="@dimen/text_micro"
-                        android:visibility="gone" />
-                </LinearLayout>
+                    android:layout_marginTop="4dp"
+                    android:text="@string/pos_payments_sub"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption" />
 
                 <LinearLayout
                     android:id="@+id/paymentList"
@@ -437,7 +310,7 @@
                     android:id="@+id/paginationBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone">
