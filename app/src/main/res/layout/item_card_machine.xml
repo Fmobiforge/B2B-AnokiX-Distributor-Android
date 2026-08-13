@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- One linked card machine: name, serial, status badge and the Remove action. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,20 +17,22 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="14dp">
+        android:paddingVertical="12dp">
 
         <FrameLayout
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:id="@+id/machineTile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/bg_kpi_icon_purple">
 
             <ImageView
+                android:id="@+id/machineIcon"
                 android:layout_width="19dp"
                 android:layout_height="19dp"
                 android:layout_gravity="center"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_card"
-                android:tint="@color/purple_primary" />
+                app:tint="@color/purple_primary" />
         </FrameLayout>
 
         <LinearLayout
@@ -39,32 +42,49 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-                android:id="@+id/machineName"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/top_title"
-                android:textSize="@dimen/text_body" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/machineDot"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_legend_dot" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/machineName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/top_title"
+                    android:textSize="@dimen/text_body" />
+            </LinearLayout>
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/machineSerial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:fontFamily="monospace"
+                android:letterSpacing="0.02"
                 android:maxLines="1"
                 android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_caption" />
+                android:textSize="@dimen/text_micro" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end|center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/machineStatus"
@@ -76,17 +96,16 @@
                 android:textColor="@color/success"
                 android:textSize="@dimen/text_micro" />
 
-            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            <ImageButton
                 android:id="@+id/machineRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="?attr/selectableItemBackground"
-                android:paddingHorizontal="4dp"
-                android:paddingVertical="2dp"
-                android:text="@string/pos_remove"
-                android:textColor="@color/danger"
-                android:textSize="@dimen/text_caption" />
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_icon_button_circle"
+                android:contentDescription="@string/pos_remove"
+                android:padding="9dp"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/danger" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

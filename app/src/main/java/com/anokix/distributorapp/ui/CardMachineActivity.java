@@ -1,9 +1,12 @@
 package com.anokix.distributorapp.ui;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.PosPaymentsData;
 import com.anokix.distributorapp.network.dto.PosTerminalsData;
+import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.ParseException;
@@ -36,6 +40,8 @@ import java.util.Locale;
 public class CardMachineActivity extends BaseSecondaryActivity {
 
     private static final int PER_PAGE = 10;
+    /** Quick-amount pills on the payment hero, mirroring the wallet top-up sheet. */
+    private static final int[] QUICK_AMOUNTS = {50, 100, 200, 500, 1000};
 
     private final List<PosTerminalsData.Terminal> terminals = new ArrayList<>();
     private final List<PosTerminalsData.Terminal> activeTerminals = new ArrayList<>();
@@ -49,9 +55,11 @@ public class CardMachineActivity extends BaseSecondaryActivity {
     private PosPaymentsData lastPayments;
 
     private EditText amountInput, referenceInput;
-    private TextView terminalLabel, machinesEmpty, paginationLabel;
-    private View noMachineBanner, paymentForm, paymentsEmpty, paginationBar, sendButton;
-    private LinearLayout machineList, paymentList;
+    private TextView terminalLabel, machinesEmpty, paginationLabel, paymentCountChip, sendButton;
+    private View noMachineBanner, paymentsEmpty, paginationBar, amountRow, amountUnderline,
+            quickAmountScroll, terminalField;
+    private LinearLayout machineList, paymentList, quickAmounts;
+    private final List<TextView> quickAmountChips = new ArrayList<>();
 
     @Override
     protected int getLayoutRes() {
@@ -73,17 +81,23 @@ public class CardMachineActivity extends BaseSecondaryActivity {
         amountInput = findViewById(R.id.amountInput);
         referenceInput = findViewById(R.id.referenceInput);
         terminalLabel = findViewById(R.id.terminalLabel);
+        terminalField = findViewById(R.id.terminalField);
         machineList = findViewById(R.id.machineList);
         machinesEmpty = findViewById(R.id.machinesEmpty);
         paymentList = findViewById(R.id.paymentList);
         paymentsEmpty = findViewById(R.id.paymentsEmpty);
         paginationBar = findViewById(R.id.paginationBar);
         paginationLabel = findViewById(R.id.paginationLabel);
+        paymentCountChip = findViewById(R.id.paymentCountChip);
         noMachineBanner = findViewById(R.id.noMachineBanner);
-        paymentForm = findViewById(R.id.paymentForm);
         sendButton = findViewById(R.id.sendButton);
+        amountRow = findViewById(R.id.amountRow);
+        amountUnderline = findViewById(R.id.amountUnderline);
+        quickAmountScroll = findViewById(R.id.quickAmountScroll);
+        quickAmounts = findViewById(R.id.quickAmounts);
 
-        findViewById(R.id.terminalField).setOnClickListener(v -> showTerminalPicker());
+        buildQuickAmounts();
+        terminalField.setOnClickListener(v -> showTerminalPicker());
         findViewById(R.id.addMachineButton).setOnClickListener(v -> showAddMachineSheet());
         sendButton.setOnClickListener(v -> sendPayment());
 
@@ -107,6 +121,53 @@ public class CardMachineActivity extends BaseSecondaryActivity {
     protected void loadData() {
         loadTerminals();
         loadPayments();
+    }
+
+    /** Tap-to-fill amounts; the matching pill lights up while the field agrees with it. */
+    private void buildQuickAmounts() {
+        quickAmounts.removeAllViews();
+        quickAmountChips.clear();
+        for (int amount : QUICK_AMOUNTS) {
+            TextView chip = new RobotoBoldTextView(this);
+            chip.setText(String.format(Locale.US, "R%,d", amount));
+            chip.setTextSize(12);
+            chip.setTextColor(ContextCompat.getColor(this, R.color.white));
+            chip.setBackgroundResource(R.drawable.bg_pos_glass_chip);
+            chip.setPadding(dp(14), dp(7), dp(14), dp(7));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMarginEnd(dp(8));
+            chip.setLayoutParams(lp);
+            chip.setOnClickListener(v -> {
+                amountInput.setText(String.valueOf(amount));
+                amountInput.setSelection(amountInput.getText().length());
+            });
+            quickAmounts.addView(chip);
+            quickAmountChips.add(chip);
+        }
+
+        amountInput.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int a, int b, int c) { }
+
+            @Override public void onTextChanged(CharSequence s, int a, int b, int c) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                highlightQuickAmount(parseAmount(s == null ? "" : s.toString()));
+            }
+        });
+    }
+
+    private void highlightQuickAmount(double typed) {
+        for (int i = 0; i < quickAmountChips.size(); i++) {
+            boolean match = Math.abs(QUICK_AMOUNTS[i] - typed) < 0.005;
+            quickAmountChips.get(i).setAlpha(match ? 1f : 0.85f);
+            quickAmountChips.get(i).setBackgroundResource(match
+                    ? R.drawable.bg_wallet_white_button : R.drawable.bg_pos_glass_chip);
+            quickAmountChips.get(i).setTextColor(ContextCompat.getColor(this,
+                    match ? R.color.purple_dark : R.color.white));
+            quickAmountChips.get(i).setPadding(dp(14), dp(7), dp(14), dp(7));
+        }
     }
 
     // ---- Terminals -------------------------------------------------------
@@ -157,9 +218,15 @@ public class CardMachineActivity extends BaseSecondaryActivity {
                 selectedTerminal == null ? R.color.text_secondary : R.color.text_primary));
 
         // Without an active machine (or without PayCloud switched on) there is nothing to
-        // send to, so the form gives way to an explanatory banner.
+        // send to, so the entry fields give way to an explanatory panel.
         boolean canTakePayment = posConfigured && !activeTerminals.isEmpty();
-        paymentForm.setVisibility(canTakePayment ? View.VISIBLE : View.GONE);
+        int formVisibility = canTakePayment ? View.VISIBLE : View.GONE;
+        amountRow.setVisibility(formVisibility);
+        amountUnderline.setVisibility(formVisibility);
+        quickAmountScroll.setVisibility(formVisibility);
+        referenceInput.setVisibility(formVisibility);
+        sendButton.setVisibility(formVisibility);
+        terminalField.setVisibility(activeTerminals.isEmpty() ? View.GONE : View.VISIBLE);
         noMachineBanner.setVisibility(canTakePayment ? View.GONE : View.VISIBLE);
         ((TextView) findViewById(R.id.bannerTitle)).setText(posConfigured
                 ? R.string.pos_no_machine_title : R.string.pos_not_configured);
@@ -185,13 +252,26 @@ public class CardMachineActivity extends BaseSecondaryActivity {
         ((TextView) row.findViewById(R.id.machineName)).setText(terminal.displayName());
         ((TextView) row.findViewById(R.id.machineSerial)).setText(terminal.terminal_sn);
 
+        boolean active = terminal.is_active;
+        int accent = ContextCompat.getColor(this, active ? R.color.success : R.color.text_tertiary);
+
+        // A live dot next to the name, and muted styling once a machine is unlinked.
+        View dot = row.findViewById(R.id.machineDot);
+        dot.getBackground().mutate().setTint(accent);
+        row.findViewById(R.id.machineTile).setBackgroundResource(
+                active ? R.drawable.bg_kpi_icon_purple : R.drawable.bg_badge_muted);
+        ((ImageView) row.findViewById(R.id.machineIcon)).setColorFilter(ContextCompat.getColor(
+                this, active ? R.color.purple_primary : R.color.text_tertiary));
+        row.findViewById(R.id.machineName).setAlpha(active ? 1f : 0.6f);
+        row.findViewById(R.id.machineSerial).setAlpha(active ? 1f : 0.6f);
+
         TextView status = row.findViewById(R.id.machineStatus);
-        status.setText(terminal.is_active ? R.string.active : R.string.pos_removed);
-        styleBadge(status, terminal.is_active ? R.color.success : R.color.text_secondary,
-                terminal.is_active ? R.drawable.bg_badge_success : R.drawable.bg_badge_muted);
+        status.setText(active ? R.string.active : R.string.pos_removed);
+        styleBadge(status, active ? R.color.success : R.color.text_secondary,
+                active ? R.drawable.bg_badge_success : R.drawable.bg_badge_muted);
 
         View remove = row.findViewById(R.id.machineRemove);
-        remove.setVisibility(terminal.is_active ? View.VISIBLE : View.GONE);
+        remove.setVisibility(active ? View.VISIBLE : View.GONE);
         remove.setOnClickListener(v -> confirmRemove(terminal));
         return row;
     }
@@ -290,12 +370,12 @@ public class CardMachineActivity extends BaseSecondaryActivity {
             return;
         }
 
-        sendButton.setEnabled(false);
+        setSending(true);
         ApiClient.get(this).sendPosPayment(amount, selectedTerminal.id, text(referenceInput),
                 new ApiCallback<String>() {
                     @Override
                     public void onSuccess(String message) {
-                        sendButton.setEnabled(true);
+                        setSending(false);
                         toast(message == null || message.isEmpty()
                                 ? getString(R.string.pos_sent_to_machine) : message);
                         amountInput.setText("");
@@ -306,7 +386,7 @@ public class CardMachineActivity extends BaseSecondaryActivity {
 
                     @Override
                     public void onError(String message) {
-                        sendButton.setEnabled(true);
+                        setSending(false);
                         // The terminal's own error ("device does not exist") lands here.
                         new AlertDialog.Builder(CardMachineActivity.this)
                                 .setTitle(R.string.pos_send_to_machine)
@@ -317,6 +397,13 @@ public class CardMachineActivity extends BaseSecondaryActivity {
                         loadPayments();
                     }
                 });
+    }
+
+    /** Pushing to a terminal takes a moment — say so instead of freezing the button. */
+    private void setSending(boolean sending) {
+        sendButton.setEnabled(!sending);
+        sendButton.setAlpha(sending ? 0.7f : 1f);
+        sendButton.setText(sending ? R.string.pos_sending : R.string.pos_send_to_machine);
     }
 
     // ---- Payments --------------------------------------------------------
@@ -351,6 +438,8 @@ public class CardMachineActivity extends BaseSecondaryActivity {
         }
 
         paymentsEmpty.setVisibility(payments.isEmpty() ? View.VISIBLE : View.GONE);
+        paymentCountChip.setVisibility(totalPayments > 0 ? View.VISIBLE : View.GONE);
+        paymentCountChip.setText(String.valueOf(totalPayments));
         LayoutInflater inflater = LayoutInflater.from(this);
         for (PosPaymentsData.Payment payment : payments) {
             paymentList.addView(paymentRow(inflater, payment));
@@ -382,6 +471,9 @@ public class CardMachineActivity extends BaseSecondaryActivity {
         TextView status = row.findViewById(R.id.paymentStatus);
         status.setText(statusLabel(payment.status));
         applyStatusStyle(status, payment.status);
+        // Colour rail down the left edge so the outcome reads at a glance.
+        row.findViewById(R.id.paymentRail).setBackgroundColor(
+                ContextCompat.getColor(this, statusColor(payment.status)));
 
         TextView error = row.findViewById(R.id.paymentError);
         error.setText(payment.last_error);
@@ -445,14 +537,27 @@ public class CardMachineActivity extends BaseSecondaryActivity {
     }
 
     private void applyStatusStyle(TextView badge, String status) {
+        int color = statusColor(status);
+        int background = color == R.color.success ? R.drawable.bg_badge_success
+                : color == R.color.danger ? R.drawable.bg_badge_danger
+                : R.drawable.bg_badge_warning;
+        styleBadge(badge, color, background);
+    }
+
+    @ColorRes
+    private int statusColor(String status) {
         String value = status == null ? "" : status.toLowerCase(Locale.US);
         if (value.contains("paid") || value.contains("success") || value.contains("complete")) {
-            styleBadge(badge, R.color.success, R.drawable.bg_badge_success);
-        } else if (value.contains("fail") || value.contains("cancel") || value.contains("declin")) {
-            styleBadge(badge, R.color.danger, R.drawable.bg_badge_danger);
-        } else {
-            styleBadge(badge, R.color.warning, R.drawable.bg_badge_warning);
+            return R.color.success;
         }
+        if (value.contains("fail") || value.contains("cancel") || value.contains("declin")) {
+            return R.color.danger;
+        }
+        return R.color.warning;
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     private void styleBadge(TextView badge, @ColorRes int color, @DrawableRes int background) {
