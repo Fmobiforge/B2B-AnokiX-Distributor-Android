@@ -37,6 +37,9 @@ import com.anokix.distributorapp.network.dto.ReferenceData;
 import com.anokix.distributorapp.network.dto.RegisterDistributorData;
 import com.anokix.distributorapp.network.dto.ReportsData;
 import com.anokix.distributorapp.network.dto.StoreDetailData;
+import com.anokix.distributorapp.network.dto.SupportArticlesData;
+import com.anokix.distributorapp.network.dto.SupportOverviewData;
+import com.anokix.distributorapp.network.dto.SupportTicketData;
 import com.anokix.distributorapp.network.dto.StoresData;
 import com.anokix.distributorapp.network.dto.TopupCreateData;
 import com.anokix.distributorapp.network.dto.TopupStatusData;
@@ -829,6 +832,53 @@ public final class ApiClient {
         io.execute(() -> deliverMessageOnly(
                 Http.postForm(BASE_URL, "api/distributor/traders/delete", form,
                         session.getToken()), cb));
+    }
+
+    // ---- Support Centre --------------------------------------------------
+
+    /**
+     * Support Centre in one call: enabled contact channels, the help-article catalogue
+     * and every ticket this account has raised.
+     */
+    public void getSupportOverview(ApiCallback<SupportOverviewData> cb) {
+        getAuthed("api/common/support/overview", null, SupportOverviewData.class, cb);
+    }
+
+    /** Help-article search. */
+    public void searchSupportArticles(String query, ApiCallback<SupportArticlesData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("q", query == null ? "" : query);
+        getAuthed("api/common/support/articles/search", q, SupportArticlesData.class, cb);
+    }
+
+    /**
+     * Raise a ticket. {@code channel} is {@code "web"} for a written request or
+     * {@code "callback"} for a call-back, which also carries {@code callback_phone}.
+     */
+    public void createSupportTicket(Map<String, String> form, ApiCallback<SupportTicketData> cb) {
+        postAuthed("api/common/support/tickets", form, SupportTicketData.class, cb);
+    }
+
+    /** One ticket with its full conversation. */
+    public void getSupportTicket(String id, ApiCallback<SupportTicketData> cb) {
+        getAuthed("api/common/support/tickets/" + (id == null ? "" : id.trim()), null,
+                SupportTicketData.class, cb);
+    }
+
+    /** Post a reply; the response carries the ticket with the new message appended. */
+    public void replySupportTicket(String ticketId, String message,
+                                   ApiCallback<SupportTicketData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("ticket_id", ticketId == null ? "" : ticketId);
+        form.put("message", message == null ? "" : message);
+        postAuthed("api/common/support/tickets/reply", form, SupportTicketData.class, cb);
+    }
+
+    /** Close a ticket; the response carries it with the closing note appended. */
+    public void closeSupportTicket(String ticketId, ApiCallback<SupportTicketData> cb) {
+        Map<String, String> form = new HashMap<>();
+        form.put("ticket_id", ticketId == null ? "" : ticketId);
+        postAuthed("api/common/support/tickets/close", form, SupportTicketData.class, cb);
     }
 
     // ---- Reports ---------------------------------------------------------

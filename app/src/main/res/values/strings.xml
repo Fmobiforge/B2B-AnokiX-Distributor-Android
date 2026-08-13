@@ -1581,4 +1581,78 @@
     <string name="report_share_title">Share report</string>
     <string name="err_no_viewer">No app on this device can open a %1$s file.</string>
     <string name="err_save_download">Could not save the downloaded report.</string>
+
+    <!-- Support Centre (New-Design/Support Centre) -->
+    <string name="support_centre">Support Centre</string>
+    <string name="support_subtitle">We\'re here to help.</string>
+    <string name="support_search_hint">Search help articles, topics or keywords…</string>
+    <string name="support_popular_topics">Popular Topics</string>
+    <string name="support_search_results">Results for \"%1$s\"</string>
+    <string name="support_search_empty">No help articles matched \"%1$s\".</string>
+    <string name="support_my_tickets">My Support Tickets</string>
+    <string name="support_new_ticket">New ticket</string>
+    <string name="support_tickets_empty">No tickets yet. Reach out above and we\'ll pick it up.</string>
+    <string name="support_hours">Support hours: %1$s</string>
+
+    <string name="channel_whatsapp">WhatsApp Support</string>
+    <string name="channel_whatsapp_sub">Chat with us on WhatsApp</string>
+    <string name="channel_callback">Call Back Request</string>
+    <string name="channel_callback_sub">Leave a number and we\'ll ring you</string>
+    <string name="channel_ticket">Create Ticket</string>
+    <string name="channel_ticket_sub">Submit a support request</string>
+    <string name="channel_email">Email Support</string>
+    <string name="channel_phone">Call Support</string>
+    <string name="channel_live_chat">Live Chat</string>
+    <string name="channel_live_chat_sub">Talk to an agent now</string>
+    <string name="err_no_whatsapp">WhatsApp is not installed on this device.</string>
+    <string name="err_no_dialer">No app on this device can place calls.</string>
+    <string name="err_no_email_app">No email app is set up on this device.</string>
+    <string name="err_no_browser">No browser on this device can open that link.</string>
+
+    <!-- Request a call back -->
+    <string name="callback_title">Request a call back</string>
+    <string name="callback_number_label">Number to call *</string>
+    <string name="callback_number_hint">0821234567</string>
+    <string name="callback_subject_label">What is it about? (optional)</string>
+    <string name="callback_subject_hint">Delivery not marked as received</string>
+    <string name="callback_message_label">Anything we should know first? (optional)</string>
+    <string name="callback_submit">Request call</string>
+    <string name="callback_default_subject">Call-back request</string>
+    <string name="err_callback_number">Enter the number we should call you on.</string>
+    <string name="requesting_call">Requesting…</string>
+
+    <!-- Create ticket -->
+    <string name="create_ticket_title">Tell us what\'s wrong</string>
+    <string name="ticket_subject_label">What is this about? *</string>
+    <string name="ticket_subject_hint">Order ORD000123 has not been paid</string>
+    <string name="ticket_topic_label">Topic (optional)</string>
+    <string name="ticket_topic_hint">Choose a topic</string>
+    <string name="ticket_priority_label">How urgent is it?</string>
+    <string name="ticket_message_label">What happened? *</string>
+    <string name="ticket_message_hint">Include order numbers, amounts and dates.</string>
+    <string name="ticket_submit">Send request</string>
+    <string name="err_ticket_subject">Tell us what this is about.</string>
+    <string name="err_ticket_message">Describe what happened so we can help.</string>
+    <string name="sending_request">Sending…</string>
+    <string name="ticket_logged">Your request has been logged.</string>
+    <string name="ticket_logged_numbered">Logged as %1$s — we\'ll be in touch.</string>
+
+    <string name="priority_low">Low — whenever you can</string>
+    <string name="priority_normal">Normal</string>
+    <string name="priority_high">High — it is affecting deliveries</string>
+    <string name="priority_urgent">Urgent — we cannot dispatch</string>
+
+    <!-- Ticket detail -->
+    <string name="ticket_opened">Opened %1$s</string>
+    <string name="ticket_reply_hint">Write a reply…</string>
+    <string name="ticket_send_reply">Send reply</string>
+    <string name="ticket_close">Close ticket</string>
+    <string name="ticket_closed_notice">This ticket is closed. Open a new one if you still need help.</string>
+    <string name="ticket_close_title">Close this ticket?</string>
+    <string name="ticket_close_message">You won\'t be able to reply to \"%1$s\" after closing it.</string>
+    <string name="ticket_waiting_support">Waiting for support</string>
+    <string name="ticket_support_replied">Support replied — your turn</string>
+    <string name="ticket_resolved">Resolved</string>
+    <string name="err_reply_empty">Write a reply before sending.</string>
+    <string name="sending_reply">Sending…</string>
 </resources>

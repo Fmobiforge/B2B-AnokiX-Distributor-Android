@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Request a call back (New-Design/Support Centre/2.Call-Request.png).
+
+  A bottom sheet rather than a centre dialog: the number field takes the keyboard, and a
+  sheet keeps the submit button above it instead of behind it.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_sheet_top"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_pill_neutral" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="12dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/callback_title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_headline" />
+
+        <ImageView
+            android:id="@+id/sheetClose"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/cancel_btn"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/border" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/callback_number_label"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_caption" />
+
+        <com.anokix.distributorapp.ui.views.RobotoEditText
+            android:id="@+id/callbackPhone"
+            style="@style/StoreFieldInput"
+            android:layout_marginTop="6dp"
+            android:hint="@string/callback_number_hint"
+            android:inputType="phone" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/callback_subject_label"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_caption" />
+
+        <com.anokix.distributorapp.ui.views.RobotoEditText
+            android:id="@+id/callbackSubject"
+            style="@style/StoreFieldInput"
+            android:layout_marginTop="6dp"
+            android:hint="@string/callback_subject_hint"
+            android:inputType="textCapSentences" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/callback_message_label"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_caption" />
+
+        <com.anokix.distributorapp.ui.views.RobotoEditText
+            android:id="@+id/callbackMessage"
+            style="@style/StoreFieldInput"
+            android:layout_height="96dp"
+            android:layout_marginTop="6dp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingVertical="12dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/sheetCancel"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_button_outlined"
+                android:gravity="center"
+                android:text="@string/cancel_btn"
+                android:textColor="@color/purple_primary"
+                android:textSize="15sp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                android:id="@+id/sheetSubmit"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_button_primary"
+                android:gravity="center"
+                android:text="@string/callback_submit"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

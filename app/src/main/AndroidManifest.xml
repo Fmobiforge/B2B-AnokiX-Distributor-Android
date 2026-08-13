@@ -124,6 +124,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.ReportsActivity" android:exported="false" />
+        <activity android:name=".ui.SupportActivity" android:exported="false" />
+        <activity
+            android:name=".ui.SupportTicketActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.DeliveriesActivity" android:exported="false" />
         <activity android:name=".ui.DeliveryDetailActivity" android:exported="false" />
         <activity android:name=".ui.ReturnsActivity" android:exported="false" />

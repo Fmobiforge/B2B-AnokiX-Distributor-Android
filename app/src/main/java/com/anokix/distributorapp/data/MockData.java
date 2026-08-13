@@ -212,8 +212,8 @@ public final class MockData {
 
     /**
      * Drawer navigation, in the order agreed for the new design (New-Design/Menu).
-     * "card_machine", "warehouse_staff" and "support" have no screens yet — MainActivity
-     * answers those with a "coming soon" message.
+     * Every entry routes to a screen; MainActivity answers anything unmapped with a
+     * "coming soon" message.
      */
     public static List<MenuItem> getDrawerMenuItems() {
         return Arrays.asList(

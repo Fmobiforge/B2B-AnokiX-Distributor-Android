@@ -224,9 +224,11 @@ public class MainActivity extends AppCompatActivity {
             case "settings":
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
+            case "support":
+                startActivity(new Intent(this, SupportActivity.class));
+                break;
             default:
-                // Card Machine / Warehouse Staff / Support Centre: menu entries are in
-                // place, their screens are still to come.
+                // Any menu entry whose screen is still to come.
                 Toast.makeText(this, getString(R.string.feature_coming_soon, item.title),
                         Toast.LENGTH_SHORT).show();
                 break;
