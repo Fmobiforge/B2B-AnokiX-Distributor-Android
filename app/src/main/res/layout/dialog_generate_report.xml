@@ -2,10 +2,10 @@
 <!--
   Generate a report (New-Design/Report/3.Generate-Report.png, 4.Generate-Report-Options.png).
 
-  A bottom sheet rather than a centre dialog: the three fields are all pickers, and a
-  sheet keeps them within thumb reach. The Category field narrows the Report dropdown —
-  picking a report on its own is enough, so Category defaults to "All Categories" and
-  never blocks the flow.
+  A bottom sheet rather than a centre dialog: both fields are pickers, and a sheet keeps
+  them within thumb reach. Report and Period are the whole form — a report already
+  carries its category, so asking for one here would be a second way to say the same
+  thing (the list screen keeps its Category filter, which is a different job).
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -77,45 +77,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/report_category_label"
-            android:textColor="@color/text_primary"
-            android:textSize="@dimen/text_caption" />
-
-        <LinearLayout
-            android:id="@+id/categoryField"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_login_input"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="14dp">
-
-            <com.anokix.distributorapp.ui.views.RobotoTextView
-                android:id="@+id/categoryValue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/all_categories"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="@null"
-                android:rotation="90"
-                android:src="@drawable/ic_chevron_right"
-                app:tint="@color/text_secondary" />
-        </LinearLayout>
-
-        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:text="@string/report_label"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/text_caption" />

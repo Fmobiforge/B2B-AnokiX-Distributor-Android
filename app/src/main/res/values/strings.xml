@@ -1570,7 +1570,6 @@
     <string name="choose_a_report">Choose a report</string>
     <string name="period_label">Period</string>
     <string name="err_choose_report">Choose a report to generate.</string>
-    <string name="err_no_reports_in_category">No reports are available in that category.</string>
     <string name="generating_report">Generating…</string>
 
     <!-- Download result -->

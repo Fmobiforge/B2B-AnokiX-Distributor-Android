@@ -27,12 +27,14 @@ import java.util.TimeZone;
 /**
  * "Generate a report" (New-Design/Report/3.Generate-Report.png).
  *
- * <p>A bottom sheet with three pickers: Category, Report and Period. Category narrows the
- * Report list — the API's {@code report_key} is all the generate call needs, so Category
- * is an optional filter rather than a required step and defaults to "All Categories".
+ * <p>A bottom sheet with two pickers: Report and Period, matching the reference dialog.
+ * Every entry in {@code available[]} already carries its own category and the generate
+ * call only takes a {@code report_key}, so there is nothing a category field could add
+ * here. (The list screen keeps its Category filter — that one narrows generated reports,
+ * which is a different job.)
  *
- * <p>"Generate again" on a report card opens the same sheet with that report's category,
- * report and original period already selected, so the user only confirms.
+ * <p>"Generate again" on a report card opens the same sheet with that report and its
+ * original period already selected, so the user only confirms.
  */
 public final class GenerateReportSheet {
 
@@ -40,11 +42,6 @@ public final class GenerateReportSheet {
     public interface OnGenerated {
         void onGenerated(@Nullable String message);
     }
-
-    /** Category options from the requirements — the web dropdown, in its own order. */
-    private static final String[] CATEGORIES = {
-            "Sales", "Traders", "Inventory", "Deliveries", "Finance", "Products"
-    };
 
     /** The API takes and returns plain calendar dates. */
     private static final String API_DATE = "yyyy-MM-dd";
@@ -78,23 +75,17 @@ public final class GenerateReportSheet {
                 .inflate(R.layout.dialog_generate_report, null, false);
         dialog.setContentView(content);
 
-        TextView categoryValue = content.findViewById(R.id.categoryValue);
         TextView reportValue = content.findViewById(R.id.reportValue);
         TextView reportAbout = content.findViewById(R.id.reportAbout);
         TextView periodValue = content.findViewById(R.id.periodValue);
         View submit = content.findViewById(R.id.sheetSubmit);
 
-        // Selection state. Index -1 on the category means "All Categories".
-        final String[] category = {""};
         final ReportsData.Available[] selected = {null};
         final long[] period = defaultPeriodUtc();
 
         // Seed from the report being regenerated, so the sheet opens ready to confirm.
         if (repeat != null) {
             selected[0] = data.findAvailable(repeat.name, repeat.category);
-            if (selected[0] != null) {
-                category[0] = selected[0].category == null ? "" : selected[0].category;
-            }
             Long from = parseApiDate(repeat.period_from);
             Long to = parseApiDate(repeat.period_to);
             if (from != null && to != null) {
@@ -104,8 +95,6 @@ public final class GenerateReportSheet {
         }
 
         Runnable render = () -> {
-            categoryValue.setText(category[0].isEmpty()
-                    ? activity.getString(R.string.all_categories) : displayCategory(category[0]));
             boolean chosen = selected[0] != null;
             reportValue.setText(chosen ? selected[0].name
                     : activity.getString(R.string.choose_a_report));
@@ -118,38 +107,15 @@ public final class GenerateReportSheet {
         };
         render.run();
 
-        content.findViewById(R.id.categoryField).setOnClickListener(v -> {
-            String[] options = new String[CATEGORIES.length + 1];
-            options[0] = activity.getString(R.string.all_categories);
-            System.arraycopy(CATEGORIES, 0, options, 1, CATEGORIES.length);
-            new AlertDialog.Builder(activity)
-                    .setTitle(R.string.report_category_label)
-                    .setItems(options, (d, which) -> {
-                        category[0] = which == 0 ? "" : CATEGORIES[which - 1];
-                        // A report from another category would contradict the new filter.
-                        if (selected[0] != null && !matchesCategory(selected[0], category[0])) {
-                            selected[0] = null;
-                        }
-                        render.run();
-                    })
-                    .show();
-        });
-
         content.findViewById(R.id.reportField).setOnClickListener(v -> {
-            List<ReportsData.Available> options = filter(catalogue, category[0]);
-            if (options.isEmpty()) {
-                Toast.makeText(activity, R.string.err_no_reports_in_category,
-                        Toast.LENGTH_LONG).show();
-                return;
-            }
-            String[] labels = new String[options.size()];
-            for (int i = 0; i < options.size(); i++) {
-                labels[i] = options.get(i).name;
+            String[] labels = new String[catalogue.size()];
+            for (int i = 0; i < catalogue.size(); i++) {
+                labels[i] = catalogue.get(i).name;
             }
             new AlertDialog.Builder(activity)
                     .setTitle(R.string.report_label)
                     .setItems(labels, (d, which) -> {
-                        selected[0] = options.get(which);
+                        selected[0] = catalogue.get(which);
                         render.run();
                     })
                     .show();
@@ -191,37 +157,6 @@ public final class GenerateReportSheet {
         });
 
         dialog.show();
-    }
-
-    // ---- Options ---------------------------------------------------------
-
-    private static List<ReportsData.Available> filter(List<ReportsData.Available> all,
-                                                      String category) {
-        if (category == null || category.isEmpty()) {
-            return all;
-        }
-        List<ReportsData.Available> matches = new ArrayList<>();
-        for (ReportsData.Available option : all) {
-            if (matchesCategory(option, category)) {
-                matches.add(option);
-            }
-        }
-        return matches;
-    }
-
-    private static boolean matchesCategory(ReportsData.Available option, String category) {
-        if (category == null || category.isEmpty()) {
-            return true;
-        }
-        return option.category != null && option.category.trim().equalsIgnoreCase(category);
-    }
-
-    /** The API sends categories lower-cased; the dropdown shows them capitalised. */
-    private static String displayCategory(String category) {
-        if (category == null || category.isEmpty()) {
-            return "";
-        }
-        return category.substring(0, 1).toUpperCase(Locale.getDefault()) + category.substring(1);
     }
 
     // ---- Period ----------------------------------------------------------
