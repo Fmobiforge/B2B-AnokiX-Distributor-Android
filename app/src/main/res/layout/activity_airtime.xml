@@ -192,6 +192,33 @@
                     android:orientation="horizontal" />
             </HorizontalScrollView>
 
+            <!--
+              "Acting as" + its gate. Both belong to the three customer-scoped tabs
+              (Subscription, Catalog & orders, Dynamic services) and are hidden elsewhere; the
+              selection is shared, so switching between those tabs keeps the same customer.
+            -->
+            <include
+                android:id="@+id/vasActingAs"
+                layout="@layout/include_vas_acting_as"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" />
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/vasGateCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_stat_card"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="34dp"
+                android:text="@string/vas_select_customer_gate"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
             <!-- Sections — exactly one is visible at a time -->
             <include
                 android:id="@+id/sectionOnboard"

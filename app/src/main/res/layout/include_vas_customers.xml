@@ -75,6 +75,18 @@
             tools:text="1 customer" />
 
         <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/customerSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_filter_pill"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="7dp"
+            android:text="@string/vas_search"
+            android:textColor="@color/purple_primary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/customerRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

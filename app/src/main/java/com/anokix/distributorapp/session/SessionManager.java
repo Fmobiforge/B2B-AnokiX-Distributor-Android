@@ -14,6 +14,7 @@ public class SessionManager {
     private static final String KEY_FIRST_NAME = "first_name";
     private static final String KEY_LAST_NAME = "last_name";
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_PHONE = "phone_number";
     private static final String KEY_ROLE_LABEL = "role_label";
     private static final String KEY_COMPANY_NAME = "company_name";
     private static final String KEY_COMPANY_LEGAL_NAME = "company_legal_name";
@@ -55,6 +56,19 @@ public class SessionManager {
                 .putString(KEY_EMAIL, email)
                 .putString(KEY_ROLE_LABEL, roleLabel)
                 .apply();
+    }
+
+    /**
+     * The account's mobile number. Kept apart from {@link #setUser} because login and the
+     * profile editor learn it at different moments, and screens that pre-fill a form from the
+     * signed-in operator (Airtime &amp; VAS › Onboard customer) need it on its own.
+     */
+    public void setPhone(String phone) {
+        prefs.edit().putString(KEY_PHONE, phone == null ? "" : phone.trim()).apply();
+    }
+
+    public String getPhone() {
+        return prefs.getString(KEY_PHONE, "");
     }
 
     public String getFirstName() {

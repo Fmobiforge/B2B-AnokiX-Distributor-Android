@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Airtime & VAS › "Acting as". Limes issues its token per customer, so the Subscription,
+  Catalog & orders and Dynamic services tabs first authenticate as the customer being served.
+  Only ACT customers are offered; until select-customer comes back approved those three tabs
+  show nothing but the gate card.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_stat_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/vas_acting_as"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/actingAsChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_vas_pill"
+            android:backgroundTint="@color/success_bg"
+            android:drawableStart="@drawable/ic_check_green"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:textColor="@color/success"
+            android:textSize="11sp"
+            android:visibility="gone"
+            tools:text="tanco@gmail.com"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Picker — hidden while the distributor has no onboarded customer to act for. -->
+    <LinearLayout
+        android:id="@+id/actingAsPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/actingAsField"
+            style="@style/ProductDropdown"
+            android:layout_marginTop="10dp">
+
+            <com.anokix.distributorapp.ui.views.RobotoTextView
+                android:id="@+id/actingAsLabel"
+                style="@style/ProductDropdownLabel"
+                android:text="@string/vas_acting_as_hint" />
+
+            <ProgressBar
+                android:id="@+id/actingAsLoading"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:indeterminateTint="@color/purple_primary"
+                android:visibility="gone" />
+
+            <ImageView style="@style/ProductDropdownChevron" />
+        </LinearLayout>
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:id="@+id/actingAsNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/vas_acting_as_note"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- No customers at all: onboarding is the only way forward, so link straight to it. -->
+    <LinearLayout
+        android:id="@+id/actingAsEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vas_no_customers_yet"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/vas_no_customers_yet_body"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+            android:id="@+id/actingAsOnboardLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_filter_pill"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
+            android:text="@string/vas_onboard_a_customer"
+            android:textColor="@color/success"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

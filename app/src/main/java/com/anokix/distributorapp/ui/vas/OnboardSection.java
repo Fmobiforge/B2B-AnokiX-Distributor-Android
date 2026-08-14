@@ -11,8 +11,10 @@ import androidx.core.text.HtmlCompat;
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
+import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.VasOnboardCustomerData;
 import com.anokix.distributorapp.network.dto.VasOnboardPreviewData;
+import com.anokix.distributorapp.session.SessionManager;
 import com.anokix.distributorapp.ui.AirtimeActivity;
 
 import java.util.LinkedHashMap;
@@ -76,9 +78,52 @@ public class OnboardSection {
                 HtmlCompat.FROM_HTML_MODE_COMPACT));
 
         bindDropdowns(root);
+        prefillFromSignedInUser();
 
         createButton.setOnClickListener(v -> submit());
         previewButton.setOnClickListener(v -> preview());
+    }
+
+    /**
+     * Opens the form on the signed-in operator's own details, which is what the web portal
+     * does: most first onboards are the distributor registering themselves, and everything here
+     * stays editable for the customers that follow.
+     *
+     * <p>The mobile number is only known once login or the profile screen has cached it, so an
+     * older session falls back to one {@code base-info} read rather than leaving the field blank.
+     */
+    private void prefillFromSignedInUser() {
+        SessionManager session = SessionManager.get(activity);
+        setIfEmpty(firstName, session.getFirstName());
+        setIfEmpty(lastName, session.getLastName());
+        setIfEmpty(email, session.getEmail());
+        setIfEmpty(phone, session.getPhone());
+        if (!text(phone).isEmpty()) return;
+
+        ApiClient.get(activity).getBaseInfo(new ApiCallback<BaseInfoData>() {
+            @Override
+            public void onSuccess(BaseInfoData data) {
+                if (activity.isFinishing() || activity.isDestroyed()) return;
+                if (data == null || data.user == null) return;
+                session.setPhone(data.user.phone_number);
+                setIfEmpty(firstName, data.user.first_name);
+                setIfEmpty(lastName, data.user.last_name);
+                setIfEmpty(email, data.user.email);
+                setIfEmpty(phone, data.user.phone_number);
+            }
+
+            @Override
+            public void onError(String message) {
+                // A prefill is a convenience — the operator can still type the details.
+            }
+        });
+    }
+
+    /** Writes {@code value} only into a field the operator has not typed into. */
+    private void setIfEmpty(EditText field, String value) {
+        if (value == null || value.trim().isEmpty()) return;
+        if (!text(field).isEmpty()) return;
+        field.setText(value.trim());
     }
 
     private void bindDropdowns(View root) {

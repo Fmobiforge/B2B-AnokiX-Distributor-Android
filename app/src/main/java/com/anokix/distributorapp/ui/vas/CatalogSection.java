@@ -114,12 +114,34 @@ public class CatalogSection {
         loadCategories();
     }
 
+    /**
+     * The distributor is now acting as a different customer (or none): the catalog is read on
+     * the customer's token, so what is on screen is dropped and re-read for the new one.
+     */
+    public void onCustomerChanged() {
+        loaded = false;
+        selectedCategory = null;
+        selectedProduct = null;
+        categoryAdapter.setItems(null);
+        productAdapter.setItems(null);
+        productAdapter.setSelectedId(null);
+        productEmpty.setVisibility(View.GONE);
+        customAmountBlock.setVisibility(View.GONE);
+        customAmountInput.setText("");
+        updateSummary();
+        if (activity.isSectionVisible(AirtimeActivity.TAB_CATALOG)
+                && !activity.actingCustomerId().isEmpty()) {
+            onShown();
+        }
+    }
+
     // ---- Categories ------------------------------------------------------
 
     private void loadCategories() {
         categoryLoading.setVisibility(View.VISIBLE);
         categoryList.setVisibility(View.GONE);
-        ApiClient.get(activity).getVasCategories(new ApiCallback<VasCategoriesData>() {
+        ApiClient.get(activity).getVasCategories(activity.actingCustomerId(),
+                new ApiCallback<VasCategoriesData>() {
             @Override
             public void onSuccess(VasCategoriesData data) {
                 if (activity.isFinishing() || activity.isDestroyed()) return;
@@ -201,7 +223,7 @@ public class CatalogSection {
         productEmpty.setVisibility(View.GONE);
         productAdapter.setItems(null);
         ApiClient.get(activity).getVasProducts(categoryId, 1, PRODUCT_LIMIT,
-                new ApiCallback<VasProductsData>() {
+                activity.actingCustomerId(), new ApiCallback<VasProductsData>() {
                     @Override
                     public void onSuccess(VasProductsData data) {
                         if (activity.isFinishing() || activity.isDestroyed()) return;
@@ -295,6 +317,11 @@ public class CatalogSection {
 
     private void purchase() {
         if (!validateOrder() || selectedCategory == null) return;
+        String customerId = activity.actingCustomerId();
+        if (customerId.isEmpty()) {
+            VasUi.showValidation(activity, R.string.vas_err_no_acting_customer, null);
+            return;
+        }
         String msisdn = recipientInput.getText().toString().trim();
         double amount = currentAmount();
 
@@ -302,7 +329,7 @@ public class CatalogSection {
         buyButton.setText(R.string.processing);
         final VasProductsData.Product product = selectedProduct;
         ApiClient.get(activity).purchaseVas(product.id, msisdn, amount, product.sku, product.name,
-                selectedCategory.name, new ApiCallback<Void>() {
+                selectedCategory.name, customerId, new ApiCallback<Void>() {
                     @Override
                     public void onSuccess(Void data) {
                         if (activity.isFinishing() || activity.isDestroyed()) return;

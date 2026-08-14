@@ -18,6 +18,7 @@ import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.VasTransactionsData;
 import com.anokix.distributorapp.ui.adapter.VasTransactionAdapter;
+import com.anokix.distributorapp.ui.vas.ActingAsSelector;
 import com.anokix.distributorapp.ui.vas.CatalogSection;
 import com.anokix.distributorapp.ui.vas.CustomersSection;
 import com.anokix.distributorapp.ui.vas.DynamicServicesSection;
@@ -41,6 +42,11 @@ import java.util.List;
  * </ol>
  * Only onboarding + subscription need each other; airtime and data top-ups go straight to
  * any number that is already active on the network.
+ *
+ * <p>Limes issues its token per customer, so Subscription, Catalog &amp; orders and Dynamic
+ * services run behind the shared "Acting as" bar: nothing on those three tabs is shown or
+ * called until one of the distributor's active customers has been authenticated, and every
+ * request they then make carries that {@code customer_id}.
  */
 public class AirtimeActivity extends AppCompatActivity {
 
@@ -68,6 +74,10 @@ public class AirtimeActivity extends AppCompatActivity {
     private CustomersSection customersSection;
     private SubscriptionSection subscriptionSection;
     private CatalogSection catalogSection;
+
+    /** Shared by the three customer-scoped tabs — one pick serves all of them. */
+    private ActingAsSelector actingAs;
+    private View gateCard;
 
     private VasTransactionAdapter txnAdapter;
     private TextView txnEmpty;
@@ -120,6 +130,10 @@ public class AirtimeActivity extends AppCompatActivity {
         subscriptionSection = new SubscriptionSection(this, sections[TAB_SUBSCRIPTION]);
         catalogSection = new CatalogSection(this, sections[TAB_CATALOG]);
 
+        gateCard = findViewById(R.id.vasGateCard);
+        actingAs = new ActingAsSelector(this, findViewById(R.id.vasActingAs),
+                customer -> onActingCustomerChanged());
+
         txnEmpty = sections[TAB_TRANSACTIONS].findViewById(R.id.txnEmpty);
         txnAdapter = new VasTransactionAdapter();
         RecyclerView txnList = sections[TAB_TRANSACTIONS].findViewById(R.id.txnList);
@@ -163,16 +177,25 @@ public class AirtimeActivity extends AppCompatActivity {
 
     private void selectTab(int index) {
         currentTab = index;
+        boolean gated = isCustomerScoped(index);
+        boolean unlocked = !gated || actingAs.hasCustomer();
+
         for (int i = 0; i < tabs.length; i++) {
             boolean selected = i == index;
             tabs[i].setBackgroundResource(
                     selected ? R.drawable.bg_vas_tab_active : R.drawable.bg_filter_pill);
             tabs[i].setTextColor(ContextCompat.getColor(this,
                     selected ? R.color.success : R.color.text_secondary));
-            sections[i].setVisibility(selected ? View.VISIBLE : View.GONE);
+            // A gated tab shows the gate card instead of its panel until Limes has approved
+            // the customer, so a selected-but-locked section stays hidden.
+            sections[i].setVisibility(selected && unlocked ? View.VISIBLE : View.GONE);
         }
+        actingAs.setVisible(gated);
+        gateCard.setVisibility(gated && !unlocked ? View.VISIBLE : View.GONE);
+
         // Sections fetch their own data the first time they are opened, so switching tabs
         // never costs a request that the operator did not ask for.
+        if (!unlocked) return;
         switch (index) {
             case TAB_CUSTOMERS:
                 customersSection.onShown();
@@ -188,9 +211,39 @@ public class AirtimeActivity extends AppCompatActivity {
         }
     }
 
+    /** The three tabs Limes runs on the customer's own token, so they need "Acting as" first. */
+    private static boolean isCustomerScoped(int tab) {
+        return tab == TAB_SUBSCRIPTION || tab == TAB_CATALOG || tab == TAB_DYNAMIC;
+    }
+
     /** True while {@code tab} is the section on screen — used to skip pointless reloads. */
     public boolean isSectionVisible(int tab) {
         return currentTab == tab;
+    }
+
+    /** Switches tabs from inside a section (e.g. "Onboard a customer" on the Acting as bar). */
+    public void openTab(int tab) {
+        selectTab(tab);
+    }
+
+    // ---- Acting as -------------------------------------------------------
+
+    /**
+     * The customer every request on the three scoped tabs is made for, or "" while none has
+     * been authenticated. Sections read it at call time so they always send the current pick.
+     */
+    public String actingCustomerId() {
+        return actingAs == null ? "" : actingAs.customerId();
+    }
+
+    /**
+     * A different customer was approved (or the pick was cleared): everything those tabs hold
+     * belongs to the previous customer, so it is dropped and re-read on their token.
+     */
+    private void onActingCustomerChanged() {
+        subscriptionSection.onCustomerChanged();
+        catalogSection.onCustomerChanged();
+        selectTab(currentTab);
     }
 
     // ---- Cross-section callbacks -----------------------------------------
@@ -198,6 +251,7 @@ public class AirtimeActivity extends AppCompatActivity {
     /** A new customer was onboarded: the Customers tab must not show a stale list. */
     public void onCustomerOnboarded() {
         customersSection.reload();
+        actingAs.reloadCustomers();
     }
 
     /** Re-reads the VAS history + KPI figures after any sale or provisioning. */

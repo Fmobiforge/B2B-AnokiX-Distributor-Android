@@ -47,6 +47,8 @@ public class CustomersSection {
         list.setLayoutManager(new LinearLayoutManager(activity));
         list.setAdapter(adapter);
 
+        root.findViewById(R.id.customerSearch).setOnClickListener(v -> load());
+        // Refresh re-reads the list as it is; clearing the keyword is the operator's call.
         root.findViewById(R.id.customerRefresh).setOnClickListener(v -> load());
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -74,7 +76,10 @@ public class CustomersSection {
         empty.setVisibility(View.GONE);
         String search = searchInput.getText() == null ? "" : searchInput.getText().toString().trim();
 
-        ApiClient.get(activity).getVasCustomers(search, LIMIT, new ApiCallback<VasCustomersData>() {
+        // The Customers tab lists everyone this distributor has onboarded, whatever their Limes
+        // status — only the "Acting as" picker is restricted to the active ones.
+        ApiClient.get(activity).getVasCustomers(search, LIMIT, false,
+                new ApiCallback<VasCustomersData>() {
             @Override
             public void onSuccess(VasCustomersData data) {
                 if (activity.isFinishing() || activity.isDestroyed()) return;
@@ -84,6 +89,10 @@ public class CustomersSection {
                 int total = customers == null ? 0 : customers.size();
                 count.setText(activity.getResources()
                         .getQuantityString(R.plurals.vas_customer_count, total, total));
+                // "Nothing matched" and "nobody onboarded yet" are different problems and read
+                // as such — a keyword that finds nothing is not an empty account.
+                empty.setText(search.isEmpty()
+                        ? R.string.vas_no_customers : R.string.vas_no_customers_search);
                 empty.setVisibility(total == 0 ? View.VISIBLE : View.GONE);
             }
 

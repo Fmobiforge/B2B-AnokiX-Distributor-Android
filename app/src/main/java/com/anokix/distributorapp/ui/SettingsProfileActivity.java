@@ -58,6 +58,7 @@ public class SettingsProfileActivity extends BaseSettingsFormActivity {
                             ? data.portal_info.company_legal_name : "";
                 }
                 if (data.user != null) {
+                    session.setPhone(data.user.phone_number);
                     bindFields(data.user.first_name, data.user.last_name,
                             data.user.email, data.user.phone_number);
                 } else {
@@ -119,6 +120,7 @@ public class SettingsProfileActivity extends BaseSettingsFormActivity {
                     public void onSuccess(ProfileUpdateData data) {
                         SessionManager session = SessionManager.get(SettingsProfileActivity.this);
                         session.setUser(firstName, lastName, email, session.getRoleLabel());
+                        session.setPhone(phone);
                         toastSaved();
                         finish();
                     }

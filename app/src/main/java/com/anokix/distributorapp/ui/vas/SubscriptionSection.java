@@ -71,10 +71,31 @@ public class SubscriptionSection {
         loadSubscriptions();
     }
 
+    /**
+     * The distributor is now acting as a different customer (or none): the products and the
+     * activated SIMs on screen belong to the previous one, so they are dropped and re-read on
+     * the new customer's token the next time the tab is shown.
+     */
+    public void onCustomerChanged() {
+        loaded = false;
+        products.clear();
+        selectedProduct = null;
+        productLabel.setText(R.string.vas_f_product_hint);
+        productLabel.setTextColor(androidx.core.content.ContextCompat.getColor(
+                activity, R.color.text_secondary));
+        iccidInput.setText("");
+        simAdapter.setItems(null);
+        simEmpty.setVisibility(View.GONE);
+        if (activity.isSectionVisible(AirtimeActivity.TAB_SUBSCRIPTION)
+                && !activity.actingCustomerId().isEmpty()) {
+            onShown();
+        }
+    }
+
     // ---- Products --------------------------------------------------------
 
     private void loadProducts() {
-        ApiClient.get(activity).getVasSubscriptionProducts(
+        ApiClient.get(activity).getVasSubscriptionProducts(activity.actingCustomerId(),
                 new ApiCallback<VasSubscriptionProductsData>() {
                     @Override
                     public void onSuccess(VasSubscriptionProductsData data) {
@@ -116,7 +137,8 @@ public class SubscriptionSection {
     // ---- Activated SIMs --------------------------------------------------
 
     private void loadSubscriptions() {
-        ApiClient.get(activity).getVasSubscriptions(new ApiCallback<VasSubscriptionsData>() {
+        ApiClient.get(activity).getVasSubscriptions(activity.actingCustomerId(),
+                new ApiCallback<VasSubscriptionsData>() {
             @Override
             public void onSuccess(VasSubscriptionsData data) {
                 if (activity.isFinishing() || activity.isDestroyed()) return;
@@ -148,10 +170,15 @@ public class SubscriptionSection {
             VasUi.showValidation(activity, R.string.vas_err_iccid, iccidInput);
             return;
         }
+        String customerId = activity.actingCustomerId();
+        if (customerId.isEmpty()) {
+            VasUi.showValidation(activity, R.string.vas_err_no_acting_customer, null);
+            return;
+        }
 
         createButton.setEnabled(false);
         createButton.setText(R.string.processing);
-        ApiClient.get(activity).subscribeVas(selectedProduct.id, iccid, eSim,
+        ApiClient.get(activity).subscribeVas(selectedProduct.id, iccid, eSim, customerId,
                 new ApiCallback<Void>() {
                     @Override
                     public void onSuccess(Void data) {

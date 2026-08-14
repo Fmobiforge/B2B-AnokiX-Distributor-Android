@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (data.user != null) {
                     session.setUser(data.user.first_name, data.user.last_name,
                             data.user.email, data.user.role_label);
+                    session.setPhone(data.user.phone_number);
                 }
                 if (data.portal_info != null) {
                     session.setCompany(data.portal_info.company_name,

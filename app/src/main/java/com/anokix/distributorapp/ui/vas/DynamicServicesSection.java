@@ -199,11 +199,16 @@ public class DynamicServicesSection {
 
     private void provision() {
         if (!validate()) return;
+        String customerId = activity.actingCustomerId();
+        if (customerId.isEmpty()) {
+            VasUi.showValidation(activity, R.string.vas_err_no_acting_customer, null);
+            return;
+        }
 
         provisionButton.setEnabled(false);
         provisionButton.setText(R.string.processing);
         ApiClient.get(activity).provisionVasDynamicServices(text(msisdnInput), buildServices(),
-                new ApiCallback<Void>() {
+                customerId, new ApiCallback<Void>() {
                     @Override
                     public void onSuccess(Void data) {
                         if (activity.isFinishing() || activity.isDestroyed()) return;
