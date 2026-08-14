@@ -1300,6 +1300,7 @@
     <string name="vas_acting_as_loading">Loading your active customers…</string>
     <string name="vas_acting_as_authenticating">Authenticating with Limes…</string>
     <string name="vas_acting_as_picker_title">Choose a customer</string>
+    <string name="vas_acting_as_clear">Stop acting as this customer</string>
     <string name="vas_acting_as_failed">Limes could not authenticate as this customer. Make sure their account is active, then try again.</string>
     <string name="vas_select_customer_gate">Select a customer above to continue. Limes authenticates as the customer, so every call on this tab runs on their token.</string>
     <string name="vas_no_customers_yet">No customers yet.</string>

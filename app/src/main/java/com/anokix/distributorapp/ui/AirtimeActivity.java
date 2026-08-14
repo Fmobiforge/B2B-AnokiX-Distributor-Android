@@ -3,6 +3,7 @@ package com.anokix.distributorapp.ui;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,6 +79,7 @@ public class AirtimeActivity extends AppCompatActivity {
     /** Shared by the three customer-scoped tabs — one pick serves all of them. */
     private ActingAsSelector actingAs;
     private View gateCard;
+    private HorizontalScrollView tabScroll;
 
     private VasTransactionAdapter txnAdapter;
     private TextView txnEmpty;
@@ -149,6 +151,7 @@ public class AirtimeActivity extends AppCompatActivity {
      * single background swap.
      */
     private void buildTabs() {
+        tabScroll = findViewById(R.id.vasTabScroll);
         LinearLayout strip = findViewById(R.id.vasTabStrip);
         float density = getResources().getDisplayMetrics().density;
         int hPad = (int) (16 * density);
@@ -192,6 +195,7 @@ public class AirtimeActivity extends AppCompatActivity {
         }
         actingAs.setVisible(gated);
         gateCard.setVisibility(gated && !unlocked ? View.VISIBLE : View.GONE);
+        revealTab(index);
 
         // Sections fetch their own data the first time they are opened, so switching tabs
         // never costs a request that the operator did not ask for.
@@ -209,6 +213,17 @@ public class AirtimeActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * Slides the strip so the chosen pill sits at the left edge. Six labels never fit across a
+     * phone, so the tab that was just tapped would otherwise stay half off-screen — and the
+     * tabs after it are the ones the operator is most likely to want next. The scroll is posted
+     * because the pill has no position until the strip has been laid out.
+     */
+    private void revealTab(int index) {
+        TextView tab = tabs[index];
+        tabScroll.post(() -> tabScroll.smoothScrollTo(tab.getLeft(), 0));
     }
 
     /** The three tabs Limes runs on the customer's own token, so they need "Acting as" first. */

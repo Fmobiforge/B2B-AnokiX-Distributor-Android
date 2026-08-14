@@ -178,6 +178,7 @@
 
             <!-- Tabs -->
             <HorizontalScrollView
+                android:id="@+id/vasTabScroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"

@@ -38,7 +38,7 @@ public class ActingAsSelector {
     private final AirtimeActivity activity;
     private final Listener listener;
 
-    private final View root, picker, field, empty;
+    private final View root, picker, field, empty, clear;
     private final TextView label, note, chip;
     private final ProgressBar loading;
 
@@ -57,12 +57,14 @@ public class ActingAsSelector {
         picker = root.findViewById(R.id.actingAsPicker);
         field = root.findViewById(R.id.actingAsField);
         empty = root.findViewById(R.id.actingAsEmpty);
+        clear = root.findViewById(R.id.actingAsClear);
         label = root.findViewById(R.id.actingAsLabel);
         note = root.findViewById(R.id.actingAsNote);
         chip = root.findViewById(R.id.actingAsChip);
         loading = root.findViewById(R.id.actingAsLoading);
 
         field.setOnClickListener(v -> showPicker());
+        clear.setOnClickListener(v -> releaseCustomer());
         root.findViewById(R.id.actingAsOnboardLink)
                 .setOnClickListener(v -> activity.openTab(AirtimeActivity.TAB_ONBOARD));
     }
@@ -233,6 +235,17 @@ public class ActingAsSelector {
         return c;
     }
 
+    /**
+     * The × on the field: stop acting as this customer. Their token is what the three tabs run
+     * on, so letting it go locks them again — that is the point of the control, and it is how
+     * an operator moves from one customer's order to the next without a stale panel in between.
+     */
+    private void releaseCustomer() {
+        if (busy || approved == null) return;
+        clearSelection();
+        render();
+    }
+
     private void clearSelection() {
         boolean had = approved != null;
         approved = null;
@@ -251,12 +264,16 @@ public class ActingAsSelector {
         empty.setVisibility(none ? View.VISIBLE : View.GONE);
         note.setVisibility(approved == null ? View.VISIBLE : View.GONE);
         note.setText(R.string.vas_acting_as_note);
+        // There is nothing to release until a customer has been approved.
+        clear.setVisibility(approved == null ? View.GONE : View.VISIBLE);
     }
 
     private void setLoading(boolean active, int noteRes) {
         loading.setVisibility(active ? View.VISIBLE : View.GONE);
         field.setEnabled(!active);
+        clear.setEnabled(!active);
         if (active) {
+            clear.setVisibility(View.GONE);
             note.setVisibility(View.VISIBLE);
             note.setText(noteRes);
         }

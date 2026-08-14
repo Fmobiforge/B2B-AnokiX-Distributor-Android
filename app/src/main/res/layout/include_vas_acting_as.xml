@@ -6,6 +6,7 @@
   show nothing but the gate card.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -70,6 +71,22 @@
                 android:layout_height="18dp"
                 android:indeterminateTint="@color/purple_primary"
                 android:visibility="gone" />
+
+            <!--
+              Clears the pick. It sits inside the dropdown but takes its own clicks, so tapping
+              the × releases the customer instead of reopening the picker.
+            -->
+            <ImageView
+                android:id="@+id/actingAsClear"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/vas_acting_as_clear"
+                android:padding="7dp"
+                android:src="@drawable/ic_close"
+                android:visibility="gone"
+                app:tint="@color/text_secondary"
+                tools:visibility="visible" />
 
             <ImageView style="@style/ProductDropdownChevron" />
         </LinearLayout>
