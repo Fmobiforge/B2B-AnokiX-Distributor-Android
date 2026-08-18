@@ -1406,7 +1406,7 @@
 
     <!-- ===== anokiX wallet screen (drawer › anokiX wallet) ===== -->
     <string name="wallet_screen_title">anokiX wallet</string>
-    <string name="wallet_screen_subtitle">Your IMB business account — balances, payments and settlements.</string>
+    <string name="wallet_screen_subtitle">Manage your money and settlements — Powered by IMB</string>
     <string name="wallet_total_balance">Total Wallet Balance</string>
     <string name="wallet_available_balance">Available Balance</string>
     <string name="wallet_pending_balance">Pending</string>
