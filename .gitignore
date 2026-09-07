@@ -1,11 +1,39 @@
-*.iml
-.gradle
-/local.properties
-/.idea
-.DS_Store
-/build
-/app/build
-captures
-.externalNativeBuild
-.cxx
+# ─── Secrets — never commit ──────────────────────────────────────────────
+# Firebase config — generate your own from your Firebase project.
+google-services.json
 
+# Signing keystores and their passwords.
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# API keys / endpoints.
+secrets.properties
+**/res/values/google_maps_api.xml
+.env
+.env.*
+
+# ─── Android build ───────────────────────────────────────────────────────
+build/
+.gradle/
+local.properties
+gradle.properties          # contains a machine-local org.gradle.java.home
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# ─── IDE ─────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+
+# ─── OS ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

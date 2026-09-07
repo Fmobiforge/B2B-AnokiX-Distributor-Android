@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  TEMPLATE — copy this file to:
+      app/src/main/res/values/google_maps_api.xml
+  and replace the placeholder with your own key.
+
+  The real file is git-ignored so live keys never reach the repository.
+
+  To get a key:
+    1. Google Cloud Console → APIs & Services → Credentials → Create API key.
+    2. Enable "Maps SDK for Android" on the project.
+    3. Restrict the key to Android apps with package "com.anokix.distributorapp"
+       and this app's signing SHA-1.
+
+  Until a valid key is set, the map area renders blank / grey.
+-->
+<resources>
+    <string name="google_maps_key" translatable="false">YOUR_MAPS_API_KEY_HERE</string>
+</resources>
