@@ -79,14 +79,14 @@ import java.util.concurrent.Executors;
  */
 public final class ApiClient {
 
-    public static final String BASE_URL = "http://109.176.30.129/ax/";
+    public static final String BASE_URL = "https://api.anokix.com/";  //"http://109.176.30.129/ax/";
 
     /**
      * Report files are served by their own service — a different port from the JSON API,
      * with no {@code /ax/} prefix — which authenticates from the request body instead of
      * an Authorization header. It is the only endpoint that does not sit under BASE_URL.
      */
-    public static final String DOWNLOAD_URL = "http://109.176.30.129:5721/api/report-download";
+    public static final String DOWNLOAD_URL = "https://api.anokix.com:5721/api/report-download";    //"http://109.176.30.129:5721/api/report-download";
 
     private static ApiClient instance;
 
