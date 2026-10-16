@@ -14,6 +14,7 @@ import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.model.MenuItem;
 import com.anokix.distributorapp.ui.views.RobotoLightTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
+import com.anokix.distributorapp.ui.views.TypefaceCache;
 
 import java.util.List;
 
@@ -76,12 +77,16 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
             holder.subtitle.setAlpha(selected ? 0.85f : 0.75f);
         }
 
+        // Portal sidebar: items are Inter medium, the active (gradient) item semibold.
+        android.graphics.Typeface itemFace = TypefaceCache.get(holder.itemView.getContext(),
+                selected ? "font/inter_semibold.ttf" : "font/inter_medium.ttf");
         if (selected) {
             holder.itemRoot.setBackgroundResource(R.drawable.bg_drawer_item_selected);
-            holder.title.setTypeface(holder.title.getTypeface(), android.graphics.Typeface.BOLD);
         } else {
             holder.itemRoot.setBackgroundResource(android.R.color.transparent);
-            holder.title.setTypeface(holder.title.getTypeface(), android.graphics.Typeface.NORMAL);
+        }
+        if (itemFace != null) {
+            holder.title.setTypeface(itemFace);
         }
 
         holder.itemView.setOnClickListener(v -> {

@@ -29,7 +29,7 @@
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/kpiTotalValue"
                 style="@style/ProductKpiValue"
-                android:textColor="@color/purple_primary" />
+                android:textColor="@color/top_title" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/kpiTotalSub"
@@ -47,7 +47,7 @@
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/kpiActiveValue"
                 style="@style/ProductKpiValue"
-                android:textColor="@color/success" />
+                android:textColor="@color/top_title" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/kpiActiveSub"
@@ -65,7 +65,7 @@
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/kpiOutValue"
                 style="@style/ProductKpiValue"
-                android:textColor="@color/danger" />
+                android:textColor="@color/top_title" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/kpiOutSub"
@@ -81,7 +81,7 @@
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/kpiLowValue"
                 style="@style/ProductKpiValue"
-                android:textColor="@color/warning" />
+                android:textColor="@color/top_title" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
                 android:id="@+id/kpiLowSub"

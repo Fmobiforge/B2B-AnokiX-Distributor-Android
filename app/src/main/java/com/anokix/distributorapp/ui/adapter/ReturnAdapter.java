@@ -33,7 +33,7 @@ public class ReturnAdapter extends RecyclerView.Adapter<ReturnAdapter.ViewHolder
     }
 
     private static final String[] AVATAR_COLORS = {
-            "#EC4899", "#7C3AED", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
+            "#EC4899", "#8B5CF6", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
     };
 
     private final List<ReturnsData.Return> items = new ArrayList<>();
@@ -71,8 +71,8 @@ public class ReturnAdapter extends RecyclerView.Adapter<ReturnAdapter.ViewHolder
 
         String name = r.traderName();
         holder.avatar.setText(name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase(Locale.US));
-        ViewCompat.setBackgroundTintList(holder.avatar,
-                ColorStateList.valueOf(Color.parseColor(AVATAR_COLORS[(int) (Math.abs(r.trader_id) % AVATAR_COLORS.length)])));
+        // Portal-style initials avatar: the gradient in bg_avatar shows through (no per-row tint).
+        ViewCompat.setBackgroundTintList(holder.avatar, null);
         holder.traderName.setText(name);
 
         String phone = r.trader_phone == null ? "" : r.trader_phone;

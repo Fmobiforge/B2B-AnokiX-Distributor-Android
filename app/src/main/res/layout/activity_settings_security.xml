@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="@color/surface"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                app:cardElevation="0dp"
                 app:contentPadding="16dp"
                 app:strokeColor="@color/border"
                 app:strokeWidth="1dp">
@@ -61,7 +61,7 @@
                             android:hint="@string/hint_current_password"
                             android:inputType="textPassword"
                             android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_secondary"
+                            android:textColorHint="@color/text_tertiary"
                             android:textSize="13sp" />
 
                         <ImageButton
@@ -97,7 +97,7 @@
                             android:hint="@string/hint_new_password"
                             android:inputType="textPassword"
                             android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_secondary"
+                            android:textColorHint="@color/text_tertiary"
                             android:textSize="13sp" />
 
                         <ImageButton
@@ -133,7 +133,7 @@
                             android:hint="@string/hint_confirm_password"
                             android:inputType="textPassword"
                             android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_secondary"
+                            android:textColorHint="@color/text_tertiary"
                             android:textSize="13sp" />
 
                         <ImageButton

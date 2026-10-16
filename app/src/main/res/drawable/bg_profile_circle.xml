@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Circular initials avatar: portal indigo -> violet gradient (CSS 135deg = Android angle 315). -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="@color/purple_light" />
+    <gradient
+        android:angle="315"
+        android:startColor="@color/gradient_start"
+        android:endColor="@color/gradient_end"
+        android:type="linear" />
 </shape>

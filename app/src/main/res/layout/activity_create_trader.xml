@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_dark"
+        android:background="@color/surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
@@ -21,11 +21,13 @@
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_header_back_button"
             android:contentDescription="@string/back"
+            android:padding="8dp"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_chevron_right"
             android:rotation="180"
-            app:tint="@android:color/white" />
+            app:tint="@color/top_title" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -41,7 +43,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/add_new_trader"
-                android:textColor="@color/white"
+                android:textColor="@color/top_title"
                 android:textSize="16sp" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
@@ -50,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/create_trader_subtitle"
-                android:textColor="@color/white"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -235,7 +237,7 @@
                         android:inputType="phone"
                         android:paddingHorizontal="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -274,7 +276,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="13sp" />
 
                     <ImageButton
@@ -312,7 +314,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="13sp" />
 
                     <ImageButton
@@ -392,7 +394,7 @@
                             android:src="@drawable/ic_add"
                             app:tint="@color/purple_primary" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/logoUploadLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -495,7 +497,7 @@
                         android:inputType="phone"
                         android:paddingHorizontal="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 

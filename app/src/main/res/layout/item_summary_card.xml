@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="R1,245,600.00"
-        android:textColor="@color/text_primary"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/top_title"
         android:textSize="18sp" />
 
     <com.anokix.distributorapp.ui.views.RobotoBoldTextView

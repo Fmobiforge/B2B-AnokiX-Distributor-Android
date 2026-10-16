@@ -6,7 +6,7 @@
     android:viewportHeight="24">
     <!-- Solid green circle -->
     <path
-        android:fillColor="#16A34A"
+        android:fillColor="@color/success"
         android:pathData="M12,12m-11,0a11,11 0 1,0 22,0a11,11 0 1,0 -22,0" />
     <!-- White check mark -->
     <path

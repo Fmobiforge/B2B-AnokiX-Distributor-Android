@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.anokix.distributorapp.R;
+import com.anokix.distributorapp.ui.views.TypefaceCache;
 import com.anokix.distributorapp.model.ProductItem;
 import com.anokix.distributorapp.network.dto.BaseInfoData;
 import com.anokix.distributorapp.network.dto.ProductsData;
@@ -262,6 +263,9 @@ public class ProductListSection {
             boolean selected = i == selectedTab;
             tabLabels[i].setTextColor(ContextCompat.getColor(context,
                     selected ? R.color.purple_primary : R.color.text_secondary));
+            // Portal underline tabs: active 600, inactive 500.
+            tabLabels[i].setTypeface(TypefaceCache.get(context,
+                    selected ? "font/inter_semibold.ttf" : "font/inter_medium.ttf"));
             tabIndicators[i].setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
         }
     }

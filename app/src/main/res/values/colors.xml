@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_primary">#7C3AED</color>
-    <color name="purple_dark">#5B21B6</color>
-    <color name="purple_light">#EDE9FE</color>
-    <color name="purple_text_light">#C4B5FD</color>
-    <color name="background">#F1F5F9</color>
+    <!-- Palette mirrors the web portal (distributor.anokix.com). The purple_* names are historical:
+         they now hold the portal's brand blue. Violet survives only as a gradient accent. -->
+    <color name="purple_primary">#0D47A1</color>
+    <color name="purple_dark">#0D3A7A</color>
+    <color name="purple_light">#E7EDF6</color>
+    <color name="purple_text_light">#B9CBE8</color>
+    <color name="background">#F5F7FA</color>
     <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#F8FAFC</color>
+    <color name="surface_variant">#FAFBFC</color>
     <color name="surface_elevated">#FFFFFF</color>
-    <color name="text_primary">#0F172A</color>
-    <color name="text_secondary">#64748B</color>
-    <color name="text_tertiary">#94A3B8</color>
-    <color name="border">#E2E8F0</color>
-    <color name="border_light">#F1F5F9</color>
-    <color name="divider">#E2E8F0</color>
-    <color name="success">#16A34A</color>
-    <color name="success_bg">#DCFCE7</color>
-    <color name="warning">#EA580C</color>
-    <color name="warning_bg">#FFEDD5</color>
-    <color name="danger">#DC2626</color>
-    <color name="danger_bg">#FEE2E2</color>
-    <color name="info">#2563EB</color>
-    <color name="info_bg">#DBEAFE</color>
+    <color name="text_primary">#1A237E</color>
+    <color name="text_secondary">#5C6B7A</color>
+    <color name="text_tertiary">#8A96A3</color>
+    <color name="border">#DCE1E8</color>
+    <color name="border_light">#E8ECF1</color>
+    <color name="divider">#E8ECF1</color>
+    <color name="success">#2E7D32</color>
+    <color name="success_bg">#E8F5E9</color>
+    <color name="warning">#E65100</color>
+    <color name="warning_bg">#FFF3E0</color>
+    <color name="danger">#C62828</color>
+    <color name="danger_bg">#FDECEC</color>
+    <color name="info">#1565C0</color>
+    <color name="info_bg">#E3F2FD</color>
+    <color name="accent">#FF6F00</color>
+    <color name="accent_bg">#FFF0E0</color>
     <color name="login_bg">#000920</color>
     <color name="drawer_bg">#000920</color>
-    <color name="drawer_item_selected">#7B61FF</color>
+    <color name="drawer_item_selected">#6366F1</color>
     <color name="drawer_text">#FFFFFF</color>
-    <color name="drawer_text_muted">#B4C3D8</color>
-    <color name="drawer_badge_bg">#161d4e</color>
-    <color name="drawer_badge_fg">#3e3389</color>
+    <color name="drawer_text_muted">#A6FFFFFF</color>
+    <color name="drawer_badge_bg">#386366F1</color>
+    <color name="drawer_badge_fg">#598B5CF6</color>
     <color name="drawer_badge_text">#C4B5FD</color>
     <color name="drawer_divider">#1B2440</color>
     <color name="drawer_logout">#F87171</color>
-    <color name="stat_low_stock">#EA580C</color>
-    <color name="stat_out_of_stock">#DC2626</color>
-    <color name="stat_expiring">#D97706</color>
+    <color name="stat_low_stock">#E65100</color>
+    <color name="stat_out_of_stock">#C62828</color>
+    <color name="stat_expiring">#F57F17</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="top_title">#1a237e</color>
+    <!-- Gradients: nav active item / avatars, and the auth-screen call to action. -->
+    <color name="gradient_start">#6366F1</color>
+    <color name="gradient_end">#8B5CF6</color>
+    <color name="auth_gradient_start">#1E9DE6</color>
+    <color name="auth_gradient_center">#4F8FF7</color>
+    <color name="auth_gradient_end">#8B5CF6</color>
+    <color name="auth_link">#43AEE1</color>
+
+    <!-- Chart series (portal: revenue violet, orders blue). -->
+    <color name="chart_violet">#8B5CF6</color>
+    <color name="chart_blue">#1565C0</color>
+    <!-- chart_violet at ~12% over white: revenue KPI icon tile. -->
+    <color name="chart_violet_bg">#F1EBFE</color>
+
+    <color name="top_title">#1A237E</color>
 
 
 </resources>

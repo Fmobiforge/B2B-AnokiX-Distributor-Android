@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="5dp"
     app:cardBackgroundColor="@color/surface"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
     app:contentPadding="0dp"
     app:strokeColor="@color/divider"
@@ -65,7 +65,6 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/bg_avatar"
-                android:backgroundTint="@color/purple_primary"
                 android:gravity="center"
                 android:text="P"
                 android:textColor="#FFFFFF"
@@ -168,7 +167,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnView"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.AnokiX.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:insetTop="0dp"
@@ -176,10 +175,10 @@
                 android:minWidth="0dp"
                 android:paddingHorizontal="16dp"
                 android:text="@string/view_btn"
-                android:textColor="@color/purple_primary"
+                android:textColor="@color/text_primary"
                 android:textSize="12sp"
-                app:cornerRadius="10dp"
-                app:strokeColor="@color/purple_primary"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/border"
                 app:strokeWidth="1dp" />
 
             <ImageButton

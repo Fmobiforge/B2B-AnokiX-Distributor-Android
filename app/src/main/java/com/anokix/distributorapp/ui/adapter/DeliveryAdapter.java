@@ -34,7 +34,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
     }
 
     private static final String[] AVATAR_COLORS = {
-            "#EC4899", "#7C3AED", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
+            "#EC4899", "#8B5CF6", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
     };
 
     private final List<DeliveriesData.Delivery> items = new ArrayList<>();
@@ -72,8 +72,8 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
 
         String name = d.traderName();
         holder.avatar.setText(name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase(Locale.US));
-        ViewCompat.setBackgroundTintList(holder.avatar,
-                ColorStateList.valueOf(Color.parseColor(AVATAR_COLORS[(int) (Math.abs(d.trader_id) % AVATAR_COLORS.length)])));
+        // Portal-style initials avatar: the gradient in bg_avatar shows through (no per-row tint).
+        ViewCompat.setBackgroundTintList(holder.avatar, null);
         holder.traderName.setText(name);
 
         String phone = d.trader_phone == null ? "" : d.trader_phone;

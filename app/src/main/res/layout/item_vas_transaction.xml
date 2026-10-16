@@ -51,7 +51,7 @@
             android:textSize="12sp"
             tools:text="R 5 050,00" />
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/txnStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

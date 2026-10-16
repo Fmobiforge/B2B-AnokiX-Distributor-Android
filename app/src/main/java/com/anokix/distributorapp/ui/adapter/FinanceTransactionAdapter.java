@@ -34,7 +34,7 @@ public class FinanceTransactionAdapter extends RecyclerView.Adapter<FinanceTrans
     }
 
     private static final String[] AVATAR_COLORS = {
-            "#EC4899", "#7C3AED", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
+            "#EC4899", "#8B5CF6", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
     };
 
     private final List<FinancesData.Transaction> items = new ArrayList<>();
@@ -86,9 +86,8 @@ public class FinanceTransactionAdapter extends RecyclerView.Adapter<FinanceTrans
         // Counterparty
         String name = nzDash(t.trader_name);
         h.avatar.setText(initial(name));
-        ViewCompat.setBackgroundTintList(h.avatar,
-                ColorStateList.valueOf(Color.parseColor(
-                        AVATAR_COLORS[(int) (Math.abs(t.id) % AVATAR_COLORS.length)])));
+        // Portal-style initials avatar: the gradient in bg_avatar shows through (no per-row tint).
+        ViewCompat.setBackgroundTintList(h.avatar, null);
         h.counterparty.setText(name);
         boolean hasPhone = t.trader_phone != null && !t.trader_phone.isEmpty();
         h.phone.setText(hasPhone ? t.trader_phone : "");

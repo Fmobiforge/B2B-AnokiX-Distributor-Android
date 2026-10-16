@@ -19,7 +19,7 @@
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:title="@string/airtime_vas"
-        app:titleTextColor="#FFFFFF" />
+        app:titleTextColor="@color/top_title" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/vasScroll"
@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/success"
+                        android:textColor="@color/top_title"
                         android:textSize="16sp"
                         tools:text="R 0,00" />
                 </LinearLayout>
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/success"
+                        android:textColor="@color/top_title"
                         android:textSize="16sp"
                         tools:text="R 0,00" />
                 </LinearLayout>
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:textColor="@color/purple_primary"
+                        android:textColor="@color/top_title"
                         android:textSize="16sp"
                         tools:text="R 100 000,00" />
                 </LinearLayout>

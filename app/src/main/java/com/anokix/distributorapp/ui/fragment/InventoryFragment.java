@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
+import com.anokix.distributorapp.ui.views.TypefaceCache;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.InventoryPageData;
@@ -253,6 +254,9 @@ public class InventoryFragment extends Fragment {
             boolean selected = i == selectedTab;
             tabLabels.get(i).setTextColor(ContextCompat.getColor(requireContext(),
                     selected ? R.color.purple_primary : R.color.text_secondary));
+            // Portal underline tabs: active 600, inactive 500.
+            tabLabels.get(i).setTypeface(TypefaceCache.get(requireContext(),
+                    selected ? "font/inter_semibold.ttf" : "font/inter_medium.ttf"));
             tabIndicators.get(i).setVisibility(selected ? View.VISIBLE : View.INVISIBLE);
         }
     }

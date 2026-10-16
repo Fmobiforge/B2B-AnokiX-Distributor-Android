@@ -6,7 +6,7 @@
     android:layout_marginBottom="12dp"
     app:cardBackgroundColor="@color/surface"
     app:cardCornerRadius="12dp"
-    app:cardElevation="1dp"
+    app:cardElevation="0dp"
     app:contentPadding="0dp"
     app:strokeColor="@color/border"
     app:strokeWidth="1dp">
@@ -35,7 +35,7 @@
                 android:textColor="@color/purple_primary"
                 android:textSize="14sp" />
 
-            <com.anokix.distributorapp.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/statusBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -257,14 +257,14 @@
                     android:layout_height="18dp"
                     android:contentDescription="@null"
                     android:src="@drawable/ic_eye"
-                    app:tint="@color/purple_primary" />
+                    app:tint="@color/text_primary" />
 
                 <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="@string/view_btn"
-                    android:textColor="@color/purple_primary"
+                    android:textColor="@color/text_primary"
                     android:textSize="13sp" />
             </LinearLayout>
 

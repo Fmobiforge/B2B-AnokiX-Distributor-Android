@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     }
 
     private static final String[] LOGO_COLORS = {
-            "#EC4899", "#7C3AED", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
+            "#EC4899", "#8B5CF6", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
     };
 
     private final List<OrdersData.Order> items;
@@ -71,8 +71,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         h.amount.setText(OrderFormat.money(o.total_amount, currency));
 
         h.avatar.setText(initials(name));
-        ViewCompat.setBackgroundTintList(h.avatar,
-                ColorStateList.valueOf(Color.parseColor(logoColor(o.trader_id))));
+        // Portal-style initials avatar: the gradient in bg_avatar shows through (no per-row tint).
+        ViewCompat.setBackgroundTintList(h.avatar, null);
         h.avatar.setTextColor(Color.WHITE);
 
         int color = OrderFormat.statusColor(o.statusKey());

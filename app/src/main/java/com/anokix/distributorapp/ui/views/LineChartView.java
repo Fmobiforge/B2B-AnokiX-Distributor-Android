@@ -22,11 +22,12 @@ public class LineChartView extends View {
     private String[] labels = null;
     private String currencySymbol = "R";
 
-    private final int lineColor = Color.parseColor("#7C3AED");
-    private final int fillTop = Color.parseColor("#557C3AED");
-    private final int fillBottom = Color.parseColor("#007C3AED");
-    private final int axisTextColor = Color.parseColor("#94A3B8");
-    private final int gridColor = Color.parseColor("#E2E8F0");
+    // Portal revenue series: chart_violet line with a fading violet fill; muted axis + hairline grid.
+    private final int lineColor = Color.parseColor("#8B5CF6");      // @color/chart_violet
+    private final int fillTop = Color.parseColor("#558B5CF6");
+    private final int fillBottom = Color.parseColor("#008B5CF6");
+    private final int axisTextColor = Color.parseColor("#8A96A3");  // @color/text_tertiary
+    private final int gridColor = Color.parseColor("#E8ECF1");      // @color/divider
 
     private final Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

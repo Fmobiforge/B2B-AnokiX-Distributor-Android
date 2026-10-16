@@ -111,7 +111,7 @@
                 android:background="@drawable/bg_login_button_outlined"
                 android:gravity="center"
                 android:text="@string/ticket_close"
-                android:textColor="@color/purple_primary"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView

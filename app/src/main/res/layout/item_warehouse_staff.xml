@@ -59,7 +59,7 @@
                     android:textSize="@dimen/text_micro" />
             </LinearLayout>
 
-            <com.anokix.distributorapp.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/staffAccess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -6,14 +6,17 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -132,6 +135,31 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.drawerLogout).setOnClickListener(v -> confirmLogout());
         bindDrawerHeader();
+
+        // Portal chrome: the app runs under a white status bar with dark icons. The drawer
+        // (#000920) sits below the status bar, so while it is mostly open the bar switches to
+        // the drawer navy with light icons, and back to white once it closes again.
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            private boolean darkBar;
+
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                boolean shouldBeDark = slideOffset > 0.5f;
+                if (shouldBeDark != darkBar) {
+                    darkBar = shouldBeDark;
+                    applyStatusBar(darkBar);
+                }
+            }
+        });
+    }
+
+    /** White bar + dark icons (default), or drawer navy + light icons while the drawer is open. */
+    private void applyStatusBar(boolean drawerOpen) {
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this,
+                drawerOpen ? R.color.drawer_bg : R.color.surface));
+        new WindowInsetsControllerCompat(window, window.getDecorView())
+                .setAppearanceLightStatusBars(!drawerOpen);
     }
 
     /**

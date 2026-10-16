@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:layout_marginTop="18dp"
-        android:background="#9CA3AF" />
+        android:background="@color/text_tertiary" />
 
     <com.anokix.distributorapp.ui.views.RobotoTextView
         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
         android:background="@drawable/bg_login_button_outlined"
         android:gravity="center"
         android:text="@string/crop_upload_new"
-        android:textColor="@color/purple_primary"
+        android:textColor="@color/text_primary"
         android:textSize="14sp" />
 
     <!-- Cancel / OK -->

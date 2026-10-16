@@ -1016,7 +1016,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/wallet_placeholder"
-                        android:textColor="@color/success"
+                        android:textColor="@color/top_title"
                         android:textSize="22sp" />
 
                     <com.anokix.distributorapp.ui.views.RobotoTextView
@@ -1073,7 +1073,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/wallet_placeholder"
-                            android:textColor="@color/warning"
+                            android:textColor="@color/top_title"
                             android:textSize="17sp" />
 
                         <com.anokix.distributorapp.ui.views.RobotoTextView

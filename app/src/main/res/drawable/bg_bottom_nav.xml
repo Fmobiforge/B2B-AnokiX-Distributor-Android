@@ -8,7 +8,7 @@
     <item android:gravity="top">
         <shape android:shape="rectangle">
             <size android:height="1dp" />
-            <solid android:color="@color/border" />
+            <solid android:color="@color/border_light" />
         </shape>
     </item>
 </layer-list>

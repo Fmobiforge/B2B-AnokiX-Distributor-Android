@@ -16,9 +16,9 @@ public class DonutChartView extends View {
 
     private float[] values = {186, 42, 8};
     private int[] colors = {
-            Color.parseColor("#16A34A"),
-            Color.parseColor("#EA580C"),
-            Color.parseColor("#DC2626")
+            Color.parseColor("#2E7D32"),   // @color/success
+            Color.parseColor("#E65100"),   // @color/warning
+            Color.parseColor("#C62828")    // @color/danger
     };
 
     private final Paint segmentPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -50,12 +50,12 @@ public class DonutChartView extends View {
         segmentPaint.setStrokeWidth(dp(strokeWidthDp));
         segmentPaint.setStrokeCap(Paint.Cap.BUTT);
 
-        centerMainPaint.setColor(Color.parseColor("#0F172A"));
+        centerMainPaint.setColor(Color.parseColor("#1A237E"));   // @color/top_title
         centerMainPaint.setTextAlign(Paint.Align.CENTER);
         centerMainPaint.setFakeBoldText(true);
         centerMainPaint.setTextSize(dp(13));
 
-        centerSubPaint.setColor(Color.parseColor("#64748B"));
+        centerSubPaint.setColor(Color.parseColor("#5C6B7A"));    // @color/text_secondary
         centerSubPaint.setTextAlign(Paint.Align.CENTER);
         centerSubPaint.setTextSize(dp(9));
     }

@@ -71,7 +71,7 @@
                         android:maxLines="1"
                         android:paddingVertical="0dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="13sp" />
 
                     <ImageButton

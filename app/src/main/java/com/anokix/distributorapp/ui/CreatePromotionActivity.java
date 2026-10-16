@@ -728,7 +728,7 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
             ImageView del = new ImageView(this);
             del.setLayoutParams(new LinearLayout.LayoutParams(dp(18), dp(18)));
             del.setImageResource(R.drawable.ic_cancel_circle);
-            del.setColorFilter(0xFF94A3B8);
+            del.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.text_tertiary));
             del.setOnClickListener(v -> { items.remove(p); refresh.run(); });
             row.addView(del);
             group.addView(row);
@@ -838,7 +838,7 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
         ImageView del = new ImageView(this);
         del.setLayoutParams(new LinearLayout.LayoutParams(dp(20), dp(20)));
         del.setImageResource(R.drawable.ic_cancel_circle);
-        del.setColorFilter(0xFF94A3B8);
+        del.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.text_tertiary));
         del.setOnClickListener(v -> onRemove.run());
         top.addView(del);
         group.addView(top);
@@ -953,7 +953,7 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
             row.setGravity(Gravity.CENTER_VERTICAL);
             row.setPadding(dp(8), dp(8), dp(8), dp(8));
             row.setBackgroundColor(isSelected
-                    ? 0x1A6D28D9 : 0x00000000);
+                    ? 0x1A0D47A1 : 0x00000000);   // 10% brand blue on the selected row
             row.setOnClickListener(v -> tap.tap(p));
 
             ImageView thumb = new ImageView(this);
@@ -1864,7 +1864,7 @@ public class CreatePromotionActivity extends AppCompatActivity implements OnMapR
         ImageView del = new ImageView(this);
         del.setLayoutParams(new LinearLayout.LayoutParams(dp(20), dp(20)));
         del.setImageResource(R.drawable.ic_cancel_circle);
-        del.setColorFilter(0xFF94A3B8);
+        del.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.text_tertiary));
         del.setOnClickListener(v -> onRemove.run());
         head.addView(del);
         return head;

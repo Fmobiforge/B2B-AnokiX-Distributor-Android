@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_dark"
+        android:background="@color/surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
@@ -21,18 +21,20 @@
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_header_back_button"
             android:contentDescription="@string/back"
+            android:padding="8dp"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_chevron_right"
             android:rotation="180"
-            app:tint="@android:color/white" />
+            app:tint="@color/top_title" />
 
         <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/add_new_product"
-            android:textColor="@color/white"
+            android:textColor="@color/top_title"
             android:textSize="16sp" />
     </LinearLayout>
 

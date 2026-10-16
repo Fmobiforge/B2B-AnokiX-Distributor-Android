@@ -195,7 +195,7 @@
                         <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/heroValue"
                             style="@style/InventoryStatValue"
-                            android:textColor="@color/purple_primary"
+                            android:textColor="@color/top_title"
                             android:textSize="@dimen/text_headline" />
                     </LinearLayout>
                 </LinearLayout>
@@ -215,7 +215,7 @@
                         android:background="@drawable/bg_login_button_outlined"
                         android:gravity="center"
                         android:text="@string/adjust_stock"
-                        android:textColor="@color/purple_primary"
+                        android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_body_sm" />
 
                     <com.anokix.distributorapp.ui.views.RobotoBoldTextView

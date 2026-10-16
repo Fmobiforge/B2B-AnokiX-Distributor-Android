@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/purple_light" />
+<!-- Square initials avatar: portal indigo -> violet gradient (CSS 135deg = Android angle 315), radius 10.
+     White initials. Adapters no longer tint this per row. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:startColor="@color/gradient_start"
+        android:endColor="@color/gradient_end"
+        android:type="linear" />
     <corners android:radius="10dp" />
 </shape>

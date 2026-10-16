@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
+import com.anokix.distributorapp.ui.views.TypefaceCache;
 import com.anokix.distributorapp.messaging.PushManager;
 import com.anokix.distributorapp.model.NotificationItem;
 import com.anokix.distributorapp.network.ApiCallback;
@@ -178,6 +179,9 @@ public class NotificationsActivity extends BaseSecondaryActivity {
         boolean all = "all".equals(filter);
         tabAll.setTextColor(getColor(all ? R.color.purple_primary : R.color.text_secondary));
         tabUnread.setTextColor(getColor(all ? R.color.text_secondary : R.color.purple_primary));
+        // Portal underline tabs: active 600, inactive 500.
+        tabAll.setTypeface(TypefaceCache.get(this, all ? "font/inter_semibold.ttf" : "font/inter_medium.ttf"));
+        tabUnread.setTypeface(TypefaceCache.get(this, all ? "font/inter_medium.ttf" : "font/inter_semibold.ttf"));
     }
 
     // ---- Actions ---------------------------------------------------------

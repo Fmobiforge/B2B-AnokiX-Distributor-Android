@@ -49,7 +49,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     };
 
     private static final String[] LOGO_COLORS = {
-            "#EC4899", "#7C3AED", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
+            "#EC4899", "#8B5CF6", "#2563EB", "#0891B2", "#16A34A", "#EA580C", "#D97706"
     };
 
     private final ApiClient api = ApiClient.get(this);
@@ -107,8 +107,8 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         TextView logo = findViewById(R.id.detailLogo);
         logo.setText(name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase(Locale.US));
-        ViewCompat.setBackgroundTintList(logo,
-                ColorStateList.valueOf(Color.parseColor(logoColor(o.trader_id))));
+        // Portal-style initials avatar: the gradient in bg_avatar shows through (no tint).
+        ViewCompat.setBackgroundTintList(logo, null);
 
         ((TextView) findViewById(R.id.detailOrderNumber)).setText(o.order_number);
         ((TextView) findViewById(R.id.detailTrader)).setText(name);
@@ -231,7 +231,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         if (hasLine) {
             View line = new View(this);
             line.setLayoutParams(new LinearLayout.LayoutParams(2 * density, 30 * density));
-            line.setBackgroundColor(lineDone ? 0xFF16A34A : 0xFFE2E8F0);
+            line.setBackgroundColor(androidx.core.content.ContextCompat.getColor(this,
+                    lineDone ? R.color.success : R.color.border));
             left.addView(line);
         }
 
@@ -243,7 +244,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         title.setText(label);
         title.setTextSize(12);
         boolean reached = done || current;
-        title.setTextColor(reached ? Color.parseColor("#0F172A") : Color.parseColor("#94A3B8"));
+        title.setTextColor(androidx.core.content.ContextCompat.getColor(this,
+                reached ? R.color.text_primary : R.color.text_tertiary));
         if (current) title.setTypeface(title.getTypeface(), android.graphics.Typeface.BOLD);
         right.addView(title);
 
@@ -251,7 +253,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             TextView date = new TextView(this);
             date.setText(sub);
             date.setTextSize(11);
-            date.setTextColor(Color.parseColor("#64748B"));
+            date.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.text_secondary));
             date.setPadding(0, density, 0, 0);
             right.addView(date);
         }
@@ -260,7 +262,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             TextView captionView = new TextView(this);
             captionView.setText(caption);
             captionView.setTextSize(12);
-            captionView.setTextColor(Color.parseColor("#7C3AED"));
+            captionView.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.purple_primary));
             captionView.setPadding(0, density, 0, 0);
             right.addView(captionView);
         }
@@ -287,7 +289,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         circle.setLayoutParams(new LinearLayout.LayoutParams(24 * density, 24 * density));
         GradientDrawable dot = new GradientDrawable();
         dot.setShape(GradientDrawable.OVAL);
-        dot.setColor(0xFFDC2626);
+        dot.setColor(androidx.core.content.ContextCompat.getColor(this, R.color.danger));
         circle.setBackground(dot);
         left.addView(circle);
 
@@ -298,14 +300,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextView title = new TextView(this);
         title.setText(label);
         title.setTextSize(14);
-        title.setTextColor(Color.parseColor("#0F172A"));
+        title.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.text_primary));
         title.setTypeface(title.getTypeface(), android.graphics.Typeface.BOLD);
         right.addView(title);
 
         TextView noteView = new TextView(this);
         noteView.setText(note);
         noteView.setTextSize(12);
-        noteView.setTextColor(0xFFDC2626);
+        noteView.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.danger));
         noteView.setPadding(0, density, 0, 0);
         right.addView(noteView);
 
@@ -350,7 +352,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             iv.setLayoutParams(new LinearLayout.LayoutParams(size, size));
             GradientDrawable bg = new GradientDrawable();
             bg.setShape(GradientDrawable.OVAL);
-            bg.setColor(0xFF16A34A);
+            bg.setColor(androidx.core.content.ContextCompat.getColor(this, R.color.success));
             iv.setBackground(bg);
             int pad = 5 * density;
             iv.setPadding(pad, pad, pad, pad);
@@ -363,7 +365,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         GradientDrawable ring = new GradientDrawable();
         ring.setShape(GradientDrawable.OVAL);
         ring.setColor(Color.WHITE);
-        ring.setStroke((current ? 3 : 2) * density, current ? 0xFF7C3AED : 0xFFCBD5E1);
+        ring.setStroke((current ? 3 : 2) * density, androidx.core.content.ContextCompat.getColor(this,
+                current ? R.color.purple_primary : R.color.border));
         v.setBackground(ring);
         return v;
     }

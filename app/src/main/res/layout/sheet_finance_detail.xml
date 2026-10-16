@@ -86,17 +86,17 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDownloadPdf"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.AnokiX.Button.Outlined"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_marginTop="18dp"
         android:text="@string/download_pdf"
-        android:textColor="@color/purple_primary"
+        android:textColor="@color/text_primary"
         android:textSize="13sp"
-        app:cornerRadius="12dp"
+        app:cornerRadius="8dp"
         app:icon="@drawable/ic_pdf"
         app:iconGravity="textStart"
         app:iconTint="@color/purple_primary"
-        app:strokeColor="@color/purple_primary"
+        app:strokeColor="@color/border"
         app:strokeWidth="1dp" />
 </LinearLayout>

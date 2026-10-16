@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Auth screens (login / forgot password) primary CTA: portal 3-stop gradient, fully rounded pill.
+     In-app screens use bg_login_button_primary (solid brand blue, radius 8) instead. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="0"
+        android:startColor="@color/auth_gradient_start"
+        android:centerColor="@color/auth_gradient_center"
+        android:endColor="@color/auth_gradient_end"
+        android:type="linear" />
+    <corners android:radius="999dp" />
+</shape>

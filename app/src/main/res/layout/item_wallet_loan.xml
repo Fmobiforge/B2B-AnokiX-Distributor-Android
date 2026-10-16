@@ -44,7 +44,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/text_title" />
 
-            <com.anokix.distributorapp.ui.views.RobotoTextView
+            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                 android:id="@+id/loanBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -23,7 +23,7 @@
             android:textSize="14sp"
             tools:text="Mr Tam Ho" />
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/customerStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

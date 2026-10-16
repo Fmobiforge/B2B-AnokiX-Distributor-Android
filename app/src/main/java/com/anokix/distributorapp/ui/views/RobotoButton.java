@@ -26,7 +26,8 @@ public class RobotoButton extends androidx.appcompat.widget.AppCompatButton {
             //Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/lato-bold.ttf");
             //setTypeface(tf);
 
-            setTypeface(TypefaceCache.get(getContext(), "font/inter_medium.ttf"));
+            // Portal buttons are Inter 600.
+            setTypeface(TypefaceCache.get(getContext(), "font/inter_semibold.ttf"));
         }
     }
 }

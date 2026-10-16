@@ -19,7 +19,7 @@ import android.view.View;
 public class SparklineView extends View {
 
     private float[] values = {4, 6, 5, 8, 7, 9, 8};
-    private int lineColor = Color.parseColor("#7C3AED");
+    private int lineColor = Color.parseColor("#8B5CF6");   // @color/chart_violet
 
     private final Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

@@ -174,7 +174,7 @@
                 android:background="@drawable/bg_login_button_outlined"
                 android:gravity="center"
                 android:text="@string/cancel_btn"
-                android:textColor="@color/purple_primary"
+                android:textColor="@color/text_primary"
                 android:textSize="15sp" />
 
             <com.anokix.distributorapp.ui.views.RobotoBoldTextView

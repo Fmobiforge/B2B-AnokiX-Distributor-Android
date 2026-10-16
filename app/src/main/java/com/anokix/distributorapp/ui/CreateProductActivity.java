@@ -554,7 +554,7 @@ public class CreateProductActivity extends AppCompatActivity {
                 new android.widget.FrameLayout.LayoutParams(dp(20), dp(20), Gravity.TOP | Gravity.END);
         remove.setLayoutParams(rlp);
         remove.setImageResource(R.drawable.ic_cancel_circle);
-        remove.setColorFilter(0xFF334155);
+        remove.setColorFilter(androidx.core.content.ContextCompat.getColor(this, R.color.text_secondary));
         remove.setOnClickListener(v -> onRemove.run());
         frame.addView(remove);
         return frame;

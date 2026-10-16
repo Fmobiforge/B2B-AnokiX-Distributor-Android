@@ -116,7 +116,7 @@ public class FinancesActivity extends BaseSecondaryActivity {
     // ---- KPI cards -----------------------------------------------------------
 
     private void setupKpiIcons() {
-        styleKpi(R.id.kpiRevenue,    R.drawable.ic_finances,       R.color.purple_primary, R.color.purple_light);
+        styleKpi(R.id.kpiRevenue,    R.drawable.ic_finances,       R.color.chart_violet,   R.color.chart_violet_bg);
         styleKpi(R.id.kpiCommission, R.drawable.ic_finance_report, R.color.warning,        R.color.warning_bg);
         styleKpi(R.id.kpiReceived,   R.drawable.ic_wallet,         R.color.success,        R.color.success_bg);
         styleKpi(R.id.kpiPending,    R.drawable.ic_clock,          R.color.info,           R.color.info_bg);

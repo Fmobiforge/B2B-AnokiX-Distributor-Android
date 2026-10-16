@@ -122,8 +122,8 @@ public class TraderAdapter extends RecyclerView.Adapter<TraderAdapter.ViewHolder
         String name = trader.displayName();
         holder.name.setText(name);
         holder.avatar.setText(ApiMapper.traderInitials(name));
-        holder.avatar.setBackgroundTintList(ContextCompat.getColorStateList(
-                context, ApiMapper.traderAvatarColor(index)));
+        // Portal-style initials avatar: the gradient in bg_profile_circle shows through (no per-row tint).
+        holder.avatar.setBackgroundTintList(null);
 
         setOrHide(holder.code, trader.trader_code);
         setOrHide(holder.address, trader.address);

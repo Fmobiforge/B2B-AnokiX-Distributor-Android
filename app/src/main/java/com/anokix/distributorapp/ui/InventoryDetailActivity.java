@@ -15,6 +15,7 @@ import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 
 import com.anokix.distributorapp.R;
+import com.anokix.distributorapp.ui.views.TypefaceCache;
 import com.anokix.distributorapp.network.ApiCallback;
 import com.anokix.distributorapp.network.ApiClient;
 import com.anokix.distributorapp.network.dto.InventoryPageData;
@@ -314,6 +315,9 @@ public class InventoryDetailActivity extends BaseSecondaryActivity {
         int secondary = ContextCompat.getColor(this, R.color.text_secondary);
         tabDetails.setTextColor(history ? secondary : primary);
         tabHistory.setTextColor(history ? primary : secondary);
+        // Portal underline tabs: active 600, inactive 500.
+        tabDetails.setTypeface(TypefaceCache.get(this, history ? "font/inter_medium.ttf" : "font/inter_semibold.ttf"));
+        tabHistory.setTypeface(TypefaceCache.get(this, history ? "font/inter_semibold.ttf" : "font/inter_medium.ttf"));
         tabDetailsIndicator.setVisibility(history ? View.INVISIBLE : View.VISIBLE);
         tabHistoryIndicator.setVisibility(history ? View.VISIBLE : View.INVISIBLE);
 

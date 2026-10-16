@@ -150,7 +150,7 @@
                         android:id="@+id/statUnread"
                         style="@style/DeliveryStatValue"
                         android:text="0"
-                        android:textColor="@color/warning" />
+                        android:textColor="@color/top_title" />
 
                     <com.anokix.distributorapp.ui.views.RobotoLightTextView
                         android:id="@+id/lblUnread"

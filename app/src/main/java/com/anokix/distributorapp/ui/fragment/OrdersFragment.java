@@ -157,6 +157,9 @@ public class OrdersFragment extends Fragment implements OrderAdapter.OnOrderActi
             chip.setEnsureMinTouchTargetSize(false);
             chip.setChipBackgroundColor(ContextCompat.getColorStateList(requireContext(), R.color.chip_bg_selector));
             chip.setTextColor(ContextCompat.getColorStateList(requireContext(), R.color.chip_text_selector));
+            // Portal filter pill: unselected = white + hairline border, selected = brand blue fill.
+            chip.setChipStrokeColor(ContextCompat.getColorStateList(requireContext(), R.color.chip_stroke_selector));
+            chip.setChipStrokeWidth(getResources().getDisplayMetrics().density);
             chip.setOnClickListener(v -> {
                 if (key.equals(status)) return;
                 status = key;

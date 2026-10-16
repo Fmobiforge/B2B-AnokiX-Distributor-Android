@@ -136,7 +136,7 @@
                         android:hint="cong@anokix.co.za"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -173,7 +173,7 @@
                         android:hint="••••••••"
                         android:inputType="textPassword"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
 
                     <ImageButton
@@ -187,7 +187,7 @@
                         android:src="@drawable/ic_visibility" />
                 </LinearLayout>
 
-                <com.anokix.distributorapp.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/forgotPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_login_button_primary"
+                    android:background="@drawable/bg_auth_button_primary"
                     android:gravity="center"
                     android:text="@string/login_button"
                     android:textColor="#FFFFFF"
@@ -214,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_login_button_outlined"
+                    android:background="@drawable/bg_auth_button_outlined"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -224,7 +224,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/ic_person_add" />
 
-                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

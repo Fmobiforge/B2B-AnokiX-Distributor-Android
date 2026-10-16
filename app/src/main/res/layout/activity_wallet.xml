@@ -218,7 +218,7 @@
                 </LinearLayout>
 
                 <!-- Wallet not active / stale balance notice -->
-                <com.anokix.distributorapp.ui.views.RobotoTextView
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                     android:id="@+id/walletNotice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_headline" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/btnManageSettlement"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -400,7 +400,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_headline" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/btnRecipientsViewAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -455,7 +455,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_headline" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/btnTxnViewAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -533,7 +533,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_headline" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/btnLoansViewAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -576,7 +576,7 @@
                             android:textColor="@color/text_primary"
                             android:textSize="@dimen/text_headline" />
 
-                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                             android:id="@+id/btnStatementsViewAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

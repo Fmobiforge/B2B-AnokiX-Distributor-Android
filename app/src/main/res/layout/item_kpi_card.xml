@@ -45,7 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="126"
-        android:textColor="@color/warning"
+        android:letterSpacing="-0.02"
+        android:textColor="@color/top_title"
         android:textSize="@dimen/text_kpi_value" />
 
     <LinearLayout

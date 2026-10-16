@@ -237,8 +237,8 @@ public class DashboardFragment extends Fragment {
             TextView kpiValue = card.findViewById(R.id.kpiValue);
             kpiValue.setText(values.get(i));
 
-            // Color
-            kpiValue.setTextColor(getResources().getColor(valueColors.get(i)));
+            // Portal KPI: the value stays navy; colour meaning lives in the icon tile.
+            kpiValue.setTextColor(getResources().getColor(R.color.top_title));
             if (i < kpiValueViews.length) {
                 kpiValueViews[i] = kpiValue;
             }
@@ -336,7 +336,7 @@ public class DashboardFragment extends Fragment {
 
             TextView trend = card.findViewById(R.id.summaryTrend);
             boolean up = c.trend == null || !"down".equalsIgnoreCase(c.trend.direction);
-            int trendColor = up ? 0xFF16A34A : 0xFFDC2626;
+            int trendColor = getResources().getColor(up ? R.color.success : R.color.danger);
             trend.setText(c.trend != null ? c.trend.label : "");
             trend.setTextColor(trendColor);
 
@@ -426,7 +426,7 @@ public class DashboardFragment extends Fragment {
             boolean up = !"down".equalsIgnoreCase(revenue.trend.direction);
             trend.setText(String.format(java.util.Locale.US, "%s %.1f%%",
                     up ? "↑" : "↓", revenue.trend.percentage));
-            int trendColor = up ? 0xFF16A34A : 0xFFDC2626;
+            int trendColor = getResources().getColor(up ? R.color.success : R.color.danger);
             trend.setTextColor(trendColor);
             trend.setBackground(roundedRect((trendColor & 0x00FFFFFF) | 0x1A000000, 20));
         }
@@ -459,7 +459,7 @@ public class DashboardFragment extends Fragment {
         int[] colors = new int[items.size()];
         for (int i = 0; i < items.size(); i++) {
             values[i] = (float) Math.max(0.0001, items.get(i).percentage);
-            colors[i] = parseColor(items.get(i).color, 0xFF7C3AED);
+            colors[i] = parseColor(items.get(i).color, 0xFF8B5CF6);   // chart_violet fallback
         }
         donut.setStrokeWidthDp(15);
         donut.setData(values, colors);
@@ -471,7 +471,7 @@ public class DashboardFragment extends Fragment {
             View row = inflater.inflate(R.layout.item_category_legend, legend, false);
             View dot = row.findViewById(R.id.legendDot);
             GradientDrawable dotBg = (GradientDrawable) dot.getBackground().mutate();
-            dotBg.setColor(parseColor(item.color, 0xFF7C3AED));
+            dotBg.setColor(parseColor(item.color, 0xFF8B5CF6));   // chart_violet fallback
             ((TextView) row.findViewById(R.id.legendName)).setText(item.name);
             ((TextView) row.findViewById(R.id.legendAmount)).setText(item.formatted_amount);
             legend.addView(row);
@@ -497,7 +497,7 @@ public class DashboardFragment extends Fragment {
             ((TextView) row.findViewById(R.id.orderAmount)).setText(order.formatted_amount);
 
             TextView status = row.findViewById(R.id.orderStatus);
-            int statusColor = parseColor(order.status_color, 0xFF7C3AED);
+            int statusColor = parseColor(order.status_color, 0xFF0D47A1);   // purple_primary fallback
             status.setText(order.status_label);
             status.setTextColor(statusColor);
             status.setBackground(roundedRect((statusColor & 0x00FFFFFF) | 0x1A000000, 20));
@@ -511,7 +511,7 @@ public class DashboardFragment extends Fragment {
                         LinearLayout.LayoutParams.MATCH_PARENT, (int) (1 * getResources().getDisplayMetrics().density));
 
                 separator.setLayoutParams(params);
-                separator.setBackgroundColor(0xFFE5E7EB); // divider color
+                separator.setBackgroundColor(getResources().getColor(R.color.divider));
 
                 list.addView(separator);
             }
@@ -537,25 +537,26 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    /** Portal KPI accents: revenue violet, orders blue, traders green, products orange. */
     private int accentColor(String name) {
         if (name == null) {
-            return 0xFF7C3AED;
+            return getResources().getColor(R.color.chart_violet);
         }
         switch (name) {
             case "blue":
-                return 0xFF2563EB;
+                return getResources().getColor(R.color.chart_blue);
             case "green":
-                return 0xFF16A34A;
+                return getResources().getColor(R.color.success);
             case "orange":
-                return 0xFFEA580C;
+                return getResources().getColor(R.color.warning);
             case "purple":
             default:
-                return 0xFF7C3AED;
+                return getResources().getColor(R.color.chart_violet);
         }
     }
 
     private int lightAccent(String name) {
-        return (accentColor(name) & 0x00FFFFFF) | 0x22000000;
+        return (accentColor(name) & 0x00FFFFFF) | 0x1F000000;   // ~12% tint
     }
 
     private GradientDrawable roundedRect(int color, float radiusDp) {

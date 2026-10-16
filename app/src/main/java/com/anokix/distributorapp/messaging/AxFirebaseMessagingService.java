@@ -86,7 +86,7 @@ public class AxFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(
                 context, getString(R.string.fcm_default_channel_id))
                 .setSmallIcon(R.drawable.ic_notifications)
-                .setColor(Color.parseColor("#7C3AED"))
+                .setColor(androidx.core.content.ContextCompat.getColor(context, R.color.purple_primary))
                 .setContentTitle(title)
                 .setContentText(body)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(body))

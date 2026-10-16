@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="1dp"
+    app:cardElevation="0dp"
     app:cardBackgroundColor="@color/surface">
 
     <LinearLayout
@@ -38,7 +38,7 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <com.anokix.distributorapp.ui.views.RobotoTextView
+        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/rowBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

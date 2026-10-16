@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_dark"
+        android:background="@drawable/bg_header_purple"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
@@ -21,11 +21,13 @@
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_header_back_button"
             android:contentDescription="@string/back"
+            android:padding="8dp"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_chevron_right"
             android:rotation="180"
-            app:tint="@android:color/white" />
+            app:tint="@color/top_title" />
 
         <com.anokix.distributorapp.ui.views.RobotoBoldTextView
             android:id="@+id/screenTitle"
@@ -34,7 +36,7 @@
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:letterSpacing="-0.01"
-            android:textColor="@android:color/white"
+            android:textColor="@color/top_title"
             android:textSize="@dimen/text_headline" />
 
         <ImageButton
@@ -46,7 +48,7 @@
             android:padding="8dp"
             android:src="@drawable/ic_delete"
             android:visibility="gone"
-            app:tint="@android:color/white" />
+            app:tint="@color/purple_primary" />
     </LinearLayout>
 
     <!-- Stepper -->
@@ -593,7 +595,7 @@
                         android:background="@drawable/bg_login_button_outlined"
                         android:gravity="center"
                         android:text="@string/back_btn"
-                        android:textColor="@color/purple_primary"
+                        android:textColor="@color/text_primary"
                         android:textSize="15sp" />
 
                     <com.anokix.distributorapp.ui.views.RobotoBoldTextView

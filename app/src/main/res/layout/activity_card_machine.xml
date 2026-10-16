@@ -133,7 +133,7 @@
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_secondary"
+                            android:textColorHint="@color/text_tertiary"
                             android:textSize="@dimen/text_body" />
                     </LinearLayout>
 
@@ -216,10 +216,10 @@
                         android:gravity="center"
                         android:paddingHorizontal="14dp"
                         android:text="@string/pos_add_machine"
-                        android:textColor="@color/purple_primary"
+                        android:textColor="@color/text_primary"
                         android:textSize="@dimen/text_body_sm"
                         app:drawableStartCompat="@drawable/ic_add"
-                        app:drawableTint="@color/purple_primary" />
+                        app:drawableTint="@color/text_primary" />
                 </LinearLayout>
 
                 <com.anokix.distributorapp.ui.views.RobotoTextView

@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_dark"
+        android:background="@color/surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
@@ -21,11 +21,13 @@
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_header_back_button"
             android:contentDescription="@string/back"
+            android:padding="8dp"
+            android:scaleType="centerInside"
             android:rotation="180"
             android:src="@drawable/ic_chevron_right"
-            app:tint="@android:color/white" />
+            app:tint="@color/top_title" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -38,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register_account"
-                android:textColor="@color/white"
+                android:textColor="@color/top_title"
                 android:textSize="16sp" />
 
             <com.anokix.distributorapp.ui.views.RobotoTextView
@@ -46,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/register_account_subtitle"
-                android:textColor="@color/white"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
@@ -140,7 +142,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    app:cardCornerRadius="12dp">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
 
                     <FrameLayout
                         android:id="@+id/logoUploadBox"
@@ -163,7 +166,7 @@
                                 android:src="@drawable/ic_add"
                                 app:tint="@color/purple_primary" />
 
-                            <com.anokix.distributorapp.ui.views.RobotoTextView
+                            <com.anokix.distributorapp.ui.views.RobotoBoldTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
@@ -304,7 +307,7 @@
                         android:inputType="phone"
                         android:paddingHorizontal="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -392,7 +395,7 @@
                         android:inputType="phone"
                         android:paddingHorizontal="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -428,7 +431,7 @@
                         android:hint="@string/hint_password"
                         android:inputType="textPassword"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="13sp" />
 
                     <ImageButton
@@ -463,7 +466,7 @@
                         android:hint="@string/hint_confirm_password_reg"
                         android:inputType="textPassword"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="13sp" />
 
                     <ImageButton
@@ -753,7 +756,7 @@
                         android:inputType="phone"
                         android:paddingHorizontal="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColorHint="@color/text_tertiary"
                         android:textSize="14sp" />
                 </LinearLayout>
 

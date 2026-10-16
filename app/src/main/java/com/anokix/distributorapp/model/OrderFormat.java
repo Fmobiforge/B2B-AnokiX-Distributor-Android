@@ -16,18 +16,18 @@ public final class OrderFormat {
 
     /** Brand colour for an order status key. */
     public static int statusColor(String key) {
-        if (key == null) return Color.parseColor("#64748B");
+        if (key == null) return Color.parseColor("#5C6B7A");   // text_secondary
         switch (key) {
-            case "pending":            return Color.parseColor("#D97706");
-            case "accepted":           return Color.parseColor("#7C3AED");
-            case "picking":            return Color.parseColor("#2563EB");
+            case "pending":            return Color.parseColor("#F57F17");   // stat_expiring
+            case "accepted":           return Color.parseColor("#0D47A1");   // purple_primary (brand blue)
+            case "picking":            return Color.parseColor("#1565C0");   // info
             case "packing":            return Color.parseColor("#0891B2");
             case "ready_for_delivery": return Color.parseColor("#0D9488");
-            case "out_for_delivery":   return Color.parseColor("#EA580C");
-            case "delivered":          return Color.parseColor("#16A34A");
-            case "cancelled":          return Color.parseColor("#DC2626");
+            case "out_for_delivery":   return Color.parseColor("#E65100");   // warning
+            case "delivered":          return Color.parseColor("#2E7D32");   // success
+            case "cancelled":          return Color.parseColor("#C62828");   // danger
             case "failed":             return Color.parseColor("#B91C1C");
-            default:                   return Color.parseColor("#64748B");
+            default:                   return Color.parseColor("#5C6B7A");   // text_secondary
         }
     }
 
