@@ -1,5 +1,6 @@
 package com.anokix.distributorapp.ui.adapter;
 
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,9 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
         int white = ContextCompat.getColor(holder.itemView.getContext(), R.color.drawer_text);
         int muted = ContextCompat.getColor(holder.itemView.getContext(), R.color.drawer_text_muted);
 
-        holder.icon.setColorFilter(selected ? white : muted);
+        // SRC_IN replaces the icon's own fill, so every menu icon renders in one colour
+        // whatever colour its vector was drawn with.
+        holder.icon.setColorFilter(selected ? white : muted, PorterDuff.Mode.SRC_IN);
         holder.title.setTextColor(selected ? white : muted);
 
         boolean hasSubtitle = item.subtitle != null && !item.subtitle.isEmpty();

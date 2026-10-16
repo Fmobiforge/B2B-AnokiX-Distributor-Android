@@ -30,7 +30,9 @@
     <color name="drawer_bg">#000920</color>
     <color name="drawer_item_selected">#6366F1</color>
     <color name="drawer_text">#FFFFFF</color>
-    <color name="drawer_text_muted">#A6FFFFFF</color>
+    <!-- Portal: white @ 65% over the #000920 sidebar, flattened to an opaque colour so it can
+         tint multi-coloured icons without their own fills showing through. -->
+    <color name="drawer_text_muted">#A6A7B1</color>
     <color name="drawer_badge_bg">#386366F1</color>
     <color name="drawer_badge_fg">#598B5CF6</color>
     <color name="drawer_badge_text">#C4B5FD</color>
