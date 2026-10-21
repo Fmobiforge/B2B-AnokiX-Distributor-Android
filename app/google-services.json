@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "304349087062",
-    "project_id": "anokix-57e18",
-    "storage_bucket": "anokix-57e18.firebasestorage.app"
+    "project_number": "484876950992",
+    "project_id": "anokix-23170",
+    "storage_bucket": "anokix-23170.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304349087062:android:bb83773be9648a06be82f7",
+        "mobilesdk_app_id": "1:484876950992:android:9925bf877fd812cd222dd5",
         "android_client_info": {
           "package_name": "com.anokix.distributorapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB6LeJQxGBsW-Hh4bU4CWDxXsvPvban7PM"
+          "current_key": "AIzaSyDWzktciji4P0yS6O7q5o5-Ufx4z2C3U0E"
         }
       ],
       "services": {
@@ -26,7 +26,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304349087062:android:ae788265b8fff554be82f7",
+        "mobilesdk_app_id": "1:484876950992:android:3716242390819d54222dd5",
         "android_client_info": {
           "package_name": "com.anokix.traderapp"
         }
@@ -34,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB6LeJQxGBsW-Hh4bU4CWDxXsvPvban7PM"
+          "current_key": "AIzaSyDWzktciji4P0yS6O7q5o5-Ufx4z2C3U0E"
         }
       ],
       "services": {
