@@ -305,7 +305,19 @@
                         android:id="@+id/revenueChart"
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
-                        android:layout_marginTop="10dp" />
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone" />
+
+                    <!-- Shown instead of the chart until real (non-zero) revenue arrives. -->
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/revenueEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/dashboard_no_sales_data"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -334,12 +346,25 @@
                         android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
+                    <!-- Shown instead of the donut until the API returns categories with sales. -->
+                    <com.anokix.distributorapp.ui.views.RobotoTextView
+                        android:id="@+id/categoriesEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center"
+                        android:text="@string/dashboard_no_sales_data"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+
                     <LinearLayout
+                        android:id="@+id/categoriesContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <com.anokix.distributorapp.ui.views.DonutChartView
                             android:id="@+id/categoriesDonut"

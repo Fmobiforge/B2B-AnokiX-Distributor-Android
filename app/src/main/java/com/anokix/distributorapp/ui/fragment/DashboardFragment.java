@@ -414,6 +414,11 @@ public class DashboardFragment extends Fragment {
 
     private void bindRevenue(View root, DashboardData.Dashboard dashboard) {
         DashboardData.RevenueOverview revenue = dashboard.revenue_overview;
+        LineChartView chart = root.findViewById(R.id.revenueChart);
+        boolean hasSales = revenue != null && revenue.chart != null
+                && hasPositive(revenue.chart.values);
+        // Portal: an all-zero (or missing) series shows "No sales data yet", not a flat line.
+        showChartOrEmpty(chart, root.findViewById(R.id.revenueEmpty), hasSales);
         if (revenue == null) {
             return;
         }
@@ -434,9 +439,7 @@ public class DashboardFragment extends Fragment {
         if (compare != null && dashboard.meta != null && dashboard.meta.compare_period_label != null) {
             compare.setText(dashboard.meta.compare_period_label);
         }
-        LineChartView chart = root.findViewById(R.id.revenueChart);
-        if (chart != null && revenue.chart != null && revenue.chart.values != null
-                && !revenue.chart.values.isEmpty()) {
+        if (chart != null && hasSales) {
             chart.setCurrencySymbol(currencySymbol);
             chart.setValues(toFloatArray(revenue.chart.values));
             if (revenue.chart.labels != null && !revenue.chart.labels.isEmpty()) {
@@ -450,8 +453,22 @@ public class DashboardFragment extends Fragment {
     private void bindCategories(View root, DashboardData.TopCategories categories) {
         DonutChartView donut = root.findViewById(R.id.categoriesDonut);
         LinearLayout legend = root.findViewById(R.id.categoriesLegend);
-        if (donut == null || legend == null || categories == null || categories.items == null
-                || categories.items.isEmpty()) {
+        boolean hasSales = false;
+        if (categories != null && categories.items != null) {
+            for (DashboardData.CategoryItem item : categories.items) {
+                if (item != null && (item.amount > 0 || item.percentage > 0)) {
+                    hasSales = true;
+                    break;
+                }
+            }
+        }
+        // Without real categories the donut would fall back to its built-in sample data.
+        showChartOrEmpty(root.findViewById(R.id.categoriesContent),
+                root.findViewById(R.id.categoriesEmpty), hasSales);
+        if (donut == null || legend == null || !hasSales) {
+            if (legend != null) {
+                legend.removeAllViews();
+            }
             return;
         }
         List<DashboardData.CategoryItem> items = categories.items;
@@ -476,6 +493,27 @@ public class DashboardFragment extends Fragment {
             ((TextView) row.findViewById(R.id.legendAmount)).setText(item.formatted_amount);
             legend.addView(row);
         }
+    }
+
+    private static void showChartOrEmpty(View content, View empty, boolean hasData) {
+        if (content != null) {
+            content.setVisibility(hasData ? View.VISIBLE : View.GONE);
+        }
+        if (empty != null) {
+            empty.setVisibility(hasData ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    private static boolean hasPositive(List<Float> values) {
+        if (values == null) {
+            return false;
+        }
+        for (Float v : values) {
+            if (v != null && v > 0f) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // ---- Recent orders ----------------------------------------------------
