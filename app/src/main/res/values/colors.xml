@@ -59,5 +59,35 @@
 
     <color name="top_title">#1A237E</color>
 
+    <!-- Add Product flow (method chooser, barcode lookup, Hirt & Carter library). The portal
+         styles these pages in violet rather than the brand blue, so they get their own set. -->
+    <color name="hc_violet">#7C3AED</color>
+    <color name="hc_violet_dark">#6D28D9</color>
+    <color name="hc_violet_border">#C4B5FD</color>
+    <!-- #7C3AED at 12% / 6% over white -->
+    <color name="hc_violet_tint">#EFE7FD</color>
+    <color name="hc_violet_wash">#F7F3FE</color>
+    <color name="hc_slate">#64748B</color>
+    <color name="hc_slate_bg">#F1F5F9</color>
+    <color name="hc_slate_border">#E2E8F0</color>
+    <color name="hc_muted">#94A3B8</color>
+    <color name="hc_placeholder">#CBD5E1</color>
+    <color name="hc_page">#F8FAFC</color>
+    <color name="hc_green">#15803D</color>
+    <color name="hc_green_icon">#22C55E</color>
+    <color name="hc_green_bg">#F0FDF4</color>
+    <color name="hc_green_border">#BBF7D0</color>
+    <color name="hc_red">#DC2626</color>
+    <color name="hc_red_icon">#EF4444</color>
+    <color name="hc_red_bg">#FEF2F2</color>
+    <color name="hc_red_border">#FECACA</color>
+    <color name="hc_invalid_border">#F87171</color>
+    <color name="hc_tag_purple">#531DAB</color>
+    <color name="hc_tag_purple_bg">#F9F0FF</color>
+    <color name="hc_tag_purple_border">#D3ADF7</color>
+    <color name="hc_info_bg">#E6F4FF</color>
+    <color name="hc_info_border">#91CAFF</color>
+    <color name="hc_info_icon">#1677FF</color>
+
 
 </resources>

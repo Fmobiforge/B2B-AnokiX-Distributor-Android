@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Library list footer: "loading more" spinner, then the data attribution. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="8dp">
+
+    <ProgressBar
+        android:id="@+id/footerProgress"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:indeterminateTint="@color/hc_violet" />
+
+    <com.anokix.distributorapp.ui.views.RobotoTextView
+        android:id="@+id/footerAttribution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/hc_library_attribution"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+</LinearLayout>

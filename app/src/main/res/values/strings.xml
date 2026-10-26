@@ -832,14 +832,124 @@
     <string name="how_add_product">How would you like to add this product?</string>
     <string name="coming_soon">Coming soon</string>
     <string name="feature_coming_soon">%1$s is coming soon.</string>
-    <string name="opt_scan_barcode">Scan Barcode</string>
-    <string name="opt_scan_barcode_sub">Scan product barcode using camera</string>
-    <string name="opt_enter_barcode">Enter Barcode Manually</string>
-    <string name="opt_enter_barcode_sub">Type or paste barcode number</string>
-    <string name="opt_search_library">Search Product Library</string>
-    <string name="opt_search_library_sub">Search by product name, brand or category</string>
+    <string name="opt_barcode">Enter or Scan Barcode</string>
+    <string name="opt_barcode_sub">Type, paste or scan a barcode number with a scanner</string>
     <string name="opt_create_product">Create New Product</string>
     <string name="opt_create_product_sub">Create a completely new product</string>
+    <string name="opt_hc_library">Hirt &amp; Carter Library</string>
+    <string name="opt_hc_library_sub">Browse and search the national product catalogue, with images and details</string>
+    <string name="opt_hc_library_preparing">Library is being prepared — please try again later</string>
+    <string name="hc_badge_products">%1$s products</string>
+    <string name="hc_badge_new">NEW</string>
+
+    <!-- ===== Add Product: barcode lookup ===== -->
+    <string name="barcode_verify_title">Scan or Enter Barcode</string>
+    <string name="barcode_verify_subtitle">Scan the product barcode or enter it manually to verify if it exists in our product library.</string>
+    <string name="barcode_label">Barcode</string>
+    <string name="barcode_placeholder">6001234567890</string>
+    <string name="verify_product">Verify Product</string>
+    <string name="how_check_library">We will check our Master Product Library</string>
+    <string name="how_add_catalogue">If found, you can add it to your catalogue</string>
+    <string name="how_create_new">If not found, you can create a new product</string>
+    <string name="err_invalid_barcode">Please enter a valid barcode (8–14 digits).</string>
+    <string name="err_verify_product">Failed to verify product</string>
+    <string name="catalogue_lookup_unavailable">Catalogue lookup unavailable — you can still create the product manually</string>
+
+    <string name="product_found_banner">Product found in our library</string>
+    <string name="product_found_prompt">Would you like to add this product to your catalogue?</string>
+    <string name="add_to_catalogue">Add To Catalogue</string>
+    <string name="product_found_info">You will be able to set your own price, stock and promotions.</string>
+    <string name="label_supplier">Supplier</string>
+
+    <string name="catalogue_product_title">Product: %1$s</string>
+    <string name="catalogue_selling_price">Selling Price (R)</string>
+    <string name="catalogue_stock_quantity">Stock Quantity</string>
+    <string name="catalogue_reorder_level">Reorder Level</string>
+    <string name="catalogue_max_stock">Maximum Stock Level</string>
+    <string name="catalogue_promo_price">Promotion Price (R) *</string>
+    <string name="catalogue_promo_start">Promotion Start Date</string>
+    <string name="catalogue_promo_end">Promotion End Date</string>
+    <string name="catalogue_available">Available For Ordering</string>
+    <string name="catalogue_yes">Yes</string>
+    <string name="catalogue_no">No</string>
+    <string name="save_product">Save Product</string>
+    <string name="err_fill_required">Please fill all required fields</string>
+    <string name="catalogue_saved">Product has been saved to your catalogue.</string>
+    <string name="err_save_product">Failed to save product</string>
+    <string name="err_promo_end_before_start">The end date cannot be before the start date.</string>
+
+    <string name="barcode_not_found_banner">Barcode not found in Product Library</string>
+    <string name="barcode_not_found_title">We couldn\'t find this product in our library.</string>
+    <string name="barcode_not_found_subtitle">Would you like to create a new product?</string>
+    <string name="request_hc_data">Request product data from Hirt &amp; Carter</string>
+    <string name="request_gtin">GTIN / Barcode</string>
+    <string name="request_brand">Brand *</string>
+    <string name="request_product_name">Product name *</string>
+    <string name="request_size">Size *</string>
+    <string name="request_unit">Unit *</string>
+    <string name="request_select_unit">Select unit</string>
+    <string name="request_sku">SKU (optional)</string>
+    <string name="request_note">Note (optional)</string>
+    <string name="request_send">Send request</string>
+    <string name="request_close">Close</string>
+    <string name="err_request_brand">Brand is required</string>
+    <string name="err_request_name">Product name is required</string>
+    <string name="err_request_size">Size is required</string>
+    <string name="err_request_unit">Unit is required</string>
+    <string name="err_request_failed">Could not send the request. Please try again later.</string>
+    <string name="request_sent_title">Request sent</string>
+    <string name="request_sent_msg">We\'ll notify you when the data and images are ready.</string>
+    <string name="request_duplicate_title">This product has already been requested</string>
+    <string name="request_duplicate_msg">We are already waiting for the data. Check the status under Data requests on the Products page.</string>
+
+    <!-- ===== Add Product: Hirt & Carter library ===== -->
+    <string name="hc_library_title">Hirt &amp; Carter Library</string>
+    <string name="hc_search_hint">Search by name, brand or barcode</string>
+    <string name="hc_all_brands">All brands</string>
+    <string name="hc_search_brands">Search brands</string>
+    <string name="hc_no_brands">No brands</string>
+    <string name="hc_images_only">With images only</string>
+    <string name="hc_searching">Searching…</string>
+    <string name="hc_count_one">%1$s product</string>
+    <string name="hc_count_many">%1$s products</string>
+    <string name="hc_load_failed_title">We couldn\'t load the library.</string>
+    <string name="hc_load_failed">Could not load the library. Please try again.</string>
+    <string name="hc_retry">Retry</string>
+    <string name="hc_unavailable">The Hirt &amp; Carter library is currently unavailable.</string>
+    <string name="hc_preparing">The library is being prepared. Please try again later.</string>
+    <string name="hc_preparing_hint">In the meantime you can add a product by entering its barcode.</string>
+    <string name="hc_enter_barcode">Enter or scan a barcode</string>
+    <string name="hc_no_match">No products match your search</string>
+    <string name="hc_clear_filters">Clear filters</string>
+    <string name="hc_lookup_barcode">Look this barcode up at Hirt &amp; Carter</string>
+    <string name="hc_tag_no_image">No image</string>
+    <string name="hc_tag_added">Already in your catalogue</string>
+    <string name="hc_already_added_hint">You already have this product in your catalogue</string>
+    <string name="hc_not_in_catalogue">This product was not found in the Hirt &amp; Carter catalogue.</string>
+    <string name="hc_catalogue_unavailable">The Hirt &amp; Carter catalogue is currently unavailable.</string>
+    <string name="hc_details_failed">Could not load the product details. Please try again.</string>
+    <string name="hc_library_attribution">Product data and images supplied by Hirt &amp; Carter Digital</string>
+
+    <!-- ===== Add Product: Hirt & Carter product ===== -->
+    <string name="hc_found_banner">Found in the Hirt &amp; Carter catalogue</string>
+    <string name="hc_no_preview">No preview images are available for this product.</string>
+    <string name="hc_unnamed">Unnamed product</string>
+    <string name="hc_label_size">Size</string>
+    <string name="hc_label_gtin">GTIN</string>
+    <string name="hc_label_article">Article number</string>
+    <string name="hc_image_hint">The selected image will be imported as the product image.</string>
+    <string name="hc_image_n">Image %1$d</string>
+    <string name="hc_product_content">Product content (%1$d)</string>
+    <string name="hc_product_attribution">Product data supplied by Hirt &amp; Carter Digital</string>
+    <string name="hc_use_product">Use this product</string>
+    <string name="hc_not_this">Not this product</string>
+
+    <!-- Create Product wizard, when opened from the Hirt & Carter catalogue -->
+    <string name="hc_prefill_title">Prefilled from the Hirt &amp; Carter catalogue</string>
+    <string name="hc_prefill_pack_size">Pack size: %1$s</string>
+    <string name="hc_prefill_body">Please check the details and complete the remaining fields. Product data supplied by Hirt &amp; Carter Digital.</string>
+    <string name="hc_image_used_hint">Image from Hirt &amp; Carter will be used unless you upload your own.</string>
+    <string name="remove_hc_image">Remove Hirt &amp; Carter image</string>
 
     <string name="create_new_product">Create New Product</string>
     <string name="edit_product">Edit Product</string>

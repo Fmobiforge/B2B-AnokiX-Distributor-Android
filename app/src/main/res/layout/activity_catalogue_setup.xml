@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_flow_header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_hc_panel"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    android:id="@+id/catalogueTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/catalogue_selling_price" />
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/etSellingPrice"
+                    style="@style/StoreFieldInput"
+                    android:hint="0.00"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_stock_quantity" />
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/etStock"
+                    style="@style/StoreFieldInput"
+                    android:hint="0"
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_reorder_level" />
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/etReorder"
+                    style="@style/StoreFieldInput"
+                    android:hint="0"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:text="200" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_max_stock" />
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/etMaxStock"
+                    style="@style/StoreFieldInput"
+                    android:hint="0"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:text="3000" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_promo_price" />
+
+                <com.anokix.distributorapp.ui.views.RobotoEditText
+                    android:id="@+id/etPromoPrice"
+                    style="@style/StoreFieldInput"
+                    android:hint="0.00"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_promo_start" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/promoStart"
+                    style="@style/StoreFieldInput"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/date_placeholder" />
+
+                <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                    style="@style/StoreFieldLabel"
+                    android:text="@string/catalogue_promo_end" />
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/promoEnd"
+                    style="@style/StoreFieldInput"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:drawablePadding="8dp"
+                    android:hint="@string/date_placeholder" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/catalogue_available"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switchAvailable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/availableLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:minWidth="28dp"
+                        android:text="@string/catalogue_yes"
+                        android:textColor="@color/success"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal">
+
+                    <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                        android:id="@+id/btnCancel"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_hc_button_outline"
+                        android:gravity="center"
+                        android:text="@string/cancel_btn"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="1dp" />
+
+                    <FrameLayout
+                        android:id="@+id/btnSave"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_hc_button"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:id="@+id/saveLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/save_product"
+                            android:textColor="@android:color/white"
+                            android:textSize="15sp" />
+
+                        <ProgressBar
+                            android:id="@+id/saveProgress"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@android:color/white"
+                            android:visibility="gone" />
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

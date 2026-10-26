@@ -1,5 +1,6 @@
 package com.anokix.distributorapp.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -59,6 +60,19 @@ public class CreateProductActivity extends AppCompatActivity {
     /** Pass an existing product id to open the wizard in edit mode. */
     public static final String EXTRA_PRODUCT_ID = "product_id";
 
+    // Create mode only: values carried over from a barcode lookup / the Hirt & Carter catalogue
+    // ("Use this product"). Brand and unit are matched by name once the lookups load, and the
+    // chosen catalogue image is imported server-side (hc_gtin + hc_image) unless the user
+    // uploads their own.
+    public static final String EXTRA_BARCODE = "prefill_barcode";
+    public static final String EXTRA_HC_NAME = "hc_name";
+    public static final String EXTRA_HC_BRAND = "hc_brand";
+    public static final String EXTRA_HC_SIZE = "hc_size";
+    public static final String EXTRA_HC_UOM = "hc_uom";
+    public static final String EXTRA_HC_IMAGE_GTIN = "hc_image_gtin";
+    public static final String EXTRA_HC_IMAGE_FILE = "hc_image_file";
+    public static final String EXTRA_HC_IMAGE_URL = "hc_image_url";
+
     private static final int STEP_COUNT = 5;
     private static final int STEP_REVIEW = 4;
 
@@ -84,6 +98,13 @@ public class CreateProductActivity extends AppCompatActivity {
 
     // Edit mode
     @Nullable private String productId;
+
+    // Hirt & Carter prefill (create mode)
+    @Nullable private String hcBrandName;
+    @Nullable private String hcUom;
+    @Nullable private String hcImageGtin;
+    @Nullable private String hcImageFile;
+    @Nullable private String hcImageUrl;
 
     // Base info lookups
     private final List<BaseInfoData.Brand> brands = new ArrayList<>();
@@ -135,6 +156,9 @@ public class CreateProductActivity extends AppCompatActivity {
         setupSelectionFields();
         setupPickers();
         applyMeasurement(0);   // default: Kilograms / Centimeters
+        if (productId == null) {
+            applyInitialData();
+        }
 
         showStep(0);
         loadBaseInfo();
@@ -272,7 +296,7 @@ public class CreateProductActivity extends AppCompatActivity {
                 }
                 return true;
             case 2:
-                if (primaryImageUri == null) return fail(R.string.err_primary_image);
+                if (primaryImageUri == null && hcImageFile == null) return fail(R.string.err_primary_image);
                 return true;
             case 3:
                 if (text(R.id.etSellingPrice).isEmpty()) return fail(R.string.err_selling_price);
@@ -479,6 +503,7 @@ public class CreateProductActivity extends AppCompatActivity {
                 preview.setVisibility(View.VISIBLE);
                 findViewById(R.id.primaryImagePlaceholder).setVisibility(View.GONE);
                 Glide.with(this).load(uri).fitCenter().into(preview);
+                renderHcImage();   // an upload replaces the catalogue image
             } else {
                 if (additionalImageCount() >= MAX_ADDITIONAL_IMAGES) {
                     Toast.makeText(this, R.string.err_max_images, Toast.LENGTH_SHORT).show();
@@ -609,6 +634,8 @@ public class CreateProductActivity extends AppCompatActivity {
                 }
                 if (productId != null) {
                     loadProductForEdit();
+                } else {
+                    matchHcLookups();
                 }
             }
 
@@ -617,6 +644,88 @@ public class CreateProductActivity extends AppCompatActivity {
                 Toast.makeText(CreateProductActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    // ---- Prefill from a barcode / the Hirt & Carter catalogue -------------
+
+    /** Seeds a new product from the extras set by the Add Product flow (portal "initialData"). */
+    private void applyInitialData() {
+        Intent in = getIntent();
+        String barcode = AddProductFlow.digits(in.getStringExtra(EXTRA_BARCODE), 14);
+        if (!barcode.isEmpty()) setText(R.id.etBarcode, barcode);
+        String name = in.getStringExtra(EXTRA_HC_NAME);
+        if (!AddProductFlow.isBlank(name)) setText(R.id.etName, name.trim());
+
+        hcBrandName = in.getStringExtra(EXTRA_HC_BRAND);
+        hcUom = in.getStringExtra(EXTRA_HC_UOM);
+        String file = in.getStringExtra(EXTRA_HC_IMAGE_FILE);
+        String gtin = in.getStringExtra(EXTRA_HC_IMAGE_GTIN);
+        if (!AddProductFlow.isBlank(file) && !AddProductFlow.isBlank(gtin)) {
+            hcImageFile = file.trim();
+            hcImageGtin = gtin.trim();
+            hcImageUrl = in.getStringExtra(EXTRA_HC_IMAGE_URL);
+        }
+
+        String size = in.getStringExtra(EXTRA_HC_SIZE);
+        if (hcImageFile != null || !AddProductFlow.isBlank(size)) {
+            StringBuilder text = new StringBuilder();
+            if (!AddProductFlow.isBlank(size)) {
+                String pack = size.trim() + (AddProductFlow.isBlank(hcUom) ? "" : " " + hcUom.trim());
+                text.append(getString(R.string.hc_prefill_pack_size, pack)).append(" · ");
+            }
+            text.append(getString(R.string.hc_prefill_body));
+            ((TextView) findViewById(R.id.hcPrefillText)).setText(text);
+            findViewById(R.id.hcPrefillBanner).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.btnRemoveHcImage).setOnClickListener(v -> {
+            hcImageFile = null;
+            hcImageGtin = null;
+            hcImageUrl = null;
+            renderHcImage();
+        });
+        renderHcImage();
+    }
+
+    /** Select the brand and unit whose names match the catalogue's (case-insensitive). */
+    private void matchHcLookups() {
+        if (selectedBrandId == null && !AddProductFlow.isBlank(hcBrandName)) {
+            String wanted = hcBrandName.trim().toLowerCase(Locale.ROOT);
+            for (BaseInfoData.Brand b : brands) {
+                if (b.name != null && b.name.trim().toLowerCase(Locale.ROOT).equals(wanted)) {
+                    selectedBrandId = b.id;
+                    setDropdownLabel(R.id.brandLabel, b.name);
+                    break;
+                }
+            }
+        }
+        if (selectedUnitId == null && !AddProductFlow.isBlank(hcUom)) {
+            String wanted = hcUom.trim().toLowerCase(Locale.ROOT);
+            for (BaseInfoData.ProductUnit u : units) {
+                if (u.name != null && u.name.trim().toLowerCase(Locale.ROOT).equals(wanted)) {
+                    selectedUnitId = u.id;
+                    setDropdownLabel(R.id.unitTypeLabel, u.name);
+                    break;
+                }
+            }
+        }
+    }
+
+    /** Shows the catalogue image as the primary image until the user uploads their own. */
+    private void renderHcImage() {
+        boolean showHc = hcImageFile != null && primaryImageUri == null;
+        ImageView preview = findViewById(R.id.primaryImagePreview);
+        if (showHc) {
+            preview.setVisibility(View.VISIBLE);
+            findViewById(R.id.primaryImagePlaceholder).setVisibility(View.GONE);
+            Glide.with(this).load(hcImageUrl).fitCenter().into(preview);
+        } else if (primaryImageUri == null) {
+            Glide.with(this).clear(preview);
+            preview.setVisibility(View.GONE);
+            findViewById(R.id.primaryImagePlaceholder).setVisibility(View.VISIBLE);
+        }
+        findViewById(R.id.btnRemoveHcImage).setVisibility(showHc ? View.VISIBLE : View.GONE);
+        findViewById(R.id.hcImageHint).setVisibility(showHc ? View.VISIBLE : View.GONE);
     }
 
     // ---- Edit mode -------------------------------------------------------
@@ -789,6 +898,11 @@ public class CreateProductActivity extends AppCompatActivity {
         List<Http.FilePart> files = new ArrayList<>();
         Http.FilePart primary = readImagePart("image", primaryImageUri);
         if (primary != null) files.add(primary);
+        if (productId == null && primaryImageUri == null && hcImageFile != null && hcImageGtin != null) {
+            // No upload: ask the server to import the chosen Hirt & Carter image instead.
+            form.put("hc_gtin", hcImageGtin);
+            form.put("hc_image", hcImageFile);
+        }
         for (int i = 0; i < additionalImageUris.size(); i++) {
             Http.FilePart part = readImagePart("additional_image_" + i, additionalImageUris.get(i));
             if (part != null) files.add(part);

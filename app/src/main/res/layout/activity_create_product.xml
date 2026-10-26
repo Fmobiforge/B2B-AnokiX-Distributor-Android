@@ -106,6 +106,50 @@
                     android:textAppearance="@style/TextAppearance.AnokiX.Title"
                     android:textColor="@color/top_title" />
 
+                <!-- Shown when the wizard was opened from the Hirt & Carter catalogue. -->
+                <LinearLayout
+                    android:id="@+id/hcPrefillBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_hc_info_banner"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginTop="1dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_info_outline"
+                        app:tint="@color/hc_info_icon" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.anokix.distributorapp.ui.views.RobotoBoldTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hc_prefill_title"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp" />
+
+                        <com.anokix.distributorapp.ui.views.RobotoTextView
+                            android:id="@+id/hcPrefillText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:lineSpacingMultiplier="1.15"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -525,7 +569,31 @@
                         android:contentDescription="@null"
                         android:scaleType="fitCenter"
                         android:visibility="gone" />
+
+                    <!-- Drops the Hirt & Carter image (an uploaded image already overrides it). -->
+                    <ImageView
+                        android:id="@+id/btnRemoveHcImage"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="6dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/remove_hc_image"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_cancel_circle"
+                        android:visibility="gone"
+                        app:tint="@color/text_secondary" />
                 </FrameLayout>
+
+                <com.anokix.distributorapp.ui.views.RobotoTextView
+                    android:id="@+id/hcImageHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/hc_image_used_hint"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -97,6 +97,21 @@
         <activity android:name=".ui.RegisterSubmittedActivity" android:exported="false" />
         <activity android:name=".ui.ProductsActivity" android:exported="false" />
         <activity android:name=".ui.AddProductOptionsActivity" android:exported="false" />
+        <activity
+            android:name=".ui.BarcodeVerifyActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity android:name=".ui.ProductFoundActivity" android:exported="false" />
+        <activity
+            android:name=".ui.CatalogueSetupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.BarcodeNotFoundActivity" android:exported="false" />
+        <activity
+            android:name=".ui.HcLibraryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.HcProductActivity" android:exported="false" />
         <activity android:name=".ui.CreateProductActivity" android:exported="false" />
         <activity android:name=".ui.InventoryDetailActivity" android:exported="false" />
         <activity android:name=".ui.CardMachineActivity" android:exported="false" />

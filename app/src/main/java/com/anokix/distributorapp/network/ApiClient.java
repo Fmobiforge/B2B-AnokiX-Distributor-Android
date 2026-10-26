@@ -12,6 +12,9 @@ import com.anokix.distributorapp.network.dto.CoordinateData;
 import com.anokix.distributorapp.network.dto.CreateTraderData;
 import com.anokix.distributorapp.network.dto.DashboardData;
 import com.anokix.distributorapp.network.dto.FinancesData;
+import com.anokix.distributorapp.network.dto.HcLibraryData;
+import com.anokix.distributorapp.network.dto.HcLookupData;
+import com.anokix.distributorapp.network.dto.HcRequestData;
 import com.anokix.distributorapp.network.dto.DeliveriesData;
 import com.anokix.distributorapp.network.dto.DeliveryDetailData;
 import com.anokix.distributorapp.network.dto.NotificationsData;
@@ -57,6 +60,9 @@ import com.anokix.distributorapp.network.dto.VasTransactionsData;
 import com.anokix.distributorapp.network.dto.WalletData;
 import com.anokix.distributorapp.session.SessionManager;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -324,6 +330,97 @@ public final class ApiClient {
             // parsed into a ProductDetailData object — only the status/message matter.
             deliverStatusOnly(r, cb);
         });
+    }
+
+    // ---- Add Product: barcode lookup + Hirt & Carter catalogue -----------
+
+    /**
+     * The distributor's own product carrying {@code barcode}
+     * (api/distributor/products/get-by-barcode). Returned raw so "Add To Catalogue" can send
+     * the record's fields back unchanged, as the portal does. A missing product is not an
+     * error: the endpoint answers 404 / "Product not found." and the callback gets null.
+     */
+    public void getProductByBarcode(String barcode, ApiCallback<JsonObject> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("barcode", barcode == null ? "" : barcode);
+        io.execute(() -> {
+            Http.Result r = Http.get(BASE_URL, "api/distributor/products/get-by-barcode", q,
+                    session.getToken());
+            JsonObject product = null;
+            String error = null;
+            try {
+                JsonObject env = r.body == null || r.body.isEmpty()
+                        ? null : JsonParser.parseString(r.body).getAsJsonObject();
+                boolean ok = env != null && env.has("status") && !env.get("status").isJsonNull()
+                        && env.get("status").getAsBoolean();
+                if (ok) {
+                    JsonElement data = env.get("data");
+                    if (data != null && data.isJsonObject()) {
+                        JsonObject d = data.getAsJsonObject();
+                        JsonElement p = d.get("product");
+                        if (p != null && p.isJsonObject()) {
+                            product = p.getAsJsonObject();
+                        } else if (d.has("id") || d.has("barcode") || d.has("sku")) {
+                            product = d;
+                        }
+                    }
+                } else {
+                    String message = env != null && env.has("message") && !env.get("message").isJsonNull()
+                            ? env.get("message").getAsString() : null;
+                    boolean notFound = r.code == 404
+                            || (message != null && message.toLowerCase(Locale.US).contains("not found"));
+                    if (!notFound) {
+                        error = message != null ? message
+                                : (env == null ? "Network error (HTTP " + r.code + ")" : "Request failed");
+                    }
+                }
+            } catch (Exception e) {
+                if (r.code != 404) {
+                    Log.e(Http.TAG, "parse failed: " + e, e);
+                    error = "Unexpected response from server";
+                }
+            }
+            final JsonObject result = product;
+            final String errorMessage = error;
+            main.post(() -> {
+                if (errorMessage == null) {
+                    cb.onSuccess(result);
+                } else {
+                    cb.onError(errorMessage);
+                }
+            });
+        });
+    }
+
+    /** Full Hirt &amp; Carter record (images + content) for one barcode. */
+    public void hcLookup(String barcode, ApiCallback<HcLookupData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("barcode", barcode == null ? "" : barcode);
+        getAuthed("api/distributor/products/external-lookup", q, HcLookupData.class, cb);
+    }
+
+    /**
+     * One page of the Hirt &amp; Carter library. Blank search / brand are left out, and
+     * {@code images=1} is only sent when the "With images only" filter is on — the same
+     * query the portal builds.
+     */
+    public void getHcLibrary(String search, String brand, boolean imagesOnly, int page, int perPage,
+                             ApiCallback<HcLibraryData> cb) {
+        Map<String, String> q = new HashMap<>();
+        q.put("page", String.valueOf(Math.max(1, page)));
+        q.put("per_page", String.valueOf(perPage));
+        if (search != null && !search.trim().isEmpty()) q.put("search", search.trim());
+        if (brand != null && !brand.trim().isEmpty()) q.put("brand", brand.trim());
+        if (imagesOnly) q.put("images", "1");
+        getAuthed("api/distributor/products/hc-library", q, HcLibraryData.class, cb);
+    }
+
+    /**
+     * Ask Hirt &amp; Carter to add a product their catalogue lacks
+     * (gtin, brand, product_name, size, uom and optional sku / note).
+     */
+    public void requestHcProduct(Map<String, String> form, ApiCallback<HcRequestData> cb) {
+        postAuthed("api/distributor/products/external-request", form, HcRequestData.class, cb);
     }
 
     public void getInventorySummary(ApiCallback<InventorySummaryData> cb) {

@@ -1,5 +1,7 @@
 package com.anokix.distributorapp.ui;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -17,28 +18,39 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.anokix.distributorapp.R;
+import com.anokix.distributorapp.network.ApiCallback;
+import com.anokix.distributorapp.network.ApiClient;
+import com.anokix.distributorapp.network.dto.HcLibraryData;
 import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
 
 /**
- * "How would you like to add this product?" chooser, opened from the Products
- * screen's Add Product action (mirrors Create-Product1.jpg).
+ * "How would you like to add this product?" — the portal's add-method chooser
+ * (/products/create), opened from the Products screen's Add Product action.
  *
- * Four options are shown but only "Create New Product" is wired today — the
- * barcode / library options depend on third-party services and arrive later.
- * Continue opens the {@link CreateProductActivity} wizard.
+ * Methods: Enter or Scan Barcode (default) · Create New Product · Hirt &amp; Carter Library.
+ * The library card only appears once a one-row library request confirms the integration is
+ * available; until then a placeholder card holds its place. While the first catalogue sync is
+ * still running the card is shown disabled, and once ready it carries the product count.
  */
 public class AddProductOptionsActivity extends AppCompatActivity {
 
-    private static final int OPTION_CREATE = 3;
+    private static final String METHOD_BARCODE = "manual";
+    private static final String METHOD_CREATE = "create_new";
+    private static final String METHOD_LIBRARY = "hc_library";
 
-    private final View[] cards = new View[4];
-    private final ImageView[] radios = new ImageView[4];
-    private int selected = OPTION_CREATE;
+    private LinearLayout container;
+    private String selected = METHOD_BARCODE;
 
-    // Launch the wizard for result and relay its RESULT_OK back to the Products
-    // screen so the list refreshes after a product is created.
-    private final ActivityResultLauncher<Intent> wizardLauncher =
+    // Library card state: loading → (hidden | shown); shown cards are ready or still preparing.
+    private boolean libraryLoading = true;
+    private boolean libraryShown;
+    private boolean libraryReady;
+    private int libraryTotal;
+
+    // Every downstream screen ends with RESULT_OK once a product is saved; pass it on to the
+    // Products screen so its list refreshes, and close the chooser.
+    private final ActivityResultLauncher<Intent> flowLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
                     setResult(RESULT_OK);
@@ -52,120 +64,223 @@ public class AddProductOptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product_options);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
-        buildOptions();
+        container = findViewById(R.id.optionsContainer);
+        findViewById(R.id.btnContinue).setOnClickListener(v -> onContinue());
 
-        findViewById(R.id.btnContinue).setOnClickListener(v -> {
-            if (selected == OPTION_CREATE) {
-                wizardLauncher.launch(new Intent(this, CreateProductActivity.class));
-            } else {
-                Toast.makeText(this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
+        renderOptions();
+        loadLibraryInfo();
+    }
+
+    /** One-row library request: tells us whether to show the card, its readiness and size. */
+    private void loadLibraryInfo() {
+        ApiClient.get(this).getHcLibrary("", "", false, 1, 1, new ApiCallback<HcLibraryData>() {
+            @Override
+            public void onSuccess(HcLibraryData data) {
+                if (isFinishing() || isDestroyed()) return;
+                libraryLoading = false;
+                if (data != null && data.available) {
+                    libraryShown = true;
+                    libraryReady = data.library_ready;
+                    libraryTotal = data.total;
+                }
+                renderOptions();
+            }
+
+            @Override
+            public void onError(String message) {
+                if (isFinishing() || isDestroyed()) return;
+                libraryLoading = false;   // the card simply stays hidden, as on the portal
+                renderOptions();
             }
         });
     }
 
-    private void buildOptions() {
-        LinearLayout container = findViewById(R.id.optionsContainer);
-        int[] icons = {R.drawable.ic_products, R.drawable.ic_document,
-                R.drawable.ic_search, R.drawable.ic_add};
-        int[] titles = {R.string.opt_scan_barcode, R.string.opt_enter_barcode,
-                R.string.opt_search_library, R.string.opt_create_product};
-        int[] subs = {R.string.opt_scan_barcode_sub, R.string.opt_enter_barcode_sub,
-                R.string.opt_search_library_sub, R.string.opt_create_product_sub};
-
-        // A single-column list of full-width rows reads cleaner than a 2-col grid
-        // (no ragged heights or wrapped titles). Each row is icon · text · radio.
-        for (int i = 0; i < 4; i++) {
-            final int index = i;
-            View card = buildCard(icons[i], titles[i], subs[i], index);
-            LinearLayout.LayoutParams cardLp = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            if (i > 0) {
-                cardLp.topMargin = dp(12);
-            }
-            card.setLayoutParams(cardLp);
-            card.setOnClickListener(v -> selectOption(index));
-            cards[index] = card;
-            container.addView(card);
+    private void onContinue() {
+        switch (selected) {
+            case METHOD_CREATE:
+                flowLauncher.launch(new Intent(this, CreateProductActivity.class));
+                break;
+            case METHOD_LIBRARY:
+                flowLauncher.launch(new Intent(this, HcLibraryActivity.class));
+                break;
+            default:
+                flowLauncher.launch(new Intent(this, BarcodeVerifyActivity.class));
+                break;
         }
-        applySelection();
     }
 
-    private View buildCard(int iconRes, int titleRes, int subRes, int index) {
+    // ---- Cards -------------------------------------------------------------
+
+    private void renderOptions() {
+        container.removeAllViews();
+        addCard(METHOD_BARCODE, R.drawable.ic_barcode, getString(R.string.opt_barcode),
+                getString(R.string.opt_barcode_sub), null, false);
+        addCard(METHOD_CREATE, R.drawable.ic_add_circle_outline, getString(R.string.opt_create_product),
+                getString(R.string.opt_create_product_sub), null, false);
+        if (libraryShown) {
+            boolean disabled = !libraryReady;
+            String badge = null;
+            if (libraryReady) {
+                badge = libraryTotal > 0
+                        ? getString(R.string.hc_badge_products, AddProductFlow.count(libraryTotal))
+                        : getString(R.string.hc_badge_new);
+            }
+            addCard(METHOD_LIBRARY, R.drawable.ic_library_book, getString(R.string.opt_hc_library),
+                    getString(disabled ? R.string.opt_hc_library_preparing : R.string.opt_hc_library_sub),
+                    badge, disabled);
+        } else if (libraryLoading) {
+            container.addView(buildSkeletonCard(), cardParams());
+        }
+    }
+
+    private void addCard(String key, int iconRes, String title, String description,
+                         @Nullable String badge, boolean disabled) {
+        boolean isSelected = !disabled && key.equals(selected);
+
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.HORIZONTAL);
         card.setGravity(Gravity.CENTER_VERTICAL);
-        card.setMinimumHeight(dp(72));
-        card.setPadding(dp(16), dp(16), dp(16), dp(16));
+        card.setPadding(dp(18), dp(18), dp(18), dp(18));
+        card.setBackgroundResource(disabled ? R.drawable.bg_hc_card_muted
+                : isSelected ? R.drawable.bg_hc_card_selected : R.drawable.bg_hc_card);
+        if (disabled) {
+            card.setAlpha(0.6f);
+        } else {
+            card.setOnClickListener(v -> {
+                selected = key;
+                renderOptions();
+            });
+        }
 
         FrameLayout iconBox = new FrameLayout(this);
-        LinearLayout.LayoutParams boxLp = new LinearLayout.LayoutParams(dp(44), dp(44));
-        iconBox.setLayoutParams(boxLp);
-        iconBox.setBackgroundResource(R.drawable.bg_circle_purple);
-
+        iconBox.setLayoutParams(new LinearLayout.LayoutParams(dp(52), dp(52)));
+        iconBox.setBackgroundResource(isSelected ? R.drawable.bg_hc_icon_selected : R.drawable.bg_hc_icon);
         ImageView icon = new ImageView(this);
-        FrameLayout.LayoutParams iconLp = new FrameLayout.LayoutParams(dp(22), dp(22));
+        FrameLayout.LayoutParams iconLp = new FrameLayout.LayoutParams(dp(26), dp(26));
         iconLp.gravity = Gravity.CENTER;
         icon.setLayoutParams(iconLp);
         icon.setImageResource(iconRes);
-        icon.setColorFilter(ContextCompat.getColor(this, R.color.purple_primary));
+        icon.setColorFilter(color(isSelected ? R.color.hc_violet : R.color.hc_slate));
         iconBox.addView(icon);
         card.addView(iconBox);
 
-        LinearLayout texts = new LinearLayout(this);
-        texts.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams textsLp = new LinearLayout.LayoutParams(
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams bodyLp = new LinearLayout.LayoutParams(
                 0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-        textsLp.setMarginStart(dp(14));
-        textsLp.setMarginEnd(dp(12));
-        texts.setLayoutParams(textsLp);
+        bodyLp.setMarginStart(dp(16));
+        body.setLayoutParams(bodyLp);
 
-        RobotoBoldTextView title = new RobotoBoldTextView(this);
-        title.setText(titleRes);
-        title.setTextSize(15);
-        title.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-        texts.addView(title);
+        RobotoBoldTextView titleView = new RobotoBoldTextView(this);
+        titleView.setText(title);
+        titleView.setTextSize(16);
+        titleView.setTextColor(color(isSelected ? R.color.hc_violet : R.color.text_primary));
+        body.addView(titleView);
 
-        RobotoTextView sub = new RobotoTextView(this);
-        sub.setText(subRes);
-        sub.setTextSize(12);
-        sub.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-        LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(
+        if (badge != null) {
+            RobotoBoldTextView badgeView = new RobotoBoldTextView(this);
+            badgeView.setText(badge);
+            badgeView.setTextSize(11);
+            badgeView.setTextColor(color(R.color.hc_violet_dark));
+            badgeView.setBackgroundResource(R.drawable.bg_hc_badge);
+            badgeView.setPadding(dp(8), dp(1), dp(8), dp(1));
+            LinearLayout.LayoutParams badgeLp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            badgeLp.topMargin = dp(4);
+            badgeView.setLayoutParams(badgeLp);
+            body.addView(badgeView);
+        }
+
+        RobotoTextView descView = new RobotoTextView(this);
+        descView.setText(description);
+        descView.setTextSize(13);
+        descView.setLineSpacing(0, 1.2f);
+        descView.setTextColor(color(R.color.text_secondary));
+        LinearLayout.LayoutParams descLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        subLp.topMargin = dp(3);
-        sub.setLayoutParams(subLp);
-        texts.addView(sub);
+        descLp.topMargin = dp(4);
+        descView.setLayoutParams(descLp);
+        body.addView(descView);
 
-        card.addView(texts);
+        card.addView(body);
+        container.addView(card, cardParams());
+    }
 
-        ImageView radio = new ImageView(this);
-        radio.setLayoutParams(new LinearLayout.LayoutParams(dp(22), dp(22)));
-        radio.setImageResource(R.drawable.ic_radio_unselected);
-        card.addView(radio);
-        radios[index] = radio;
+    /** Placeholder for the library card while its availability is being checked. */
+    private View buildSkeletonCard() {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.HORIZONTAL);
+        card.setGravity(Gravity.CENTER_VERTICAL);
+        card.setPadding(dp(18), dp(18), dp(18), dp(18));
+        card.setBackgroundResource(R.drawable.bg_hc_card);
+        card.setContentDescription(getString(R.string.opt_hc_library));
 
+        View icon = new View(this);
+        icon.setLayoutParams(new LinearLayout.LayoutParams(dp(52), dp(52)));
+        icon.setBackgroundResource(R.drawable.bg_hc_icon);
+        card.addView(icon);
+
+        LinearLayout body = new LinearLayout(this);
+        body.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams bodyLp = new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        bodyLp.setMarginStart(dp(16));
+        body.setLayoutParams(bodyLp);
+        body.addView(skeletonBar(0.62f, 16));
+        body.addView(skeletonBar(0.34f, 16));
+        body.addView(skeletonBar(0.92f, 11));
+        body.addView(skeletonBar(0.64f, 11));
+        card.addView(body);
+
+        ObjectAnimator pulse = ObjectAnimator.ofFloat(card, View.ALPHA, 1f, 0.5f);
+        pulse.setDuration(700);
+        pulse.setRepeatMode(ValueAnimator.REVERSE);
+        pulse.setRepeatCount(ValueAnimator.INFINITE);
+        card.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                pulse.start();
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                pulse.cancel();
+            }
+        });
         return card;
     }
 
-    private void selectOption(int index) {
-        if (index != OPTION_CREATE) {
-            Toast.makeText(this, R.string.coming_soon, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        selected = index;
-        applySelection();
+    /** A grey bar {@code widthFraction} of the card body wide. */
+    private View skeletonBar(float widthFraction, int heightDp) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp));
+        rowLp.bottomMargin = dp(8);
+        row.setLayoutParams(rowLp);
+        row.setWeightSum(1f);
+
+        View bar = new View(this);
+        bar.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, widthFraction));
+        bar.setBackgroundResource(R.drawable.bg_hc_thumb_well);
+        row.addView(bar);
+        return row;
     }
 
-    private void applySelection() {
-        for (int i = 0; i < cards.length; i++) {
-            boolean isSelected = i == selected;
-            cards[i].setBackgroundResource(isSelected
-                    ? R.drawable.bg_trader_type_card_selected : R.drawable.bg_trader_type_card);
-            radios[i].setImageResource(isSelected
-                    ? R.drawable.ic_radio_selected : R.drawable.ic_radio_unselected);
+    private LinearLayout.LayoutParams cardParams() {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (container.getChildCount() > 0) {
+            lp.topMargin = dp(14);
         }
+        return lp;
+    }
+
+    private int color(int res) {
+        return ContextCompat.getColor(this, res);
     }
 
     private int dp(int v) {
-        return Math.round(v * getResources().getDisplayMetrics().density);
+        return AddProductFlow.dp(this, v);
     }
 }
