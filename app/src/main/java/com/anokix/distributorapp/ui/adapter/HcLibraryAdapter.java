@@ -39,12 +39,18 @@ public class HcLibraryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private final List<HcLibraryData.Item> items = new ArrayList<>();
     private final OnItemClick listener;
+    /** Columns of the grid — cards in one row reserve the same optional lines (see bind). */
+    private int spanCount = 2;
     private boolean loadingMore;
     /** GTIN being looked up: its card shows a spinner and every card is disabled. */
     @Nullable private String busyGtin;
 
     public HcLibraryAdapter(OnItemClick listener) {
         this.listener = listener;
+    }
+
+    public void setSpanCount(int spanCount) {
+        this.spanCount = Math.max(1, spanCount);
     }
 
     public void setItems(List<HcLibraryData.Item> newItems) {
@@ -100,14 +106,24 @@ public class HcLibraryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         HcLibraryData.Item item = items.get(position);
 
         h.brand.setText(item.brand == null ? "" : item.brand);
-        h.brand.setVisibility(item.brand == null || item.brand.trim().isEmpty() ? View.GONE : View.VISIBLE);
         h.name.setText(item.name);
         String size = ((item.size == null ? "" : item.size) + (item.uom == null ? "" : item.uom)).trim();
         h.size.setText(size);
         h.size.setVisibility(size.isEmpty() ? View.GONE : View.VISIBLE);
         h.gtin.setText(item.gtin);
-        h.tagNoImage.setVisibility(item.has_images ? View.GONE : View.VISIBLE);
-        h.tagAdded.setVisibility(item.already_added ? View.VISIBLE : View.GONE);
+        // Keep every card in a row the same height (as iOS does): when any card in the row
+        // shows a tag, the others reserve that line invisibly instead of collapsing it.
+        boolean rowNoImage = false;
+        boolean rowAdded = false;
+        int rowStart = (position / spanCount) * spanCount;
+        int rowEnd = Math.min(rowStart + spanCount, items.size());
+        for (int i = rowStart; i < rowEnd; i++) {
+            HcLibraryData.Item other = items.get(i);
+            rowNoImage |= !other.has_images;
+            rowAdded |= other.already_added;
+        }
+        h.tagNoImage.setVisibility(!item.has_images ? View.VISIBLE : rowNoImage ? View.INVISIBLE : View.GONE);
+        h.tagAdded.setVisibility(item.already_added ? View.VISIBLE : rowAdded ? View.INVISIBLE : View.GONE);
 
         // Products already in the catalogue stay selectable but read as secondary.
         h.card.setBackgroundResource(item.already_added ? R.drawable.bg_hc_card_muted : R.drawable.bg_hc_card);

@@ -139,6 +139,7 @@ public class HcLibraryActivity extends AppCompatActivity {
         int span = Math.max(2, (int) (widthDp / 170));
         GridLayoutManager layout = new GridLayoutManager(this, span);
         adapter = new HcLibraryAdapter(item -> openProduct(item.gtin));
+        adapter.setSpanCount(span);
         layout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
