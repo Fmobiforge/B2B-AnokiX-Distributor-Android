@@ -23,6 +23,7 @@
             android:background="@drawable/bg_product_image">
 
             <ImageView
+                android:id="@+id/productPlaceholder"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"

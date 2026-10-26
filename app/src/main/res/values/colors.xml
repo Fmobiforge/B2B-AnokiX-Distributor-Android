@@ -59,6 +59,14 @@
 
     <color name="top_title">#1A237E</color>
 
+    <!-- Product status pills (portal Products page): text + 12–14% tint over white. -->
+    <color name="status_active_text">#15803D</color>
+    <color name="status_active_bg">#E5F8EC</color>
+    <color name="status_pending_text">#B45309</color>
+    <color name="status_pending_bg">#FEF1DD</color>
+    <color name="status_inactive_text">#4B5563</color>
+    <color name="status_inactive_bg">#EDEEF0</color>
+
     <!-- Add Product flow (method chooser, barcode lookup, Hirt & Carter library). The portal
          styles these pages in violet rather than the brand blue, so they get their own set. -->
     <color name="hc_violet">#7C3AED</color>

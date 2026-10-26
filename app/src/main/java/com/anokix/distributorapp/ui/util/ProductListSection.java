@@ -209,7 +209,7 @@ public class ProductListSection {
     }
 
     private boolean matchesStatus(ProductItem item) {
-        return ALL_STATUS.equals(status) || status.equalsIgnoreCase(item.status);
+        return ALL_STATUS.equals(status) || status.equalsIgnoreCase(item.statusLabel());
     }
 
     private boolean contains(String value) {
@@ -379,15 +379,17 @@ public class ProductListSection {
 
     private void showStatusPicker() {
         List<String> labels = new ArrayList<>();
-        // The API documents Active / Pending / InActive; anything else a product carries
-        // is appended below so the filter always covers the data on screen.
+        // The portal's status labels (Active / Pending Review / InActive), matched against the
+        // badge text; any other status a product carries is appended so the filter always
+        // covers the data on screen.
         labels.add(context.getString(R.string.all_status));
-        labels.add(context.getString(R.string.active));
-        labels.add(context.getString(R.string.pending));
-        labels.add(context.getString(R.string.inactive));
+        labels.add(ProductItem.LABEL_ACTIVE);
+        labels.add(ProductItem.LABEL_PENDING);
+        labels.add(ProductItem.LABEL_INACTIVE);
         for (ProductItem item : allItems) {
-            if (!item.status.isEmpty() && !labels.contains(item.status)) {
-                labels.add(item.status);
+            String label = item.statusLabel();
+            if (!label.isEmpty() && !labels.contains(label)) {
+                labels.add(label);
             }
         }
 

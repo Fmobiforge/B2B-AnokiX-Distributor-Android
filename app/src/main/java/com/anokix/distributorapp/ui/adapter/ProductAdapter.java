@@ -1,6 +1,8 @@
 package com.anokix.distributorapp.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.model.ProductItem;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,13 +81,43 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         applyStockBadgeStyle(holder, item.stockStatus);
         applyStatusBadgeStyle(holder, item);
 
+        // The placeholder icon sits under the image. Hide it once the image has loaded and
+        // give the image a white backdrop: imported catalogue images (e.g. Hirt & Carter) have
+        // transparent backgrounds, which otherwise let the icon and blue tile show through.
+        holder.placeholder.setVisibility(View.VISIBLE);
+        holder.image.setBackgroundColor(Color.TRANSPARENT);
         if (item.imageUrl != null && !item.imageUrl.isEmpty()) {
+            final String url = item.imageUrl;
+            holder.boundUrl = url;
             holder.image.setVisibility(View.VISIBLE);
             Glide.with(holder.image.getContext())
-                    .load(item.imageUrl)
+                    .load(url)
                     .centerCrop()
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                    @NonNull Target<Drawable> target, boolean isFirstResource) {
+                            if (url.equals(holder.boundUrl)) {
+                                holder.image.setVisibility(View.GONE);
+                                holder.placeholder.setVisibility(View.VISIBLE);
+                            }
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(@NonNull Drawable resource, @NonNull Object model,
+                                                       Target<Drawable> target, @NonNull DataSource dataSource,
+                                                       boolean isFirstResource) {
+                            if (url.equals(holder.boundUrl)) {
+                                holder.placeholder.setVisibility(View.GONE);
+                                holder.image.setBackgroundColor(Color.WHITE);
+                            }
+                            return false;
+                        }
+                    })
                     .into(holder.image);
         } else {
+            holder.boundUrl = null;
             holder.image.setVisibility(View.GONE);
             Glide.with(holder.image.getContext()).clear(holder.image);
         }
@@ -104,16 +141,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.stockBadge.setBackgroundResource(bgRes);
     }
 
+    /** Portal status pill: green Active, amber Pending Review, grey InActive. */
     private void applyStatusBadgeStyle(ViewHolder holder, ProductItem item) {
         Context context = holder.itemView.getContext();
-        String label = item.status == null || item.status.isEmpty()
-                ? context.getString(R.string.active) : item.status;
-        holder.statusBadge.setText(label);
-        boolean active = item.isActive();
-        holder.statusBadge.setTextColor(context.getColor(
-                active ? R.color.success : R.color.text_secondary));
-        holder.statusBadge.setBackgroundResource(
-                active ? R.drawable.bg_badge_success : R.drawable.bg_badge_muted);
+        holder.statusBadge.setText(item.statusLabel());
+        int text, bg;
+        switch (item.statusKind()) {
+            case ACTIVE:
+                text = R.color.status_active_text;
+                bg = R.drawable.bg_status_active;
+                break;
+            case PENDING:
+                text = R.color.status_pending_text;
+                bg = R.drawable.bg_status_pending;
+                break;
+            default:
+                text = R.color.status_inactive_text;
+                bg = R.drawable.bg_status_inactive;
+                break;
+        }
+        holder.statusBadge.setTextColor(context.getColor(text));
+        holder.statusBadge.setBackgroundResource(bg);
     }
 
     @Override
@@ -123,7 +171,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView name, sku, category, brand, price, stock, stockBadge, statusBadge;
-        final ImageView image;
+        final ImageView image, placeholder;
+        @Nullable String boundUrl;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -136,6 +185,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             stockBadge = itemView.findViewById(R.id.productStockBadge);
             statusBadge = itemView.findViewById(R.id.productStatusBadge);
             image = itemView.findViewById(R.id.productImage);
+            placeholder = itemView.findViewById(R.id.productPlaceholder);
         }
     }
 }
