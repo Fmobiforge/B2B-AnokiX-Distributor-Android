@@ -836,7 +836,8 @@
     <string name="opt_barcode_sub">Type, paste or scan a barcode number with a scanner</string>
     <string name="opt_create_product">Create New Product</string>
     <string name="opt_create_product_sub">Create a completely new product</string>
-    <string name="opt_hc_library">Hirt &amp; Carter Library</string>
+    <!--<string name="opt_hc_library">Hirt &amp; Carter Library</string>-->
+    <string name="opt_hc_library">anokiX Library</string>
     <string name="opt_hc_library_sub">Browse and search the national product catalogue, with images and details</string>
     <string name="opt_hc_library_preparing">Library is being prepared — please try again later</string>
     <string name="hc_badge_products">%1$s products</string>
@@ -903,7 +904,8 @@
     <string name="request_duplicate_msg">We are already waiting for the data. Check the status under Data requests on the Products page.</string>
 
     <!-- ===== Add Product: Hirt & Carter library ===== -->
-    <string name="hc_library_title">Hirt &amp; Carter Library</string>
+    <!--<string name="hc_library_title">Hirt &amp; Carter Library</string>-->
+    <string name="hc_library_title">anokiX Library</string>
     <string name="hc_search_hint">Search by name, brand or barcode</string>
     <string name="hc_all_brands">All brands</string>
     <string name="hc_search_brands">Search brands</string>
