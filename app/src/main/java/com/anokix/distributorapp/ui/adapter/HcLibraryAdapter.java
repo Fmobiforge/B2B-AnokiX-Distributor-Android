@@ -27,6 +27,13 @@ public class HcLibraryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         void onItemClick(HcLibraryData.Item item);
     }
 
+    /**
+     * Read timeout for Hirt &amp; Carter CDN images. The CDN renders each size on first request
+     * (measured 2.6–6.4 s uncached, ~0.35 s once cached), so Glide's default 2.5 s timeout
+     * abandons most first loads with "SocketTimeoutException: Read timed out".
+     */
+    public static final int HC_IMAGE_TIMEOUT_MS = 15_000;
+
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;
 
@@ -114,6 +121,7 @@ public class HcLibraryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             h.thumb.setVisibility(View.VISIBLE);
             h.placeholder.setVisibility(View.GONE);
             Glide.with(h.thumb).load(item.thumb_url).fitCenter()
+                    .timeout(HC_IMAGE_TIMEOUT_MS)
                     .listener(new PlaceholderOnError(h, item.thumb_url)).into(h.thumb);
         } else {
             h.boundUrl = null;

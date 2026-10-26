@@ -718,7 +718,9 @@ public class CreateProductActivity extends AppCompatActivity {
         if (showHc) {
             preview.setVisibility(View.VISIBLE);
             findViewById(R.id.primaryImagePlaceholder).setVisibility(View.GONE);
-            Glide.with(this).load(hcImageUrl).fitCenter().into(preview);
+            Glide.with(this).load(hcImageUrl).fitCenter()
+                    .timeout(com.anokix.distributorapp.ui.adapter.HcLibraryAdapter.HC_IMAGE_TIMEOUT_MS)
+                    .into(preview);
         } else if (primaryImageUri == null) {
             Glide.with(this).clear(preview);
             preview.setVisibility(View.GONE);

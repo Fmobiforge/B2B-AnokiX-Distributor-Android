@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.anokix.distributorapp.R;
 import com.anokix.distributorapp.network.dto.HcLookupData;
+import com.anokix.distributorapp.ui.adapter.HcLibraryAdapter;
 import com.anokix.distributorapp.ui.views.RobotoBoldTextView;
 import com.anokix.distributorapp.ui.views.RobotoTextView;
 import com.bumptech.glide.Glide;
@@ -100,7 +101,8 @@ public class HcProductActivity extends AppCompatActivity {
             mainPlaceholder.setVisibility(View.GONE);
             mainImage.setVisibility(View.VISIBLE);
             mainImage.setContentDescription(imageAlt(current));
-            Glide.with(this).load(current.preview_url).fitCenter().into(mainImage);
+            Glide.with(this).load(current.preview_url).fitCenter()
+                    .timeout(HcLibraryAdapter.HC_IMAGE_TIMEOUT_MS).into(mainImage);
         } else {
             mainImage.setVisibility(View.GONE);
             mainPlaceholder.setVisibility(View.VISIBLE);
@@ -136,7 +138,8 @@ public class HcProductActivity extends AppCompatActivity {
         ImageView thumb = new ImageView(this);
         thumb.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
         thumb.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Glide.with(this).load(image.preview_url).fitCenter().into(thumb);
+        Glide.with(this).load(image.preview_url).fitCenter()
+                .timeout(HcLibraryAdapter.HC_IMAGE_TIMEOUT_MS).into(thumb);
         tile.addView(thumb);
 
         RobotoTextView caption = new RobotoTextView(this);
