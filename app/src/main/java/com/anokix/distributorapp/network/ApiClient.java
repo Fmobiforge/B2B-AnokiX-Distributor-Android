@@ -1298,7 +1298,9 @@ public final class ApiClient {
             }
         } catch (Exception e) {
             Log.e(Http.TAG, "parse failed: " + e, e);
-            error = "Unexpected response from server";
+            // A crashed endpoint answers 5xx with a non-envelope body (e.g. ""): say so plainly.
+            error = r.code >= 500 ? "Server error (HTTP " + r.code + "). Please try again later."
+                    : "Unexpected response from server";
         }
 
         final T result = data;

@@ -280,11 +280,30 @@ public class HcProductActivity extends AppCompatActivity {
         i.putExtra(CreateProductActivity.EXTRA_HC_UOM, product.uom);
         HcLookupData.Image image = currentImage();
         if (image != null) {
-            i.putExtra(CreateProductActivity.EXTRA_HC_IMAGE_GTIN, gtin);
+            i.putExtra(CreateProductActivity.EXTRA_HC_IMAGE_GTIN, imageGtin(image, gtin));
             i.putExtra(CreateProductActivity.EXTRA_HC_IMAGE_FILE, image.file_name);
             i.putExtra(CreateProductActivity.EXTRA_HC_IMAGE_URL, image.preview_url);
         }
         createLauncher.launch(i);
+    }
+
+    /**
+     * The GTIN the image is stored under, which the server needs to import it. A product can
+     * carry several GTINs (e.g. 6001285005845 with images under 6009706344153), so this is
+     * taken from the image's file name ("{gtin}_{id}") or its CDN path, not the product's GTIN —
+     * sending a mismatched pair makes products/create fail with HTTP 500.
+     */
+    private static String imageGtin(HcLookupData.Image image, String fallback) {
+        if (!AddProductFlow.isBlank(image.file_name)) {
+            String prefix = image.file_name.trim().split("_")[0];
+            if (AddProductFlow.isBarcode(prefix)) return prefix;
+        }
+        if (!AddProductFlow.isBlank(image.preview_url)) {
+            java.util.regex.Matcher m = java.util.regex.Pattern
+                    .compile("://[^/]+/(\\d{8,14})/").matcher(image.preview_url);
+            if (m.find()) return m.group(1);
+        }
+        return fallback;
     }
 
     // ---- Helpers -----------------------------------------------------------
